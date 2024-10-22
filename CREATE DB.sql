@@ -6,10 +6,25 @@ CREATE TABLE Usuario (
     apellido VARCHAR(50) NOT NULL
 );
 
+-- Tabla AulaGeneral (debe ir antes de las referencias)
+CREATE TABLE AulaGeneral (
+    idAula SERIAL PRIMARY KEY,
+    tipo VARCHAR(15) NOT NULL,
+    ubicacion VARCHAR(30) NOT NULL,
+    estado BOOLEAN NOT NULL,
+    capacidad INTEGER NOT NULL,
+    piso INTEGER NOT NULL,
+    tipoDePizarron VARCHAR(15),
+    ventiladores BOOLEAN,
+    aireAcondicionado BOOLEAN,
+    habilitado BOOLEAN NOT NULL,
+    CONSTRAINT uq_ubicacion_piso UNIQUE(ubicacion, piso) 
+);
+
 -- Tabla Bedel
 CREATE TABLE Bedel (
     idUsuario INT PRIMARY KEY REFERENCES Usuario(idUsuario),
-    idBedel SERIAL,
+    idBedel SERIAL UNIQUE,  -- Autoincremental y único
     turno VARCHAR(10) NOT NULL,
     habilitado BOOLEAN NOT NULL
 );
@@ -17,7 +32,7 @@ CREATE TABLE Bedel (
 -- Tabla Administrador
 CREATE TABLE Administrador (
     idUsuario INT PRIMARY KEY REFERENCES Usuario(idUsuario),
-    idAdministrador SERIAL
+    idAdministrador SERIAL UNIQUE  -- Autoincremental y único
 );
 
 -- Tabla Reserva
@@ -46,24 +61,9 @@ CREATE TABLE DetalleReserva (
     CONSTRAINT idAulaHorarioInicioFecha_uq UNIQUE(idAula, horarioInicio, fecha)
 );
 
--- Tabla AulaGeneral
-CREATE TABLE AulaGeneral (
-    idAula SERIAL PRIMARY KEY,
-    tipo VARCHAR(15) NOT NULL,
-    ubicacion VARCHAR(30) NOT NULL,
-    estado BOOLEAN NOT NULL,
-    capacidad INTEGER NOT NULL,
-    piso INTEGER NOT NULL,
-    tipoDePizarron VARCHAR(15),
-    ventiladores BOOLEAN,
-    aireAcondicionado BOOLEAN,
-    habilitado BOOLEAN NOT NULL,
-    CONSTRAINT uq_ubicacion_piso UNIQUE(ubicacion, piso) 
-);
-
 -- Tabla AulaMultimedios
 CREATE TABLE AulaMultimedios (
-    idAula SERIAL PRIMARY KEY REFERENCES AulaGeneral(idAula),
+    idAula INT PRIMARY KEY REFERENCES AulaGeneral(idAula),  -- Cambiado SERIAL a INT
     televisor BOOLEAN,
     canon BOOLEAN,
     computadora BOOLEAN
@@ -71,13 +71,13 @@ CREATE TABLE AulaMultimedios (
 
 -- Tabla AulaLaboratorio
 CREATE TABLE AulaLaboratorio (
-    idAula SERIAL PRIMARY KEY REFERENCES AulaGeneral(idAula),
+    idAula INT PRIMARY KEY REFERENCES AulaGeneral(idAula),  -- Cambiado SERIAL a INT
     cantidadDePCs INTEGER
 );
 
 -- Tabla ReservaPeriodica
 CREATE TABLE ReservaPeriodica (
-   idReserva INTEGER REFERENCES Reserva(idReserva),
+    idReserva INTEGER NOT NULL UNIQUE REFERENCES Reserva(idReserva),  -- Marcado como UNIQUE
     idReservaPeriodica SERIAL PRIMARY KEY,
     tipo VARCHAR(15) NOT NULL,
     diasSemana JSON NOT NULL  -- Almacenamos dias de la semana en formato JSON
@@ -85,9 +85,9 @@ CREATE TABLE ReservaPeriodica (
 
 -- Tabla ReservaEsporadica
 CREATE TABLE ReservaEsporadica (
-    idReserva INTEGER REFERENCES Reserva(idReserva),
+    idReserva INTEGER NOT NULL UNIQUE REFERENCES Reserva(idReserva),  -- Marcado como UNIQUE
     idReservaEsporadica SERIAL PRIMARY KEY
-   );
+);
 
 -- Tabla Cuatrimestre
 CREATE TABLE Cuatrimestre (
@@ -102,5 +102,3 @@ CREATE TABLE PeriodoAsignado (
     idReservaPeriodica INT NOT NULL REFERENCES ReservaPeriodica(idReservaPeriodica),
     PRIMARY KEY (idCuatrimestre, idReservaPeriodica)
 );
-
-
