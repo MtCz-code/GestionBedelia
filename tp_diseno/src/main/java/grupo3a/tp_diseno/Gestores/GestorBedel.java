@@ -1,5 +1,7 @@
+
 package grupo3a.tp_diseno.Gestores;
 
-public class GestorLogin {
+
+public class GestorBedel {
     
 }
