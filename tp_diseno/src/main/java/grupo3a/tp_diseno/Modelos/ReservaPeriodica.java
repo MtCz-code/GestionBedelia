@@ -1,20 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
 import grupo3a.tp_diseno.Enumerations.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author gabic
- */
 public class ReservaPeriodica extends Reserva{
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
-    private List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
+    private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
 
+    ReservaPeriodica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
+            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro,TipoReservaPeriodica tipoo,List<DiaSemana> diasSemana){
+            super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,fechaRegistro); 
+            this.tipo=tipoo;
+            this.diasSemana=diasSemana;
+    }
+    
     public TipoReservaPeriodica getTipo() {
         return tipo;
     }
@@ -24,11 +26,7 @@ public class ReservaPeriodica extends Reserva{
     }
 
     public List<DiaSemana> getDiasSemana() {
-        return diasSemana;
+        return new ArrayList<>(diasSemana);
     }
 
-    public void setDiasSemana(List<DiaSemana> diasSemana) {
-        this.diasSemana = diasSemana;
-    }
-    
 }

@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package grupo3a.tp_diseno.Modelos;
-import grupo3a.tp_diseno.Enumerations.*;
 
-/**
- *
- * @author gabic
- */
+package grupo3a.tp_diseno.Modelos;
+
+import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Enumerations.TipoPizarron;
+
+
 public class AulaGeneral {
     private int idAula;
     private TipoAula tipo; // Enum: GENERAL, MULTIMEDIOS, LABORATORIO
@@ -21,6 +17,21 @@ public class AulaGeneral {
     private boolean aireAcondicionado;
     private boolean habilitado;
 
+    
+        AulaGeneral(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
+                    TipoPizarron tipoDePizarron, boolean ventiladores, boolean aireAcondicionado,boolean habilitado){
+        this.tipo=tipo;
+        this.ubicacion=ubicacion;
+        this.estado=estado;
+        this.capacidad=capacidad;
+        this.piso=piso;
+        this.tipoDePizarron=tipoDePizarron;
+        this.ventiladores=ventiladores;
+        this.aireAcondicionado=aireAcondicionado;
+        this.habilitado=habilitado;
+    }
+        
+        
     public int getIdAula() {
         return idAula;
     }

@@ -1,19 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
-/**
- *
- * @author gabic
- */
 public class Usuario {
     private int idUsuario;
-    private String contraseña;
+    private String contrasena;
     private String nombre;
     private String apellido;
 
+    Usuario(String contrasena,String nombre, String apellido){
+        this.contrasena=contrasena;
+        this.nombre=nombre;
+        this.apellido=apellido;
+    }
+    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -22,12 +21,12 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getNombre() {

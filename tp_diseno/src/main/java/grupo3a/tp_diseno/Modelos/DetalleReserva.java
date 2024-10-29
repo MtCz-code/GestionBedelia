@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author gabic
- */
 public class DetalleReserva {
     private LocalDate horarioInicio;
     private int cantModulos;
     private LocalDate fecha;
     private String diaReserva;
 
+    DetalleReserva(LocalDate horarioInicio,int cantModulos,LocalDate fecha,String diaReserva){
+        this.horarioInicio=horarioInicio;
+        this.cantModulos=cantModulos;
+        this.fecha=fecha;
+        this.diaReserva=diaReserva;
+    }
+    
     public LocalDate getHorarioInicio() {
         return horarioInicio;
     }
