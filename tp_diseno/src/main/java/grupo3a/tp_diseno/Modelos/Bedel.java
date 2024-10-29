@@ -13,6 +13,10 @@ public class Bedel extends Usuario{
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
+    public Bedel(String contrasenaa, String nombree, String apellidoo) {
+        super(contrasenaa, nombree, apellidoo);
+    }
+
     public String getIdBedel() {
         return idBedel;
     }

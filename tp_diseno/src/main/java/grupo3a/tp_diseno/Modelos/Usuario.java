@@ -10,10 +10,16 @@ package grupo3a.tp_diseno.Modelos;
  */
 public class Usuario {
     private int idUsuario;
-    private String contraseña;
+    private String contrasena;
     private String nombre;
     private String apellido;
 
+    public Usuario(String contrasenaa,String nombree, String apellidoo){
+        contrasena=contrasenaa;
+        nombre=nombree;
+        apellido=apellidoo;
+    }
+    
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -23,11 +29,11 @@ public class Usuario {
     }
 
     public String getContraseña() {
-        return contraseña;
+        return contrasena;
     }
 
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.contrasena = contraseña;
     }
 
     public String getNombre() {

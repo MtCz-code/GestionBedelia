@@ -5,10 +5,18 @@
     <artifactId>tp_diseno</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+        </dependency>
+    </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.source>20</maven.compiler.source>
+        <maven.compiler.target>20</maven.compiler.target>
         <exec.mainClass>grupo3a.tp_diseno.Tp_diseno</exec.mainClass>
     </properties>
+    
 </project>
