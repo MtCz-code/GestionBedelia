@@ -14,10 +14,12 @@ public class Usuario {
     private String nombre;
     private String apellido;
 
-    public Usuario(String contrasenaa,String nombree, String apellidoo){
-        contrasena=contrasenaa;
-        nombre=nombree;
-        apellido=apellidoo;
+
+    Usuario(){}
+    Usuario(String contrasena,String nombre, String apellido){
+        this.contrasena=contrasena;
+        this.nombre=nombre;
+        this.apellido=apellido;
     }
     
     public int getIdUsuario() {

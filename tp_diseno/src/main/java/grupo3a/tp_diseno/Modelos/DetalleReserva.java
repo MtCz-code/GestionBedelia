@@ -8,7 +8,8 @@ public class DetalleReserva {
     private int cantModulos;
     private LocalDate fecha;
     private String diaReserva;
-
+    
+    DetalleReserva(){}
     DetalleReserva(LocalDate horarioInicio,int cantModulos,LocalDate fecha,String diaReserva){
         this.horarioInicio=horarioInicio;
         this.cantModulos=cantModulos;

@@ -9,7 +9,7 @@ public class Bedel extends Usuario{
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
-
+    Bedel(){}
     Bedel(String contrasena,String nombre, String apellido,String idBedel,TurnoBedel turno,boolean habilitado){
         super(contrasena,nombre,apellido);
         this.idBedel=idBedel;
