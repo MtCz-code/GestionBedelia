@@ -8,6 +8,7 @@ public class Cuatrimestre {
     private LocalDate fechaInicioCuatrimestre;
     private LocalDate fechaFinCuatrimestre;
 
+    Cuatrimestre(){}
     Cuatrimestre(LocalDate fechaInicioCuatrimestre,LocalDate fechaFinCuatrimestre){
         this.fechaInicioCuatrimestre=fechaInicioCuatrimestre;
         this.fechaFinCuatrimestre=fechaFinCuatrimestre;

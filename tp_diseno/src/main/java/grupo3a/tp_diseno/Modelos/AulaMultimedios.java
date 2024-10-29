@@ -9,6 +9,7 @@ public class AulaMultimedios extends AulaGeneral{
     private boolean canon;
     private boolean computadora;
 
+    AulaMultimedios(){}
         AulaMultimedios(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
                     TipoPizarron tipoDePizarron, boolean ventiladores,
                     boolean aireAcondicionado,boolean habilitado,boolean televisor,boolean canon,boolean computadora){

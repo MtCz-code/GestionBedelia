@@ -17,7 +17,7 @@ public class AulaGeneral {
     private boolean aireAcondicionado;
     private boolean habilitado;
 
-    
+    AulaGeneral(){}
         AulaGeneral(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
                     TipoPizarron tipoDePizarron, boolean ventiladores, boolean aireAcondicionado,boolean habilitado){
         this.tipo=tipo;
