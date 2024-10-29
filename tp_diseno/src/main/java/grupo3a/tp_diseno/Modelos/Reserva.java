@@ -12,9 +12,10 @@ public class Reserva {
     private int idCatedra;
     private String nombreCatedra;
     private LocalDateTime fechaRegistro;
+    private int idBedel;
     
     Reserva(){}
-    Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
+    public Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
             int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
         this.nombreDocente=nombreDocente;
         this.idDocente=idDocente;
@@ -27,6 +28,14 @@ public class Reserva {
 
     public int getIdReserva() {
         return idReserva;
+    }
+
+    public int getIdBedel() {
+        return idBedel;
+    }
+
+    public void setIdBedel(int idBedel) {
+        this.idBedel = idBedel;
     }
 
     public void setIdReserva(int idReserva) {

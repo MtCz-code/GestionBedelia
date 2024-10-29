@@ -4,8 +4,11 @@
 
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.DAOs.Clases_sql.ReservaSqlDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
+import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Modelos.Usuario;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -15,14 +18,8 @@ public class Tp_diseno {
 
     public static void main(String[] args) {
         
-        Usuario gabig = new Usuario("123456","GaBIG","COCKnavesio");
         
-        UsuarioSqlDAO nuevoUsuario = new UsuarioSqlDAO();
-        
-        nuevoUsuario.agregarUsuario(gabig);
-        
-        
-        
+      //hola
         
         
     }

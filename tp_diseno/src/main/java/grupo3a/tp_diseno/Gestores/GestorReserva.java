@@ -24,7 +24,7 @@ import grupo3a.tp_diseno.DAOs.Clases_sql.AulaGeneralSqlDAO;
 
 public class GestorReserva {
 
-     private ReservaEsporadicaDAO reservaEsporadicaDAO = new ReservaEsporadicaSqlDAO();
+ /*    private ReservaEsporadicaDAO reservaEsporadicaDAO = new ReservaEsporadicaSqlDAO();
      private ReservaPeriodicaDAO reservaPeriodicaDAO = new ReservaPeriodicaSqlDAO();
      private AulaGeneralDAO aulaGeneralDAO = new AulaGeneralSqlDAO();
      
@@ -86,5 +86,5 @@ public class GestorReserva {
     
 }
     
-    
+ */   
 }
