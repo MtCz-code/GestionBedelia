@@ -1,22 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
-import grupo3a.tp_diseno.Enumerations.*;
-/**
- *
- * @author gabic
- */
+
+import grupo3a.tp_diseno.Enumerations.TurnoBedel;
+
+
 public class Bedel extends Usuario{
     private String idBedel;
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
-    public Bedel(String contrasenaa, String nombree, String apellidoo) {
-        super(contrasenaa, nombree, apellidoo);
-    }
 
+    Bedel(String contrasena,String nombre, String apellido,String idBedel,TurnoBedel turno,boolean habilitado){
+        super(contrasena,nombre,apellido);
+        this.idBedel=idBedel;
+        this.turno=turno;
+        this.habilitado=habilitado;
+        
+    }
+    
     public String getIdBedel() {
         return idBedel;
     }

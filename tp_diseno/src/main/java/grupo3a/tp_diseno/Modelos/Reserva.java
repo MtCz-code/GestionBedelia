@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author gabic
- */
 public class Reserva {
     private int idReserva;
     private String nombreDocente;
@@ -19,6 +12,17 @@ public class Reserva {
     private int idCatedra;
     private String nombreCatedra;
     private LocalDateTime fechaRegistro;
+    
+    Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
+            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
+        this.nombreDocente=nombreDocente;
+        this.idDocente=idDocente;
+        this.apellidoDocente=apellidoDocente;
+        this.emailDocente=emailDocente;
+        this.idCatedra=idCatedra;
+        this.nombreCatedra=nombreCatedra;
+        this.fechaRegistro=fechaRegistro;
+    }
 
     public int getIdReserva() {
         return idReserva;

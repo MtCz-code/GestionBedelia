@@ -1,13 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
-/**
- *
- * @author gabic
- */
+import java.time.LocalDateTime;
+
+
 public class ReservaEsporadica extends Reserva{
-    
+    ReservaEsporadica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
+            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
+        super(nombreDocente,idDocente,apellidoDocente,emailDocente,
+            idCatedra,nombreCatedra,fechaRegistro);
+    }
 }

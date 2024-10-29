@@ -1,20 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Modelos;
 
 import java.time.LocalDate;
 
-/**
- *
- * @author gabic
- */
 public class Cuatrimestre {
     private int idCuatrimestre;
     private LocalDate fechaInicioCuatrimestre;
     private LocalDate fechaFinCuatrimestre;
 
+    Cuatrimestre(LocalDate fechaInicioCuatrimestre,LocalDate fechaFinCuatrimestre){
+        this.fechaInicioCuatrimestre=fechaInicioCuatrimestre;
+        this.fechaFinCuatrimestre=fechaFinCuatrimestre;
+    }
+    
     public int getIdCuatrimestre() {
         return idCuatrimestre;
     }

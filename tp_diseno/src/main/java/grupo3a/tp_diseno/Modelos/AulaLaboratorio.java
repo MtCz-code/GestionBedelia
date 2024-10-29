@@ -1,16 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package grupo3a.tp_diseno.Modelos;
 
-/**
- *
- * @author gabic
- */
+package grupo3a.tp_diseno.Modelos;
+import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Enumerations.TipoPizarron;
+
 public class AulaLaboratorio extends AulaGeneral{
     private int cantidadDePCs;
 
+    AulaLaboratorio(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
+                    TipoPizarron tipoDePizarron, boolean ventiladores, boolean aireAcondicionado,boolean habilitado,int cantidadDePCs){
+        super(tipo,ubicacion,estado,capacidad,piso,tipoDePizarron,ventiladores,aireAcondicionado,habilitado);
+        this.cantidadDePCs=cantidadDePCs;
+    }
+    
     public int getCantidadDePCs() {
         return cantidadDePCs;
     }
