@@ -55,6 +55,10 @@ public class ReservaDTO {
         this.idReserva = idReserva;
     }
 
+    public List<DiaSemana> getDiaSemana() {
+        return diasSemana;
+    }
+
     public String getNombreDocente() {
         return nombreDocente;
     }

@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Modelos.Reserva;
 
 /**
@@ -12,6 +13,6 @@ import grupo3a.tp_diseno.Modelos.Reserva;
  */
 public interface ReservaDAO {
     
-    void agregarReserva(Reserva reserva);
+    void crear(ReservaDTO reserva);
     
 }
