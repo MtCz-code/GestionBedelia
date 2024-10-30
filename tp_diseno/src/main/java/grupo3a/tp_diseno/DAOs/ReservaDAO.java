@@ -13,6 +13,7 @@ import grupo3a.tp_diseno.Modelos.Reserva;
  */
 public interface ReservaDAO {
     
-    void crear(ReservaDTO reserva);
+    Integer crear(Reserva reserva);
+    void asociarCuatrimestre(int idReserva, int cuat1, int cuat2);
     
 }
