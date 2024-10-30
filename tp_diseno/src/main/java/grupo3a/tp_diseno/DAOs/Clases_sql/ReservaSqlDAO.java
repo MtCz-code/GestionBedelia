@@ -26,7 +26,7 @@ import org.json.JSONArray;
 public class ReservaSqlDAO implements ReservaDAO{
    
     @Override
-    public void crear(ReservaDTO reserva) {
+    public Integer crear(Reserva reserva) {
         String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,?,?)";
     
  
@@ -73,7 +73,7 @@ public class ReservaSqlDAO implements ReservaDAO{
                             
                             JSONArray diasSemanaJson = new JSONArray();
                             for (DiaSemana dia : reserva.getDiaSemana()) {
-                                diasSemanaJson.put(dia.name());  // Convierte cada DiaSemana a su nombre
+                                diasSemanaJson.put(dia.name()); 
                             }
                             stmtPer.setString(3, diasSemanaJson.toString());
                             stmtPer.executeUpdate();
@@ -82,28 +82,10 @@ public class ReservaSqlDAO implements ReservaDAO{
                             System.out.println("Error al agregar la reserva periodica");
                         }                 
 
-                        String queryCuat = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
-                        try(PreparedStatement stmtCuat = conn.prepareStatement(queryCuat)){
-                            stmtCuat.setInt(1, reserva.getIdCuatrimestre1());
-                            stmtCuat.setInt(2, idReserva);
-                            stmtCuat.executeUpdate();
-                            if(reserva.getTipo().toString().equals("ANUAL")){
-                                String queryCuat2 = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
-                                try(PreparedStatement stmtCuat2 = conn.prepareStatement(queryCuat2)){
-                                    stmtCuat.setInt(1, reserva.getIdCuatrimestre2());
-                                    stmtCuat.setInt(2, idReserva);
-                                    stmtCuat2.executeUpdate();
-                                } catch(SQLException e){
-                                    System.out.println("Error al asignar el segundo periodo");
-                                }
-                            }
-                            
-                        }catch(SQLException e){
-                            System.out.println("Error al asignar el periodo a la reserva.");
-
-                        }
+                        
                     }
-    
+                    
+                return idReserva;
                 } else {
                     System.out.println("No se pudo obtener el ID de la reserva.");
                 }
@@ -115,6 +97,37 @@ public class ReservaSqlDAO implements ReservaDAO{
             
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva: " + e.getMessage());
+            return 0;
         }    
+        return null;
+    }
+    
+    @Override
+    public void asociarCuatrimestre(int idReserva, int cuat1, int cuat2){
+        
+        
+        
+        String queryCuat = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
+        try(Connection conn = DataBaseConnection.getConnection();
+                PreparedStatement stmtCuat = conn.prepareStatement(queryCuat)){
+            stmtCuat.setInt(1, cuat1);
+            stmtCuat.setInt(2, idReserva);
+            stmtCuat.executeUpdate();
+            if(cuat2!=0){
+                String queryCuat2 = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
+                try(PreparedStatement stmtCuat2 = conn.prepareStatement(queryCuat2)){
+                    stmtCuat.setInt(1, cuat2);
+                    stmtCuat.setInt(2, idReserva);
+                    stmtCuat2.executeUpdate();
+                } catch(SQLException e){
+                    System.out.println("Error al asignar el segundo periodo");
+                }
+            }
+
+        }catch(SQLException e){
+            System.out.println("Error al asignar el periodo a la reserva.");
+
+        }
+        
     }
 }
