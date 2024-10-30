@@ -4,10 +4,13 @@
  */
 package grupo3a.tp_diseno.DTOs;
 
+import java.util.List;
+
 /**
  *
  * @author gabic
  */
 public class DisponibilidadDTO {
-    
+    private List<AulaDTO> aulasDisponibles; 
+    private boolean solapamiento;
 }

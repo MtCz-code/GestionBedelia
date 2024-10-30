@@ -4,18 +4,10 @@
  */
 package grupo3a.tp_diseno.DTOs;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author gabic
  */
-public class DetalleReservaDTO {
-    private int idReserva;
-    private LocalDate horarioInicio;
-    private int cantModulos;
-    private LocalDate fecha;
-    private String diaReserva;
-    private int idAula;
+public class AulaDTO {
     
 }
