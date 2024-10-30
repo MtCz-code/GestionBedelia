@@ -5,13 +5,13 @@ import java.time.LocalDate;
 
 public class Cuatrimestre {
     private int idCuatrimestre;
-    private LocalDate fechaInicioCuatrimestre;
-    private LocalDate fechaFinCuatrimestre;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
-    Cuatrimestre(){}
-    Cuatrimestre(LocalDate fechaInicioCuatrimestre,LocalDate fechaFinCuatrimestre){
-        this.fechaInicioCuatrimestre=fechaInicioCuatrimestre;
-        this.fechaFinCuatrimestre=fechaFinCuatrimestre;
+    public Cuatrimestre(){}
+    public Cuatrimestre(LocalDate fechaInicio,LocalDate fechaFin){
+        this.fechaInicio=fechaInicio;
+        this.fechaFin=fechaFin;
     }
     
     public int getIdCuatrimestre() {
@@ -22,20 +22,20 @@ public class Cuatrimestre {
         this.idCuatrimestre = idCuatrimestre;
     }
 
-    public LocalDate getFechaInicioCuatrimestre() {
-        return fechaInicioCuatrimestre;
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFechaInicioCuatrimestre(LocalDate fechaInicioCuatrimestre) {
-        this.fechaInicioCuatrimestre = fechaInicioCuatrimestre;
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFinCuatrimestre() {
-        return fechaFinCuatrimestre;
+    public LocalDate getFechaFin() {
+        return fechaFin;
     }
 
-    public void setFechaFinCuatrimestre(LocalDate fechaFinCuatrimestre) {
-        this.fechaFinCuatrimestre = fechaFinCuatrimestre;
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
     }
     
 }

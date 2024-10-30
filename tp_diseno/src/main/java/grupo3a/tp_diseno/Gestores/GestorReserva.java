@@ -56,25 +56,25 @@ public class GestorReserva {
                 && reservaDTO.getNombreCatedra() != null && !reservaDTO.getNombreCatedra().isEmpty();
     }
 
-    private Reserva crearReserva(ReservaDTO reservaDTO) {
-        Reserva reserva = new Reserva(reservaDTO.);
-       
-        return reserva;
-    }
     
     public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO, AulaDTO aulaDTO) {
         // Obtener el aula seleccionada y asociarla a la reserva
-        Reserva reserva = new Reserva();
+        Reserva reserva = new Reserva(reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
+                reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(), reservaDTO.getIdCatedra(), 
+                reservaDTO.getNombreCatedra(), reservaDTO.getFechaRegistro());
   
-        reservaDAO.agregarReserva(reserva);
+        reserva.setIdReserva(reservaDAO.crear(reserva));
         
-         ArrayList<DetalleReserva> detallesReserva = new ArrayList<>(detallesReservaDTO.size());
+        
         for(DetalleReservaDTO i : detallesReservaDTO){
             
-            DetalleReserva detalleReserva = new DetalleReserva();
+            DetalleReserva detalleReserva = new DetalleReserva(reserva.getIdReserva(), 
+                    i.getHorarioInicio(), i.getCantModulos(), i.getFecha(), i.getDiaReserva(), aulaDTO.getIdAula());
             
             detalleReservaDAO.crear(detalleReserva);
         }
+        
+        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());
         
     }
     
