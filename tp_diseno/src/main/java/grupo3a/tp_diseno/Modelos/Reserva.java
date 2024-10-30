@@ -14,7 +14,10 @@ public class Reserva {
     private LocalDateTime fechaRegistro;
     private int idBedel;
     
-    Reserva(){}
+    public Reserva(){
+    
+    }
+    
     public Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
             int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
         this.nombreDocente=nombreDocente;

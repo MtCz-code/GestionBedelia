@@ -11,8 +11,8 @@ public class DetalleReserva {
     private String diaReserva;
     private int idAula;
     
-    DetalleReserva(){}
-    DetalleReserva(int idReserva, LocalDate horarioInicio,int cantModulos,LocalDate fecha,String diaReserva, int idAula){
+    public DetalleReserva(){}
+    public DetalleReserva(int idReserva, LocalDate horarioInicio,int cantModulos,LocalDate fecha,String diaReserva, int idAula){
         this.idReserva = idReserva;
         this.horarioInicio=horarioInicio;
         this.cantModulos=cantModulos;

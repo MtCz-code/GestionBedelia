@@ -28,7 +28,9 @@ public class ReservaDTO {
     private boolean tipoReserva; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     private int idCuatrimestre1; private int idCuatrimestre2;
 
-    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, boolean tipoReserva, int idCuatrimestre1, int idCuatrimestre2) {
+    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
+            int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, TipoReservaPeriodica tipo,
+            List<DiaSemana> diasSemana, boolean tipoReserva, int idCuatrimestre1, int idCuatrimestre2) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
         this.idDocente = idDocente;

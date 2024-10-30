@@ -8,6 +8,6 @@ package grupo3a.tp_diseno.DAOs;
  *
  * @author exero
  */
-public interface AulaGeneralDAO {
+public interface AulaDAO {
     
 }

@@ -4,12 +4,12 @@
  */
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
-import grupo3a.tp_diseno.DAOs.AulaGeneralDAO;
+import grupo3a.tp_diseno.DAOs.AulaDAO;
 
 /**
  *
  * @author exero
  */
-public class AulaGeneralSqlDAO implements AulaGeneralDAO{
+public class AulaSqlDAO implements AulaDAO{
     
 }
