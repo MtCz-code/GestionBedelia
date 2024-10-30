@@ -10,9 +10,9 @@ public class ReservaPeriodica extends Reserva{
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
 
-    ReservaPeriodica(){
+    public ReservaPeriodica(){
     this.diasSemana= new ArrayList<>();}
-    ReservaPeriodica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
+    public ReservaPeriodica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
             int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro,TipoReservaPeriodica tipo,List<DiaSemana> diasSemana){
             super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,fechaRegistro); 
             this.tipo=tipo;

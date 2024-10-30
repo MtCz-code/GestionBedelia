@@ -33,31 +33,40 @@ public class GestorReserva {
     public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO, AulaDTO aulaDTO) {
         // Obtener el aula seleccionada y asociarla a la reserva
         
-        
-        Reserva reserva = new Reserva(reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
-                reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(), reservaDTO.getIdCatedra(), 
-                reservaDTO.getNombreCatedra(), reservaDTO.getFechaRegistro());
-        
-        if(reservaDTO.isEsEsporadica()){
-            reserva.setIdReserva(reservaDAO.crear((ReservaEsporadica)reserva));
+        Reserva reserva;
+
+        if (reservaDTO.isEsEsporadica()) {
+            // Crear una instancia de ReservaEsporadica
+            ReservaEsporadica reservaEsporadica = new ReservaEsporadica(
+                    reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
+                    reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
+                    reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
+                    reservaDTO.getFechaRegistro()
+            );
+
+            reservaEsporadica.setIdReserva(reservaDAO.crear(reservaEsporadica));
+            reserva = reservaEsporadica; // Asignamos a reserva la instancia específica
+        } else {
+            // Crear una instancia de ReservaPeriodica
+            ReservaPeriodica reservaPeriodica = new ReservaPeriodica(
+                    reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
+                    reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
+                    reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
+                    reservaDTO.getFechaRegistro(), reservaDTO.getTipo(), reservaDTO.getDiasSemana()
+            );
+
+            reservaPeriodica.setIdReserva(reservaDAO.crear(reservaPeriodica));
+            reserva = reservaPeriodica; // Asignamos a reserva la instancia específica
         }
-        else {
-            ReservaPeriodica reservaAux = (ReservaPeriodica)reserva;
-            reservaAux.setTipo(reservaDTO.getTipo());
-            reservaAux.getDiasSemana().addAll(reservaDTO.getDiasSemana());
-            
-            reserva.setIdReserva(reservaDAO.crear(reservaAux));
-        }
+       
         
-        
-        
-        for(DetalleReservaDTO i : detallesReservaDTO){
+        /*for(DetalleReservaDTO i : detallesReservaDTO){
             
             DetalleReserva detalleReserva = new DetalleReserva(reserva.getIdReserva(), 
                     i.getHorarioInicio(), i.getCantModulos(), i.getFecha(), i.getDiaReserva(), aulaDTO.getIdAula());
             
             detalleReservaDAO.crear(detalleReserva);
-        }
+        }*/
         
         reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());
         

@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DTOs;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 /**
@@ -12,13 +13,13 @@ import java.time.LocalDate;
  */
 public class DetalleReservaDTO {
     private int idReserva;
-    private LocalDate horarioInicio;
+    private Time horarioInicio;
     private int cantModulos;
     private LocalDate fecha;
     private String diaReserva;
     private int idAula;
 
-    public DetalleReservaDTO(int idReserva, LocalDate horarioInicio, int cantModulos, LocalDate fecha, String diaReserva, int idAula) {
+    public DetalleReservaDTO(int idReserva, Time horarioInicio, int cantModulos, LocalDate fecha, String diaReserva, int idAula) {
         this.idReserva = idReserva;
         this.horarioInicio = horarioInicio;
         this.cantModulos = cantModulos;
@@ -35,11 +36,11 @@ public class DetalleReservaDTO {
         this.idReserva = idReserva;
     }
 
-    public LocalDate getHorarioInicio() {
+    public Time getHorarioInicio() {
         return horarioInicio;
     }
 
-    public void setHorarioInicio(LocalDate horarioInicio) {
+    public void setHorarioInicio(Time horarioInicio) {
         this.horarioInicio = horarioInicio;
     }
 

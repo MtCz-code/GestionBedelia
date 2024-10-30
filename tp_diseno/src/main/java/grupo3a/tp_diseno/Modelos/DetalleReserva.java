@@ -1,18 +1,19 @@
 
 package grupo3a.tp_diseno.Modelos;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 public class DetalleReserva {
     private int idReserva;
-    private LocalDate horarioInicio;
+    private Time horarioInicio;
     private int cantModulos;
     private LocalDate fecha;
     private String diaReserva;
     private int idAula;
     
     public DetalleReserva(){}
-    public DetalleReserva(int idReserva, LocalDate horarioInicio,int cantModulos,LocalDate fecha,String diaReserva, int idAula){
+    public DetalleReserva(int idReserva, Time horarioInicio,int cantModulos,LocalDate fecha,String diaReserva, int idAula){
         this.idReserva = idReserva;
         this.horarioInicio=horarioInicio;
         this.cantModulos=cantModulos;
@@ -40,11 +41,11 @@ public class DetalleReserva {
     
     
     
-    public LocalDate getHorarioInicio() {
+    public Time getHorarioInicio() {
         return horarioInicio;
     }
 
-    public void setHorarioInicio(LocalDate horarioInicio) {
+    public void setHorarioInicio(Time horarioInicio) {
         this.horarioInicio = horarioInicio;
     }
 
