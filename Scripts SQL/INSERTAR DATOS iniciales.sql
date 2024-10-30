@@ -1,0 +1,1 @@
+insert into bedel values (1, 'NOCHE', true);

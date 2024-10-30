@@ -19,13 +19,14 @@ public class Reserva {
     }
     
     public Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
+            int idCatedra,String nombreCatedra, int idBedel ,LocalDateTime fechaRegistro){
         this.nombreDocente=nombreDocente;
         this.idDocente=idDocente;
         this.apellidoDocente=apellidoDocente;
         this.emailDocente=emailDocente;
         this.idCatedra=idCatedra;
         this.nombreCatedra=nombreCatedra;
+        this.idBedel = idBedel;
         this.fechaRegistro=fechaRegistro;
     }
 

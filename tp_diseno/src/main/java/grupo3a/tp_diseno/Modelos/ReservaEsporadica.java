@@ -8,9 +8,9 @@ public class ReservaEsporadica extends Reserva{
     public ReservaEsporadica(){
     }
     public ReservaEsporadica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro){
+            int idCatedra,String nombreCatedra,int idBedel,LocalDateTime fechaRegistro){
         
         super(nombreDocente,idDocente,apellidoDocente,emailDocente,
-            idCatedra,nombreCatedra,fechaRegistro);
+            idCatedra,nombreCatedra,idBedel,fechaRegistro);
     }
 }

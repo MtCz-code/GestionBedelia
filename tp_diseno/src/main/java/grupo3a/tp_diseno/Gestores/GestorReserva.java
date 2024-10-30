@@ -41,7 +41,7 @@ public class GestorReserva {
                     reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
                     reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
                     reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
-                    reservaDTO.getFechaRegistro()
+                    reservaDTO.getIdBedel(), reservaDTO.getFechaRegistro()
             );
 
             reservaEsporadica.setIdReserva(reservaDAO.crear(reservaEsporadica));
@@ -52,7 +52,8 @@ public class GestorReserva {
                     reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
                     reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
                     reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
-                    reservaDTO.getFechaRegistro(), reservaDTO.getTipo(), reservaDTO.getDiasSemana()
+                    reservaDTO.getIdBedel(), reservaDTO.getFechaRegistro(), 
+                    reservaDTO.getTipo(), reservaDTO.getDiasSemana()
             );
 
             reservaPeriodica.setIdReserva(reservaDAO.crear(reservaPeriodica));
@@ -68,7 +69,7 @@ public class GestorReserva {
             detalleReservaDAO.crear(detalleReserva);
         }*/
         
-        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());
+        /*reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());*/
         
     }
     

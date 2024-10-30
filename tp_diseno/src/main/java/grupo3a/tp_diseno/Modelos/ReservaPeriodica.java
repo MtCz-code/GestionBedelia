@@ -13,8 +13,8 @@ public class ReservaPeriodica extends Reserva{
     public ReservaPeriodica(){
     this.diasSemana= new ArrayList<>();}
     public ReservaPeriodica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra,LocalDateTime fechaRegistro,TipoReservaPeriodica tipo,List<DiaSemana> diasSemana){
-            super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,fechaRegistro); 
+            int idCatedra,String nombreCatedra, int idBedel, LocalDateTime fechaRegistro,TipoReservaPeriodica tipo,List<DiaSemana> diasSemana){
+            super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,idBedel,fechaRegistro); 
             this.tipo=tipo;
             this.diasSemana=diasSemana;
     }
