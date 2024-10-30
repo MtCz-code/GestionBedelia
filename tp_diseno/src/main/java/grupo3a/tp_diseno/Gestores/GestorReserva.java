@@ -17,53 +17,38 @@ public class GestorReserva {
      private final DetalleReservaDAO detalleReservaDAO = new DetalleReservaSqlDAO();
      
      
-     
+    // solo se usa para reserva esporadica
     public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
-        // Validar que no haya días duplicados en la reserva
-        Set<DetalleReservaDTO> diasUnicos = new HashSet<>(diasReserva);
-        return diasUnicos.size() == diasReserva.size();
+       return true;
     }
     
+    
+    // NO ES NECESARIO VALIDAR NADA EN EL GESTOR, SE PUEDEN VALIDAR EN LA INTERFAZ
     public Reserva validarDatosReserva(ReservaDTO reservaDTO) {
-        try {
-            // Validar datos como nombre de docente, asignatura, etc.
-            if (!validarDatos(reservaDTO)) {
-                System.out.println("Error en los datos de la reserva");
-                return null;
-            }
-            
-            // Crear la reserva si los datos son válidos
-            Reserva reserva = this.crearReserva(reservaDTO);
-            
-            try {
-                reservaDAO.agregarReserva(reserva); // Guardar en la base de datos
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-            
-            
-            return reserva;
-        } catch (Exception e) {
-            System.out.println("Error al validar datos de la reserva: " + e.getMessage());
-            return null;
-        }
-    }
-
-    private boolean validarDatos(ReservaDTO reservaDTO) {
-        // Implementación de la validación específica de los datos de la reserva
-        return reservaDTO.getNombreDocente() != null && !reservaDTO.getNombreDocente().isEmpty()
-                && reservaDTO.getNombreCatedra() != null && !reservaDTO.getNombreCatedra().isEmpty();
+        
+        return null;
     }
 
     
     public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO, AulaDTO aulaDTO) {
         // Obtener el aula seleccionada y asociarla a la reserva
+        
+        
         Reserva reserva = new Reserva(reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
                 reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(), reservaDTO.getIdCatedra(), 
                 reservaDTO.getNombreCatedra(), reservaDTO.getFechaRegistro());
-  
-        reserva.setIdReserva(reservaDAO.crear(reserva));
+        
+        if(reservaDTO.isEsEsporadica()){
+            reserva.setIdReserva(reservaDAO.crear((ReservaEsporadica)reserva));
+        }
+        else {
+            ReservaPeriodica reservaAux = (ReservaPeriodica)reserva;
+            reservaAux.setTipo(reservaDTO.getTipo());
+            reservaAux.getDiasSemana().addAll(reservaDTO.getDiasSemana());
+            
+            reserva.setIdReserva(reservaDAO.crear(reservaAux));
+        }
+        
         
         
         for(DetalleReservaDTO i : detallesReservaDTO){

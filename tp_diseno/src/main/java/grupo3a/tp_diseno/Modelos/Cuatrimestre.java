@@ -15,8 +15,8 @@ public class Cuatrimestre {
     }
     public Cuatrimestre(int id, LocalDate fechaInicioCuatrimestre,LocalDate fechaFinCuatrimestre){
         this.idCuatrimestre=id;
-        this.fechaInicioCuatrimestre=fechaInicioCuatrimestre;
-        this.fechaFinCuatrimestre=fechaFinCuatrimestre;
+        this.fechaInicio=fechaInicioCuatrimestre;
+        this.fechaFin=fechaFinCuatrimestre;
     }
     
     public int getIdCuatrimestre() {

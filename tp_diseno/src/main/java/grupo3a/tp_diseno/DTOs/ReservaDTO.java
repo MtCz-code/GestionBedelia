@@ -25,12 +25,12 @@ public class ReservaDTO {
     private int idBedel;
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
-    private boolean tipoReserva; // FALSO = PERIODICA, VERDADERO = ESPORADICA
+    private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     private int idCuatrimestre1; private int idCuatrimestre2;
 
     public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
             int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, TipoReservaPeriodica tipo,
-            List<DiaSemana> diasSemana, boolean tipoReserva, int idCuatrimestre1, int idCuatrimestre2) {
+            List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
         this.idDocente = idDocente;
@@ -42,7 +42,7 @@ public class ReservaDTO {
         this.idBedel = idBedel;
         this.tipo = tipo;
         this.diasSemana = diasSemana;
-        this.tipoReserva = tipoReserva;
+        this.esEsporadica = esEsporadica; // 0 == periodica / 1 == esporadica
         this.idCuatrimestre1 = idCuatrimestre1;
         this.idCuatrimestre2 = idCuatrimestre2;
     }
@@ -55,7 +55,7 @@ public class ReservaDTO {
         this.idReserva = idReserva;
     }
 
-    public List<DiaSemana> getDiaSemana() {
+    public List<DiaSemana> getDiasSemana() {
         return diasSemana;
     }
 
@@ -131,12 +131,12 @@ public class ReservaDTO {
         this.tipo = tipo;
     }
 
-    public boolean isTipoReserva() {
-        return tipoReserva;
+    public boolean isEsEsporadica() {
+        return esEsporadica;
     }
 
-    public void setTipoReserva(boolean tipoReserva) {
-        this.tipoReserva = tipoReserva;
+    public void setEsEsporadica(boolean esEsporadica) {
+        this.esEsporadica = esEsporadica;
     }
 
     public int getIdCuatrimestre1() {
