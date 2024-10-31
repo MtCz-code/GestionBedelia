@@ -59,17 +59,17 @@ public class GestorReserva {
             reservaPeriodica.setIdReserva(reservaDAO.crear(reservaPeriodica));
             reserva = reservaPeriodica; // Asignamos a reserva la instancia específica
         }
-       
+      
         
-        /*for(DetalleReservaDTO i : detallesReservaDTO){
+            
+        for(DetalleReservaDTO i : detallesReservaDTO){
             
             DetalleReserva detalleReserva = new DetalleReserva(reserva.getIdReserva(), 
                     i.getHorarioInicio(), i.getCantModulos(), i.getFecha(), i.getDiaReserva(), aulaDTO.getIdAula());
-            
             detalleReservaDAO.crear(detalleReserva);
-        }*/
+        }
         
-        /*reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());*/
+        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(), reservaDTO.getIdCuatrimestre2());
         
     }
     

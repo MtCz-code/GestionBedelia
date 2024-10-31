@@ -12,6 +12,5 @@ import grupo3a.tp_diseno.Modelos.DetalleReserva;
  */
 public interface DetalleReservaDAO {
     
-    
     public void crear(DetalleReserva detalleReserva);
 }

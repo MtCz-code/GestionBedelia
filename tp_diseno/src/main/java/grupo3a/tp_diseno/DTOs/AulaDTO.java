@@ -12,6 +12,10 @@ public class AulaDTO {
 
     private int idAula;
 
+    public AulaDTO(int id) {
+        this.idAula = id;
+    }
+
     public int getIdAula() {
         return idAula;
     }

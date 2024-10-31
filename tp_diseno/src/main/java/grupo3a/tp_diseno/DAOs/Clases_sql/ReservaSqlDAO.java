@@ -47,7 +47,8 @@ public class ReservaSqlDAO implements ReservaDAO{
             stmt.setTimestamp(7, timestamp);
             stmt.setInt(8, reserva.getIdBedel());
             
-        
+            
+            
             stmt.executeUpdate();
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -57,16 +58,18 @@ public class ReservaSqlDAO implements ReservaDAO{
                     try(PreparedStatement stmtPer = conn.prepareStatement(queryE)){
                         stmtPer.setInt(1,idReserva);
                         stmtPer.setString(2, reserva.getTipo().toString());
-
+                        
                         JSONArray diasSemanaJson = new JSONArray();
                         for (DiaSemana dia : reserva.getDiasSemana()) {
                             diasSemanaJson.put(dia.name()); 
                         }
-                        stmtPer.setString(3, diasSemanaJson.toString());
+                        
+                        stmtPer.setObject(3, diasSemanaJson.toString(), java.sql.Types.OTHER);                        
+                        
                         stmtPer.executeUpdate();
-
+                        System.out.println("Reserva periodica asignada con exito.");
                     } catch(SQLException e){
-                        System.out.println("Error al agregar la reserva periodica");
+                        System.out.println("Error al agregar la reserva periodica"+ e.getMessage());
                     } 
                 return idReserva;
                 } else {
@@ -75,7 +78,7 @@ public class ReservaSqlDAO implements ReservaDAO{
             }
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva: " + e.getMessage());
-            return 0;
+            return null;
         }    
         return null;
     }
@@ -143,19 +146,21 @@ public class ReservaSqlDAO implements ReservaDAO{
             stmtCuat.setInt(1, cuat1);
             stmtCuat.setInt(2, idReserva);
             stmtCuat.executeUpdate();
+            System.out.println("Periodo 1 asignado con exito.");
             if(cuat2!=0){
                 String queryCuat2 = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
                 try(PreparedStatement stmtCuat2 = conn.prepareStatement(queryCuat2)){
-                    stmtCuat.setInt(1, cuat2);
-                    stmtCuat.setInt(2, idReserva);
+                    stmtCuat2.setInt(1, cuat2);
+                    stmtCuat2.setInt(2, idReserva);
                     stmtCuat2.executeUpdate();
+                    System.out.println("Periodo 2 asignado con exito.");
                 } catch(SQLException e){
-                    System.out.println("Error al asignar el segundo periodo");
+                    System.out.println("Error al asignar el segundo periodo" + e.getMessage());
                 }
             }
 
         }catch(SQLException e){
-            System.out.println("Error al asignar el periodo a la reserva.");
+            System.out.println("Error al asignar el periodo a la reserva." + e.getMessage());
 
         }
         
