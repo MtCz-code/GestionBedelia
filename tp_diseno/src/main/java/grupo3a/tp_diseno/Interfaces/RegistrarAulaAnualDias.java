@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package grupo3a.tp_diseno.Interfaces;
 
@@ -8,13 +8,37 @@ package grupo3a.tp_diseno.Interfaces;
  *
  * @author imsac
  */
-public class RegistrarAulaAnualDias extends javax.swing.JFrame {
+public class RegistrarAulaAnualDias extends javax.swing.JPanel {
 
     /**
-     * Creates new form RegistrarBede
+     * Creates new form RegistrarAulaAnualDias1
      */
+    
+    public interface Listener {
+        void back();
+        void next();
+    }
+    
+    private boolean[] diasSeleccionados = {
+        false,  //lunes
+        false,  //martes
+        false,  //miercoles
+        false,  //jueves
+        false   //viernes
+    };
+    
+    private Listener listener;
+    
     public RegistrarAulaAnualDias() {
         initComponents();
+    }
+    
+    public boolean[] getDiasSeleccionados() {
+        return diasSeleccionados;
+    }
+    
+    public void setListener(Listener listener){
+        this.listener = listener;
     }
 
     /**
@@ -36,22 +60,22 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rbtnLunes = new javax.swing.JRadioButton();
         jPanel12 = new javax.swing.JPanel();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rbtnMartes = new javax.swing.JRadioButton();
         jPanel13 = new javax.swing.JPanel();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        rbtnMiercoles = new javax.swing.JRadioButton();
         jPanel14 = new javax.swing.JPanel();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        rbtnJueves = new javax.swing.JRadioButton();
         jPanel10 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        rbtnViernes = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(19, 66, 125));
         jPanel1.setForeground(new java.awt.Color(19, 66, 126));
@@ -59,11 +83,12 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setFont(new java.awt.Font("Montserrat Thin Light", 1, 40)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Registro de reserva");
         jPanel1.add(jLabel7, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jPanel2.setBackground(new java.awt.Color(26, 26, 26));
         jPanel2.setPreferredSize(new java.awt.Dimension(815, 500));
@@ -75,6 +100,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(37, 300));
 
         jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("seleccione los dias de la reserva");
 
@@ -89,6 +115,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(300, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Seleccione dias de reserva ");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -119,8 +146,18 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
 
         jPanel11.setBackground(new java.awt.Color(28, 28, 28));
 
-        jRadioButton2.setText("Lunes");
-        jRadioButton2.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnLunes.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnLunes.setText("Lunes");
+        rbtnLunes.setBorder(null);
+        rbtnLunes.setContentAreaFilled(false);
+        rbtnLunes.setFocusPainted(false);
+        rbtnLunes.setFocusable(false);
+        rbtnLunes.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnLunes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnLunesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -128,22 +165,32 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbtnLunes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rbtnLunes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(jPanel11);
 
         jPanel12.setBackground(new java.awt.Color(28, 28, 28));
 
-        jRadioButton3.setLabel("Martes");
-        jRadioButton3.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnMartes.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnMartes.setBorder(null);
+        rbtnMartes.setContentAreaFilled(false);
+        rbtnMartes.setFocusPainted(false);
+        rbtnMartes.setFocusable(false);
+        rbtnMartes.setLabel("Martes");
+        rbtnMartes.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnMartes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnMartesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -151,22 +198,32 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbtnMartes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rbtnMartes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(jPanel12);
 
         jPanel13.setBackground(new java.awt.Color(28, 28, 28));
 
-        jRadioButton4.setLabel("Miercoles");
-        jRadioButton4.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnMiercoles.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnMiercoles.setBorder(null);
+        rbtnMiercoles.setContentAreaFilled(false);
+        rbtnMiercoles.setFocusPainted(false);
+        rbtnMiercoles.setFocusable(false);
+        rbtnMiercoles.setLabel("Miercoles");
+        rbtnMiercoles.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnMiercoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnMiercolesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -174,22 +231,32 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbtnMiercoles, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rbtnMiercoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(jPanel13);
 
         jPanel14.setBackground(new java.awt.Color(28, 28, 28));
 
-        jRadioButton5.setLabel("Jueves");
-        jRadioButton5.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnJueves.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnJueves.setBorder(null);
+        rbtnJueves.setContentAreaFilled(false);
+        rbtnJueves.setFocusPainted(false);
+        rbtnJueves.setFocusable(false);
+        rbtnJueves.setLabel("Jueves");
+        rbtnJueves.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnJueves.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnJuevesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -197,22 +264,32 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbtnJueves, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jRadioButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rbtnJueves, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(jPanel14);
 
         jPanel10.setBackground(new java.awt.Color(28, 28, 28));
 
-        jRadioButton1.setLabel("Viernes");
-        jRadioButton1.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnViernes.setForeground(new java.awt.Color(255, 255, 255));
+        rbtnViernes.setBorder(null);
+        rbtnViernes.setContentAreaFilled(false);
+        rbtnViernes.setFocusPainted(false);
+        rbtnViernes.setFocusable(false);
+        rbtnViernes.setLabel("Viernes");
+        rbtnViernes.setPreferredSize(new java.awt.Dimension(300, 25));
+        rbtnViernes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnViernesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -220,14 +297,14 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rbtnViernes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(186, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rbtnViernes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel3.add(jPanel10);
@@ -237,9 +314,9 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(257, Short.MAX_VALUE)
+                .addContainerGap(250, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +328,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,13 +343,13 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
         jPanel7.setBackground(new java.awt.Color(60, 63, 0));
-        jPanel7.setPreferredSize(new java.awt.Dimension(0, 80));
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel9.setBackground(new java.awt.Color(26, 26, 26));
         jPanel9.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnCancelar.setBackground(new java.awt.Color(17, 17, 17));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Regresar");
         btnCancelar.setPreferredSize(new java.awt.Dimension(110, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -285,7 +362,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(130, 130, 130)
@@ -297,7 +374,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             .addGap(0, 200, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(20, 20, 20)))
         );
@@ -308,6 +385,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnRegistrar.setBackground(new java.awt.Color(17, 17, 17));
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Siguiente");
         btnRegistrar.setBorder(new BordesRedondeados(20));
         btnRegistrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -322,7 +400,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -334,7 +412,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
             .addGap(0, 200, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(20, 20, 20)))
         );
@@ -343,18 +421,43 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
 
         jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        pack();
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        if(listener != null)
+            listener.back();
+                
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        if(diasSeleccionados[0] | diasSeleccionados[1] | diasSeleccionados[2] | 
+            diasSeleccionados[3] | diasSeleccionados[4]){
+            
+            if(listener != null)
+                listener.next();
+        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void rbtnLunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLunesActionPerformed
+        diasSeleccionados[0] = rbtnLunes.isSelected();
+    }//GEN-LAST:event_rbtnLunesActionPerformed
+
+    private void rbtnViernesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnViernesActionPerformed
+        diasSeleccionados[4] = rbtnViernes.isSelected();
+    }//GEN-LAST:event_rbtnViernesActionPerformed
+
+    private void rbtnJuevesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnJuevesActionPerformed
+        diasSeleccionados[3] = rbtnJueves.isSelected();
+    }//GEN-LAST:event_rbtnJuevesActionPerformed
+
+    private void rbtnMiercolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMiercolesActionPerformed
+        diasSeleccionados[2] = rbtnMiercoles.isSelected();
+    }//GEN-LAST:event_rbtnMiercolesActionPerformed
+
+    private void rbtnMartesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMartesActionPerformed
+        diasSeleccionados[1] = rbtnMartes.isSelected();
+    }//GEN-LAST:event_rbtnMartesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -377,10 +480,10 @@ public class RegistrarAulaAnualDias extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton rbtnJueves;
+    private javax.swing.JRadioButton rbtnLunes;
+    private javax.swing.JRadioButton rbtnMartes;
+    private javax.swing.JRadioButton rbtnMiercoles;
+    private javax.swing.JRadioButton rbtnViernes;
     // End of variables declaration//GEN-END:variables
 }

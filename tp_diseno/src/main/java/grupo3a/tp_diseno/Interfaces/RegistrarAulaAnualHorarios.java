@@ -1,20 +1,229 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package grupo3a.tp_diseno.Interfaces;
+
+import java.time.LocalTime;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author imsac
  */
-public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
+public class RegistrarAulaAnualHorarios extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarBede
-     */
+    public interface Listener {
+
+        void back();
+
+        void next();
+    }
+
+    private static final String[] HORARIOS = {
+        "8:00",
+        "8:30",
+        "9:00",
+        "9:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "16:30",
+        "17:00",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",};
+
+    private static final String[] DURACIONES = {
+        "00:30",
+        "01:00",
+        "01:30",
+        "02:00",
+        "02:30",
+        "03:00",
+        "03:30",
+        "04:00",
+        "04:30",
+        "05:00",
+        "05:30",
+        "06:00",
+        "06:30",
+        "07:00",
+        "07:30",
+        "08:00",
+        "08:30",
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "14:00"
+    };
+
+    private Listener listener;
+    private LocalTime[] horariosSeleccionados = new LocalTime[] {
+        null, null, null, null, null
+    };
+    private LocalTime[] duracionesSeleccionadas = new LocalTime[] {
+        null, null, null, null, null
+    };
+
     public RegistrarAulaAnualHorarios() {
         initComponents();
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public void setDiasHabilitados(boolean[] dias) {
+        cbLunesHorario.setEnabled(dias[0]);
+        cbMartesHorario.setEnabled(dias[1]);
+        cbMiercolesHorario.setEnabled(dias[2]);
+        cbJuevesHorario.setEnabled(dias[3]);
+        cbViernesHorario.setEnabled(dias[4]);
+        
+        cbLunesDuracion.setEnabled(false);
+        cbMartesDuracion.setEnabled(false);
+        cbMiercolesDuracion.setEnabled(false);
+        cbJuevesDuracion.setEnabled(false);
+        cbViernesDuracion.setEnabled(false);
+
+        String s;
+        String[] duraciones;
+
+        if (dias[0]) {
+            cbLunesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
+            cbLunesHorario.setSelectedIndex(0);
+            horariosSeleccionados[0] = getTime((String) cbLunesHorario.getSelectedItem());
+            
+            s = (String) cbLunesHorario.getSelectedItem();
+            duraciones = calcularDuraciones(s);
+            cbLunesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+            cbLunesDuracion.setEnabled(true);
+            duracionesSeleccionadas[0] = getTime((String) cbLunesDuracion.getSelectedItem());
+        }
+        else {
+            cbLunesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+            cbLunesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+        }
+        
+        if (dias[1]) {
+            cbMartesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
+            cbMartesHorario.setSelectedIndex(0);
+            horariosSeleccionados[1] = getTime((String) cbMartesHorario.getSelectedItem());
+            
+            s = (String) cbMartesHorario.getSelectedItem();
+            duraciones = calcularDuraciones(s);
+            cbMartesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+            cbMartesDuracion.setEnabled(true);
+            duracionesSeleccionadas[1] = getTime((String) cbMartesDuracion.getSelectedItem());
+        }
+        else {
+            cbMartesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+            cbMartesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+        }
+        
+        if (dias[2]) {
+            cbMiercolesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
+            cbMiercolesHorario.setSelectedIndex(0);
+            horariosSeleccionados[2] = getTime((String) cbMiercolesHorario.getSelectedItem());
+            
+            s = (String) cbMiercolesHorario.getSelectedItem();
+            duraciones = calcularDuraciones(s);
+            cbMiercolesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+            cbMiercolesDuracion.setEnabled(true);
+            duracionesSeleccionadas[2] = getTime((String) cbMiercolesDuracion.getSelectedItem());
+        }
+        else {
+            cbMiercolesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+            cbMiercolesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+        }
+        
+        if (dias[3]) {
+            cbJuevesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
+            cbJuevesHorario.setSelectedIndex(0);
+            horariosSeleccionados[3] = getTime((String) cbJuevesHorario.getSelectedItem());
+            
+            s = (String) cbJuevesHorario.getSelectedItem();
+            duraciones = calcularDuraciones(s);
+            cbJuevesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+            cbJuevesDuracion.setEnabled(true);
+            duracionesSeleccionadas[3] = getTime((String) cbJuevesDuracion.getSelectedItem());
+        }
+        else {
+            cbJuevesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+            cbJuevesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+        }
+        
+        if (dias[4]) {
+            cbViernesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
+            cbViernesHorario.setSelectedIndex(0);
+            horariosSeleccionados[4] = getTime((String) cbViernesHorario.getSelectedItem());
+            
+            s = (String) cbViernesHorario.getSelectedItem();
+            duraciones = calcularDuraciones(s);
+            cbViernesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+            cbViernesDuracion.setEnabled(true);
+            duracionesSeleccionadas[4] = getTime((String) cbViernesDuracion.getSelectedItem());
+        }
+        else {
+            cbViernesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+            cbViernesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
+        }
+        
+
+    }
+
+    public LocalTime[] getHorariosSeleccionados() {
+        return horariosSeleccionados;
+    }
+    
+    public LocalTime[] getDuracionesSeleccionadas() {
+        return duracionesSeleccionadas;
+    }
+
+    private String[] calcularDuraciones(String s) {
+        // buscar string en HORARIOS
+
+        int idx = 0;
+        while (idx < HORARIOS.length && !s.equals(HORARIOS[idx])) {
+            idx++;
+        }
+
+        int limit = DURACIONES.length - idx;
+
+        String[] duraciones = new String[limit];
+        for (int i = 0; i < limit; i++) {
+            duraciones[i] = DURACIONES[i];
+        }
+        return duraciones;
+    }
+    
+    private LocalTime getTime(String s) {
+        String[] parts = s.split(":");
+        return LocalTime.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 
     /**
@@ -23,7 +232,8 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -42,26 +252,25 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox11 = new javax.swing.JComboBox<>();
-        jComboBox12 = new javax.swing.JComboBox<>();
-        jComboBox13 = new javax.swing.JComboBox<>();
-        jComboBox14 = new javax.swing.JComboBox<>();
-        jComboBox15 = new javax.swing.JComboBox<>();
+        cbLunesHorario = new javax.swing.JComboBox<>();
+        cbMartesHorario = new javax.swing.JComboBox<>();
+        cbMiercolesHorario = new javax.swing.JComboBox<>();
+        cbJuevesHorario = new javax.swing.JComboBox<>();
+        cbViernesHorario = new javax.swing.JComboBox<>();
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jComboBox8 = new javax.swing.JComboBox<>();
-        jComboBox9 = new javax.swing.JComboBox<>();
-        jComboBox10 = new javax.swing.JComboBox<>();
+        cbLunesDuracion = new javax.swing.JComboBox<>();
+        cbMartesDuracion = new javax.swing.JComboBox<>();
+        cbMiercolesDuracion = new javax.swing.JComboBox<>();
+        cbJuevesDuracion = new javax.swing.JComboBox<>();
+        cbViernesDuracion = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setBackground(new java.awt.Color(19, 66, 125));
         jPanel1.setForeground(new java.awt.Color(19, 66, 126));
@@ -69,11 +278,12 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setFont(new java.awt.Font("Montserrat Thin Light", 1, 40)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Registro de reserva");
         jPanel1.add(jLabel7, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel1);
+        add(jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(26, 26, 26));
         jPanel2.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -86,6 +296,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(26, 26, 26));
         jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("seleccione los horarios de la reserva");
 
@@ -98,10 +309,11 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(26, 26, 26));
         jPanel6.setPreferredSize(new java.awt.Dimension(467, 30));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel2.setBackground(new java.awt.Color(28, 28, 28));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setToolTipText("");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -112,6 +324,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(28, 28, 28));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Lunes");
         jLabel3.setToolTipText("");
@@ -123,6 +336,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(28, 28, 28));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Martes");
         jLabel5.setToolTipText("");
@@ -134,6 +348,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(28, 28, 28));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Miercoles");
         jLabel4.setToolTipText("");
@@ -145,6 +360,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel6.setBackground(new java.awt.Color(28, 28, 28));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Jueves");
         jLabel6.setToolTipText("");
@@ -156,6 +372,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
 
         jLabel8.setBackground(new java.awt.Color(28, 28, 28));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Viernes");
         jLabel8.setToolTipText("");
@@ -171,30 +388,84 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         jPanel16.setLayout(new java.awt.GridLayout(1, 1, 20, 0));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("<html>Horarios de <br>inicio</html>");
         jPanel16.add(jLabel10);
 
-        jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese...", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30" }));
-        jPanel16.add(jComboBox11);
+        cbLunesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbLunesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbLunesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbLunesHorario.setBorder(null);
+        cbLunesHorario.setDoubleBuffered(true);
+        cbLunesHorario.setEnabled(false);
+        cbLunesHorario.setFocusable(false);
+        cbLunesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLunesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel16.add(cbLunesHorario);
 
-        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese...", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30" }));
-        jPanel16.add(jComboBox12);
+        cbMartesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbMartesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbMartesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMartesHorario.setDoubleBuffered(true);
+        cbMartesHorario.setEnabled(false);
+        cbMartesHorario.setFocusable(false);
+        cbMartesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMartesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel16.add(cbMartesHorario);
 
-        jComboBox13.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese...", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30" }));
-        jPanel16.add(jComboBox13);
+        cbMiercolesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbMiercolesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbMiercolesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMiercolesHorario.setDoubleBuffered(true);
+        cbMiercolesHorario.setEnabled(false);
+        cbMiercolesHorario.setFocusable(false);
+        cbMiercolesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMiercolesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel16.add(cbMiercolesHorario);
 
-        jComboBox14.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese...", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30" }));
-        jPanel16.add(jComboBox14);
+        cbJuevesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbJuevesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbJuevesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbJuevesHorario.setDoubleBuffered(true);
+        cbJuevesHorario.setEnabled(false);
+        cbJuevesHorario.setFocusable(false);
+        cbJuevesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbJuevesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel16.add(cbJuevesHorario);
 
-        jComboBox15.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese...", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30" }));
-        jPanel16.add(jComboBox15);
+        cbViernesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbViernesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbViernesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbViernesHorario.setDoubleBuffered(true);
+        cbViernesHorario.setEnabled(false);
+        cbViernesHorario.setFocusable(false);
+        cbViernesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbViernesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel16.add(cbViernesHorario);
 
         jPanel3.add(jPanel16);
 
         jPanel15.setBackground(new java.awt.Color(26, 26, 26));
+        jPanel15.setForeground(new java.awt.Color(255, 255, 255));
         jPanel15.setLayout(new java.awt.GridLayout(1, 1, 20, 0));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setText("Duracion");
         jLabel9.setToolTipText("");
@@ -202,64 +473,111 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         jLabel9.setPreferredSize(new java.awt.Dimension(50, 30));
         jPanel15.add(jLabel9);
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        jPanel15.add(jComboBox6);
+        cbLunesDuracion.setBackground(new java.awt.Color(40, 40, 40));
+        cbLunesDuracion.setForeground(new java.awt.Color(255, 255, 255));
+        cbLunesDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbLunesDuracion.setEnabled(false);
+        cbLunesDuracion.setFocusable(false);
+        cbLunesDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLunesDuracionActionPerformed(evt);
+            }
+        });
+        jPanel15.add(cbLunesDuracion);
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        jPanel15.add(jComboBox7);
+        cbMartesDuracion.setBackground(new java.awt.Color(40, 40, 40));
+        cbMartesDuracion.setForeground(new java.awt.Color(255, 255, 255));
+        cbMartesDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMartesDuracion.setEnabled(false);
+        cbMartesDuracion.setFocusable(false);
+        cbMartesDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMartesDuracionActionPerformed(evt);
+            }
+        });
+        jPanel15.add(cbMartesDuracion);
 
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        jPanel15.add(jComboBox8);
+        cbMiercolesDuracion.setBackground(new java.awt.Color(40, 40, 40));
+        cbMiercolesDuracion.setForeground(new java.awt.Color(255, 255, 255));
+        cbMiercolesDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMiercolesDuracion.setEnabled(false);
+        cbMiercolesDuracion.setFocusable(false);
+        cbMiercolesDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMiercolesDuracionActionPerformed(evt);
+            }
+        });
+        jPanel15.add(cbMiercolesDuracion);
 
-        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        jPanel15.add(jComboBox9);
+        cbJuevesDuracion.setBackground(new java.awt.Color(40, 40, 40));
+        cbJuevesDuracion.setForeground(new java.awt.Color(255, 255, 255));
+        cbJuevesDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbJuevesDuracion.setEnabled(false);
+        cbJuevesDuracion.setFocusable(false);
+        cbJuevesDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbJuevesDuracionActionPerformed(evt);
+            }
+        });
+        jPanel15.add(cbJuevesDuracion);
 
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        jPanel15.add(jComboBox10);
+        cbViernesDuracion.setBackground(new java.awt.Color(40, 40, 40));
+        cbViernesDuracion.setForeground(new java.awt.Color(255, 255, 255));
+        cbViernesDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbViernesDuracion.setEnabled(false);
+        cbViernesDuracion.setFocusable(false);
+        cbViernesDuracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbViernesDuracionActionPerformed(evt);
+            }
+        });
+        jPanel15.add(cbViernesDuracion);
 
         jPanel3.add(jPanel15);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 650,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)));
         jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                Short.MAX_VALUE));
         jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
         jPanel7.setBackground(new java.awt.Color(28, 28, 28));
-        jPanel7.setPreferredSize(new java.awt.Dimension(0, 80));
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel9.setBackground(new java.awt.Color(26, 26, 26));
         jPanel9.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnCancelar.setBackground(new java.awt.Color(17, 17, 17));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Regresar");
         btnCancelar.setPreferredSize(new java.awt.Dimension(110, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -271,23 +589,25 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(130, 130, 130)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(110, Short.MAX_VALUE)))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 447, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addGap(130, 130, 130)
+                                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))));
         jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)))
-        );
+                jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 200, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel9Layout.createSequentialGroup()
+                                        .addContainerGap(140, Short.MAX_VALUE)
+                                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(20, 20, 20))));
 
         jPanel7.add(jPanel9);
 
@@ -295,6 +615,7 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnRegistrar.setBackground(new java.awt.Color(17, 17, 17));
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Siguiente");
         btnRegistrar.setBorder(new BordesRedondeados(20));
         btnRegistrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -308,55 +629,114 @@ public class RegistrarAulaAnualHorarios extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(110, Short.MAX_VALUE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(130, 130, 130)))
-        );
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 447, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(130, 130, 130))));
         jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)))
-        );
+                jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 200, Short.MAX_VALUE)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addContainerGap(140, Short.MAX_VALUE)
+                                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(20, 20, 20))));
 
         jPanel7.add(jPanel8);
 
         jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel2);
-
-        pack();
+        add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCancelarActionPerformed
+        if (listener != null) {
+            listener.back();
+        }
+    }// GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRegistrarActionPerformed
 
+        if (listener != null)
+            listener.next();
+        
+    }// GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void cbLunesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbLunesHorarioActionPerformed
+        String s = (String) cbLunesHorario.getSelectedItem();
+        String[] duraciones = calcularDuraciones(s);
+        cbLunesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+        horariosSeleccionados[0] = getTime((String) cbLunesHorario.getSelectedItem());
+    }// GEN-LAST:event_cbLunesHorarioActionPerformed
+
+    private void cbMartesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbMartesHorarioActionPerformed
+        String s = (String) cbMartesHorario.getSelectedItem();
+        String[] duraciones = calcularDuraciones(s);
+        cbMartesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+        horariosSeleccionados[1] = getTime((String) cbMartesHorario.getSelectedItem());
+    }// GEN-LAST:event_cbMartesHorarioActionPerformed
+
+    private void cbMiercolesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbMiercolesHorarioActionPerformed
+        String s = (String) cbMiercolesHorario.getSelectedItem();
+        String[] duraciones = calcularDuraciones(s);
+        cbMiercolesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+        horariosSeleccionados[2] = getTime((String) cbMiercolesHorario.getSelectedItem());
+    }// GEN-LAST:event_cbMiercolesHorarioActionPerformed
+
+    private void cbJuevesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbJuevesHorarioActionPerformed
+        String s = (String) cbJuevesHorario.getSelectedItem();
+        String[] duraciones = calcularDuraciones(s);
+        cbJuevesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+        horariosSeleccionados[3] = getTime((String) cbJuevesHorario.getSelectedItem());
+    }// GEN-LAST:event_cbJuevesHorarioActionPerformed
+
+    private void cbViernesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbViernesHorarioActionPerformed
+        String s = (String) cbViernesHorario.getSelectedItem();
+        String[] duraciones = calcularDuraciones(s);
+        cbViernesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
+        horariosSeleccionados[4] = getTime((String) cbViernesHorario.getSelectedItem());
+    }// GEN-LAST:event_cbViernesHorarioActionPerformed
+
+    private void cbLunesDuracionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbLunesDuracionActionPerformed
+        duracionesSeleccionadas[0] = getTime((String) cbLunesDuracion.getSelectedItem());
+    }// GEN-LAST:event_cbLunesDuracionActionPerformed
+
+    private void cbMartesDuracionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbMartesDuracionActionPerformed
+        duracionesSeleccionadas[1] = getTime((String) cbMartesDuracion.getSelectedItem());
+    }// GEN-LAST:event_cbMartesDuracionActionPerformed
+
+    private void cbMiercolesDuracionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbMiercolesDuracionActionPerformed
+        duracionesSeleccionadas[2] = getTime((String) cbMiercolesDuracion.getSelectedItem());
+    }// GEN-LAST:event_cbMiercolesDuracionActionPerformed
+
+    private void cbJuevesDuracionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbJuevesDuracionActionPerformed
+        duracionesSeleccionadas[3] = getTime((String) cbJuevesDuracion.getSelectedItem());
+    }// GEN-LAST:event_cbJuevesDuracionActionPerformed
+
+    private void cbViernesDuracionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbViernesDuracionActionPerformed
+        duracionesSeleccionadas[4] = getTime((String) cbViernesDuracion.getSelectedItem());
+    }// GEN-LAST:event_cbViernesDuracionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> jComboBox10;
-    private javax.swing.JComboBox<String> jComboBox11;
-    private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JComboBox<String> jComboBox13;
-    private javax.swing.JComboBox<String> jComboBox14;
-    private javax.swing.JComboBox<String> jComboBox15;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JComboBox<String> jComboBox9;
+    private javax.swing.JComboBox<String> cbJuevesDuracion;
+    private javax.swing.JComboBox<String> cbJuevesHorario;
+    private javax.swing.JComboBox<String> cbLunesDuracion;
+    private javax.swing.JComboBox<String> cbLunesHorario;
+    private javax.swing.JComboBox<String> cbMartesDuracion;
+    private javax.swing.JComboBox<String> cbMartesHorario;
+    private javax.swing.JComboBox<String> cbMiercolesDuracion;
+    private javax.swing.JComboBox<String> cbMiercolesHorario;
+    private javax.swing.JComboBox<String> cbViernesDuracion;
+    private javax.swing.JComboBox<String> cbViernesHorario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

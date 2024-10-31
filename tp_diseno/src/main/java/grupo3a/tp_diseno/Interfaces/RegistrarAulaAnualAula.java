@@ -1,22 +1,50 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package grupo3a.tp_diseno.Interfaces;
+
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author imsac
  */
-public class RegistrarAulaAnualAula extends javax.swing.JFrame {
+public class RegistrarAulaAnualAula extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarBede
-     */
+
+    public interface Listener {
+        void back();
+        void next();
+    }
+    
+    private Listener listener;
+    private String[][] elements;
+    private int selectedElement;
+    
     public RegistrarAulaAnualAula() {
         initComponents();
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+    
+    public void setTable(String[][] elements) {
+        this.elements = elements;
+        String[] columnNames = {"Ubicacion", "Capacidad", "Caracteristicas"};
+        jTable1.setModel(new DefaultTableModel(elements, columnNames));
+    }
+    
+    public int getSelectedElementIndex(){
+        return selectedElement;
+    }
+    
+    public String[] getSelectedElement(){
+        if(elements != null && selectedElement > -1)
+            return elements[selectedElement];
+        return null;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,8 +54,6 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -43,21 +69,7 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable2);
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.Y_AXIS));
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setBackground(new java.awt.Color(19, 66, 125));
         jPanel1.setForeground(new java.awt.Color(19, 66, 126));
@@ -65,11 +77,12 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setFont(new java.awt.Font("Montserrat Thin Light", 1, 40)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Registro de reserva");
         jPanel1.add(jLabel7, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel1);
+        add(jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(26, 26, 26));
         jPanel2.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -82,6 +95,7 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(26, 26, 26));
         jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione su aula a reservar");
 
@@ -92,6 +106,7 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(350, 155));
         jPanel3.setLayout(new java.awt.GridLayout(0, 1, 0, 20));
 
+        jTable1.setForeground(new java.awt.Color(102, 102, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Aula multimedios 3", "50", "12 computadoras"},
@@ -133,7 +148,7 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -149,20 +164,20 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel7.setBackground(new java.awt.Color(28, 28, 28));
-        jPanel7.setPreferredSize(new java.awt.Dimension(0, 80));
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel9.setBackground(new java.awt.Color(26, 26, 26));
         jPanel9.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnCancelar.setBackground(new java.awt.Color(17, 17, 17));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Regresar");
         btnCancelar.setPreferredSize(new java.awt.Dimension(110, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -180,14 +195,14 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(130, 130, 130)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(110, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGap(0, 80, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
+                    .addContainerGap(20, Short.MAX_VALUE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(20, 20, 20)))
         );
@@ -198,6 +213,7 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
         jPanel8.setPreferredSize(new java.awt.Dimension(0, 80));
 
         btnRegistrar.setBackground(new java.awt.Color(17, 17, 17));
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Siguiente");
         btnRegistrar.setBorder(new BordesRedondeados(20));
         btnRegistrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -215,36 +231,40 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
             .addGap(0, 350, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(110, Short.MAX_VALUE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(130, 130, 130)))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGap(0, 80, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(140, Short.MAX_VALUE)
+                    .addContainerGap(20, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(20, 20, 20)))
         );
 
         jPanel7.add(jPanel8);
 
-        jPanel2.add(jPanel7, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanel7, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(jPanel2);
-
-        pack();
+        add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.back();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        
+        if(jTable1.getSelectedRow() > -1 && listener != null){
+            selectedElement = jTable1.getSelectedRow();
+            listener.next();
+        }
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -261,8 +281,6 @@ public class RegistrarAulaAnualAula extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
