@@ -71,7 +71,7 @@ public class Tp_diseno {
 //        registrarAulaAnualHorarios.setDiasHabilitados(b);
 //        cardLayout.show(mainPanel, "registrarAulaAnualHorarios");
 
-        cardLayout.show(mainPanel, "registrarAulaAnualAula");
+        cardLayout.show(mainPanel, "registrarAula");
         
         String[][] elem = new String[][]{
                 {"Aula Multimedios 3", "50 alumnos", "12 Computadoras"},
@@ -91,6 +91,8 @@ public class Tp_diseno {
         
         
         registrarAula.setListener(() -> {
+            System.err.println("tipo de reserva: " + registrarAula.getSelected());
+
             if(registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.ESPORADICA) {
                 cardLayout.show(mainPanel, "registrarAulaEsporadicaDias");
             }
