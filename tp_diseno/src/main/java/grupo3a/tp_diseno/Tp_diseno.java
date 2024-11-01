@@ -16,14 +16,18 @@ import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.AulaMultimedios;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**
@@ -57,6 +61,8 @@ public class Tp_diseno {
         return str;
     }
 
+    
+    
     public static void main(String[] args) {
 
         RegistrarAula registrarAula = new RegistrarAula();
@@ -65,6 +71,7 @@ public class Tp_diseno {
         RegistrarAulaAnualHorarios registrarAulaAnualHorarios = new RegistrarAulaAnualHorarios();
         RegistrarAulaEsporadicaDias registrarAulaEsporadicaDias = new RegistrarAulaEsporadicaDias();
         RegistrarAulaInformacion registrarAulaInformacion = new RegistrarAulaInformacion();
+        Alerta alerta = new Alerta();
 
         CardLayout cardLayout = new CardLayout();
         JPanel mainPanel = new JPanel(cardLayout);
@@ -74,35 +81,22 @@ public class Tp_diseno {
         mainPanel.add(registrarAulaAnualHorarios, "registrarAulaAnualHorarios");
         mainPanel.add(registrarAulaEsporadicaDias, "registrarAulaEsporadicaDias");
         mainPanel.add(registrarAulaInformacion, "registrarAulaInformacion");
+        mainPanel.add(alerta, "alerta");
 
+        
+        // frame principal
         JFrame mainFrame = new JFrame();
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(800, 600);
+        
         mainFrame.add(mainPanel);
         mainFrame.setVisible(true);
+        
+        
 
-//        boolean[] b = new boolean[]{true, false, false, true, true};
-//        registrarAulaAnualHorarios.setDiasHabilitados(b);
-//        cardLayout.show(mainPanel, "registrarAulaAnualHorarios");
         cardLayout.show(mainPanel, "registrarAula");
-
-//        String[][] elem = new String[][]{
-//                {"Aula Multimedios 3", "50 alumnos", "12 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 2", "10 alumnos", "16 Computadoras"},
-//                {"Aula Multimedios 1", "30 alumnos", "10 Computadoras"}
-//        };
-//        registrarAulaAnualAula.setTable(elem);
         GestorReserva gestorReserva = new GestorReserva();
 
-//        cardLayout.show(mainPanel, "registrarAula");
         registrarAula.setListener(() -> {
             if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.ANUAL) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
@@ -276,11 +270,13 @@ public class Tp_diseno {
                 System.err.println("reservado");
                 
                 // TODO follow
+                cardLayout.show(mainPanel, "registrarAulaAnualDias");
                 
                 
             }
         });
 
+        /*
         // _-----------------------------------------------------------
 //        final GestorReserva gestorReserva = new GestorReserva();
         TipoReservaPeriodica tipor = TipoReservaPeriodica.ANUAL;
@@ -305,7 +301,7 @@ public class Tp_diseno {
 
         AulaDTO aula = new AulaDTO(1);
 
-        gestorReserva.aulaSeleccionada(reservaDTO, detalles, aula);
+        gestorReserva.aulaSeleccionada(reservaDTO, detalles, aula);*/
 
     }
 }

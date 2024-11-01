@@ -142,7 +142,7 @@ public class GestorReserva {
                 true, // aireAcondicionado
                 true // habilitado
         );
-        a1.setIdAula(0);
+        a1.setIdAula(1);
 
         AulaLaboratorio a2 = new AulaLaboratorio(TipoAula.LABORATORIO,
                 "14",
@@ -152,7 +152,7 @@ public class GestorReserva {
                 true,
                 true,
                 10);
-        a1.setIdAula(1);
+        a1.setIdAula(2);
 
         AulaMultimedios a3 = new AulaMultimedios(TipoAula.MULTIMEDIOS,
                 "15",
@@ -185,7 +185,7 @@ public class GestorReserva {
         Reserva reserva;
         int reservaIdDocente = 0;
         int reservaIdCatedra = 0;
-        int reservaIdBedel = 0;
+        int reservaIdBedel = 1;
         LocalDateTime reservaFechaRegistro = LocalDateTime.now();
 
         if (reservaTipoReserva == RESERVA_ANUAL ||
@@ -203,7 +203,8 @@ public class GestorReserva {
 
             re.setIdReserva(reservaDAO.crear(re));
             reserva = re;
-        } else {
+        } 
+        else {
             ReservaPeriodica rp = new ReservaPeriodica(
                     reservaNombreDocente,
                     reservaIdDocente,
@@ -222,7 +223,8 @@ public class GestorReserva {
         for (int i = 0; i < reservaDetalleReservas.size(); i++) {
             DetalleReserva re = reservaDetalleReservas.get(i);
             re.setIdReserva(reserva.getIdReserva());
-            re.setFecha(LocalDate.of(2024, 04, 07));
+            re.setFecha(LocalDate.of(2024, 04, LocalDateTime.now().getDayOfMonth()));
+            
             re.setIdAula(reservaAulaSeleccionada.getIdAula());
 
             detalleReservaDAO.crear(re); // FIXME: por que aca no devuelve id??
@@ -230,7 +232,7 @@ public class GestorReserva {
 
         // FIXME: cuatrimestre o detalle reserva se tendria que manejar de otra forma
         // fecha en reserva esta al pedo, si es anual, se pueden calcular las fechas
-        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 0, 1);
+        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1, 2);
 
     }
 
