@@ -9,5 +9,5 @@ package grupo3a.tp_diseno.Enumerations;
  * @author gabic
  */
 public enum TipoPizarron {
-    
+    TIZA, FIBRON
 }

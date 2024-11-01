@@ -1,19 +1,20 @@
 
 package grupo3a.tp_diseno.Modelos;
 
+import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import java.sql.Time;
 import java.time.LocalDate;
 
 public class DetalleReserva {
     private int idReserva;
     private Time horarioInicio;
-    private int cantModulos;
+    private int cantModulos;    // 30 min
     private LocalDate fecha;
-    private String diaReserva;
+    private DiaSemana diaReserva;
     private int idAula;
     
     public DetalleReserva(){}
-    public DetalleReserva(int idReserva, Time horarioInicio,int cantModulos,LocalDate fecha,String diaReserva, int idAula){
+    public DetalleReserva(int idReserva, Time horarioInicio,int cantModulos,LocalDate fecha,DiaSemana diaReserva, int idAula){
         this.idReserva = idReserva;
         this.horarioInicio=horarioInicio;
         this.cantModulos=cantModulos;
@@ -65,11 +66,11 @@ public class DetalleReserva {
         this.fecha = fecha;
     }
 
-    public String getDiaReserva() {
+    public DiaSemana getDiaReserva() {
         return diaReserva;
     }
 
-    public void setDiaReserva(String diaReserva) {
+    public void setDiaReserva(DiaSemana diaReserva) {
         this.diaReserva = diaReserva;
     }
     

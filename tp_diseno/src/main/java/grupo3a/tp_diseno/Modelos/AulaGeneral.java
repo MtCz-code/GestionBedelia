@@ -9,7 +9,7 @@ public class AulaGeneral {
     private int idAula;
     private TipoAula tipo; // Enum: GENERAL, MULTIMEDIOS, LABORATORIO
     private String ubicacion;
-    private boolean estado;
+    private boolean estado;     // ??
     private int capacidad;
     private int piso;
     private TipoPizarron tipoDePizarron; // Enum: TIZA, FIBRÓN
@@ -17,8 +17,8 @@ public class AulaGeneral {
     private boolean aireAcondicionado;
     private boolean habilitado;
 
-    AulaGeneral(){}
-        AulaGeneral(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
+    public AulaGeneral(){}
+        public AulaGeneral(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
                     TipoPizarron tipoDePizarron, boolean ventiladores, boolean aireAcondicionado,boolean habilitado){
         this.tipo=tipo;
         this.ubicacion=ubicacion;

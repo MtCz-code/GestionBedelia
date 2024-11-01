@@ -9,8 +9,8 @@ public class AulaMultimedios extends AulaGeneral{
     private boolean canon;
     private boolean computadora;
 
-    AulaMultimedios(){}
-        AulaMultimedios(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
+    public AulaMultimedios(){}
+    public AulaMultimedios(TipoAula tipo,String ubicacion,boolean estado,int capacidad,int piso,
                     TipoPizarron tipoDePizarron, boolean ventiladores,
                     boolean aireAcondicionado,boolean habilitado,boolean televisor,boolean canon,boolean computadora){
         super(tipo,ubicacion,estado,capacidad,piso,tipoDePizarron,ventiladores,aireAcondicionado,habilitado);

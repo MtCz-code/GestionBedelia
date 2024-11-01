@@ -36,7 +36,7 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             LocalDate fecha = detalleReserva.getFecha();
             stmt.setDate(3, Date.valueOf(fecha));
             stmt.setInt(4, detalleReserva.getCantModulos());
-            stmt.setString(5, detalleReserva.getDiaReserva());
+            stmt.setString(5, detalleReserva.getDiaReserva().toString());
             stmt.setInt(6, detalleReserva.getIdAula());
             stmt.executeUpdate();
             
