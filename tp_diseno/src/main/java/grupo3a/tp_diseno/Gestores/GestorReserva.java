@@ -52,6 +52,7 @@ public class GestorReserva {
         return null;
     }
 
+    /*
     public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO,
             AulaDTO aulaDTO) {
         // Obtener el aula seleccionada y asociarla a la reserva
@@ -96,7 +97,7 @@ public class GestorReserva {
         reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(),
                 reservaDTO.getIdCuatrimestre2());
 
-    }
+    }*/
 
     // --------------------------------------------------------------------------------------------------------------------
 
@@ -152,7 +153,7 @@ public class GestorReserva {
                 true,
                 true,
                 10);
-        a1.setIdAula(2);
+        a2.setIdAula(2);
 
         AulaMultimedios a3 = new AulaMultimedios(TipoAula.MULTIMEDIOS,
                 "15",
@@ -165,7 +166,7 @@ public class GestorReserva {
                 true,
                 true,
                 true);
-        a1.setIdAula(2);
+        a3.setIdAula(2);
 
         reservaAulasDisponibles = new AulaGeneral[] {
                 a1,
@@ -186,25 +187,13 @@ public class GestorReserva {
         int reservaIdDocente = 0;
         int reservaIdCatedra = 0;
         int reservaIdBedel = 1;
+        int reservaIdAula = 1;
+        
         LocalDateTime reservaFechaRegistro = LocalDateTime.now();
 
         if (reservaTipoReserva == RESERVA_ANUAL ||
                 reservaTipoReserva == RESERVA_PRIMER_CUATRIMESTRE ||
                 reservaTipoReserva == RESERVA_SEGUNDO_CUATRIMESTRE) {
-            ReservaEsporadica re = new ReservaEsporadica(
-                    reservaNombreDocente,
-                    reservaIdDocente,
-                    reservaApellidoDocente,
-                    reservaCorreo,
-                    reservaIdCatedra,
-                    reservaNombreCatedra,
-                    reservaIdBedel,
-                    reservaFechaRegistro);
-
-            re.setIdReserva(reservaDAO.crear(re));
-            reserva = re;
-        } 
-        else {
             ReservaPeriodica rp = new ReservaPeriodica(
                     reservaNombreDocente,
                     reservaIdDocente,
@@ -218,21 +207,49 @@ public class GestorReserva {
                     reservaDiasSeleccionadosSemana);
             rp.setIdReserva(reservaDAO.crear(rp));
             reserva = rp;
-        }
+            // FIXME: cuatrimestre o detalle reserva se tendria que manejar de otra forma
+            // fecha en reserva esta al pedo, si es anual, se pueden calcular las fechas
+            if (reservaTipoReserva == RESERVA_ANUAL) {
+                // asignar primer cuatrimestre
+                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1, 2);
+            }
+            else if (reservaTipoReserva == RESERVA_PRIMER_CUATRIMESTRE) {
+                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1);
+            }
+            else {
+                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 2);
+            }
+            
+        } 
+        else {
+            ReservaEsporadica re = new ReservaEsporadica(
+                    reservaNombreDocente,
+                    reservaIdDocente,
+                    reservaApellidoDocente,
+                    reservaCorreo,
+                    reservaIdCatedra,
+                    reservaNombreCatedra,
+                    reservaIdBedel,
+                    reservaFechaRegistro);
 
+            re.setIdReserva(reservaDAO.crear(re));
+            reserva = re;
+            
+        }
+        
+        // FIXME: aca se tendria que generar una para cada dia del cuatrimestre??
         for (int i = 0; i < reservaDetalleReservas.size(); i++) {
             DetalleReserva re = reservaDetalleReservas.get(i);
             re.setIdReserva(reserva.getIdReserva());
-            re.setFecha(LocalDate.of(2024, 04, LocalDateTime.now().getDayOfMonth()));
+            LocalDate d = LocalDate.of(2024, 04, 01 + i);
+            re.setFecha(d);
             
             re.setIdAula(reservaAulaSeleccionada.getIdAula());
 
             detalleReservaDAO.crear(re); // FIXME: por que aca no devuelve id??
         }
 
-        // FIXME: cuatrimestre o detalle reserva se tendria que manejar de otra forma
-        // fecha en reserva esta al pedo, si es anual, se pueden calcular las fechas
-        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1, 2);
+        
 
     }
 

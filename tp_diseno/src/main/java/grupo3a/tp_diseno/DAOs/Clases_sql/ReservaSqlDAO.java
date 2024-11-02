@@ -166,5 +166,20 @@ public class ReservaSqlDAO implements ReservaDAO{
         
     }
     
+    @Override
+    public void asociarCuatrimestre(int idReserva, int idCuatrimestre) {
+        String queryCuat = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
+        try(Connection conn = DataBaseConnection.getConnection();
+                PreparedStatement stmtCuat = conn.prepareStatement(queryCuat)){
+            stmtCuat.setInt(1, idCuatrimestre);
+            stmtCuat.setInt(2, idReserva);
+            stmtCuat.executeUpdate();
+            System.out.println("Periodo asignado con exito.");
+        }catch(SQLException e){
+            System.out.println("Error al asignar el periodo a la reserva." + e.getMessage());
+
+        }
+    }
+    
     
 }
