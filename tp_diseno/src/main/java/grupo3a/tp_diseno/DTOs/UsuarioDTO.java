@@ -27,12 +27,25 @@ public class UsuarioDTO {
         this.habilitado = habilitado;
     }
     
+    public UsuarioDTO(int idUsuario, String contrasena, String nombre, String apellido) {
+        this.idUsuario = idUsuario;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+    
     public UsuarioDTO(String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
         this.contrasena = contrasena;
         this.nombre = nombre;
         this.apellido = apellido;
         this.turno = turno;
         this.habilitado = habilitado;
+    }
+    
+    public UsuarioDTO(String contrasena, String nombre, String apellido) {
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public int getIdUsuario() {
