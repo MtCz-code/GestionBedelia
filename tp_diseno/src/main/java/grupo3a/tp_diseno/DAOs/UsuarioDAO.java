@@ -13,5 +13,5 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    void agregarUsuario(Usuario usuario);
+    void crear(Usuario usuario);
 }
