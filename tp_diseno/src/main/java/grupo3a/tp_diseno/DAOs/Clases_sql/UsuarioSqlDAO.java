@@ -35,7 +35,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     }
     
     @Override
-    public void crear(Bedel bedel){
+    public Integer crear(Bedel bedel){
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
@@ -59,6 +59,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                         stmtBed.setBoolean(3, bedel.isHabilitado());
                        
                         System.out.println("Bedel ingresado con exito.");
+                        return idBedel;
                     } catch(SQLException e){
                         System.out.println("Error al agregar el bedel: "+ e.getMessage());
                     } 
@@ -72,10 +73,11 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         
         
         
+        return null;
     }
     
     @Override
-    public void crear(Administrador admin){
+    public Integer crear(Administrador admin){
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
@@ -91,12 +93,13 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    int idBedel = generatedKeys.getInt(1);
+                    int idAdmin = generatedKeys.getInt(1);
                     String queryB = "INSERT INTO administrador (id_usuario) VALUES (?)";
                     try(PreparedStatement stmtBed = conn.prepareStatement(queryB)){
-                        stmtBed.setInt(1, idBedel);
+                        stmtBed.setInt(1, idAdmin);
                        
                             System.out.println("Administrador ingresado con exito.");
+                            return idAdmin;
                     } catch(SQLException e){
                         System.out.println("Error al agregar el administrador: "+ e.getMessage());
                     } 
@@ -108,9 +111,12 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             System.out.println("Error al agregar usuario: " + e.getMessage());
         }
         
-        
+        return null;
         
     }
+    
+    
+    
     
 }
 

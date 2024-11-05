@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Usuario;
 
@@ -14,6 +15,6 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    void crear(Bedel bedel);
-    void crear(Administrador admin);
+    Integer crear(Bedel bedel);
+    Integer crear(Administrador admin);
 }
