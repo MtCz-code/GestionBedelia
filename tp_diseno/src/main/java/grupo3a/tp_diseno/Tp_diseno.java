@@ -7,6 +7,7 @@ import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
@@ -15,6 +16,8 @@ import java.awt.CardLayout;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -49,10 +52,7 @@ public class Tp_diseno {
         return str;
     }
 
-    
-    
-    public static void main(String[] args) {
-
+    public static void showReserva() {
         RegistrarAula registrarAula = new RegistrarAula();
         RegistrarAulaAnualDias registrarAulaAnualDias = new RegistrarAulaAnualDias();
         RegistrarAulaAnualAula registrarAulaAnualAula = new RegistrarAulaAnualAula();
@@ -263,6 +263,194 @@ public class Tp_diseno {
                 
             }
         });
+    }
+
+    
+    
+    static RegistrarBedel registrarBedel;
+    static Alerta alerta;
+    static AlertaConfirmacion alertaConfirmacion;
+    static BaseFrame baseFrame;
+    
+    public static boolean contains(String s, char a, char b) {
+        for (int i = a; i <= b; i++) {
+            char e = (char)i;
+            if(s.contains(String.valueOf(e)))
+                return true;
+        }
+        return false;
+    }
+    
+    public static void verificar() {
+
+        String nombre = registrarBedel.getNombre();
+        String apellido = registrarBedel.getApellido();
+        String idBedel = registrarBedel.getIdBedel();
+        TurnoBedel turno = registrarBedel.getTurno();
+        String contraseña = registrarBedel.getContraseña();
+        String rContraseña = registrarBedel.getrContraseña();
+
+
+        System.err.println("nombre: " + nombre);
+        System.err.println("apellido: " + apellido);
+        System.err.println("idBedel: " + idBedel);
+        System.err.println("turno: " + turno.toString());
+        System.err.println("contraseña: " + contraseña);
+        System.err.println("rContraseña: " + rContraseña);
+        
+       
+        // verificar el nombre
+        // borrar espacios al final(si hay)
+        nombre = nombre.trim();
+
+        String regex = "([a-zA-Z])+";
+        Pattern pattern = Pattern.compile(regex);
+        if(!pattern.matcher(nombre).matches()) {
+            alerta.setText("complete un nombre valido");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        
+        // apellido
+        apellido = apellido.trim();
+        if(!pattern.matcher(apellido).matches()) {
+            alerta.setText("complete un apellido valido");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        
+        // idbedel
+        // TODO: poner condiciones de id, verificar que no exista
+        if(idBedel.length() == 0) {
+            alerta.setText("complete un id valido");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        
+        // contraseña
+        if (contraseña.length() == 0) {
+            alerta.setText("introduzca la contraseña");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        // o Longitud mínima de la contraseña
+        int largoMin = 8;
+        if(contraseña.length() < largoMin){
+            
+            alerta.setText("<html>la contraseña debe contener al menos <br>" + largoMin + " caracteres</html>");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        // o Si la contraseña debe contener signos especiales (@#$%&*)
+        if (!(contraseña.contains("@") || contraseña.contains("#") ||
+                contraseña.contains("$") || contraseña.contains("%") ||
+                contraseña.contains("*"))) {
+            alerta.setText("<html>la contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        // o Si la contraseña debe contener al menos una letra mayúscula.
+        if (!contains(contraseña, 'A', 'Z')){
+            alerta.setText("<html>la contraseña debe contener <br> al menos una letra mayúscula</html>");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        // o Si la contraseña debe contener al menos un dígito.
+        if (!contains(contraseña, '0', '9')){
+            alerta.setText("<html>la contraseña debe contener <br>al menos un dígito</html>");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+            return;
+        }
+        // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
+        // TODO:
+        
+        // rcontraseña
+        if (!contraseña.equals(rContraseña)) {
+            alerta.setText("las contraseñas no coinciden");
+            baseFrame.getPanel2().add(alerta);
+            baseFrame.setPanel2Up();
+        }
+        
+        
+        // falta verificar bien id y
+        // si la contraseña puede ser igual a una contraseña anterior del usuario.
+        
+
+        
+    }
+    
+    public static void showBedel() {
+        
+        registrarBedel = new RegistrarBedel();
+        alerta = new Alerta();
+        alertaConfirmacion = new AlertaConfirmacion();
+        
+        
+        CardLayout cardLayout = new CardLayout();
+        JPanel mainPanel = new JPanel(cardLayout);
+        mainPanel.add(registrarBedel, "registrarBedel");
+
+        
+        
+        // frame principal
+        baseFrame = new BaseFrame();
+        
+        baseFrame.getPanel1().add(mainPanel);
+        
+        baseFrame.setVisible(true);
+        
+        cardLayout.show(mainPanel, "registrarAula");
+        
+        registrarBedel.setListener(new RegistrarBedel.Listener() {
+            @Override
+            public void back() {
+                alertaConfirmacion.setText("¿Esta seguro que desea cancelar?");
+                baseFrame.getPanel2().add(alertaConfirmacion);
+                baseFrame.setPanel2Up();
+            }
+
+            @Override
+            public void next() {
+                verificar();
+            }
+            
+        });
+        
+        alerta.setListener(() -> {
+            baseFrame.setPanel1Up();
+            baseFrame.getPanel2().remove(alerta);
+        });
+        
+        alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
+            @Override
+            public void back() {
+                baseFrame.setPanel1Up();
+                baseFrame.getPanel2().remove(alertaConfirmacion);
+            }
+
+            @Override
+            public void next() {
+                // cerrar todo
+            }
+            
+        });
+
+    }
+
+    
+    public static void main(String[] args) {
+        showBedel();
+        
+        
+        
 
         /*
         // _-----------------------------------------------------------

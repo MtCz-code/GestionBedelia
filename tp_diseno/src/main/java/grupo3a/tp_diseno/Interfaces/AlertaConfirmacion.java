@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.Interfaces;
 
+import java.awt.Color;
 import javax.swing.ComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.event.ListDataListener;
@@ -17,26 +18,16 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
     /**
      * Creates new form RegistrarAula
      */
-    public enum TIPO_RESERVA {
-        ANUAL,
-        PRIMER_CUATRIMESTRE,
-        SEGUNDO_CUATRIMESTRE,
-        ESPORADICA
-    }
+    
     
     public interface Listener {
+        public void back();
         public void next();
     }
 
-    private TIPO_RESERVA selectedTipoReserva = null;
-    private final String[] tipoDeReservas = new String[] {
-        "Seleccione una opcion",
-        "Anual",
-        "Primer Cuatrimestre",
-        "Segundo Cuatrimestre",
-        "Esporadica"
-    };
+    
     private Listener listener;
+    private Color backColor = new Color(0,0,0, 55);
     
     
     public AlertaConfirmacion() {
@@ -46,11 +37,11 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
     public void setListener(Listener listener) {
         this.listener = listener;
     }
-
-    public TIPO_RESERVA getSelected() {
-        return selectedTipoReserva;
-    }
     
+    public void setText(String text) {
+        lb.setText(text);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,14 +53,15 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lb = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnYes = new javax.swing.JButton();
+        btnNo = new javax.swing.JButton();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(backColor);
         jPanel2.setPreferredSize(new java.awt.Dimension(815, 500));
 
         jPanel4.setBackground(new java.awt.Color(157, 154, 111));
@@ -77,26 +69,28 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
         jPanel4.setMinimumSize(new java.awt.Dimension(100, 130));
         jPanel4.setPreferredSize(new java.awt.Dimension(37, 150));
 
-        jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("seleccione el tipo de reserva");
+        lb.setFont(new java.awt.Font("Montserrat Thin Light", 1, 18)); // NOI18N
+        lb.setForeground(new java.awt.Color(255, 255, 255));
+        lb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb.setText("seleccione el tipo de reserva");
 
         jPanel1.setBackground(new java.awt.Color(157, 154, 111));
 
-        jButton2.setBackground(new java.awt.Color(17, 17, 17));
-        jButton2.setText("Si");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnYes.setBackground(new java.awt.Color(17, 17, 17));
+        btnYes.setForeground(new java.awt.Color(255, 255, 255));
+        btnYes.setText("Si");
+        btnYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnYesActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(17, 17, 17));
-        jButton1.setText("No");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNo.setBackground(new java.awt.Color(17, 17, 17));
+        btnNo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNo.setText("No");
+        btnNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNoActionPerformed(evt);
             }
         });
 
@@ -106,9 +100,9 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnYes, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,8 +110,8 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnYes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
 
@@ -125,16 +119,14 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(lb, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel1)
+                .addComponent(lb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -159,21 +151,23 @@ public class AlertaConfirmacion extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYesActionPerformed
+        if(listener != null)
+            listener.next();
+    }//GEN-LAST:event_btnYesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoActionPerformed
+        if (listener != null)
+            listener.back();
+    }//GEN-LAST:event_btnNoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnNo;
+    private javax.swing.JButton btnYes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lb;
     // End of variables declaration//GEN-END:variables
 }

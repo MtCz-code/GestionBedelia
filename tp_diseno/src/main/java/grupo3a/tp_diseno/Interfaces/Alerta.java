@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.Interfaces;
 
+import java.awt.Color;
 import javax.swing.ComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.event.ListDataListener;
@@ -14,30 +15,12 @@ import javax.swing.event.ListDataListener;
  */
 public class Alerta extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarAula
-     */
-    public enum TIPO_RESERVA {
-        ANUAL,
-        PRIMER_CUATRIMESTRE,
-        SEGUNDO_CUATRIMESTRE,
-        ESPORADICA
-    }
-    
     public interface Listener {
         public void next();
     }
 
-    private TIPO_RESERVA selectedTipoReserva = null;
-    private final String[] tipoDeReservas = new String[] {
-        "Seleccione una opcion",
-        "Anual",
-        "Primer Cuatrimestre",
-        "Segundo Cuatrimestre",
-        "Esporadica"
-    };
     private Listener listener;
-    
+    private Color backColor = new Color(0,0,0,55);
     
     public Alerta() {
         initComponents();
@@ -47,8 +30,8 @@ public class Alerta extends javax.swing.JPanel {
         this.listener = listener;
     }
 
-    public TIPO_RESERVA getSelected() {
-        return selectedTipoReserva;
+    public void setText(String text) {
+        lb.setText(text);
     }
     
     /**
@@ -62,13 +45,16 @@ public class Alerta extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lb = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
 
+        setBackground(new Color(0,0,0,0));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setBackground(backColor);
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(815, 500));
 
         jPanel4.setBackground(new java.awt.Color(157, 154, 111));
@@ -76,14 +62,15 @@ public class Alerta extends javax.swing.JPanel {
         jPanel4.setMinimumSize(new java.awt.Dimension(100, 130));
         jPanel4.setPreferredSize(new java.awt.Dimension(37, 150));
 
-        jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("seleccione el tipo de reserva");
+        lb.setFont(new java.awt.Font("Montserrat Thin Light", 1, 18)); // NOI18N
+        lb.setForeground(new java.awt.Color(255, 255, 255));
+        lb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb.setText("seleccione el tipo de reserva");
 
         jPanel1.setBackground(new java.awt.Color(157, 154, 111));
 
         jButton2.setBackground(new java.awt.Color(17, 17, 17));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Si");
         jButton2.setPreferredSize(new java.awt.Dimension(120, 30));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -97,14 +84,14 @@ public class Alerta extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(lb, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jLabel1)
+                .addComponent(lb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -130,15 +117,16 @@ public class Alerta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.next();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lb;
     // End of variables declaration//GEN-END:variables
 }
