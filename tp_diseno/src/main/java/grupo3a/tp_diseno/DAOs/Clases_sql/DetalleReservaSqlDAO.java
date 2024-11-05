@@ -21,6 +21,18 @@ import java.util.logging.Logger;
  */
 public class DetalleReservaSqlDAO implements DetalleReservaDAO{
 
+    public DetalleReservaSqlDAO() {
+    }
+    
+    
+    //singleton
+    private static DetalleReservaSqlDAO instance;
+    public static DetalleReservaSqlDAO getInstance(){
+        if(DetalleReservaSqlDAO.instance == null)DetalleReservaSqlDAO.instance =  new DetalleReservaSqlDAO();
+        return DetalleReservaSqlDAO.instance;
+    }
+    
+    
     @Override
     public void crear(DetalleReserva detalleReserva) {
         

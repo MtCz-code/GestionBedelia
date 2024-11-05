@@ -26,7 +26,19 @@ import org.json.JSONArray;
  * @author exero
  */
 public class ReservaSqlDAO implements ReservaDAO{
+
+    public ReservaSqlDAO() {
+    }
    
+    //singleton
+    private static ReservaSqlDAO instance;
+    public static ReservaSqlDAO getInstance(){
+        if(ReservaSqlDAO.instance == null)ReservaSqlDAO.instance =  new ReservaSqlDAO();
+        return ReservaSqlDAO.instance;
+    }
+    
+    
+    
     @Override
     public Integer crear(ReservaPeriodica reserva) {
         String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,?,?)";

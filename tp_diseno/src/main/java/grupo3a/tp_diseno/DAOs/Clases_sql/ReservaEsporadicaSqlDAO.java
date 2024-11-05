@@ -11,5 +11,13 @@ import grupo3a.tp_diseno.DAOs.ReservaEsporadicaDAO;
  * @author exero
  */
 public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO{
-    
+    //singleton
+    private static ReservaEsporadicaSqlDAO instance;
+    public static ReservaEsporadicaSqlDAO getInstance(){
+        if(ReservaEsporadicaSqlDAO.instance == null)ReservaEsporadicaSqlDAO.instance =  new ReservaEsporadicaSqlDAO();
+        return ReservaEsporadicaSqlDAO.instance;
+    }
+
+    public ReservaEsporadicaSqlDAO() {
+    }
 }

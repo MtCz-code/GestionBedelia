@@ -23,6 +23,17 @@ import java.util.logging.Logger;
  * @author exero
  */
 public class CuatrimestreSqlDAO implements CuatrimestreDAO{
+
+    public CuatrimestreSqlDAO() {
+    }
+    
+    //singleton
+    private static CuatrimestreSqlDAO instance;
+    public static CuatrimestreSqlDAO getInstance(){
+        if(CuatrimestreSqlDAO.instance == null)CuatrimestreSqlDAO.instance =  new CuatrimestreSqlDAO();
+        return CuatrimestreSqlDAO.instance;
+    }
+    
     @Override
     public ArrayList listar(){
         String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre";
