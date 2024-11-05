@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Usuario;
 

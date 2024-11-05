@@ -6,7 +6,7 @@ import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Usuario;
-
+import org.mindrot.jbcrypt.BCrypt;
 
 public class GestorBedel {
     //singleton
@@ -15,23 +15,30 @@ public class GestorBedel {
         if(GestorBedel.instance == null)GestorBedel.instance =  new GestorBedel();
         return GestorBedel.instance;
     }
-    
+
+    public GestorBedel() {
+    }
+    /*
+    BCrypt.gensalt(): Genera un "sal" aleatorio, que se añade a la contraseña antes de hashearla. Esto previene ataques de diccionario y hace que el hash sea único incluso para contraseñas iguales.
+    BCrypt.hashpw(password, BCrypt.gensalt()): Aplica el algoritmo bcrypt a la contraseña junto con el "sal".
+    BCrypt.checkpw(password, hashedPassword): Compara la contraseña proporcionada con el hash almacenado.
+    */
     private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
 
     public void crear(UsuarioDTO usuarioDTO){
-       Object u;
-        
+       
         if(usuarioDTO.getTurno() != null){ // crear BEDEL
-           u = new Bedel(usuarioDTO.getApellido(), usuarioDTO.getNombre(), usuarioDTO.getContrasena(), usuarioDTO.getTurno(), usuarioDTO.isHabilitado());
-           
+           Bedel b = new Bedel( BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getTurno(), usuarioDTO.isHabilitado());
+           DAO.crear(b);
        }
        else { // crear admin
-           u = new Administrador(usuarioDTO.getApellido(), usuarioDTO.getNombre(), usuarioDTO.getContrasena());
-       }
-       
-       DAO.crear(u);
+           Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido() );
+           DAO.crear(a);
+        }
        
     }
+    
+    
     
     
     
