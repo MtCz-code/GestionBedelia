@@ -5,7 +5,7 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 
 
 public class Bedel extends Usuario{
-    //private String idBedel;
+    private String idBedel;
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
@@ -31,6 +31,16 @@ public class Bedel extends Usuario{
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
+
+    public void setIdBedel(String idBedel) {
+        this.idBedel = idBedel;
+    }
+
+    public String getIdBedel() {
+        return idBedel;
+    }
+    
+    
     
     
 }

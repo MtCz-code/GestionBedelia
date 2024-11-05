@@ -3,6 +3,7 @@ package grupo3a.tp_diseno.Gestores;
 import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
+import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Usuario;
@@ -36,6 +37,16 @@ public class GestorBedel {
            DAO.crear(a);
         }
        
+    }
+    
+//    public void registrarBedel(UsuarioDTO usuario) {
+//        Bedel bedel = new Bedel(usuario.getContrasena(), 
+//                usuario.getNombre(), 
+//                usuario.getApellido(), 
+//                usuario.getTurno(), 
+//                true);
+    public void registrarBedel(Bedel bedel) {
+        DAO.crear(bedel);
     }
     
     

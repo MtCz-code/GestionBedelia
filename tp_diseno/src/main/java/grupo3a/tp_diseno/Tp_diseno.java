@@ -3,13 +3,16 @@
  */
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
+import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
+import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 
 import java.awt.CardLayout;
@@ -271,6 +274,7 @@ public class Tp_diseno {
     static Alerta alerta;
     static AlertaConfirmacion alertaConfirmacion;
     static BaseFrame baseFrame;
+    static GestorBedel gestorBedel = new GestorBedel();
     
     public static boolean contains(String s, char a, char b) {
         for (int i = a; i <= b; i++) {
@@ -383,8 +387,12 @@ public class Tp_diseno {
         // falta verificar bien id y
         // si la contraseña puede ser igual a una contraseña anterior del usuario.
         
-
-        
+        // nombre, apellido, idbedel, turno, contraseña
+//        UsuarioDTO bedel = new UsuarioDTO(contraseña, nombre, apellido, turno, true);
+        Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
+        bedel.setIdBedel(idBedel);
+        gestorBedel.registrarBedel(bedel);
+                
     }
     
     public static void showBedel() {

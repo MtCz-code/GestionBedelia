@@ -52,6 +52,10 @@ public class UsuarioDTO {
         return idUsuario;
     }
 
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public String getContrasena() {
         return contrasena;
     }
