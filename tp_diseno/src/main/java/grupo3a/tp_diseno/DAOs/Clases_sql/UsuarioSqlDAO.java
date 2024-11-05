@@ -6,6 +6,7 @@ package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
+import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Usuario;
 import java.sql.Connection;
@@ -34,16 +35,16 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     }
     
     @Override
-    public void crear(Usuario usuario, Bedel bedel){
+    public void crear(Bedel bedel){
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, usuario.getContraseña());
-            stmt.setString(2, usuario.getNombre());
-            stmt.setString(3, usuario.getApellido());
+            stmt.setString(1, bedel.getContraseña());
+            stmt.setString(2, bedel.getNombre());
+            stmt.setString(3, bedel.getApellido());
         
             stmt.executeUpdate();
             System.out.println("Usuario insertado exitosamente.");
@@ -74,16 +75,16 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     }
     
     @Override
-    public void crear(Usuario usuario){
+    public void crear(Administrador admin){
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, usuario.getContraseña());
-            stmt.setString(2, usuario.getNombre());
-            stmt.setString(3, usuario.getApellido());
+            stmt.setString(1, admin.getContraseña());
+            stmt.setString(2, admin.getNombre());
+            stmt.setString(3, admin.getApellido());
         
             stmt.executeUpdate();
             System.out.println("Usuario insertado exitosamente.");
