@@ -57,6 +57,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                         stmtBed.setInt(1, idBedel);
                         stmtBed.setString(2, bedel.getTurno().toString());
                         stmtBed.setBoolean(3, bedel.isHabilitado());
+                        stmtBed.executeUpdate();
                        
                         System.out.println("Bedel ingresado con exito.");
                         return idBedel;
@@ -97,6 +98,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                     String queryB = "INSERT INTO administrador (id_usuario) VALUES (?)";
                     try(PreparedStatement stmtBed = conn.prepareStatement(queryB)){
                         stmtBed.setInt(1, idAdmin);
+                        stmtBed.executeUpdate();
                        
                             System.out.println("Administrador ingresado con exito.");
                             return idAdmin;
