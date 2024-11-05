@@ -15,8 +15,8 @@ public class Usuario {
     private String apellido;
 
 
-    Usuario(){}
-    Usuario(String contrasena,String nombre, String apellido){
+    public Usuario(){}
+    public Usuario(String contrasena,String nombre, String apellido){
         this.contrasena=contrasena;
         this.nombre=nombre;
         this.apellido=apellido;

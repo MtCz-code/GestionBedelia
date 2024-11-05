@@ -3,31 +3,19 @@
  */
 package grupo3a.tp_diseno;
 
-import grupo3a.tp_diseno.DTOs.AulaDTO;
-import grupo3a.tp_diseno.DTOs.DetalleReservaDTO;
-import grupo3a.tp_diseno.DTOs.ReservaDTO;
-import grupo3a.tp_diseno.Enumerations.DiaSemana;
-import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
-import grupo3a.tp_diseno.Modelos.AulaMultimedios;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
-import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**

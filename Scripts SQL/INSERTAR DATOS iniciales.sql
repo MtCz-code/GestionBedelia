@@ -1,8 +1,11 @@
 insert into usuario (contrasena,nombre,apellido) values (1234,'Pedro','Sanchez');
 insert into usuario (contrasena,nombre,apellido) values (4321,'Santiago','Perren');
+insert into usuario (contrasena,nombre,apellido) values ('admin','Admin','Admin');
 
 insert into bedel values (1, 'NOCHE', true);
 insert into bedel values(2,'DIA',true);
+
+insert into administrador values(3);
 
 insert into cuatrimestre (fecha_inicio_cuatrimestre,fecha_fin_cuatrimestre) values ('2024-03-27','2024-07-06');
 insert into cuatrimestre (fecha_inicio_cuatrimestre,fecha_fin_cuatrimestre) values ('2024-08-06','2024-12-04');

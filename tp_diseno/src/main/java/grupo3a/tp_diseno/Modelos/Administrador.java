@@ -10,8 +10,8 @@ package grupo3a.tp_diseno.Modelos;
  */
 public class Administrador extends Usuario{
 
-    public Administrador(String contrasenaa, String nombree, String apellidoo) {
-        super(contrasenaa, nombree, apellidoo);
+    public Administrador(String contrasena, String nombre, String apellido) {
+        super(contrasena, nombre, apellido);
     }
 
     
