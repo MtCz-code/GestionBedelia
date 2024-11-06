@@ -45,9 +45,7 @@ public class GestorBedel {
 //                usuario.getApellido(), 
 //                usuario.getTurno(), 
 //                true);
-    public void registrarBedel(Bedel bedel) {
-        DAO.crear(bedel);
-    }
+    
     
     
     

@@ -374,9 +374,9 @@ public class Tp_diseno {
         // si la contraseña puede ser igual a una contraseña anterior del usuario.
         
         // nombre, apellido, idbedel, turno, contraseña
-//        UsuarioDTO bedel = new UsuarioDTO(contraseña, nombre, apellido, turno, true);
-        Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
-        gestorBedel.registrarBedel(bedel);
+        UsuarioDTO bedel = new UsuarioDTO(contraseña, nombre, apellido, turno, true);
+        //Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
+        gestorBedel.crear(bedel);
                 
     }
     
