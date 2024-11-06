@@ -366,6 +366,7 @@ public class Tp_diseno {
             alerta.setText("las contraseñas no coinciden");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
+            return;
         }
         
         
