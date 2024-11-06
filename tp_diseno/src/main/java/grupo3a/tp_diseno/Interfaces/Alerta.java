@@ -71,7 +71,7 @@ public class Alerta extends javax.swing.JPanel {
 
         jButton2.setBackground(new java.awt.Color(17, 17, 17));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Si");
+        jButton2.setText("OK");
         jButton2.setPreferredSize(new java.awt.Dimension(120, 30));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.Interfaces.RegistrarBedel;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.*;
@@ -24,10 +23,6 @@ import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author gabic
- */
 public class Tp_diseno {
 
     public static String[][] convertirFormatoAula(AulaGeneral[] aulas) {
@@ -289,7 +284,6 @@ public class Tp_diseno {
 
         String nombre = registrarBedel.getNombre();
         String apellido = registrarBedel.getApellido();
-        String idBedel = registrarBedel.getIdBedel();
         TurnoBedel turno = registrarBedel.getTurno();
         String contraseña = registrarBedel.getContraseña();
         String rContraseña = registrarBedel.getrContraseña();
@@ -297,7 +291,6 @@ public class Tp_diseno {
 
         System.err.println("nombre: " + nombre);
         System.err.println("apellido: " + apellido);
-        System.err.println("idBedel: " + idBedel);
         System.err.println("turno: " + turno.toString());
         System.err.println("contraseña: " + contraseña);
         System.err.println("rContraseña: " + rContraseña);
@@ -325,14 +318,6 @@ public class Tp_diseno {
             return;
         }
         
-        // idbedel
-        // TODO: poner condiciones de id, verificar que no exista
-        if(idBedel.length() == 0) {
-            alerta.setText("complete un id valido");
-            baseFrame.getPanel2().add(alerta);
-            baseFrame.setPanel2Up();
-            return;
-        }
         
         // contraseña
         if (contraseña.length() == 0) {
@@ -390,12 +375,15 @@ public class Tp_diseno {
         // nombre, apellido, idbedel, turno, contraseña
 //        UsuarioDTO bedel = new UsuarioDTO(contraseña, nombre, apellido, turno, true);
         Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
-        bedel.setIdBedel(idBedel);
         gestorBedel.registrarBedel(bedel);
                 
     }
     
-    public static void showBedel() {
+    public static void showMenu(){
+        
+    }
+    
+    public static void showRegistroBedel() {
         
         registrarBedel = new RegistrarBedel();
         alerta = new Alerta();
@@ -446,7 +434,10 @@ public class Tp_diseno {
 
             @Override
             public void next() {
-                // cerrar todo
+              mainPanel.remove(registrarBedel);
+              
+              mainPanel.revalidate();
+              mainPanel.repaint();
             }
             
         });
@@ -455,7 +446,7 @@ public class Tp_diseno {
 
     
     public static void main(String[] args) {
-        showBedel();
+        showRegistroBedel();
         
         
         
