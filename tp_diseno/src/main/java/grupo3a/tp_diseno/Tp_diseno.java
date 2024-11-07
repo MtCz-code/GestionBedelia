@@ -270,6 +270,7 @@ public class Tp_diseno {
     static AlertaConfirmacion alertaConfirmacion;
     static BaseFrame baseFrame;
     static GestorBedel gestorBedel = new GestorBedel();
+    static MenuGeneral menuGeneral;
     
     public static boolean contains(String s, char a, char b) {
         for (int i = a; i <= b; i++) {
@@ -381,11 +382,26 @@ public class Tp_diseno {
     }
     
     public static void showMenu(){
+        // frame principal
+        baseFrame = new BaseFrame();
+        menuGeneral = new MenuGeneral();
+        
+        
+        baseFrame.getPanel1().add(menuGeneral);
+        baseFrame.setVisible(true);
+        
+        menuGeneral.setListener(new MenuGeneral.Listener() {
+            @Override
+            public void registrarBedel() {
+                baseFrame.getPanel1().remove(menuGeneral);
+                showRegistroBedel();
+            }
+        });
         
     }
     
     public static void showRegistroBedel() {
-        
+        registrarBedel = new RegistrarBedel();
         registrarBedel = new RegistrarBedel();
         alerta = new Alerta();
         alertaConfirmacion = new AlertaConfirmacion();
@@ -395,14 +411,13 @@ public class Tp_diseno {
         JPanel mainPanel = new JPanel(cardLayout);
         mainPanel.add(registrarBedel, "registrarBedel");
 
-        
-        
         // frame principal
-        baseFrame = new BaseFrame();
+//        baseFrame = new BaseFrame();
         
         baseFrame.getPanel1().add(mainPanel);
+        baseFrame.revalidate();
+        baseFrame.repaint();   
         
-        baseFrame.setVisible(true);
         
         cardLayout.show(mainPanel, "registrarAula");
         
@@ -429,16 +444,19 @@ public class Tp_diseno {
         alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
             @Override
             public void back() {
-                baseFrame.setPanel1Up();
                 baseFrame.getPanel2().remove(alertaConfirmacion);
+                baseFrame.setPanel1Up();
+                
             }
 
             @Override
             public void next() {
-              mainPanel.remove(registrarBedel);
-              
-              mainPanel.revalidate();
-              mainPanel.repaint();
+                baseFrame.getPanel2().remove(alertaConfirmacion);
+                baseFrame.getPanel1().remove(mainPanel);
+                baseFrame.getPanel1().add(menuGeneral);
+                baseFrame.setPanel1Up();
+                baseFrame.revalidate(); // Actualiza la jerarquía de componentes y el diseño
+                baseFrame.repaint();   
             }
             
         });
@@ -447,7 +465,8 @@ public class Tp_diseno {
 
     
     public static void main(String[] args) {
-        showRegistroBedel();
+//        showRegistroBedel();
+        showMenu();
         
         
         
