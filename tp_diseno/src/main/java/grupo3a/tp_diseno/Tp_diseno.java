@@ -13,6 +13,7 @@ import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
 import java.sql.Time;
@@ -388,6 +389,8 @@ public class Tp_diseno {
         
         
         baseFrame.getPanel1().add(menuGeneral);
+        baseFrame.getPanel1().setLayout(new BorderLayout());
+        baseFrame.getPanel1().add(menuGeneral, BorderLayout.CENTER); 
         baseFrame.setVisible(true);
         
         menuGeneral.setListener(new MenuGeneral.Listener() {
