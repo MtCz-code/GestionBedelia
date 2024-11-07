@@ -99,6 +99,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Registrar Bedel");
+        jLabel7.setPreferredSize(new java.awt.Dimension(294, 450));
         jPanel1.add(jLabel7, java.awt.BorderLayout.CENTER);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
