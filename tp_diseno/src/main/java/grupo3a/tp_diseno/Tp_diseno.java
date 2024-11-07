@@ -265,7 +265,7 @@ public class Tp_diseno {
     static AlertaConfirmacion alertaConfirmacion;
     static BaseFrame baseFrame;
     static GestorBedel gestorBedel = new GestorBedel();
-    static MenuGeneral menuGeneral;
+    static MenuAdmin menuAdmin;
 
     public static boolean contains(String s, char a, char b) {
         for (int i = a; i <= b; i++) {
@@ -354,17 +354,17 @@ public class Tp_diseno {
     public static void showMenu() {
         // frame principal
         baseFrame = new BaseFrame();
-        menuGeneral = new MenuGeneral();
+        menuAdmin = new MenuAdmin();
 
-        baseFrame.getPanel1().add(menuGeneral);
+        baseFrame.getPanel1().add(menuAdmin);
         baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(menuGeneral, BorderLayout.CENTER);
+        baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
         baseFrame.setVisible(true);
 
-        menuGeneral.setListener(new MenuGeneral.Listener() {
+        menuAdmin.setListener(new MenuAdmin.Listener() {
             @Override
             public void registrarBedel() {
-                baseFrame.getPanel1().remove(menuGeneral);
+                baseFrame.getPanel1().remove(menuAdmin);
                 showRegistroBedel();
             }
         });
@@ -417,7 +417,7 @@ public class Tp_diseno {
                         public void next() {
                             baseFrame.getPanel2().remove(alerta);
                             baseFrame.getPanel1().remove(mainPanel);
-                            baseFrame.getPanel1().add(menuGeneral);
+                            baseFrame.getPanel1().add(menuAdmin);
                             baseFrame.setPanel1Up();
                             baseFrame.revalidate();
                             baseFrame.repaint();
@@ -445,7 +445,7 @@ public class Tp_diseno {
             public void next() {
                 baseFrame.getPanel2().remove(alertaConfirmacion);
                 baseFrame.getPanel1().remove(mainPanel);
-                baseFrame.getPanel1().add(menuGeneral);
+                baseFrame.getPanel1().add(menuAdmin);
                 baseFrame.setPanel1Up();
                 baseFrame.revalidate();
                 baseFrame.repaint();
