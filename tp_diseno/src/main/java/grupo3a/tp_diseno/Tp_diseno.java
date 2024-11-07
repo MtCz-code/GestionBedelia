@@ -282,7 +282,7 @@ public class Tp_diseno {
         return false;
     }
     
-    public static void verificar() {
+    public static boolean verificar() {
 
         String nombre = registrarBedel.getNombre();
         String apellido = registrarBedel.getApellido();
@@ -305,80 +305,78 @@ public class Tp_diseno {
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         if(!pattern.matcher(nombre).matches()) {
-            alerta.setText("complete un nombre valido");
+            alerta.setText("Introduzca un nombre válido.");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         
         // apellido
         apellido = apellido.trim();
         if(!pattern.matcher(apellido).matches()) {
-            alerta.setText("complete un apellido valido");
+            alerta.setText("Introduzca un apellido válido.");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         
         
         // contraseña
         if (contraseña.length() == 0) {
-            alerta.setText("introduzca la contraseña");
+            alerta.setText("Introduzca una contraseña.");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         // o Longitud mínima de la contraseña
         int largoMin = 8;
         if(contraseña.length() < largoMin){
             
-            alerta.setText("<html>la contraseña debe contener al menos <br>" + largoMin + " caracteres</html>");
+            alerta.setText("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         // o Si la contraseña debe contener signos especiales (@#$%&*)
         if (!(contraseña.contains("@") || contraseña.contains("#") ||
                 contraseña.contains("$") || contraseña.contains("%") ||
                 contraseña.contains("*"))) {
-            alerta.setText("<html>la contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
+            alerta.setText("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         // o Si la contraseña debe contener al menos una letra mayúscula.
         if (!contains(contraseña, 'A', 'Z')){
-            alerta.setText("<html>la contraseña debe contener <br> al menos una letra mayúscula</html>");
+            alerta.setText("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         // o Si la contraseña debe contener al menos un dígito.
         if (!contains(contraseña, '0', '9')){
-            alerta.setText("<html>la contraseña debe contener <br>al menos un dígito</html>");
+            alerta.setText("<html>La contraseña debe contener <br>al menos un dígito</html>");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
         // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
         // TODO:
         
         // rcontraseña
         if (!contraseña.equals(rContraseña)) {
-            alerta.setText("las contraseñas no coinciden");
+            alerta.setText("Las contraseñas no coinciden.");
             baseFrame.getPanel2().add(alerta);
             baseFrame.setPanel2Up();
-            return;
+            return false;
         }
-        
+        return true;
         
         // falta verificar bien id y
         // si la contraseña puede ser igual a una contraseña anterior del usuario.
         
         // nombre, apellido, idbedel, turno, contraseña
-        UsuarioDTO bedel = new UsuarioDTO(contraseña, nombre, apellido, turno, true);
         //Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
-        gestorBedel.crear(bedel);
                 
     }
     
@@ -434,10 +432,34 @@ public class Tp_diseno {
 
             @Override
             public void next() {
-                verificar();
+                if (verificar()) {
+            UsuarioDTO bedel = new UsuarioDTO(
+                registrarBedel.getContraseña(),
+                registrarBedel.getNombre(),
+                registrarBedel.getApellido(),
+                registrarBedel.getTurno(),
+                true
+            );
+            gestorBedel.crear(bedel);
+
+                alerta.setText("Bedel registrado con éxito");
+                baseFrame.getPanel2().add(alerta);
+                baseFrame.setPanel2Up();
+                alerta.setListener(new Alerta.Listener(){
+                    @Override
+                public void next(){
+                baseFrame.getPanel2().remove(alerta);
+                baseFrame.getPanel1().remove(mainPanel);
+                baseFrame.getPanel1().add(menuGeneral);
+                baseFrame.setPanel1Up();
+                baseFrame.revalidate(); 
+                baseFrame.repaint();   
             }
+               } );
             
-        });
+        }
+         }
+            });
         
         alerta.setListener(() -> {
             baseFrame.setPanel1Up();
@@ -458,7 +480,7 @@ public class Tp_diseno {
                 baseFrame.getPanel1().remove(mainPanel);
                 baseFrame.getPanel1().add(menuGeneral);
                 baseFrame.setPanel1Up();
-                baseFrame.revalidate(); // Actualiza la jerarquía de componentes y el diseño
+                baseFrame.revalidate(); 
                 baseFrame.repaint();   
             }
             
