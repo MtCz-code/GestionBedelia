@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
+import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Modelos.Administrador;
@@ -24,6 +25,9 @@ import org.json.JSONArray;
  */
 public class UsuarioSqlDAO implements UsuarioDAO{
 
+    private BedelDAO DAO = BedelSqlDAO.getInstance();
+
+    
     public UsuarioSqlDAO() {
     }
     
@@ -34,17 +38,20 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         return UsuarioSqlDAO.instance;
     }
     
+    
+    
     @Override
-    public Integer crear(Bedel bedel){
-        String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
+    public void crear(Bedel bedel){
+        String query = "INSERT INTO usuario (id_login, contrasena, nombre, apellido) VALUES (?, ?, ?, ?)";
     
  
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, bedel.getContraseña());
-            stmt.setString(2, bedel.getNombre());
-            stmt.setString(3, bedel.getApellido());
+            stmt.setString(1, bedel.getIdLogin());
+            stmt.setString(2, bedel.getContraseña());
+            stmt.setString(3, bedel.getNombre());
+            stmt.setString(4, bedel.getApellido());
         
             stmt.executeUpdate();
             System.out.println("Usuario insertado exitosamente.");
@@ -52,18 +59,11 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int idBedel = generatedKeys.getInt(1);
-                    String queryB = "INSERT INTO bedel (id_usuario,turno,habilitado) VALUES (?,?,?)";
-                    try(PreparedStatement stmtBed = conn.prepareStatement(queryB)){
-                        stmtBed.setInt(1, idBedel);
-                        stmtBed.setString(2, bedel.getTurno().toString());
-                        stmtBed.setBoolean(3, bedel.isHabilitado());
-                        stmtBed.executeUpdate();
-                       
-                        System.out.println("Bedel ingresado con exito.");
-                        return idBedel;
-                    } catch(SQLException e){
-                        System.out.println("Error al agregar el bedel: "+ e.getMessage());
-                    } 
+                    
+                    bedel.setIdUsuario(idBedel);
+                    
+                    DAO.crear(bedel);
+                    
                 } else {
                     System.out.println("No se pudo obtener el ID del usuario.");
                 }
@@ -72,13 +72,10 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             System.out.println("Error al agregar usuario: " + e.getMessage());
         }
         
-        
-        
-        return null;
     }
     
-    @Override
-    public Integer crear(Administrador admin){
+    @Override //No es necesario codificar crear administrador, no tiene un gestor para eso. 
+    public void crear(Administrador admin){
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
@@ -101,7 +98,6 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                         stmtBed.executeUpdate();
                        
                             System.out.println("Administrador ingresado con exito.");
-                            return idAdmin;
                     } catch(SQLException e){
                         System.out.println("Error al agregar el administrador: "+ e.getMessage());
                     } 
@@ -113,7 +109,6 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             System.out.println("Error al agregar usuario: " + e.getMessage());
         }
         
-        return null;
         
     }
     

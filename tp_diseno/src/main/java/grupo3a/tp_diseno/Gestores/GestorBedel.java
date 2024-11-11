@@ -2,7 +2,7 @@
 package grupo3a.tp_diseno.Gestores;
 import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
-import grupo3a.tp_diseno.DTOs.UsuarioDTO;
+import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
@@ -26,20 +26,14 @@ public class GestorBedel {
     */
     private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
 
-    public void crear(UsuarioDTO usuarioDTO){
+    public void crear(BedelDTO bedelDTO){
        
-        if(usuarioDTO.getTurno() != null){ // crear BEDEL
-           Bedel b = new Bedel( BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido(), usuarioDTO.getTurno(), usuarioDTO.isHabilitado());
-           DAO.crear(b);
-       }
-       else { // crear admin
-           Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido() );
-           DAO.crear(a);
-        }
-       
+        Bedel bedel = new Bedel(bedelDTO.getIdLogin(), BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()), bedelDTO.getNombre(), bedelDTO.getApellido(), bedelDTO.getTurno(), bedelDTO.isHabilitado());
+        DAO.crear(bedel);
+        
     }
     
-//    public void registrarBedel(UsuarioDTO usuario) {
+//    public void registrarBedel(bedelDTO usuario) {
 //        Bedel bedel = new Bedel(usuario.getContrasena(), 
 //                usuario.getNombre(), 
 //                usuario.getApellido(), 

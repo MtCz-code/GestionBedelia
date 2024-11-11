@@ -10,13 +10,15 @@ package grupo3a.tp_diseno.Modelos;
  */
 public class Usuario {
     private int idUsuario;
+    private String idLogin;
     private String contrasena;
     private String nombre;
     private String apellido;
 
 
     public Usuario(){}
-    public Usuario(String contrasena,String nombre, String apellido){
+    public Usuario(String idLogin, String contrasena,String nombre, String apellido){
+        this.idLogin=idLogin;
         this.contrasena=contrasena;
         this.nombre=nombre;
         this.apellido=apellido;
@@ -24,6 +26,22 @@ public class Usuario {
     
     public int getIdUsuario() {
         return idUsuario;
+    }
+
+    public String getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(String idLogin) {
+        this.idLogin = idLogin;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public void setIdUsuario(int idUsuario) {

@@ -1,6 +1,7 @@
 -- Tabla usuario
 CREATE TABLE usuario (
     id_usuario SERIAL PRIMARY KEY,
+	id_login VARCHAR(30) NOT NULL UNIQUE,
     contrasena VARCHAR(60) NOT NULL,  -- Hash de la contraseña
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL

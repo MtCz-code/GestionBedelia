@@ -1,6 +1,6 @@
-insert into usuario (contrasena,nombre,apellido) values (1234,'Pedro','Sanchez');
-insert into usuario (contrasena,nombre,apellido) values (4321,'Santiago','Perren');
-insert into usuario (contrasena,nombre,apellido) values ('admin','Admin','Admin');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('PedroFacha123',1234,'Pedro','Sanchez');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('PerrenSanti',4321,'Santiago','Perren');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('Admin','admin','Admin','Admin');
 
 insert into bedel values (1, 'NOCHE', true);
 insert into bedel values(2,'DIA',true);

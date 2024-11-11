@@ -1,5 +1,6 @@
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Interfaces.RegistrarBedel;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
@@ -400,15 +401,16 @@ public class Tp_diseno {
             @Override
             public void next() {
                 if (verificar()) {
-                    UsuarioDTO bedel = new UsuarioDTO(
+                    /*BedelDTO bedel = new BedelDTO(
                             registrarBedel.getContraseña(),
                             registrarBedel.getNombre(),
                             registrarBedel.getApellido(),
                             registrarBedel.getTurno(),
                             true
                     );
+                    
                     gestorBedel.crear(bedel);
-
+*/
                     alerta.setText("Bedel registrado con éxito");
                     baseFrame.getPanel2().add(alerta);
                     baseFrame.setPanel2Up();

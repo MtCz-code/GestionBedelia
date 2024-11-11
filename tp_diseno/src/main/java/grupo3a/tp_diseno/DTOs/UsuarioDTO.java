@@ -12,20 +12,31 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
  */
 public class UsuarioDTO {
     private int idUsuario;
+    private String idLogin;
     private String contrasena;
     private String nombre;
     private String apellido;
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
-    public UsuarioDTO(int idUsuario, String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
-        this.idUsuario = idUsuario;
+    public UsuarioDTO(String idLogin, String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
+        this.idLogin = idLogin;
         this.contrasena = contrasena;
         this.nombre = nombre;
         this.apellido = apellido;
         this.turno = turno;
         this.habilitado = habilitado;
     }
+
+    public String getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(String idLogin) {
+        this.idLogin = idLogin;
+    }
+    
+    
     
     public UsuarioDTO(int idUsuario, String contrasena, String nombre, String apellido) {
         this.idUsuario = idUsuario;

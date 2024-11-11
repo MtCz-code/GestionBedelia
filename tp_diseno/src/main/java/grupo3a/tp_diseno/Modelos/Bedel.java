@@ -5,13 +5,12 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 
 
 public class Bedel extends Usuario{
-    private String idBedel;
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
     private boolean habilitado;
 
     public Bedel(){}
-    public Bedel(String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
-        super(contrasena,nombre,apellido);
+    public Bedel(String idLogin, String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
+        super(idLogin, contrasena,nombre,apellido);
         this.turno=turno;
         this.habilitado=habilitado;
     }
@@ -31,16 +30,6 @@ public class Bedel extends Usuario{
     public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
-
-    public void setIdBedel(String idBedel) {
-        this.idBedel = idBedel;
-    }
-
-    public String getIdBedel() {
-        return idBedel;
-    }
-    
-    
     
     
 }

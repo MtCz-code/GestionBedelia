@@ -15,6 +15,6 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    Integer crear(Bedel bedel);
-    Integer crear(Administrador admin);
+    void crear(Bedel bedel);
+    void crear(Administrador admin);
 }
