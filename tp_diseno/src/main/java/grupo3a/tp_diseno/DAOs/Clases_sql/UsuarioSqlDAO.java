@@ -80,9 +80,5 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         return true;
     }
     
-  
-    
-    
-    
 }
 

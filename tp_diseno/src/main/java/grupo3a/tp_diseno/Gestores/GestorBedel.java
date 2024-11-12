@@ -48,6 +48,10 @@ public class GestorBedel {
 
         // verificar el nombre
         // borrar espacios al final(si hay)
+        
+        idLogin = idLogin.trim();
+        if(DAO.validarIdLogin(idLogin))
+        
         nombre = nombre.trim();
 
         String regex = "([a-zA-Z])+";
