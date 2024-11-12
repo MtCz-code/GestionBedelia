@@ -74,6 +74,11 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         
         return null;
     }
+
+    @Override
+    public boolean validarIdLogin(String idLogin) {
+        return true;
+    }
     
   
     
