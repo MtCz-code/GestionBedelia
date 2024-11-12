@@ -20,4 +20,10 @@ public class Exceptions {
             super(msg);
         }
     }
+    
+    public static class DAOException extends Exception {
+        public DAOException(String msg) {
+            super(msg);
+        }
+    }
 }

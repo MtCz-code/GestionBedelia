@@ -7,8 +7,11 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Exceptions;
+import grupo3a.tp_diseno.Modelos.Exceptions.ValueException;
 import grupo3a.tp_diseno.Modelos.Usuario;
 import static grupo3a.tp_diseno.Tp_diseno.contains;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -48,54 +51,53 @@ public class GestorBedel {
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(nombre).matches()) {
-            throw new Exceptions.ValueException("Introduzca un nombre válido.");
+            throw new ValueException("Introduzca un nombre válido.");
         }
 
         // apellido
         apellido = apellido.trim();
         if (!pattern.matcher(apellido).matches()) {
-            throw new Exceptions.ValueException("Introduzca un apellido válido.");
+            throw new ValueException("Introduzca un apellido válido.");
         }
 
         // contraseña
         if (contraseña.length() == 0) {
-            throw new Exceptions.ValueException("Introduzca una contraseña.");
+            throw new ValueException("Introduzca una contraseña.");
         }
 
         // o Longitud mínima de la contraseña
         int largoMin = 8;
         if (contraseña.length() < largoMin) {
-            throw new Exceptions.ValueException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
+            throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
         }
 
         // o Si la contraseña debe contener signos especiales (@#$%&*)
         if (!(contraseña.contains("@") || contraseña.contains("#")
                 || contraseña.contains("$") || contraseña.contains("%")
                 || contraseña.contains("*"))) {
-            throw new Exceptions.ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
+            throw new ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
         }
 
         // o Si la contraseña debe contener al menos una letra mayúscula.
         if (!contains(contraseña, 'A', 'Z')) {
-            throw new Exceptions.ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
+            throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
         }
 
         // o Si la contraseña debe contener al menos un dígito.
         if (!contains(contraseña, '0', '9')) {
-            throw new Exceptions.ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
+            throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
         }
 
         // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
         // TODO:
-        Bedel bedel = new Bedel(bedelDTO.getIdLogin(), BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()), bedelDTO.getNombre(), bedelDTO.getApellido(), bedelDTO.getTurno(), bedelDTO.isHabilitado());
-        DAO.crear(bedel);
+        Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, bedelDTO.isHabilitado());
+
+        try {
+            DAO.crear(bedel);
+        } catch (Exceptions.DAOException ex) {
+            throw new ValueException("Ocurrio un error interno al intentar guardar");
+        }
 
     }
 
-//    public void registrarBedel(bedelDTO usuario) {
-//        Bedel bedel = new Bedel(usuario.getContrasena(), 
-//                usuario.getNombre(), 
-//                usuario.getApellido(), 
-//                usuario.getTurno(), 
-//                true);
 }

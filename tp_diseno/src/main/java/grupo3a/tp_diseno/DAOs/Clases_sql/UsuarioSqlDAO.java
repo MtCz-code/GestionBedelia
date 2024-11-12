@@ -9,6 +9,7 @@ import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
+import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     
     
     @Override
-    public void crear(Bedel bedel){
+    public void crear(Bedel bedel) throws DAOException {
         String query = "INSERT INTO usuario (id_login, contrasena, nombre, apellido) VALUES (?, ?, ?, ?)";
     
  
@@ -70,12 +71,13 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             }
         } catch (SQLException e) {
             System.out.println("Error al agregar usuario: " + e.getMessage());
+            throw new DAOException("Error al agregar usuario: " + e.getMessage());
         }
         
     }
     
     @Override //No es necesario codificar crear administrador, no tiene un gestor para eso. 
-    public void crear(Administrador admin){
+    public void crear(Administrador admin) throws DAOException {
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
  
@@ -107,6 +109,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             }
         } catch (SQLException e) {
             System.out.println("Error al agregar usuario: " + e.getMessage());
+            throw new DAOException("Error al agregar usuario: " + e.getMessage());
         }
         
         

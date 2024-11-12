@@ -281,86 +281,6 @@ public class Tp_diseno {
         return false;
     }
 
-    public static boolean verificar() {
-
-        String nombre = registrarBedel.getNombre();
-        String apellido = registrarBedel.getApellido();
-        TurnoBedel turno = registrarBedel.getTurno();
-        String contraseña = registrarBedel.getContraseña();
-        String rContraseña = registrarBedel.getrContraseña();
-
-        System.err.println("nombre: " + nombre);
-        System.err.println("apellido: " + apellido);
-        System.err.println("turno: " + turno.toString());
-        System.err.println("contraseña: " + contraseña);
-        System.err.println("rContraseña: " + rContraseña);
-
-        // verificar el nombre
-        // borrar espacios al final(si hay)
-        nombre = nombre.trim();
-
-        try {
-            String regex = "([a-zA-Z])+";
-            Pattern pattern = Pattern.compile(regex);
-            if (!pattern.matcher(nombre).matches()) {
-                throw new UIException("Introduzca un nombre válido.");
-            }
-
-            // apellido
-            apellido = apellido.trim();
-            if (!pattern.matcher(apellido).matches()) {
-                throw new UIException("Introduzca un apellido válido.");
-            }
-
-            // contraseña
-            if (contraseña.length() == 0) {
-                throw new UIException("Introduzca una contraseña.");
-            }
-
-            // o Longitud mínima de la contraseña
-            int largoMin = 8;
-            if (contraseña.length() < largoMin) {
-                throw new UIException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
-            }
-
-            // o Si la contraseña debe contener signos especiales (@#$%&*)
-            if (!(contraseña.contains("@") || contraseña.contains("#")
-                    || contraseña.contains("$") || contraseña.contains("%")
-                    || contraseña.contains("*"))) {
-                throw new UIException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
-            }
-
-            // o Si la contraseña debe contener al menos una letra mayúscula.
-            if (!contains(contraseña, 'A', 'Z')) {
-                throw new UIException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
-            }
-
-            // o Si la contraseña debe contener al menos un dígito.
-            if (!contains(contraseña, '0', '9')) {
-                throw new UIException("<html>La contraseña debe contener <br>al menos un dígito</html>");
-            }
-
-            // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
-            // TODO:
-            // rcontraseña
-            if (!contraseña.equals(rContraseña)) {
-                throw new UIException("Las contraseñas no coinciden.");
-            }
-
-            return true;
-        } catch (UIException e) {
-            alerta.setText(e.getMessage());
-            baseFrame.getPanel2().add(alerta);
-            baseFrame.setPanel2Up();
-            return false;
-        }
-
-        // falta verificar bien id y
-        // si la contraseña puede ser igual a una contraseña anterior del usuario.
-        // nombre, apellido, idbedel, turno, contraseña
-        //Bedel bedel = new Bedel(contraseña, nombre, apellido, turno, true);
-    }
-
     public static void showMenu() {
         // frame principal
         baseFrame = new BaseFrame();
@@ -438,17 +358,6 @@ public class Tp_diseno {
                     return;
                 }
 
-//                if (verificar()) {
-                /*BedelDTO bedel = new BedelDTO(
-                            registrarBedel.getContraseña(),
-                            registrarBedel.getNombre(),
-                            registrarBedel.getApellido(),
-                            registrarBedel.getTurno(),
-                            true
-                    );
-                    
-                    gestorBedel.crear(bedel);
-                 */
                 alerta.setText("Bedel registrado con éxito");
                 baseFrame.getPanel2().add(alerta);
                 baseFrame.setPanel2Up();

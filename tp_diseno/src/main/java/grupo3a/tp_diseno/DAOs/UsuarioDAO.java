@@ -6,6 +6,7 @@ package grupo3a.tp_diseno.DAOs;
 
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
+import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Usuario;
 
 /**
@@ -15,6 +16,6 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    void crear(Bedel bedel);
-    void crear(Administrador admin);
+    void crear(Bedel bedel) throws DAOException;
+    void crear(Administrador admin) throws DAOException;
 }
