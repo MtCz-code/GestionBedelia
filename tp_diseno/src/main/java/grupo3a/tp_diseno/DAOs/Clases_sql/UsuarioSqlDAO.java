@@ -26,7 +26,7 @@ import org.json.JSONArray;
  */
 public class UsuarioSqlDAO implements UsuarioDAO{
 
-    private BedelDAO DAO = BedelSqlDAO.getInstance();
+//    private BedelDAO DAO = BedelSqlDAO.getInstance();
 
     
     public UsuarioSqlDAO() {
@@ -42,26 +42,26 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     
     
     @Override
-    public Integer crear(Bedel bedel) throws DAOException {
+    public Integer crear(Usuario usuario) throws DAOException {
         String query = "INSERT INTO usuario (id_login, contrasena, nombre, apellido) VALUES (?, ?, ?, ?)";
     
  
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            stmt.setString(1, bedel.getIdLogin());
-            stmt.setString(2, bedel.getContraseña());
-            stmt.setString(3, bedel.getNombre());
-            stmt.setString(4, bedel.getApellido());
+            stmt.setString(1, usuario.getIdLogin());
+            stmt.setString(2, usuario.getContraseña());
+            stmt.setString(3, usuario.getNombre());
+            stmt.setString(4, usuario.getApellido());
         
             stmt.executeUpdate();
             System.out.println("Usuario insertado exitosamente.");
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    int idBedel = generatedKeys.getInt(1);
+                    int idUsuario = generatedKeys.getInt(1);
                     
-                   return idBedel;
+                   return idUsuario;
                     
                 } else {
                     System.out.println("No se pudo obtener el ID del usuario.");
@@ -75,45 +75,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         return null;
     }
     
-    /* @Override //No es necesario codificar crear administrador, no tiene un gestor para eso. 
-    public void crear(Administrador admin) throws DAOException {
-        String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
-    
- 
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setString(1, admin.getContraseña());
-            stmt.setString(2, admin.getNombre());
-            stmt.setString(3, admin.getApellido());
-        
-            stmt.executeUpdate();
-            System.out.println("Usuario insertado exitosamente.");
-            
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int idAdmin = generatedKeys.getInt(1);
-                    String queryB = "INSERT INTO administrador (id_usuario) VALUES (?)";
-                    try(PreparedStatement stmtBed = conn.prepareStatement(queryB)){
-                        stmtBed.setInt(1, idAdmin);
-                        stmtBed.executeUpdate();
-                       
-                            System.out.println("Administrador ingresado con exito.");
-                    } catch(SQLException e){
-                        System.out.println("Error al agregar el administrador: "+ e.getMessage());
-                    } 
-                } else {
-                    System.out.println("No se pudo obtener el ID del usuario.");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al agregar usuario: " + e.getMessage());
-            throw new DAOException("Error al agregar usuario: " + e.getMessage());
-        }
-        
-        
-    }
-    */
+  
     
     
     
