@@ -11,6 +11,6 @@ import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
  *
  * @author exero
  */
-public interface BedelDAO {
+public interface BedelDAO extends UsuarioDAO {
     void crear(Bedel bedel) throws DAOException;
 }

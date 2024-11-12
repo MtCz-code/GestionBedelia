@@ -97,9 +97,5 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         }
     }
     
-  
-    
-    
-    
 }
 
