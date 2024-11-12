@@ -17,7 +17,7 @@ public interface UsuarioDAO {
     
     
     Integer crear(Usuario usuario) throws DAOException;
-    boolean validarIdLogin(String idLogin);
+    boolean validarIdLogin(String idLogin)  throws DAOException;
    
     //No es necesario codearlo
     //void crear(Administrador admin) throws DAOException;

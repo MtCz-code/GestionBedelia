@@ -76,8 +76,25 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     }
 
     @Override
-    public boolean validarIdLogin(String idLogin) {
-        return true;
+    public boolean validarIdLogin(String idLogin) throws DAOException {
+        
+        String query = "SELECT id_login FROM usuario where id_login = ?;";
+    
+ 
+        try (Connection conn = DataBaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1,idLogin);
+        
+            try(ResultSet rs = stmt.executeQuery()){
+                
+                return rs.next();
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("Error con la consulta." + e.getMessage());
+            throw new DAOException("Error con la consulta." + e.getMessage());
+        }
     }
     
   
