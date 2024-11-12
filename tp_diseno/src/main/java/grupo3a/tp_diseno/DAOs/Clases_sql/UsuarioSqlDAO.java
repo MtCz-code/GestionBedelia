@@ -42,7 +42,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     
     
     @Override
-    public void crear(Bedel bedel) throws DAOException {
+    public Integer crear(Bedel bedel) throws DAOException {
         String query = "INSERT INTO usuario (id_login, contrasena, nombre, apellido) VALUES (?, ?, ?, ?)";
     
  
@@ -61,9 +61,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                 if (generatedKeys.next()) {
                     int idBedel = generatedKeys.getInt(1);
                     
-                    bedel.setIdUsuario(idBedel);
-                    
-                    DAO.crear(bedel);
+                   return idBedel;
                     
                 } else {
                     System.out.println("No se pudo obtener el ID del usuario.");
@@ -74,9 +72,10 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             throw new DAOException("Error al agregar usuario: " + e.getMessage());
         }
         
+        return null;
     }
     
-    @Override //No es necesario codificar crear administrador, no tiene un gestor para eso. 
+    /* @Override //No es necesario codificar crear administrador, no tiene un gestor para eso. 
     public void crear(Administrador admin) throws DAOException {
         String query = "INSERT INTO usuario (contrasena, nombre, apellido) VALUES (?, ?, ?)";
     
@@ -114,7 +113,7 @@ public class UsuarioSqlDAO implements UsuarioDAO{
         
         
     }
-    
+    */
     
     
     

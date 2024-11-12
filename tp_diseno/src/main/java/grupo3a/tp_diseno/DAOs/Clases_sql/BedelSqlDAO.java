@@ -5,6 +5,7 @@
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.BedelDAO;
+import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
 import grupo3a.tp_diseno.database.DataBaseConnection;
@@ -19,6 +20,8 @@ import java.sql.Statement;
  */
 public class BedelSqlDAO implements BedelDAO {
 
+    private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
+    
     public BedelSqlDAO() {
     }
 
@@ -34,7 +37,10 @@ public class BedelSqlDAO implements BedelDAO {
 
     @Override
     public void crear(Bedel bedel) throws DAOException {
-
+        
+        bedel.setIdUsuario(DAO.crear(bedel));
+        
+        
         String queryB = "INSERT INTO bedel (id_usuario,turno,habilitado) VALUES (?,?,?)";
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(queryB)) {
             stmtBed.setInt(1, bedel.getIdUsuario());

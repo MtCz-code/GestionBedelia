@@ -16,6 +16,8 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    void crear(Bedel bedel) throws DAOException;
-    void crear(Administrador admin) throws DAOException;
+    Integer crear(Bedel bedel) throws DAOException;
+   
+    //No es necesario codearlo
+    //void crear(Administrador admin) throws DAOException;
 }

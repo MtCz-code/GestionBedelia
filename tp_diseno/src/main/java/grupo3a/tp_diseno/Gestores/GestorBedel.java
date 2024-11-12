@@ -1,5 +1,7 @@
 package grupo3a.tp_diseno.Gestores;
 
+import grupo3a.tp_diseno.DAOs.BedelDAO;
+import grupo3a.tp_diseno.DAOs.Clases_sql.BedelSqlDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
@@ -34,7 +36,7 @@ public class GestorBedel {
     BCrypt.hashpw(password, BCrypt.gensalt()): Aplica el algoritmo bcrypt a la contraseña junto con el "sal".
     BCrypt.checkpw(password, hashedPassword): Compara la contraseña proporcionada con el hash almacenado.
      */
-    private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
+    private BedelDAO DAO = BedelSqlDAO.getInstance();
 
     public void crear(BedelDTO bedelDTO) throws Exceptions.ValueException {
 
