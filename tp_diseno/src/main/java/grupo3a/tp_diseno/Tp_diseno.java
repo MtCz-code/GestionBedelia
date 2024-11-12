@@ -13,6 +13,7 @@ import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import grupo3a.tp_diseno.Modelos.Exceptions;
 import grupo3a.tp_diseno.Modelos.Exceptions.UIException;
 import java.awt.BorderLayout;
 
@@ -20,6 +21,8 @@ import java.awt.CardLayout;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFrame;
@@ -299,45 +302,51 @@ public class Tp_diseno {
         try {
             String regex = "([a-zA-Z])+";
             Pattern pattern = Pattern.compile(regex);
-            if (!pattern.matcher(nombre).matches())
+            if (!pattern.matcher(nombre).matches()) {
                 throw new UIException("Introduzca un nombre válido.");
+            }
 
             // apellido
             apellido = apellido.trim();
-            if (!pattern.matcher(apellido).matches())
+            if (!pattern.matcher(apellido).matches()) {
                 throw new UIException("Introduzca un apellido válido.");
+            }
 
             // contraseña
-            if (contraseña.length() == 0) 
+            if (contraseña.length() == 0) {
                 throw new UIException("Introduzca una contraseña.");
-            
+            }
+
             // o Longitud mínima de la contraseña
             int largoMin = 8;
-            if (contraseña.length() < largoMin) 
+            if (contraseña.length() < largoMin) {
                 throw new UIException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
-                
+            }
+
             // o Si la contraseña debe contener signos especiales (@#$%&*)
             if (!(contraseña.contains("@") || contraseña.contains("#")
                     || contraseña.contains("$") || contraseña.contains("%")
-                    || contraseña.contains("*")))
+                    || contraseña.contains("*"))) {
                 throw new UIException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
-                
+            }
+
             // o Si la contraseña debe contener al menos una letra mayúscula.
-            if (!contains(contraseña, 'A', 'Z')) 
+            if (!contains(contraseña, 'A', 'Z')) {
                 throw new UIException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
-            
+            }
+
             // o Si la contraseña debe contener al menos un dígito.
-            if (!contains(contraseña, '0', '9')) 
+            if (!contains(contraseña, '0', '9')) {
                 throw new UIException("<html>La contraseña debe contener <br>al menos un dígito</html>");
-                
+            }
+
             // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
             // TODO:
-
             // rcontraseña
-            if (!contraseña.equals(rContraseña))
+            if (!contraseña.equals(rContraseña)) {
                 throw new UIException("Las contraseñas no coinciden.");
-            
-            
+            }
+
             return true;
         } catch (UIException e) {
             alerta.setText(e.getMessage());
@@ -400,8 +409,37 @@ public class Tp_diseno {
 
             @Override
             public void next() {
-                if (verificar()) {
-                    /*BedelDTO bedel = new BedelDTO(
+                try {
+                    String nombre = registrarBedel.getNombre();
+                    String apellido = registrarBedel.getApellido();
+                    String idLogin = registrarBedel.getIdLogin();
+                    TurnoBedel turno = registrarBedel.getTurno();
+                    String contraseña = registrarBedel.getContraseña();
+                    String rContraseña = registrarBedel.getrContraseña();
+
+                    // rcontraseña
+                    if (!contraseña.equals(rContraseña)) {
+                        throw new UIException("Las contraseñas no coinciden.");
+                    }
+
+                    BedelDTO bedelDTO = new BedelDTO(idLogin, contraseña, nombre, apellido, turno, true);
+
+                    gestorBedel.crear(bedelDTO);
+
+                } catch (UIException e) {
+                    alerta.setText(e.getMessage());
+                    baseFrame.getPanel2().add(alerta);
+                    baseFrame.setPanel2Up();
+                    return;
+                } catch (Exceptions.ValueException e) {
+                    alerta.setText(e.getMessage());
+                    baseFrame.getPanel2().add(alerta);
+                    baseFrame.setPanel2Up();
+                    return;
+                }
+
+//                if (verificar()) {
+                /*BedelDTO bedel = new BedelDTO(
                             registrarBedel.getContraseña(),
                             registrarBedel.getNombre(),
                             registrarBedel.getApellido(),
@@ -410,23 +448,22 @@ public class Tp_diseno {
                     );
                     
                     gestorBedel.crear(bedel);
-*/
-                    alerta.setText("Bedel registrado con éxito");
-                    baseFrame.getPanel2().add(alerta);
-                    baseFrame.setPanel2Up();
-                    alerta.setListener(new Alerta.Listener() {
-                        @Override
-                        public void next() {
-                            baseFrame.getPanel2().remove(alerta);
-                            baseFrame.getPanel1().remove(mainPanel);
-                            baseFrame.getPanel1().add(menuAdmin);
-                            baseFrame.setPanel1Up();
-                            baseFrame.revalidate();
-                            baseFrame.repaint();
-                        }
-                    });
+                 */
+                alerta.setText("Bedel registrado con éxito");
+                baseFrame.getPanel2().add(alerta);
+                baseFrame.setPanel2Up();
+                alerta.setListener(new Alerta.Listener() {
+                    @Override
+                    public void next() {
+                        baseFrame.getPanel2().remove(alerta);
+                        baseFrame.getPanel1().remove(mainPanel);
+                        baseFrame.getPanel1().add(menuAdmin);
+                        baseFrame.setPanel1Up();
+                        baseFrame.revalidate();
+                        baseFrame.repaint();
+                    }
+                });
 
-                }
             }
         });
 

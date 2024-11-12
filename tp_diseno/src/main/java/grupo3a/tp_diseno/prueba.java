@@ -21,7 +21,7 @@ public class prueba {
     public static void main(String[] args) {
         GestorBedel gestorBedel = GestorBedel.getInstance();
     
-            gestorBedel.crear(new BedelDTO("Bedelaso123","bedel_1", "bedel_1", "bedel", TurnoBedel.NOCHE, true));
+//            gestorBedel.crear(new BedelDTO("Bedelaso123","bedel_1", "bedel_1", "bedel", TurnoBedel.NOCHE, true));
             
     }
     

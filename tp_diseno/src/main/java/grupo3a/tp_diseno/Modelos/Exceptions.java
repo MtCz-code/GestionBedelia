@@ -14,4 +14,10 @@ public class Exceptions {
             super(msg);
         }
     }
+    
+    public static class ValueException extends Exception {
+        public ValueException(String msg) {
+            super(msg);
+        }
+    }
 }
