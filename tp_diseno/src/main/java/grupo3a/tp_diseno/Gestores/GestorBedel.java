@@ -9,6 +9,7 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.Exceptions;
+import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Exceptions.ValueException;
 import grupo3a.tp_diseno.Modelos.Usuario;
 import static grupo3a.tp_diseno.Tp_diseno.contains;
@@ -37,6 +38,7 @@ public class GestorBedel {
     BCrypt.checkpw(password, hashedPassword): Compara la contraseña proporcionada con el hash almacenado.
      */
     private BedelDAO DAO = BedelSqlDAO.getInstance();
+    
 
     public void crear(BedelDTO bedelDTO) throws Exceptions.ValueException {
 
@@ -46,14 +48,19 @@ public class GestorBedel {
         TurnoBedel turno = bedelDTO.getTurno();
         String contraseña = bedelDTO.getContrasena();
 
-        // verificar el nombre
-        // borrar espacios al final(si hay)
-        
         idLogin = idLogin.trim();
-        if(DAO.validarIdLogin(idLogin))
+        
+        try {
+            if(DAO.validarIdLogin(idLogin)){
+                throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
+            }
+        }
+        catch(DAOException e) {
+           throw new ValueException("Error con la consulta." + e.getMessage());
+        }
         
         nombre = nombre.trim();
-
+        
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(nombre).matches()) {
@@ -93,10 +100,9 @@ public class GestorBedel {
         if (!contains(contraseña, '0', '9')) {
             throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
         }
-
-        // o Si la contraseña puede ser igual a una contraseña anterior del usuario.
+        
         // TODO:
-        Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, bedelDTO.isHabilitado());
+        Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, true);
 
         try {
             DAO.crear(bedel);

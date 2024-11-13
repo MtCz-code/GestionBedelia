@@ -18,7 +18,7 @@ import java.sql.Statement;
  *
  * @author exero
  */
-public class BedelSqlDAO implements BedelDAO {
+public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
     
@@ -38,8 +38,7 @@ public class BedelSqlDAO implements BedelDAO {
     @Override
     public void crear(Bedel bedel) throws DAOException {
         
-        bedel.setIdUsuario(DAO.crear(bedel));
-        
+        bedel.setIdUsuario(super.crear(bedel));
         
         String queryB = "INSERT INTO bedel (id_usuario,turno,habilitado) VALUES (?,?,?)";
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(queryB)) {

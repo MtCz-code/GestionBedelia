@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class ReservaEsporadica extends Reserva{
     public ReservaEsporadica(){
     }
+    
     public ReservaEsporadica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
             int idCatedra,String nombreCatedra,int idBedel,LocalDateTime fechaRegistro){
         

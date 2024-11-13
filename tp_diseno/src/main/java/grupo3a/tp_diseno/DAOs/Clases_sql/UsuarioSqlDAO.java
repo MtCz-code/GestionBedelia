@@ -76,7 +76,8 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     }
 
     @Override
-    public boolean validarIdLogin(String idLogin) throws DAOException {
+    // DEVUELVE TRUE SI YA EXISTE UN USUARIO CON ESE IDLOGIN
+    public boolean validarIdLogin(String idLogin) throws DAOException { 
         
         String query = "SELECT id_login FROM usuario where id_login = ?;";
     

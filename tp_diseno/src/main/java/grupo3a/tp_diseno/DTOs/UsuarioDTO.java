@@ -16,17 +16,23 @@ public class UsuarioDTO {
     private String contrasena;
     private String nombre;
     private String apellido;
-    private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
-    private boolean habilitado;
+    
 
-    public UsuarioDTO(String idLogin, String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
+    public UsuarioDTO(String idLogin, String contrasena, String nombre, String apellido) {
         this.idLogin = idLogin;
         this.contrasena = contrasena;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.turno = turno;
-        this.habilitado = habilitado;
     }
+
+    public UsuarioDTO(int idUsuario, String idLogin, String contrasena, String nombre, String apellido) {
+        this.idUsuario = idUsuario;
+        this.idLogin = idLogin;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+    
 
     public String getIdLogin() {
         return idLogin;
@@ -36,28 +42,6 @@ public class UsuarioDTO {
         this.idLogin = idLogin;
     }
     
-    
-    
-    public UsuarioDTO(int idUsuario, String contrasena, String nombre, String apellido) {
-        this.idUsuario = idUsuario;
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-    
-    public UsuarioDTO(String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.turno = turno;
-        this.habilitado = habilitado;
-    }
-    
-    public UsuarioDTO(String contrasena, String nombre, String apellido) {
-        this.contrasena = contrasena;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
 
     public int getIdUsuario() {
         return idUsuario;
@@ -91,22 +75,5 @@ public class UsuarioDTO {
         this.apellido = apellido;
     }
 
-    public TurnoBedel getTurno() {
-        return turno;
-    }
-
-    public void setTurno(TurnoBedel turno) {
-        this.turno = turno;
-    }
-
-    public boolean isHabilitado() {
-        return habilitado;
-    }
-
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
-    }
-    
-    
     
 }
