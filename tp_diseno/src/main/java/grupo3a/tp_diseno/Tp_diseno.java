@@ -1,8 +1,8 @@
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
-import grupo3a.tp_diseno.Interfaces.RegistrarBedel;
-import grupo3a.tp_diseno.DTOs.UsuarioDTO;
+import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
@@ -11,7 +11,6 @@ import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
-import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import grupo3a.tp_diseno.Modelos.Exceptions;
 import grupo3a.tp_diseno.Modelos.Exceptions.UIException;
@@ -21,10 +20,6 @@ import java.awt.CardLayout;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -58,7 +53,7 @@ public class Tp_diseno {
     public static void showReserva() {
         RegistrarAula registrarAula = new RegistrarAula();
         RegistrarAulaAnualDias registrarAulaAnualDias = new RegistrarAulaAnualDias();
-        RegistrarAulaAnualAula registrarAulaAnualAula = new RegistrarAulaAnualAula();
+        ResultadosAulas registrarAulaAnualAula = new ResultadosAulas();
         RegistrarAulaAnualHorarios registrarAulaAnualHorarios = new RegistrarAulaAnualHorarios();
         RegistrarAulaEsporadicaDias registrarAulaEsporadicaDias = new RegistrarAulaEsporadicaDias();
         RegistrarAulaInformacion registrarAulaInformacion = new RegistrarAulaInformacion();
@@ -243,7 +238,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaAnualAula.setListener(new RegistrarAulaAnualAula.Listener() {
+        registrarAulaAnualAula.setListener(new ResultadosAulas.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAulaInformacion");
@@ -404,9 +399,8 @@ public class Tp_diseno {
     }
 
     public static void main(String[] args) {
-//        showRegistroBedel();
-        showMenu();
-
+        //showMenu(); 
+        showReserva();
         /*
         // _-----------------------------------------------------------
 //        final GestorReserva gestorReserva = new GestorReserva();

@@ -109,6 +109,7 @@ public class RegistrarAula extends javax.swing.JPanel {
         boxTipoDeReserva.setForeground(new java.awt.Color(255, 255, 255));
         boxTipoDeReserva.setModel(new javax.swing.DefaultComboBoxModel<>(tipoDeReservas));
         boxTipoDeReserva.setToolTipText("");
+        boxTipoDeReserva.setPreferredSize(new java.awt.Dimension(250, 25));
         boxTipoDeReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxTipoDeReservaActionPerformed(evt);

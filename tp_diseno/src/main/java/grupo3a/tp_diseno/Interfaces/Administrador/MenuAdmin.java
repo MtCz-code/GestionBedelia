@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Administrador;
 
 
 public class MenuAdmin extends javax.swing.JPanel {
@@ -39,7 +39,7 @@ public class MenuAdmin extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrarBedel = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBuscarBedel = new javax.swing.JButton();
 
         jLabel7.setFont(new java.awt.Font("Montserrat Thin Light", 1, 40)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -85,12 +85,12 @@ public class MenuAdmin extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(16, 16, 16));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Buscar Bedel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarBedel.setBackground(new java.awt.Color(16, 16, 16));
+        btnBuscarBedel.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarBedel.setText("Buscar Bedel");
+        btnBuscarBedel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBuscarBedelActionPerformed(evt);
             }
         });
 
@@ -102,12 +102,12 @@ public class MenuAdmin extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarBedel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrarBedel, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnRegistrarBedel, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBuscarBedel, btnRegistrarBedel});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,11 +116,11 @@ public class MenuAdmin extends javax.swing.JPanel {
                 .addGap(96, 96, 96)
                 .addComponent(btnRegistrarBedel)
                 .addGap(82, 82, 82)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(btnBuscarBedel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnRegistrarBedel, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnBuscarBedel, btnRegistrarBedel});
 
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,14 +129,14 @@ public class MenuAdmin extends javax.swing.JPanel {
             listener.registrarBedel();
     }//GEN-LAST:event_btnRegistrarBedelActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnBuscarBedelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarBedelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnBuscarBedelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarBedel;
     private javax.swing.JButton btnRegistrarBedel;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

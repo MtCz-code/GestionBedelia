@@ -1,7 +1,8 @@
 
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Administrador;
 
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
+import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
 import java.awt.Dimension;
 
 
@@ -188,10 +189,10 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel13.add(jLabel6);
 
         jPanel5.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         lbNombre.setForeground(new java.awt.Color(255, 255, 255));
-        lbNombre.setText("Nombre");
+        lbNombre.setText("Nombre de usuario");
         lbNombre.setPreferredSize(new java.awt.Dimension(70, 20));
         jPanel5.add(lbNombre);
 
@@ -219,7 +220,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel12.add(jLabel2);
 
         jPanel19.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel19.setLayout(new java.awt.GridLayout());
+        jPanel19.setLayout(new java.awt.GridLayout(1, 0));
 
         lbApellido.setForeground(new java.awt.Color(255, 255, 255));
         lbApellido.setText("Apellido");
@@ -249,10 +250,10 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel14.add(jLabel3);
 
         jPanel20.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel20.setLayout(new java.awt.GridLayout());
+        jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
         lbLogin.setForeground(new java.awt.Color(255, 255, 255));
-        lbLogin.setText("Nombre de usuario");
+        lbLogin.setText("Nombre");
         lbLogin.setPreferredSize(new java.awt.Dimension(70, 20));
         jPanel20.add(lbLogin);
 
@@ -279,7 +280,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel15.add(jLabel4);
 
         jPanel21.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel21.setLayout(new java.awt.GridLayout());
+        jPanel21.setLayout(new java.awt.GridLayout(1, 0));
 
         lbTurno.setForeground(new java.awt.Color(255, 255, 255));
         lbTurno.setText("Turno en el que trabaja");
@@ -311,7 +312,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel16.add(jLabel5);
 
         jPanel22.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel22.setLayout(new java.awt.GridLayout());
+        jPanel22.setLayout(new java.awt.GridLayout(1, 0));
 
         lbContraseña.setForeground(new java.awt.Color(255, 255, 255));
         lbContraseña.setText("Contraseña");
@@ -341,7 +342,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel17.add(jLabel9);
 
         jPanel23.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel23.setLayout(new java.awt.GridLayout());
+        jPanel23.setLayout(new java.awt.GridLayout(1, 0));
 
         lbRContraseña.setForeground(new java.awt.Color(255, 255, 255));
         lbRContraseña.setText("Repetir contraseña");
