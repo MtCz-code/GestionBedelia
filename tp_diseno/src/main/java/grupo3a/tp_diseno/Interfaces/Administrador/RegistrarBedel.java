@@ -71,8 +71,8 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel13 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        lbNombre = new javax.swing.JLabel();
-        tfNombre = new javax.swing.JTextField();
+        lbLogin = new javax.swing.JLabel();
+        tfLogin = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
@@ -81,8 +81,8 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel14 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
-        lbLogin = new javax.swing.JLabel();
-        tfLogin = new javax.swing.JTextField();
+        lbNombre = new javax.swing.JLabel();
+        tfNombre = new javax.swing.JTextField();
         jPanel15 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
@@ -197,20 +197,20 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(26, 26, 26));
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
-        lbNombre.setForeground(new java.awt.Color(255, 255, 255));
-        lbNombre.setText("Nombre de usuario");
-        lbNombre.setPreferredSize(new java.awt.Dimension(70, 20));
-        jPanel5.add(lbNombre);
+        lbLogin.setForeground(new java.awt.Color(255, 255, 255));
+        lbLogin.setText("Nombre de usuario");
+        lbLogin.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel5.add(lbLogin);
 
-        tfNombre.setBackground(new java.awt.Color(40, 40, 40));
-        tfNombre.setForeground(new java.awt.Color(255, 255, 255));
-        tfNombre.setPreferredSize(new java.awt.Dimension(64, 20));
-        tfNombre.addActionListener(new java.awt.event.ActionListener() {
+        tfLogin.setBackground(new java.awt.Color(40, 40, 40));
+        tfLogin.setForeground(new java.awt.Color(255, 255, 255));
+        tfLogin.setPreferredSize(new java.awt.Dimension(64, 20));
+        tfLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfNombreActionPerformed(evt);
+                tfLoginActionPerformed(evt);
             }
         });
-        jPanel5.add(tfNombre);
+        jPanel5.add(tfLogin);
 
         jPanel13.add(jPanel5);
 
@@ -258,19 +258,19 @@ public class RegistrarBedel extends javax.swing.JPanel {
         jPanel20.setBackground(new java.awt.Color(26, 26, 26));
         jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
-        lbLogin.setForeground(new java.awt.Color(255, 255, 255));
-        lbLogin.setText("Nombre");
-        lbLogin.setPreferredSize(new java.awt.Dimension(70, 20));
-        jPanel20.add(lbLogin);
+        lbNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lbNombre.setText("Nombre");
+        lbNombre.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel20.add(lbNombre);
 
-        tfLogin.setBackground(new java.awt.Color(40, 40, 40));
-        tfLogin.setForeground(new java.awt.Color(255, 255, 255));
-        tfLogin.addActionListener(new java.awt.event.ActionListener() {
+        tfNombre.setBackground(new java.awt.Color(40, 40, 40));
+        tfNombre.setForeground(new java.awt.Color(255, 255, 255));
+        tfNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLoginActionPerformed(evt);
+                tfNombreActionPerformed(evt);
             }
         });
-        jPanel20.add(tfLogin);
+        jPanel20.add(tfNombre);
 
         jPanel14.add(jPanel20);
 
@@ -460,9 +460,9 @@ public class RegistrarBedel extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
-        nombre = tfNombre.getText();
-    }//GEN-LAST:event_tfNombreActionPerformed
+    private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
+        idLogin = tfLogin.getText();
+    }//GEN-LAST:event_tfLoginActionPerformed
 
     private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
         apellido = tfApellido.getText();
@@ -525,9 +525,9 @@ public class RegistrarBedel extends javax.swing.JPanel {
             listener.back();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
-         idLogin = tfLogin.getText();
-    }//GEN-LAST:event_tfLoginActionPerformed
+    private void tfNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreActionPerformed
+         nombre = tfNombre.getText();
+    }//GEN-LAST:event_tfNombreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
