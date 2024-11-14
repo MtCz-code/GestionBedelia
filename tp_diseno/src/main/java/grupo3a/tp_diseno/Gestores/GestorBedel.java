@@ -48,6 +48,7 @@ public class GestorBedel {
         TurnoBedel turno = bedelDTO.getTurno();
         String contraseña = bedelDTO.getContrasena();
 
+        
         idLogin = idLogin.trim();
         
         try {
@@ -58,6 +59,14 @@ public class GestorBedel {
         catch(DAOException e) {
            throw new ValueException("Error con la consulta." + e.getMessage());
         }
+        
+        String patronIdLogin = "^[a-zA-Z0-9_]+$";
+        
+        Pattern patternIdLogin = Pattern.compile(patronIdLogin);
+        if (!patternIdLogin.matcher(idLogin).matches()) {
+            throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
+        }
+        
         
         nombre = nombre.trim();
         
