@@ -399,8 +399,8 @@ public class Tp_diseno {
     }
 
     public static void main(String[] args) {
-        //showMenu(); 
-        showReserva();
+        showMenu(); 
+//        showReserva();
         /*
         // _-----------------------------------------------------------
 //        final GestorReserva gestorReserva = new GestorReserva();
