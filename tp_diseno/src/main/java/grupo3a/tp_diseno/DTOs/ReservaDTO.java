@@ -27,6 +27,8 @@ public class ReservaDTO {
     private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
     private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     private int idCuatrimestre1; private int idCuatrimestre2;
+    private List<DetalleReservaDTO> detallesReserva;
+    
 
     public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
             int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, TipoReservaPeriodica tipo,
@@ -46,6 +48,15 @@ public class ReservaDTO {
         this.idCuatrimestre1 = idCuatrimestre1;
         this.idCuatrimestre2 = idCuatrimestre2;
     }
+
+    public List<DetalleReservaDTO> getDetallesReserva() {
+        return detallesReserva;
+    }
+
+    public void setDetallesReserva(List<DetalleReservaDTO> detallesReserva) {
+        this.detallesReserva = detallesReserva;
+    }
+    
 
     public int getIdReserva() {
         return idReserva;
