@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
+
+import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
 
 /**
  *
  * @author imsac
  */
-public class RegistrarAulaAnualDias extends javax.swing.JPanel {
+public class TipoPeriodicaDias extends javax.swing.JPanel {
 
     /**
      * Creates new form RegistrarAulaAnualDias1
@@ -29,7 +31,7 @@ public class RegistrarAulaAnualDias extends javax.swing.JPanel {
     
     private Listener listener;
     
-    public RegistrarAulaAnualDias() {
+    public TipoPeriodicaDias() {
         initComponents();
     }
     

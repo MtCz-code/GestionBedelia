@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
 
 /**
  *
  * @author imsac
  */
-public class RegistrarAulaInformacion extends javax.swing.JPanel {
+public class RegistrarReservaDatos extends javax.swing.JPanel {
 
     /**
      * Creates new form RegistrarAulaAnualDias1
@@ -30,7 +31,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
      
     private Listener listener;
     
-    public RegistrarAulaInformacion() {
+    public RegistrarReservaDatos() {
         initComponents();
     }
 
@@ -147,6 +148,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Cantidad Alumnos");
 
+        tfCantAlumnos.setBackground(new java.awt.Color(153, 153, 153));
         tfCantAlumnos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0"))));
         tfCantAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +190,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Tipo de aula");
 
+        cbTipoAula.setBackground(new java.awt.Color(153, 153, 153));
         cbTipoAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estandar", "Multimedios", "Laboratorio" }));
         cbTipoAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +222,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Nombre de catedra");
 
+        tfNombreCatedra.setBackground(new java.awt.Color(153, 153, 153));
         tfNombreCatedra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfNombreCatedraActionPerformed(evt);
@@ -256,6 +260,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Nombre docente");
 
+        tfNombreDocente.setBackground(new java.awt.Color(153, 153, 153));
         tfNombreDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfNombreDocenteActionPerformed(evt);
@@ -288,6 +293,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Apellido docente");
 
+        tfApellidoDocente.setBackground(new java.awt.Color(153, 153, 153));
         tfApellidoDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfApellidoDocenteActionPerformed(evt);
@@ -320,6 +326,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Correo");
 
+        tfCorreo.setBackground(new java.awt.Color(153, 153, 153));
         tfCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCorreoActionPerformed(evt);
@@ -382,7 +389,7 @@ public class RegistrarAulaInformacion extends javax.swing.JPanel {
                 .addGap(50, 50, 50)
                 .addComponent(jLabel1)
                 .addGap(20, 20, 20)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

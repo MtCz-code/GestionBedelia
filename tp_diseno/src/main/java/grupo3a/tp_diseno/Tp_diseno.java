@@ -1,5 +1,10 @@
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.RegistrarReservaDatos;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaDias;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
@@ -51,12 +56,12 @@ public class Tp_diseno {
     }
 
     public static void showReserva() {
-        RegistrarAula registrarAula = new RegistrarAula();
-        RegistrarAulaAnualDias registrarAulaAnualDias = new RegistrarAulaAnualDias();
+        SeleccionTipoReserva registrarAula = new SeleccionTipoReserva();
+        TipoPeriodicaDias registrarAulaAnualDias = new TipoPeriodicaDias();
         ResultadosAulas registrarAulaAnualAula = new ResultadosAulas();
-        RegistrarAulaAnualHorarios registrarAulaAnualHorarios = new RegistrarAulaAnualHorarios();
+        TipoPeriodicaHorarios registrarAulaAnualHorarios = new TipoPeriodicaHorarios();
         RegistrarAulaEsporadicaDias registrarAulaEsporadicaDias = new RegistrarAulaEsporadicaDias();
-        RegistrarAulaInformacion registrarAulaInformacion = new RegistrarAulaInformacion();
+        RegistrarReservaDatos registrarAulaInformacion = new RegistrarReservaDatos();
         Alerta alerta = new Alerta();
 
         CardLayout cardLayout = new CardLayout();
@@ -81,13 +86,13 @@ public class Tp_diseno {
         GestorReserva gestorReserva = new GestorReserva();
 
         registrarAula.setListener(() -> {
-            if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.ANUAL) {
+            if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.ANUAL) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
-            } else if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
+            } else if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
-            } else if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
+            } else if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
             } else {  //esporadica
@@ -96,7 +101,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaAnualDias.setListener(new RegistrarAulaAnualDias.Listener() {
+        registrarAulaAnualDias.setListener(new TipoPeriodicaDias.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAula");
@@ -129,7 +134,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaAnualHorarios.setListener(new RegistrarAulaAnualHorarios.Listener() {
+        registrarAulaAnualHorarios.setListener(new TipoPeriodicaHorarios.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
@@ -206,7 +211,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaInformacion.setListener(new RegistrarAulaInformacion.Listener() {
+        registrarAulaInformacion.setListener(new RegistrarReservaDatos.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAulaAnualHorarios");
