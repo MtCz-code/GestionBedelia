@@ -9,6 +9,9 @@ import java.util.List;
 public class ReservaPeriodica extends Reserva{
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
+    private Cuatrimestre cuatrimestre1;
+    private Cuatrimestre cuatrimestre2;
+    
 
     public ReservaPeriodica(){
     this.diasSemana= new ArrayList<>();}
@@ -18,6 +21,23 @@ public class ReservaPeriodica extends Reserva{
             this.tipo=tipo;
             this.diasSemana=diasSemana;
     }
+
+    public Cuatrimestre getCuatrimestre1() {
+        return cuatrimestre1;
+    }
+
+    public void setCuatrimestre1(Cuatrimestre cuatrimestre1) {
+        this.cuatrimestre1 = cuatrimestre1;
+    }
+
+    public Cuatrimestre getCuatrimestre2() {
+        return cuatrimestre2;
+    }
+
+    public void setCuatrimestre2(Cuatrimestre cuatrimestre2) {
+        this.cuatrimestre2 = cuatrimestre2;
+    }
+    
     
     public TipoReservaPeriodica getTipo() {
         return tipo;

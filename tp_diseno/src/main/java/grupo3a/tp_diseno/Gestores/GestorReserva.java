@@ -211,13 +211,13 @@ public class GestorReserva {
             // fecha en reserva esta al pedo, si es anual, se pueden calcular las fechas
             if (reservaTipoReserva == RESERVA_ANUAL) {
                 // asignar primer cuatrimestre
-                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1, 2);
+                ((ReservaPeriodicaDAO)reservaDAO).asociarCuatrimestre(reserva.getIdReserva(), 1, 2);
             }
             else if (reservaTipoReserva == RESERVA_PRIMER_CUATRIMESTRE) {
-                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 1);
+               ((ReservaPeriodicaDAO)reservaDAO).asociarCuatrimestre(reserva.getIdReserva(), 1);
             }
             else {
-                reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), 2);
+                ((ReservaPeriodicaDAO)reservaDAO).asociarCuatrimestre(reserva.getIdReserva(), 2);
             }
             
         } 

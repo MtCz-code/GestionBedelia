@@ -15,11 +15,6 @@ import grupo3a.tp_diseno.Modelos.ReservaPeriodica;
  */
 public interface ReservaDAO {
     
-    
-    
-    Integer crear(ReservaPeriodica reserva);
-    Integer crear(ReservaEsporadica reserva);
-    void asociarCuatrimestre(int idReserva, int cuat1, int cuat2);
-    void asociarCuatrimestre(int idReserva, int idCuatrimestre);
-    
+    Integer crear(Reserva reserva);
+    //Integer crear(ReservaEsporadica reserva);
 }
