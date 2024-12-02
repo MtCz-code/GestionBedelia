@@ -1,5 +1,6 @@
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.RegistrarReservaDatos;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
@@ -62,7 +63,7 @@ public class Tp_diseno {
         TipoPeriodicaDias registrarAulaAnualDias = new TipoPeriodicaDias();
         ResultadosAulas registrarAulaAnualAula = new ResultadosAulas();
         TipoPeriodicaHorarios registrarAulaAnualHorarios = new TipoPeriodicaHorarios();
-        RegistrarAulaEsporadicaDias registrarAulaEsporadicaDias = new RegistrarAulaEsporadicaDias();
+        EsporadicaDias registrarAulaEsporadicaDias = new EsporadicaDias();
         RegistrarReservaDatos registrarAulaInformacion = new RegistrarReservaDatos();
         Alerta alerta = new Alerta();
 
@@ -266,12 +267,24 @@ public class Tp_diseno {
         });
     }
 
-    
+ /**
+ * MenuAdmin *-> RegistarBedel
+ *           └-> BuscarBedel
+ * 
+ * * MenuBedel *-> RegReserv *-> selTipoReser *-> (Per)Anual
+ *                                            ├-> (Per)PCuatr
+ *                                            ├-> (Per)SCuatr
+ *                                            └-> Esp
+ *             ├-> BuscarAulas
+ *             ├-> ListarAulasParaUnCurso
+ *             └-> ListarAulasParaUnDia
+ */
     
     private static Interfaz interfaz;
     
     public static void main(String[] args) {
-        interfaz = Interfaz.getInstance(); 
+//        interfaz = Interfaz.getInstance(); 
+    EsporadicaDias esp = new EsporadicaDias();
 
     }
 }

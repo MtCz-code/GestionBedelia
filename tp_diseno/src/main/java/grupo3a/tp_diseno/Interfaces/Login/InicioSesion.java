@@ -10,9 +10,11 @@ package grupo3a.tp_diseno.Interfaces.Login;
  */
 public class InicioSesion extends javax.swing.JPanel {
 
-    /**
-     * Creates new form InicioSesionAdmin
-     */
+    
+    private interface Listener {
+        void iniciar();
+    }
+    
     public InicioSesion() {
         initComponents();
     }
