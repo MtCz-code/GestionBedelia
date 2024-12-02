@@ -8,14 +8,14 @@ import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
-import static grupo3a.tp_diseno.Tp_diseno.contains;
+//import static grupo3a.tp_diseno.Tp_diseno.contains;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import static javax.management.Query.value;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class GestorBedel{
+public class GestorBedel {
 
     //singleton
     private static GestorBedel instance;
@@ -29,9 +29,8 @@ public class GestorBedel{
 
     public GestorBedel() {
     }
-    
+
     private BedelDAO DAO = BedelSqlDAO.getInstance();
-    
 
     public void crear(BedelDTO bedelDTO) throws Exceptions.ValueException {
 
@@ -41,28 +40,25 @@ public class GestorBedel{
         TurnoBedel turno = bedelDTO.getTurno();
         String contraseña = bedelDTO.getContrasena();
 
-        
         idLogin = idLogin.trim();
-        
+
         try {
-            if(DAO.validarIdLogin(idLogin)){
+            if (DAO.validarIdLogin(idLogin)) {
                 throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
             }
+        } catch (DAOException e) {
+            throw new ValueException("Error con la consulta." + e.getMessage());
         }
-        catch(DAOException e) {
-           throw new ValueException("Error con la consulta." + e.getMessage());
-        }
-        
+
         String patronIdLogin = "^[a-zA-Z0-9_]+$";
-        
+
         Pattern patternIdLogin = Pattern.compile(patronIdLogin);
         if (!patternIdLogin.matcher(idLogin).matches()) {
             throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
         }
-        
-        
+
         nombre = nombre.trim();
-        
+
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(nombre).matches()) {
@@ -102,7 +98,7 @@ public class GestorBedel{
         if (!contains(contraseña, '0', '9')) {
             throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
         }
-        
+
         // TODO:
         Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, true);
 
@@ -150,6 +146,32 @@ public class GestorBedel{
             bedeles.add(BedelDTOaux);
         }
         return bedeles;
-       
+    }
+    
+    public List<BedelDTO> buscarBedel(Object value) throws Exceptions.ValueException {
+
+        if (value instanceof String) {
+            String regex = "([a-zA-Z])+";
+            Pattern pattern = Pattern.compile(regex);
+            String apellido = (String) value;
+
+            apellido = apellido.trim();
+            if (!pattern.matcher(apellido).matches()) {
+                throw new ValueException("Introduzca un apellido válido.");
+            }
+
+        }
+        return null;
+    }
+    
+    // utilidades
+    public static boolean contains(String s, char a, char b) {
+        for (int i = a; i <= b; i++) {
+            char e = (char) i;
+            if (s.contains(String.valueOf(e))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
