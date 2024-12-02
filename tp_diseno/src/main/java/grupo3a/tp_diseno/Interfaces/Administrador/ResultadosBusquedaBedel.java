@@ -34,7 +34,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
     public ResultadosBusquedaBedel() throws Exceptions.ValueException {
         initComponents();
-        actualizarTabla();
+ //       actualizarTabla();
         this.tableBedeles.setAutoResizeMode(5);
         tableBedeles.setRowHeight(40);
         JTableHeader tableHeader = tableBedeles.getTableHeader();

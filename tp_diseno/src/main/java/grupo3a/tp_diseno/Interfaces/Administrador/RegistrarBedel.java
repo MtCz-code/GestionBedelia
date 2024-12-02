@@ -204,6 +204,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
 
         tfLogin.setBackground(new java.awt.Color(40, 40, 40));
         tfLogin.setForeground(new java.awt.Color(255, 255, 255));
+        tfLogin.setEnabled(false);
         tfLogin.setPreferredSize(new java.awt.Dimension(64, 20));
         tfLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,7 +462,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
-        idLogin = tfLogin.getText();
+        
     }//GEN-LAST:event_tfLoginActionPerformed
 
     private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
