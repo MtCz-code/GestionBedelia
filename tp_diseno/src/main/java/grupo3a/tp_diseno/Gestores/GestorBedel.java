@@ -9,8 +9,10 @@ import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import static grupo3a.tp_diseno.Tp_diseno.contains;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import static javax.management.Query.value;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class GestorBedel{
@@ -112,20 +114,42 @@ public class GestorBedel{
 
     }
 
-    public List<BedelDTO> buscarBedel(Object value) throws Exceptions.ValueException {
-        
+    public List<BedelDTO> buscarBedel(String datoCriterio) throws Exceptions.ValueException, DAOException {
+        List<BedelDTO> bedeles = new ArrayList<>();
+        List<Bedel> bedelesAux = new ArrayList<>();
 
-        if(value instanceof String){
+        if(datoCriterio instanceof String){
                     String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
-        String apellido=(String) value;
+        String apellido=(String) datoCriterio;
         
         apellido = apellido.trim();
-        if (!pattern.matcher(apellido).matches()) {
-            throw new ValueException("Introduzca un apellido válido.");
+            if (!pattern.matcher(apellido).matches()) {
+                throw new ValueException("Introduzca un apellido válido.");
+            }
         }
-
+        bedelesAux = DAO.buscarBedel(datoCriterio);
+        
+        for(Bedel bedel : bedelesAux){
+            BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
+            bedeles.add(BedelDTOaux);
+        }
+        return bedeles;
     }
-    return null;
-}
+             
+    
+    public List<BedelDTO> buscarBedel(TurnoBedel datoCriterio) throws Exceptions.ValueException, DAOException {
+        
+        List<BedelDTO> bedeles = new ArrayList<>();
+        List<Bedel> bedelesAux = new ArrayList<>();
+        
+       bedelesAux = DAO.buscarBedel(datoCriterio);
+        
+        for(Bedel bedel : bedelesAux){
+            BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
+            bedeles.add(BedelDTOaux);
+        }
+        return bedeles;
+       
+    }
 }

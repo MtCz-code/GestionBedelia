@@ -19,6 +19,12 @@ public class BedelDTO extends UsuarioDTO{
         this.turno = turno;
         this.habilitado = habilitado;
     }
+    
+    public BedelDTO(int id, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
+        super(id,nombre,apellido);
+        this.turno=turno;
+        this.habilitado=habilitado;
+    }
 
     public TurnoBedel getTurno() {
         return turno;

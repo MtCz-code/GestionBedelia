@@ -4,8 +4,10 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,6 @@ import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
  */
 public interface BedelDAO extends UsuarioDAO {
     void crear(Bedel bedel) throws DAOException;
+    List buscarBedel(String datoCriterio) throws DAOException;
+    List buscarBedel(TurnoBedel datoCriterio) throws DAOException;
 }
