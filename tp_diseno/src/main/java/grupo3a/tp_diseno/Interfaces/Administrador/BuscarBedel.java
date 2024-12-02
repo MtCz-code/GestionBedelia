@@ -6,30 +6,17 @@ import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 import java.awt.CardLayout;
 
 public class BuscarBedel extends javax.swing.JPanel {
-
     private String apellido;
     private TurnoBedel turno;
     private String seleccionado;
     
-
         public interface Listener {
         void back();
         void next();
     }
     
     private Listener listener;
-    
-    public Object getDato(){
-        try{
-        if(seleccionado.equals("Apellido")) return apellido;
-        else if(seleccionado.equals("Turno")) return turno;}
-        catch(NullPointerException e){
-        throw new IllegalArgumentException("Elija un criterio");
-        }
-        return null;
-    }
-    
-    
+
     public BuscarBedel() {
         initComponents();
         panelCards.add(panelApellido, "Apellido");
@@ -41,6 +28,21 @@ public class BuscarBedel extends javax.swing.JPanel {
         
         public void setListener(Listener listener){
         this.listener = listener;
+    }
+        
+public String getSeleccionado() {
+    if (seleccionado == null) {
+        throw new NullPointerException("Seleccione un criterio");
+    }
+    return seleccionado;
+}
+       
+        public String getApellido() {
+        return apellido;
+    }
+
+    public TurnoBedel getTurno() {
+        return turno;
     }
 
     @SuppressWarnings("unchecked")
@@ -382,12 +384,16 @@ public class BuscarBedel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        apellido=tfApellido.getText();
+        try{
+            apellido=tfApellido.getText();
         turno=switch (cbTurno.getSelectedIndex()) {
             case 0 -> TurnoBedel.MAÑANA;
             case 1 -> TurnoBedel.TARDE;
             default -> TurnoBedel.NOCHE;
         };
+        }catch(NullPointerException e){
+            throw new NullPointerException("Seleccione un criterio");
+        }
         if (listener != null)
         listener.next();
 
