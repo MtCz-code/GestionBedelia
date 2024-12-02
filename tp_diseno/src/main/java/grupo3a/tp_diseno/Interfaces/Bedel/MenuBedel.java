@@ -10,13 +10,23 @@ package grupo3a.tp_diseno.Interfaces.Bedel;
  */
 public class MenuBedel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form MenuBedel
-     */
+    public interface Listener {
+        void registrarReserva();
+        void buscarAulas();
+        void listarReservasParaUnCurso();
+        void listarReservasParaUnDia();
+    };
+    
+    private Listener listener;
+    
     public MenuBedel() {
         initComponents();
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,7 +136,7 @@ public class MenuBedel extends javax.swing.JPanel {
                 .addComponent(btnListarReservaPorCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnListarReservaPorDia, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -135,36 +145,34 @@ public class MenuBedel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 800, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarReservaPorDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarReservaPorDiaActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.listarReservasParaUnCurso();
     }//GEN-LAST:event_btnListarReservaPorDiaActionPerformed
 
     private void btnListarReservaPorCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarReservaPorCursoActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.listarReservasParaUnCurso();
     }//GEN-LAST:event_btnListarReservaPorCursoActionPerformed
 
     private void btnBuscarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAulaActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.buscarAulas();
     }//GEN-LAST:event_btnBuscarAulaActionPerformed
 
     private void btnRegistrarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarReservaActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.registrarReserva();
     }//GEN-LAST:event_btnRegistrarReservaActionPerformed
 
 
