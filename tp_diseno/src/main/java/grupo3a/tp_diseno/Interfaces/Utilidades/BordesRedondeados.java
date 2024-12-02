@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Utilidades;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

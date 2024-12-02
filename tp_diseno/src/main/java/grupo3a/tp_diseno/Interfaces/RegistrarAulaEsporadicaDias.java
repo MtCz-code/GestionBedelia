@@ -4,6 +4,8 @@
  */
 package grupo3a.tp_diseno.Interfaces;
 
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
+
 /**
  *
  * @author imsac

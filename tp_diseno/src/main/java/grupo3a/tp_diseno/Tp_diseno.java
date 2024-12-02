@@ -17,8 +17,10 @@ import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
-import grupo3a.tp_diseno.Modelos.Exceptions;
-import grupo3a.tp_diseno.Modelos.Exceptions.UIException;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.UIException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
+import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
 import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
@@ -265,6 +267,7 @@ public class Tp_diseno {
     }
 
     static RegistrarBedel registrarBedel;
+    static BuscarBedel buscarBedel;
     static Alerta alerta;
     static AlertaConfirmacion alertaConfirmacion;
     static BaseFrame baseFrame;
@@ -297,12 +300,54 @@ public class Tp_diseno {
                 baseFrame.getPanel1().remove(menuAdmin);
                 showRegistroBedel();
             }
+            @Override
+            public void buscarBedel() {
+                baseFrame.getPanel1().remove(menuAdmin);
+                showBuscarBedel();
+            }
+        });
+
+    }
+    //terminar
+        public static void showBuscarBedel() {
+        buscarBedel = new BuscarBedel();
+        alerta = new Alerta();
+        alertaConfirmacion = new AlertaConfirmacion();
+
+        CardLayout cardLayout = new CardLayout();
+        JPanel mainPanel = new JPanel(cardLayout);
+        mainPanel.add(buscarBedel, "buscarBedel");
+
+        baseFrame.getPanel1().add(mainPanel);
+        baseFrame.revalidate();
+        baseFrame.repaint();
+
+        buscarBedel.setListener(new BuscarBedel.Listener() {
+            @Override
+            public void back() {
+                alertaConfirmacion.setText("¿Esta seguro que desea regresar?");
+                baseFrame.getPanel2().add(alertaConfirmacion);
+                baseFrame.setPanel2Up();
+            }
+
+            @Override
+            public void next() {
+                try {
+                  gestorBedel.buscarBedel(buscarBedel.getDato());
+
+                } catch (IllegalArgumentException| ValueException e) {
+                    alerta.setText(e.getMessage());
+                    baseFrame.getPanel2().add(alerta);
+                    baseFrame.setPanel2Up();
+                }
+
+
+            }
         });
 
     }
 
     public static void showRegistroBedel() {
-        registrarBedel = new RegistrarBedel();
         registrarBedel = new RegistrarBedel();
         alerta = new Alerta();
         alertaConfirmacion = new AlertaConfirmacion();
@@ -316,8 +361,6 @@ public class Tp_diseno {
         baseFrame.getPanel1().add(mainPanel);
         baseFrame.revalidate();
         baseFrame.repaint();
-
-        cardLayout.show(mainPanel, "registrarAula");
 
         registrarBedel.setListener(new RegistrarBedel.Listener() {
             @Override
@@ -346,12 +389,7 @@ public class Tp_diseno {
 
                     gestorBedel.crear(bedelDTO);
 
-                } catch (UIException e) {
-                    alerta.setText(e.getMessage());
-                    baseFrame.getPanel2().add(alerta);
-                    baseFrame.setPanel2Up();
-                    return;
-                } catch (Exceptions.ValueException e) {
+                } catch (UIException | Exceptions.ValueException e) {
                     alerta.setText(e.getMessage());
                     baseFrame.getPanel2().add(alerta);
                     baseFrame.setPanel2Up();
@@ -361,16 +399,13 @@ public class Tp_diseno {
                 alerta.setText("Bedel registrado con éxito");
                 baseFrame.getPanel2().add(alerta);
                 baseFrame.setPanel2Up();
-                alerta.setListener(new Alerta.Listener() {
-                    @Override
-                    public void next() {
-                        baseFrame.getPanel2().remove(alerta);
-                        baseFrame.getPanel1().remove(mainPanel);
-                        baseFrame.getPanel1().add(menuAdmin);
-                        baseFrame.setPanel1Up();
-                        baseFrame.revalidate();
-                        baseFrame.repaint();
-                    }
+                alerta.setListener(() -> {
+                    baseFrame.getPanel2().remove(alerta);
+                    baseFrame.getPanel1().remove(mainPanel);
+                    baseFrame.getPanel1().add(menuAdmin);
+                    baseFrame.setPanel1Up();
+                    baseFrame.revalidate();
+                    baseFrame.repaint();
                 });
 
             }

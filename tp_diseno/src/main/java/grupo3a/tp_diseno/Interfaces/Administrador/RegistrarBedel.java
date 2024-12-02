@@ -2,7 +2,7 @@
 package grupo3a.tp_diseno.Interfaces.Administrador;
 
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 import java.awt.Dimension;
 
 
@@ -496,23 +496,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         idLogin = tfLogin.getText();
         contraseña = new String(pfContraseña.getPassword());
         rContraseña = new String(pfContraseñaR.getPassword());
-        // la verificacion se hace en el main
-//        String regex = "([a-zA-Z])+";
-//        String input = "hola";
 
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(input);
-        
-//        System.out.println("" + matcher. matches());
-
-//        if (pattern.matcher(nombre).matches()) ;
-//        if (pattern.matcher(apellido).matches()) ;
-        
-//        if (idBedel.length() > 0);
-//        if (contraseña.length() > 0);
-        
-//        if (!contraseña.equals(rContraseña));
-        
         if (listener != null)
             listener.next();
         

@@ -4,7 +4,7 @@
  */
 package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
 
-import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 
 /**
  *

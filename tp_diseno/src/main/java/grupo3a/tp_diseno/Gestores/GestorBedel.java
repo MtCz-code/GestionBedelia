@@ -2,23 +2,18 @@ package grupo3a.tp_diseno.Gestores;
 
 import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.BedelSqlDAO;
-import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
-import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
-import grupo3a.tp_diseno.Modelos.Exceptions;
-import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
-import grupo3a.tp_diseno.Modelos.Exceptions.ValueException;
-import grupo3a.tp_diseno.Modelos.Usuario;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import static grupo3a.tp_diseno.Tp_diseno.contains;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
 
-public class GestorBedel {
+public class GestorBedel{
 
     //singleton
     private static GestorBedel instance;
@@ -32,11 +27,7 @@ public class GestorBedel {
 
     public GestorBedel() {
     }
-    /*
-    BCrypt.gensalt(): Genera un "sal" aleatorio, que se añade a la contraseña antes de hashearla. Esto previene ataques de diccionario y hace que el hash sea único incluso para contraseñas iguales.
-    BCrypt.hashpw(password, BCrypt.gensalt()): Aplica el algoritmo bcrypt a la contraseña junto con el "sal".
-    BCrypt.checkpw(password, hashedPassword): Compara la contraseña proporcionada con el hash almacenado.
-     */
+    
     private BedelDAO DAO = BedelSqlDAO.getInstance();
     
 
@@ -121,4 +112,20 @@ public class GestorBedel {
 
     }
 
+    public List<BedelDTO> buscarBedel(Object value) throws Exceptions.ValueException {
+        
+
+        if(value instanceof String){
+                    String regex = "([a-zA-Z])+";
+        Pattern pattern = Pattern.compile(regex);
+        String apellido=(String) value;
+        
+        apellido = apellido.trim();
+        if (!pattern.matcher(apellido).matches()) {
+            throw new ValueException("Introduzca un apellido válido.");
+        }
+
+    }
+    return null;
+}
 }
