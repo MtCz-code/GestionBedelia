@@ -23,11 +23,16 @@ public class Usuario {
         this.nombre=nombre;
         this.apellido=apellido;
     }
-    public Usuario(Integer id,String nombre, String apellido){
-        this.idUsuario=id;
-        this.nombre=nombre;
-        this.apellido=apellido;
+
+    public Usuario(int idUsuario, String idLogin, String contrasena, String nombre, String apellido) {
+        this.idUsuario = idUsuario;
+        this.idLogin = idLogin;
+        this.contrasena = contrasena;
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
+    
+    
     
     public int getIdUsuario() {
         return idUsuario;
