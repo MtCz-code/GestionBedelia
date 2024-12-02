@@ -2,6 +2,7 @@
 package grupo3a.tp_diseno.Modelos;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Reserva {
     private int idReserva;
@@ -13,6 +14,7 @@ public class Reserva {
     private String nombreCatedra;
     private LocalDateTime fechaRegistro;
     private int idBedel;
+    private List<DetalleReserva> detallesReserva;
     
     public Reserva(){
     
@@ -28,6 +30,14 @@ public class Reserva {
         this.nombreCatedra=nombreCatedra;
         this.idBedel = idBedel;
         this.fechaRegistro=fechaRegistro;
+    }
+
+    public List<DetalleReserva> getDetallesReserva() {
+        return detallesReserva;
+    }
+
+    public void setDetallesReserva(List<DetalleReserva> detallesReserva) {
+        this.detallesReserva = detallesReserva;
     }
 
     public int getIdReserva() {
