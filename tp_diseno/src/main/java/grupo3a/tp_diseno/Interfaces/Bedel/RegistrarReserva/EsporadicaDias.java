@@ -1,43 +1,27 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
+package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
 
-package grupo3a.tp_diseno.Interfaces;
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 
-import javax.swing.table.DefaultTableModel;
 
-public class ResultadosAulas extends javax.swing.JPanel {
+/**
+ *
+ * @author imsac
+ */
 
-    public interface Listener {
-        void back();
-        void next();
-    }
-    
-    private Listener listener;
-    private String[][] elements;
-    private int selectedElement;
-    
-    public ResultadosAulas() {
+        
+public class EsporadicaDias extends javax.swing.JPanel {
+
+    /**
+     * Creates new form RegistrarAulaEsporadicaDias1
+     */
+    public EsporadicaDias() {
         initComponents();
-        this.jTable1.setAutoResizeMode(5);
     }
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-    
-    public void setTable(String[][] elements) {
-        this.elements = elements;
-        String[] columnNames = {"Ubicacion", "Capacidad", "Caracteristicas"};
-        jTable1.setModel(new DefaultTableModel(elements, columnNames));
-    }
-    
-    public int getSelectedElementIndex(){
-        return selectedElement;
-    }
-    
-    public String[] getSelectedElement(){
-        if(elements != null && selectedElement > -1)
-            return elements[selectedElement];
-        return null;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,13 +31,15 @@ public class ResultadosAulas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel11 = new javax.swing.JPanel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        cbMartesHorario = new javax.swing.JComboBox<>();
+        cbMartesHorario1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
@@ -61,6 +47,35 @@ public class ResultadosAulas extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
+
+        jPanel11.setLayout(new java.awt.GridLayout());
+        jPanel11.add(jDateChooser2);
+
+        cbMartesHorario.setBackground(new java.awt.Color(40, 40, 40));
+        cbMartesHorario.setForeground(new java.awt.Color(255, 255, 255));
+        cbMartesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMartesHorario.setDoubleBuffered(true);
+        cbMartesHorario.setEnabled(false);
+        cbMartesHorario.setFocusable(false);
+        cbMartesHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMartesHorarioActionPerformed(evt);
+            }
+        });
+        jPanel11.add(cbMartesHorario);
+
+        cbMartesHorario1.setBackground(new java.awt.Color(40, 40, 40));
+        cbMartesHorario1.setForeground(new java.awt.Color(255, 255, 255));
+        cbMartesHorario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
+        cbMartesHorario1.setDoubleBuffered(true);
+        cbMartesHorario1.setEnabled(false);
+        cbMartesHorario1.setFocusable(false);
+        cbMartesHorario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMartesHorario1ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(cbMartesHorario1);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -92,81 +107,41 @@ public class ResultadosAulas extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione su aula a reservar");
 
-        jPanel5.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel5.setPreferredSize(new java.awt.Dimension(815, 200));
-
-        jPanel3.setBackground(new java.awt.Color(26, 26, 26));
-        jPanel3.setPreferredSize(new java.awt.Dimension(650, 95));
-        jPanel3.setLayout(new java.awt.GridLayout(0, 1, 0, 20));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 34, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 34, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTable1.setForeground(new java.awt.Color(102, 102, 102));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Aula multimedios 3", "50", "12 computadoras"},
-                {"Aula multimedios 2", "30", "12 computadoras"},
-                {"Aula multimedios 1", "30", "10 computadoras"}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Ubicacion", "Capacidad", "Caracteristica"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable1.setMinimumSize(new java.awt.Dimension(100, 50));
-        jTable1.setPreferredSize(new java.awt.Dimension(650, 95));
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
+                        .addGap(61, 61, 61))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -191,12 +166,12 @@ public class ResultadosAulas extends javax.swing.JPanel {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(130, 130, 130)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(119, Short.MAX_VALUE)))
+                    .addContainerGap(110, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,10 +204,10 @@ public class ResultadosAulas extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(119, Short.MAX_VALUE)
+                    .addContainerGap(110, Short.MAX_VALUE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(130, 130, 130)))
         );
@@ -254,30 +229,34 @@ public class ResultadosAulas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        if (listener != null)
-            listener.back();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
-        if(jTable1.getSelectedRow() > -1 && listener != null){
-            selectedElement = jTable1.getSelectedRow();
-            listener.next();
-        }
-        
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void cbMartesHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMartesHorarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMartesHorarioActionPerformed
+
+    private void cbMartesHorario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMartesHorario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMartesHorario1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cbMartesHorario;
+    private javax.swing.JComboBox<String> cbMartesHorario1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;

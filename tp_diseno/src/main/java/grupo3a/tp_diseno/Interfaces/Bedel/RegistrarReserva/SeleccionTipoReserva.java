@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
 
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 import javax.swing.ComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.event.ListDataListener;
@@ -12,7 +13,7 @@ import javax.swing.event.ListDataListener;
  *
  * @author imsac
  */
-public class RegistrarAula extends javax.swing.JPanel {
+public class SeleccionTipoReserva extends javax.swing.JPanel {
 
     /**
      * Creates new form RegistrarAula
@@ -39,7 +40,7 @@ public class RegistrarAula extends javax.swing.JPanel {
     private Listener listener;
     
     
-    public RegistrarAula() {
+    public SeleccionTipoReserva() {
         initComponents();
     }
     

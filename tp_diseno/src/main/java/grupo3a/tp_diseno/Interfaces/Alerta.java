@@ -5,14 +5,7 @@
 package grupo3a.tp_diseno.Interfaces;
 
 import java.awt.Color;
-import javax.swing.ComboBoxModel;
-import javax.swing.JColorChooser;
-import javax.swing.event.ListDataListener;
 
-/**
- *
- * @author imsac
- */
 public class Alerta extends javax.swing.JPanel {
 
     public interface Listener {

@@ -1,27 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package grupo3a.tp_diseno;
 
 import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
-import grupo3a.tp_diseno.DTOs.BedelDTO;
-import grupo3a.tp_diseno.DTOs.UsuarioDTO;
-import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
-import grupo3a.tp_diseno.Modelos.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author gabic
- */
 public class prueba {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         GestorBedel gestorBedel = GestorBedel.getInstance();
     

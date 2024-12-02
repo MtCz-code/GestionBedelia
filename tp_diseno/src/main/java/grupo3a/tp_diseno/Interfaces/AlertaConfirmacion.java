@@ -1,24 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package grupo3a.tp_diseno.Interfaces;
 
 import java.awt.Color;
-import javax.swing.ComboBoxModel;
-import javax.swing.JColorChooser;
-import javax.swing.event.ListDataListener;
 
-/**
- *
- * @author imsac
- */
+
 public class AlertaConfirmacion extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarAula
-     */
-    
     
     public interface Listener {
         public void back();

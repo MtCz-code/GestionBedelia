@@ -1,5 +1,11 @@
 package grupo3a.tp_diseno;
 
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.EsporadicaDias;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.RegistrarReservaDatos;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaDias;
+import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
@@ -12,8 +18,10 @@ import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
-import grupo3a.tp_diseno.Modelos.Exceptions;
-import grupo3a.tp_diseno.Modelos.Exceptions.UIException;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.UIException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
+import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
 import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
@@ -51,12 +59,12 @@ public class Tp_diseno {
     }
 
     public static void showReserva() {
-        RegistrarAula registrarAula = new RegistrarAula();
-        RegistrarAulaAnualDias registrarAulaAnualDias = new RegistrarAulaAnualDias();
+        SeleccionTipoReserva registrarAula = new SeleccionTipoReserva();
+        TipoPeriodicaDias registrarAulaAnualDias = new TipoPeriodicaDias();
         ResultadosAulas registrarAulaAnualAula = new ResultadosAulas();
-        RegistrarAulaAnualHorarios registrarAulaAnualHorarios = new RegistrarAulaAnualHorarios();
-        RegistrarAulaEsporadicaDias registrarAulaEsporadicaDias = new RegistrarAulaEsporadicaDias();
-        RegistrarAulaInformacion registrarAulaInformacion = new RegistrarAulaInformacion();
+        TipoPeriodicaHorarios registrarAulaAnualHorarios = new TipoPeriodicaHorarios();
+        EsporadicaDias registrarAulaEsporadicaDias = new EsporadicaDias();
+        RegistrarReservaDatos registrarAulaInformacion = new RegistrarReservaDatos();
         Alerta alerta = new Alerta();
 
         CardLayout cardLayout = new CardLayout();
@@ -81,13 +89,13 @@ public class Tp_diseno {
         GestorReserva gestorReserva = new GestorReserva();
 
         registrarAula.setListener(() -> {
-            if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.ANUAL) {
+            if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.ANUAL) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
-            } else if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
+            } else if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
-            } else if (registrarAula.getSelected() == RegistrarAula.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
+            } else if (registrarAula.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
             } else {  //esporadica
@@ -96,7 +104,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaAnualDias.setListener(new RegistrarAulaAnualDias.Listener() {
+        registrarAulaAnualDias.setListener(new TipoPeriodicaDias.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAula");
@@ -129,7 +137,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaAnualHorarios.setListener(new RegistrarAulaAnualHorarios.Listener() {
+        registrarAulaAnualHorarios.setListener(new TipoPeriodicaHorarios.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAulaAnualDias");
@@ -206,7 +214,7 @@ public class Tp_diseno {
             }
         });
 
-        registrarAulaInformacion.setListener(new RegistrarAulaInformacion.Listener() {
+        registrarAulaInformacion.setListener(new RegistrarReservaDatos.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "registrarAulaAnualHorarios");
@@ -259,173 +267,24 @@ public class Tp_diseno {
         });
     }
 
-    static RegistrarBedel registrarBedel;
-    static Alerta alerta;
-    static AlertaConfirmacion alertaConfirmacion;
-    static BaseFrame baseFrame;
-    static GestorBedel gestorBedel = new GestorBedel();
-    static MenuAdmin menuAdmin;
-
-    public static boolean contains(String s, char a, char b) {
-        for (int i = a; i <= b; i++) {
-            char e = (char) i;
-            if (s.contains(String.valueOf(e))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void showMenu() {
-        // frame principal
-        baseFrame = new BaseFrame();
-        menuAdmin = new MenuAdmin();
-
-        baseFrame.getPanel1().add(menuAdmin);
-        baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
-        baseFrame.setVisible(true);
-
-        menuAdmin.setListener(new MenuAdmin.Listener() {
-            @Override
-            public void registrarBedel() {
-                baseFrame.getPanel1().remove(menuAdmin);
-                showRegistroBedel();
-            }
-        });
-
-    }
-
-    public static void showRegistroBedel() {
-        registrarBedel = new RegistrarBedel();
-        registrarBedel = new RegistrarBedel();
-        alerta = new Alerta();
-        alertaConfirmacion = new AlertaConfirmacion();
-
-        CardLayout cardLayout = new CardLayout();
-        JPanel mainPanel = new JPanel(cardLayout);
-        mainPanel.add(registrarBedel, "registrarBedel");
-
-        // frame principal
-//        baseFrame = new BaseFrame();
-        baseFrame.getPanel1().add(mainPanel);
-        baseFrame.revalidate();
-        baseFrame.repaint();
-
-        cardLayout.show(mainPanel, "registrarAula");
-
-        registrarBedel.setListener(new RegistrarBedel.Listener() {
-            @Override
-            public void back() {
-                alertaConfirmacion.setText("¿Esta seguro que desea cancelar?");
-                baseFrame.getPanel2().add(alertaConfirmacion);
-                baseFrame.setPanel2Up();
-            }
-
-            @Override
-            public void next() {
-                try {
-                    String nombre = registrarBedel.getNombre();
-                    String apellido = registrarBedel.getApellido();
-                    String idLogin = registrarBedel.getIdLogin();
-                    TurnoBedel turno = registrarBedel.getTurno();
-                    String contraseña = registrarBedel.getContraseña();
-                    String rContraseña = registrarBedel.getrContraseña();
-
-                    // rcontraseña
-                    if (!contraseña.equals(rContraseña)) {
-                        throw new UIException("Las contraseñas no coinciden.");
-                    }
-
-                    BedelDTO bedelDTO = new BedelDTO(idLogin, contraseña, nombre, apellido, turno, true);
-
-                    gestorBedel.crear(bedelDTO);
-
-                } catch (UIException e) {
-                    alerta.setText(e.getMessage());
-                    baseFrame.getPanel2().add(alerta);
-                    baseFrame.setPanel2Up();
-                    return;
-                } catch (Exceptions.ValueException e) {
-                    alerta.setText(e.getMessage());
-                    baseFrame.getPanel2().add(alerta);
-                    baseFrame.setPanel2Up();
-                    return;
-                }
-
-                alerta.setText("Bedel registrado con éxito");
-                baseFrame.getPanel2().add(alerta);
-                baseFrame.setPanel2Up();
-                alerta.setListener(new Alerta.Listener() {
-                    @Override
-                    public void next() {
-                        baseFrame.getPanel2().remove(alerta);
-                        baseFrame.getPanel1().remove(mainPanel);
-                        baseFrame.getPanel1().add(menuAdmin);
-                        baseFrame.setPanel1Up();
-                        baseFrame.revalidate();
-                        baseFrame.repaint();
-                    }
-                });
-
-            }
-        });
-
-        alerta.setListener(() -> {
-            baseFrame.setPanel1Up();
-            baseFrame.getPanel2().remove(alerta);
-        });
-
-        alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
-            @Override
-            public void back() {
-                baseFrame.getPanel2().remove(alertaConfirmacion);
-                baseFrame.setPanel1Up();
-
-            }
-
-            @Override
-            public void next() {
-                baseFrame.getPanel2().remove(alertaConfirmacion);
-                baseFrame.getPanel1().remove(mainPanel);
-                baseFrame.getPanel1().add(menuAdmin);
-                baseFrame.setPanel1Up();
-                baseFrame.revalidate();
-                baseFrame.repaint();
-            }
-
-        });
-
-    }
-
+ /**
+ * MenuAdmin *-> RegistarBedel
+ *           └-> BuscarBedel
+ * 
+ * * MenuBedel *-> RegReserv *-> selTipoReser *-> (Per)Anual
+ *                                            ├-> (Per)PCuatr
+ *                                            ├-> (Per)SCuatr
+ *                                            └-> Esp
+ *             ├-> BuscarAulas
+ *             ├-> ListarAulasParaUnCurso
+ *             └-> ListarAulasParaUnDia
+ */
+    
+    private static Interfaz interfaz;
+    
     public static void main(String[] args) {
-        showMenu(); 
-//        showReserva();
-        /*
-        // _-----------------------------------------------------------
-//        final GestorReserva gestorReserva = new GestorReserva();
-        TipoReservaPeriodica tipor = TipoReservaPeriodica.ANUAL;
-        ArrayList<DiaSemana> dias = new ArrayList<>();
+//        interfaz = Interfaz.getInstance(); 
+    EsporadicaDias esp = new EsporadicaDias();
 
-        dias.add(DiaSemana.MIERCOLES);
-        dias.add(DiaSemana.MARTES);
-
-        ReservaDTO reservaDTO = new ReservaDTO(0, "Carlos", 6, "Alcaraz", "a@a.com", 4, "Algoritmos", LocalDateTime.now(), 1, tipor, dias, false, 5, 6);
-
-        ArrayList<DetalleReservaDTO> detalles = new ArrayList<>();
-
-        LocalTime horaEspecifica = LocalTime.of(17, 0);
-        Time tiempo = Time.valueOf(horaEspecifica);
-
-        detalles.add(new DetalleReservaDTO(1, tiempo, 2, LocalDate.of(2024, 04, 07), "Miercoles", 0));
-
-        LocalTime horaEspecifica1 = LocalTime.of(13, 0);
-        Time tiempo1 = Time.valueOf(horaEspecifica1);
-
-        detalles.add(new DetalleReservaDTO(1, tiempo1, 4, LocalDate.of(2024, 11, 06), "Martes", 0));
-
-        AulaDTO aula = new AulaDTO(1);
-
-        gestorReserva.aulaSeleccionada(reservaDTO, detalles, aula);*/
     }
 }

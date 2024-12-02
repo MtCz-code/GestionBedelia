@@ -2,20 +2,17 @@ package grupo3a.tp_diseno.Gestores;
 
 import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.BedelSqlDAO;
-import grupo3a.tp_diseno.DAOs.Clases_sql.UsuarioSqlDAO;
-import grupo3a.tp_diseno.DAOs.UsuarioDAO;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
-import grupo3a.tp_diseno.Modelos.Exceptions;
-import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
-import grupo3a.tp_diseno.Modelos.Exceptions.ValueException;
-import grupo3a.tp_diseno.Modelos.Usuario;
-import static grupo3a.tp_diseno.Tp_diseno.contains;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
+//import static grupo3a.tp_diseno.Tp_diseno.contains;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+import static javax.management.Query.value;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class GestorBedel {
@@ -32,13 +29,8 @@ public class GestorBedel {
 
     public GestorBedel() {
     }
-    /*
-    BCrypt.gensalt(): Genera un "sal" aleatorio, que se añade a la contraseña antes de hashearla. Esto previene ataques de diccionario y hace que el hash sea único incluso para contraseñas iguales.
-    BCrypt.hashpw(password, BCrypt.gensalt()): Aplica el algoritmo bcrypt a la contraseña junto con el "sal".
-    BCrypt.checkpw(password, hashedPassword): Compara la contraseña proporcionada con el hash almacenado.
-     */
+
     private BedelDAO DAO = BedelSqlDAO.getInstance();
-    
 
     public void crear(BedelDTO bedelDTO) throws Exceptions.ValueException {
 
@@ -48,28 +40,25 @@ public class GestorBedel {
         TurnoBedel turno = bedelDTO.getTurno();
         String contraseña = bedelDTO.getContrasena();
 
-        
         idLogin = idLogin.trim();
-        
+
         try {
-            if(DAO.validarIdLogin(idLogin)){
+            if (DAO.validarIdLogin(idLogin)) {
                 throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
             }
+        } catch (DAOException e) {
+            throw new ValueException("Error con la consulta." + e.getMessage());
         }
-        catch(DAOException e) {
-           throw new ValueException("Error con la consulta." + e.getMessage());
-        }
-        
+
         String patronIdLogin = "^[a-zA-Z0-9_]+$";
-        
+
         Pattern patternIdLogin = Pattern.compile(patronIdLogin);
         if (!patternIdLogin.matcher(idLogin).matches()) {
             throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
         }
-        
-        
+
         nombre = nombre.trim();
-        
+
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(nombre).matches()) {
@@ -109,7 +98,7 @@ public class GestorBedel {
         if (!contains(contraseña, '0', '9')) {
             throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
         }
-        
+
         // TODO:
         Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, true);
 
@@ -121,4 +110,68 @@ public class GestorBedel {
 
     }
 
+    public List<BedelDTO> buscarBedel(String datoCriterio) throws Exceptions.ValueException, DAOException {
+        List<BedelDTO> bedeles = new ArrayList<>();
+        List<Bedel> bedelesAux = new ArrayList<>();
+
+        if(datoCriterio instanceof String){
+                    String regex = "([a-zA-Z])+";
+        Pattern pattern = Pattern.compile(regex);
+        String apellido=(String) datoCriterio;
+        
+        apellido = apellido.trim();
+            if (!pattern.matcher(apellido).matches()) {
+                throw new ValueException("Introduzca un apellido válido.");
+            }
+        }
+        bedelesAux = DAO.buscarBedel(datoCriterio);
+        
+        for(Bedel bedel : bedelesAux){
+            BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
+            bedeles.add(BedelDTOaux);
+        }
+        return bedeles;
+    }
+             
+    
+    public List<BedelDTO> buscarBedel(TurnoBedel datoCriterio) throws Exceptions.ValueException, DAOException {
+        
+        List<BedelDTO> bedeles = new ArrayList<>();
+        List<Bedel> bedelesAux = new ArrayList<>();
+        
+       bedelesAux = DAO.buscarBedel(datoCriterio);
+        
+        for(Bedel bedel : bedelesAux){
+            BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
+            bedeles.add(BedelDTOaux);
+        }
+        return bedeles;
+    }
+    
+    public List<BedelDTO> buscarBedel(Object value) throws Exceptions.ValueException {
+
+        if (value instanceof String) {
+            String regex = "([a-zA-Z])+";
+            Pattern pattern = Pattern.compile(regex);
+            String apellido = (String) value;
+
+            apellido = apellido.trim();
+            if (!pattern.matcher(apellido).matches()) {
+                throw new ValueException("Introduzca un apellido válido.");
+            }
+
+        }
+        return null;
+    }
+    
+    // utilidades
+    public static boolean contains(String s, char a, char b) {
+        for (int i = a; i <= b; i++) {
+            char e = (char) i;
+            if (s.contains(String.valueOf(e))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

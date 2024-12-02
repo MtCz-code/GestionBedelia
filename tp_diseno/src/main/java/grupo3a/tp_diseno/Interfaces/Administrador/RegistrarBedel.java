@@ -2,7 +2,7 @@
 package grupo3a.tp_diseno.Interfaces.Administrador;
 
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Interfaces.BordesRedondeados;
+import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
 import java.awt.Dimension;
 
 
@@ -204,6 +204,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
 
         tfLogin.setBackground(new java.awt.Color(40, 40, 40));
         tfLogin.setForeground(new java.awt.Color(255, 255, 255));
+        tfLogin.setEnabled(false);
         tfLogin.setPreferredSize(new java.awt.Dimension(64, 20));
         tfLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,7 +462,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLoginActionPerformed
-        idLogin = tfLogin.getText();
+        
     }//GEN-LAST:event_tfLoginActionPerformed
 
     private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
@@ -496,23 +497,7 @@ public class RegistrarBedel extends javax.swing.JPanel {
         idLogin = tfLogin.getText();
         contraseña = new String(pfContraseña.getPassword());
         rContraseña = new String(pfContraseñaR.getPassword());
-        // la verificacion se hace en el main
-//        String regex = "([a-zA-Z])+";
-//        String input = "hola";
 
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(input);
-        
-//        System.out.println("" + matcher. matches());
-
-//        if (pattern.matcher(nombre).matches()) ;
-//        if (pattern.matcher(apellido).matches()) ;
-        
-//        if (idBedel.length() > 0);
-//        if (contraseña.length() > 0);
-        
-//        if (!contraseña.equals(rContraseña));
-        
         if (listener != null)
             listener.next();
         

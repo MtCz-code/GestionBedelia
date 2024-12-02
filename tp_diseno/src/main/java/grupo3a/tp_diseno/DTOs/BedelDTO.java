@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.DTOs;
 
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 
-/**
- *
- * @author exero
- */
 public class BedelDTO extends UsuarioDTO{
     
     private TurnoBedel turno; // Enum: MAÑANA, TARDE, NOCHE
@@ -25,6 +18,12 @@ public class BedelDTO extends UsuarioDTO{
         super(idUsuario, idLogin, contrasena, nombre, apellido);
         this.turno = turno;
         this.habilitado = habilitado;
+    }
+    
+    public BedelDTO(int id, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
+        super(id,nombre,apellido);
+        this.turno=turno;
+        this.habilitado=habilitado;
     }
 
     public TurnoBedel getTurno() {

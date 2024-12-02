@@ -10,13 +10,23 @@ package grupo3a.tp_diseno.Interfaces.Bedel;
  */
 public class MenuBedel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form MenuBedel
-     */
+    public interface Listener {
+        void registrarReserva();
+        void buscarAulas();
+        void listarReservasParaUnCurso();
+        void listarReservasParaUnDia();
+    };
+    
+    private Listener listener;
+    
     public MenuBedel() {
         initComponents();
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +36,153 @@ public class MenuBedel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btnListarReservaPorDia = new javax.swing.JButton();
+        btnListarReservaPorCurso = new javax.swing.JButton();
+        btnBuscarAula = new javax.swing.JButton();
+        btnRegistrarReserva = new javax.swing.JButton();
+
+        jPanel1.setBackground(new java.awt.Color(26, 26, 26));
+        jPanel1.setForeground(new java.awt.Color(19, 66, 125));
+
+        jPanel2.setBackground(new java.awt.Color(19, 66, 125));
+        jPanel2.setFont(new java.awt.Font("Montserrat Light", 1, 40)); // NOI18N
+        jPanel2.setMaximumSize(new java.awt.Dimension(294, 52));
+        jPanel2.setPreferredSize(new java.awt.Dimension(685, 100));
+
+        jLabel1.setFont(new java.awt.Font("Montserrat Light", 1, 40)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Menu Bedel");
+        jLabel1.setPreferredSize(new java.awt.Dimension(259, 49));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 170, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 170, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        btnListarReservaPorDia.setBackground(new java.awt.Color(16, 16, 16));
+        btnListarReservaPorDia.setForeground(new java.awt.Color(255, 255, 255));
+        btnListarReservaPorDia.setText("Listar reservas para un día");
+        btnListarReservaPorDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarReservaPorDiaActionPerformed(evt);
+            }
+        });
+
+        btnListarReservaPorCurso.setBackground(new java.awt.Color(16, 16, 16));
+        btnListarReservaPorCurso.setForeground(new java.awt.Color(255, 255, 255));
+        btnListarReservaPorCurso.setText("Listar reservas para un curso");
+        btnListarReservaPorCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarReservaPorCursoActionPerformed(evt);
+            }
+        });
+
+        btnBuscarAula.setBackground(new java.awt.Color(16, 16, 16));
+        btnBuscarAula.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarAula.setText("Buscar aulas");
+        btnBuscarAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarAulaActionPerformed(evt);
+            }
+        });
+
+        btnRegistrarReserva.setBackground(new java.awt.Color(16, 16, 16));
+        btnRegistrarReserva.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarReserva.setText("Registrar reserva");
+        btnRegistrarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarReservaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegistrarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListarReservaPorCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnListarReservaPorDia, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btnRegistrarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscarAula, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnListarReservaPorCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnListarReservaPorDia, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnListarReservaPorDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarReservaPorDiaActionPerformed
+        if (listener != null)
+            listener.listarReservasParaUnCurso();
+    }//GEN-LAST:event_btnListarReservaPorDiaActionPerformed
+
+    private void btnListarReservaPorCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarReservaPorCursoActionPerformed
+        if (listener != null)
+            listener.listarReservasParaUnCurso();
+    }//GEN-LAST:event_btnListarReservaPorCursoActionPerformed
+
+    private void btnBuscarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAulaActionPerformed
+        if (listener != null)
+            listener.buscarAulas();
+    }//GEN-LAST:event_btnBuscarAulaActionPerformed
+
+    private void btnRegistrarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarReservaActionPerformed
+        if (listener != null)
+            listener.registrarReserva();
+    }//GEN-LAST:event_btnRegistrarReservaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarAula;
+    private javax.swing.JButton btnListarReservaPorCurso;
+    private javax.swing.JButton btnListarReservaPorDia;
+    private javax.swing.JButton btnRegistrarReserva;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

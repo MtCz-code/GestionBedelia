@@ -1,23 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
+import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Bedel;
-import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.database.DataBaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author exero
- */
 public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     private UsuarioDAO DAO = UsuarioSqlDAO.getInstance();
@@ -53,6 +49,58 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             throw new DAOException("Error al agregar el bedel: " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public List buscarBedel(String datoCriterio) throws DAOException {
+        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
+                + " usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE apellido ILIKE ?;";
+        List<Bedel> bedeles = new ArrayList<>();
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
+            stmtBed.setString(1,"%" +query+ "%");
+            ResultSet rs = stmtBed.executeQuery();
+            if (rs.next()){
+                int id = rs.getInt("id_usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
+                boolean habilitado = rs.getBoolean("habilitado");
+                
+                Bedel bedel = new Bedel(id,nombre,apellido,turno,habilitado);
+                bedeles.add(bedel);
+            }
+            return bedeles;
+            
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al buscar el bedel: " + e.getMessage());
+        }        
+    }
+
+    @Override
+    public List buscarBedel(TurnoBedel datoCriterio) throws DAOException {
+        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado " +
+"FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.turno = ?;";
+        List<Bedel> bedeles = new ArrayList<>();
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
+            stmtBed.setString(1,query);
+            ResultSet rs = stmtBed.executeQuery();
+            if (rs.next()){
+                int id = rs.getInt("id_usuario");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
+                boolean habilitado = rs.getBoolean("habilitado");
+                
+                Bedel bedel = new Bedel(id,nombre,apellido,turno,habilitado);
+                bedeles.add(bedel);
+            }
+            return bedeles;
+            
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al buscar el bedel: " + e.getMessage());
+        }  
     }
 
 }

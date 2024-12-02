@@ -33,6 +33,11 @@ public class UsuarioDTO {
         this.apellido = apellido;
     }
     
+    public UsuarioDTO(int id, String nombre, String apellido){
+        this.idUsuario=id;
+        this.nombre=nombre;
+        this.apellido=apellido;
+    }
 
     public String getIdLogin() {
         return idLogin;

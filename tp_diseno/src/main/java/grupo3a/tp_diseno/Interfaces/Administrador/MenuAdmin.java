@@ -6,8 +6,10 @@ public class MenuAdmin extends javax.swing.JPanel {
     
     public interface Listener {
         void registrarBedel();
+        void buscarBedel();
     };
-
+    
+    private BuscarBedel buscarBedel;
     private RegistrarBedel registrarBedel;
     
     private Listener listener;
@@ -30,6 +32,9 @@ public class MenuAdmin extends javax.swing.JPanel {
      */
     public void setRegistrarBedel(RegistrarBedel registro){
         this.registrarBedel=registro;
+    }
+    public void setBuscarBedel(BuscarBedel buscar){
+        this.buscarBedel=buscar;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -130,7 +135,8 @@ public class MenuAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegistrarBedelActionPerformed
 
     private void btnBuscarBedelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarBedelActionPerformed
-        // TODO add your handling code here:
+        if(listener != null)
+            listener.buscarBedel();
     }//GEN-LAST:event_btnBuscarBedelActionPerformed
 
 

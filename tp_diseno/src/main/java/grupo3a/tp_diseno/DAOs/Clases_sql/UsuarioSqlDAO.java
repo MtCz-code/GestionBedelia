@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
-import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.UsuarioDAO;
-import grupo3a.tp_diseno.Enumerations.DiaSemana;
-import grupo3a.tp_diseno.Modelos.Administrador;
-import grupo3a.tp_diseno.Modelos.Bedel;
-import grupo3a.tp_diseno.Modelos.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,13 +10,8 @@ import java.sql.SQLException;
 import grupo3a.tp_diseno.database.DataBaseConnection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import org.json.JSONArray;
 
 
-/**
- *
- * @author exero
- */
 public class UsuarioSqlDAO implements UsuarioDAO{
 
 //    private BedelDAO DAO = BedelSqlDAO.getInstance();
