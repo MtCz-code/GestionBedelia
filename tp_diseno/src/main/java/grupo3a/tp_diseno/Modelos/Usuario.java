@@ -31,6 +31,19 @@ public class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
     }
+
+    public Usuario(int id,String id_login, String nombre, String apellido){
+        this.idUsuario=id;
+        this.idLogin=idLogin;
+        this.nombre=nombre;
+        this.apellido=apellido;
+    }
+    
+    public Usuario(int id, String nombre, String apellido){
+        this.idUsuario=id;
+        this.nombre=nombre;
+        this.apellido=apellido;
+    }
     
     
     
