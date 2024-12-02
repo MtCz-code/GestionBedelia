@@ -124,7 +124,7 @@ public class GestorBedel {
                 throw new ValueException("Introduzca un apellido válido.");
             }
         }
-        bedelesAux = DAO.buscarBedel(datoCriterio);
+        bedelesAux = DAO.buscar(datoCriterio);
         
         for(Bedel bedel : bedelesAux){
             BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
@@ -139,7 +139,7 @@ public class GestorBedel {
         List<BedelDTO> bedeles = new ArrayList<>();
         List<Bedel> bedelesAux = new ArrayList<>();
         
-       bedelesAux = DAO.buscarBedel(datoCriterio);
+       bedelesAux = DAO.buscar(datoCriterio);
         
         for(Bedel bedel : bedelesAux){
             BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());

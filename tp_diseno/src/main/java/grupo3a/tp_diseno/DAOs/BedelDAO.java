@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface BedelDAO extends UsuarioDAO {
     void crear(Bedel bedel) throws DAOException;
-    List buscarBedel(String datoCriterio) throws DAOException;
-    List buscarBedel(TurnoBedel datoCriterio) throws DAOException;
+    List buscar(String datoCriterio) throws DAOException;
+    List buscar(TurnoBedel datoCriterio) throws DAOException;
+    void eliminar(Bedel bedel) throws DAOException;
+    void modificar(Bedel vedel) throws DAOException;
 }

@@ -52,8 +52,8 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
     }
 
     @Override
-    public List buscarBedel(String datoCriterio) throws DAOException {
-ing query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
+    public List buscar(String datoCriterio) throws DAOException {
+        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
                 + " usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE apellido ILIKE ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
@@ -78,7 +78,7 @@ ing query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
     }
 
     @Override
-    public List buscarBedel(TurnoBedel datoCriterio) throws DAOException {
+    public List buscar(TurnoBedel datoCriterio) throws DAOException {
 
         String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado " +
 "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.turno = ?;";
@@ -102,6 +102,61 @@ ing query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
         } catch (SQLException e) {
             throw new DAOException("Error al buscar el bedel: " + e.getMessage());
         }  
+    }
+
+    @Override
+    public void eliminar(Bedel bedel) throws DAOException {
+        
+        String query = "SELECT B.id_usuario,U.contrasena,U.id_login,U.nombre,U.apellido,B.turno " +
+            "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.id_usuario = ?;";
+        
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
+            stmtBed.setString(1, bedel.getTurno().toString());
+            ResultSet rs = stmtBed.executeQuery();
+            if (rs.next()){
+                int id = rs.getInt("id_usuario");
+                String id_login = rs.getString("id_login");
+                String contraseña = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
+                Bedel bedelElim = new Bedel(id,contraseña,id_login,nombre,apellido,turno,false);
+                
+                this.modificar(bedelElim);
+                
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al recuperar el bedel: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void modificar(Bedel bedel) throws DAOException {
+        
+        String queryU = "UPDATE TABLE usuario (nombre,apellido,id_login,contrasena) VALUES(?,?,?,?);";
+        String queryB = "UPDATE TABLE bedel (turno,habilitado) VALUES (?,?);";
+        try(Connection conn = DataBaseConnection.getConnection();
+                PreparedStatement stmtU = conn.prepareStatement(queryU);
+                PreparedStatement stmtB = conn.prepareStatement(queryB)){
+            conn.setAutoCommit(false);
+            stmtU.setString(1, bedel.getNombre());
+            stmtU.setString(2, bedel.getApellido());
+            stmtU.setString(3, bedel.getIdLogin());
+            stmtU.setString(4, bedel.getContrasena());
+            stmtU.executeUpdate();
+            
+            stmtB.setString(1,bedel.getTurno().toString());
+            stmtB.setBoolean(2,bedel.isHabilitado());
+            stmtB.executeUpdate();
+            
+            conn.commit();
+            
+            
+        }catch(SQLException e){
+            throw new DAOException("Error al modificar el bedel: " + e.getMessage());
+        }
+        
     }
 
 }
