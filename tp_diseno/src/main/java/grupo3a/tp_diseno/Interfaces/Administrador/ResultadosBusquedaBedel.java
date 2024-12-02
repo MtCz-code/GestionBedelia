@@ -19,45 +19,38 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
     
     String apellido;
     TurnoBedel turno;     
-  //  private GestorBedel gestor= GestorBedel.getInstance();
+    List<BedelDTO> bedeles;
     private Listener listener;
     
-  /*  public void setParametro(Object value){
-       try{
-        if(value instanceof String) this.apellido=(String)value;
-        else if(value instanceof TurnoBedel){
-        this.turno=((TurnoBedel)value);}
-       } catch(NullPointerException e){
-        throw new IllegalArgumentException("Elija un criterio");
-        }
-    }*/
-
-    public ResultadosBusquedaBedel() throws Exceptions.ValueException {
+    public void setListener(Listener listener){
+        this.listener=listener;
+    }
+    
+    public ResultadosBusquedaBedel(List<BedelDTO> bedeles) throws Exceptions.ValueException {
         initComponents();
-        //actualizarTabla();
+        this.bedeles=bedeles;
+        actualizarTabla();
         this.tableBedeles.setAutoResizeMode(5);
         tableBedeles.setRowHeight(40);
         JTableHeader tableHeader = tableBedeles.getTableHeader();
         tableHeader.setReorderingAllowed(false);
+        System.out.println("hola");
     }
 
-       /* private void actualizarTabla() throws Exceptions.ValueException {
+        private void actualizarTabla() throws Exceptions.ValueException {
         String[] columnNames = {"Nombre", "Apellido", "Turno", "Habilitado","", ""};
-        List<BedelDTO> bedeles= new ArrayList<>();
-        if(apellido!=null)bedeles = gestor.buscarBedel(apellido);
-        else bedeles = gestor.buscarBedel(turno);
         
         tableBedeles.setModel(new UsuarioTableModel(bedeles, columnNames));
         
-        tableBedeles.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer("Editar"));
-        tableBedeles.getColumnModel().getColumn(8).setCellRenderer(new ButtonRenderer("Borrar"));
+        tableBedeles.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Editar"));
+        tableBedeles.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Borrar"));
 
         // Editores para las columnas
-        tableBedeles.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor("Editar"));
-        tableBedeles.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor("Borrar")); 
+        tableBedeles.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor("Editar"));
+        tableBedeles.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor("Borrar")); 
 
 
-    }*/
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

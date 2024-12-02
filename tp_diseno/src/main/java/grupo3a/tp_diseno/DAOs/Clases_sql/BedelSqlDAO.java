@@ -53,13 +53,14 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     @Override
     public List buscarBedel(String datoCriterio) throws DAOException {
-        String query = "SELECT id,nombre,apellido,turno,habilitado FROM bedel WHERE apellido ILIKE ?;";
+        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
+                + " usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE apellido ILIKE ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setString(1,"%" +query+ "%");
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
@@ -72,20 +73,20 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             
             
         } catch (SQLException e) {
-            System.out.println("Error al buscar el bedel: "+ e.getMessage());
             throw new DAOException("Error al buscar el bedel: " + e.getMessage());
         }        
     }
 
     @Override
     public List buscarBedel(TurnoBedel datoCriterio) throws DAOException {
-        String query = "SELECT id,nombre,apellido,turno,habilitado FROM bedel WHERE turno is ?;";
+        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado " +
+"FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.turno = ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setString(1,query);
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
@@ -98,7 +99,6 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             
             
         } catch (SQLException e) {
-            System.out.println("Error al buscar el bedel: "+ e.getMessage());
             throw new DAOException("Error al buscar el bedel: " + e.getMessage());
         }  
     }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Interfaces;
 
 import grupo3a.tp_diseno.DTOs.BedelDTO;
@@ -11,14 +8,15 @@ import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
 import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
 import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
+import grupo3a.tp_diseno.Interfaces.Administrador.ResultadosBusquedaBedel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
-/**
- *
- * @author imsac
- */
+
 public class Interfaz {
     // singleton
     private static Interfaz interfazInstance;
@@ -36,6 +34,8 @@ public class Interfaz {
     private BaseFrame baseFrame;
     // menu donde se inicia el programa
     private MenuAdmin menuAdmin;
+    CardLayout cardLayout = new CardLayout();
+    JPanel mainPanel = new JPanel(cardLayout);
     
     private RegistrarBedel registrarBedel;
     private BuscarBedel buscarBedel;
@@ -45,31 +45,30 @@ public class Interfaz {
     private AlertaConfirmacion alertaConfirmacion;
     
     // gestores
-    private GestorBedel gestorBedel;
+    private GestorBedel gestorBedel= GestorBedel.getInstance();
     
     public Interfaz() {
         baseFrame = new BaseFrame();
-        menuAdmin = new MenuAdmin();
-        
-        gestorBedel = new GestorBedel();
-
-        baseFrame.getPanel1().add(menuAdmin);
         baseFrame.getPanel1().setLayout(new BorderLayout());
         baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
-        baseFrame.setVisible(true);
+        baseFrame.getPanel1().add(mainPanel);
+
+        menuAdmin = new MenuAdmin();
+        mainPanel.add(menuAdmin,"menuAdmin");
+
+
 
         menuAdmin.setListener(new MenuAdmin.Listener() {
             @Override
             public void registrarBedel() {
-                baseFrame.getPanel1().remove(menuAdmin);
                 showRegistroBedel();
             }
             @Override
             public void buscarBedel() {
-                baseFrame.getPanel1().remove(menuAdmin);
                 showBuscarBedel();
             }
         });
+            baseFrame.setVisible(true);
     }
     
     public void showBuscarBedel() {
@@ -77,13 +76,11 @@ public class Interfaz {
         alerta = new Alerta();
         alertaConfirmacion = new AlertaConfirmacion();
 
-        CardLayout cardLayout = new CardLayout();
-        JPanel mainPanel = new JPanel(cardLayout);
         mainPanel.add(buscarBedel, "buscarBedel");
-
-        baseFrame.getPanel1().add(mainPanel);
         baseFrame.revalidate();
         baseFrame.repaint();
+        
+
 
         buscarBedel.setListener(new BuscarBedel.Listener() {
             @Override
@@ -96,18 +93,32 @@ public class Interfaz {
             @Override
             public void next() {
                 try {
-                  gestorBedel.buscarBedel(buscarBedel.getDato());
+                    List<BedelDTO> bedelesBuscados;
+                    if(buscarBedel.getSeleccionado().equals("Apellido"))
+                        bedelesBuscados=gestorBedel.buscarBedel(buscarBedel.getApellido());
+                    else
+                        bedelesBuscados=gestorBedel.buscarBedel(buscarBedel.getTurno());
+                 
+            showResultadosBusquedaBedel(bedelesBuscados);
 
-                } catch (IllegalArgumentException| Exceptions.ValueException e) {
+
+                } catch (NullPointerException| Exceptions.ValueException e) {
                     alerta.setText(e.getMessage());
                     baseFrame.getPanel2().add(alerta);
                     baseFrame.setPanel2Up();
+                } catch (Exceptions.DAOException ex) {
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
 
 
             }
         });
-
+    cardLayout.show(mainPanel, "buscarBedel");
+    }
+    
+    public void showResultadosBusquedaBedel(List<BedelDTO> bedeles){
+        
     }
 
     public void showRegistroBedel() {
@@ -115,15 +126,8 @@ public class Interfaz {
         alerta = new Alerta();
         alertaConfirmacion = new AlertaConfirmacion();
 
-        CardLayout cardLayout = new CardLayout();
-        JPanel mainPanel = new JPanel(cardLayout);
         mainPanel.add(registrarBedel, "registrarBedel");
 
-        // frame principal
-//        baseFrame = new BaseFrame();
-        baseFrame.getPanel1().add(mainPanel);
-        baseFrame.revalidate();
-        baseFrame.repaint();
 
         registrarBedel.setListener(new RegistrarBedel.Listener() {
             @Override
