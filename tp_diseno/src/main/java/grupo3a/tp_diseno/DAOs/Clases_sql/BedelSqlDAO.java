@@ -120,7 +120,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
-                Bedel bedelElim = new Bedel(id,contraseña,id_login,nombre,apellido,turno,false);
+                Bedel bedelElim = new Bedel(id,id_login, contraseña,nombre,apellido,turno,false);
                 
                 this.modificar(bedelElim);
                 

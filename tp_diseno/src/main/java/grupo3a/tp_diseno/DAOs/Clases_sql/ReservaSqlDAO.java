@@ -6,6 +6,7 @@ package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.ReservaDAO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
+import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
 import grupo3a.tp_diseno.Modelos.ReservaPeriodica;
 import grupo3a.tp_diseno.database.DataBaseConnection;
