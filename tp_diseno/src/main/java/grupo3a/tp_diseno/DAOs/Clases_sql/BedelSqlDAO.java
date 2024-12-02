@@ -53,13 +53,13 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     @Override
     public List buscarBedel(String datoCriterio) throws DAOException {
-        String query = "SELECT id,nombre,apellido,turno,habilitado FROM bedel WHERE apellido ILIKE ?;";
+        String query = "SELECT id_usuario,nombre,apellido,turno,habilitado FROM bedel WHERE apellido ILIKE ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setString(1,"%" +query+ "%");
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
@@ -79,13 +79,13 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     @Override
     public List buscarBedel(TurnoBedel datoCriterio) throws DAOException {
-        String query = "SELECT id,nombre,apellido,turno,habilitado FROM bedel WHERE turno is ?;";
+        String query = "SELECT id_usuario,nombre,apellido,turno,habilitado FROM bedel WHERE turno is ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setString(1,query);
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
