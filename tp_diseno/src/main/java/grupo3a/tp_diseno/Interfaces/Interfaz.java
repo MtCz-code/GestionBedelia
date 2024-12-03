@@ -66,27 +66,21 @@ public class Interfaz {
     // gestores
     private GestorBedel gestorBedel= GestorBedel.getInstance();
     
-    public Interfaz() {
+public Interfaz() {
         baseFrame = new BaseFrame();
-        baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
-        baseFrame.getPanel1().add(mainPanel);
-
-        menuAdmin = new MenuAdmin();
-        mainPanel.add(menuAdmin,"menuAdmin");
-
         menuAdmin = new MenuAdmin();
         menuBedel = new MenuBedel();
-        
+
         gestorBedel = new GestorBedel();
 
         baseFrame.getPanel1().setLayout(new BorderLayout());
+        baseFrame.getPanel1().add(mainPanel);
         baseFrame.setVisible(true);
-        
-//        showMenuAdmin();
+
+        showMenuAdmin();
         showMenuBedel();
-        
-        
+
+
     }
     
     // Admin

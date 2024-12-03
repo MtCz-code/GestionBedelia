@@ -76,7 +76,8 @@ public class MenuBedel extends javax.swing.JPanel {
 
         btnListarReservaPorDia.setBackground(new java.awt.Color(16, 16, 16));
         btnListarReservaPorDia.setForeground(new java.awt.Color(255, 255, 255));
-        btnListarReservaPorDia.setText("Listar reservas para un día");
+        btnListarReservaPorDia.setText("Listar reservas por día");
+        btnListarReservaPorDia.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnListarReservaPorDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListarReservaPorDiaActionPerformed(evt);
@@ -85,7 +86,9 @@ public class MenuBedel extends javax.swing.JPanel {
 
         btnListarReservaPorCurso.setBackground(new java.awt.Color(16, 16, 16));
         btnListarReservaPorCurso.setForeground(new java.awt.Color(255, 255, 255));
-        btnListarReservaPorCurso.setText("Listar reservas para un curso");
+        btnListarReservaPorCurso.setText("Listar reservas por curso");
+        btnListarReservaPorCurso.setActionCommand("Listar reservas por curso");
+        btnListarReservaPorCurso.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnListarReservaPorCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnListarReservaPorCursoActionPerformed(evt);

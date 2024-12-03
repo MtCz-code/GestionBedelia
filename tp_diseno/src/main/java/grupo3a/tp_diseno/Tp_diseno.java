@@ -283,8 +283,8 @@ public class Tp_diseno {
     private static Interfaz interfaz;
     
     public static void main(String[] args) {
-//        interfaz = Interfaz.getInstance(); 
-    EsporadicaDias esp = new EsporadicaDias();
+        interfaz = Interfaz.getInstance(); 
+
 
     }
 }
