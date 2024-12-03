@@ -151,7 +151,7 @@ public class GestorBedel {
     
     public void eliminar(int id) throws DAOException{
         try{
-           Bedel b = DAO.buscarPorID(id);
+           Bedel b = DAO.buscarPorId(id);
            b.setHabilitado(false);
            DAO.modificar(b);
         } catch(DAOException e){
@@ -162,7 +162,7 @@ public class GestorBedel {
     public BedelDTO buscarPorID(Integer id) throws DAOException {
         
         try{
-            Bedel b = DAO.buscarPorID(id);
+            Bedel b = DAO.buscarPorId(id);
             return convertirADTO(b);
         } catch(DAOException e){
             throw new DAOException(e.getMessage());

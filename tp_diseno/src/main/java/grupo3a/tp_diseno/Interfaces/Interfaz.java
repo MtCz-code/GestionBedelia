@@ -3,10 +3,13 @@ package grupo3a.tp_diseno.Interfaces;
 
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
+import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Gestores.GestorLogin;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
@@ -59,6 +62,10 @@ public class Interfaz {
     private Alerta alerta;
     private AlertaConfirmacion alertaConfirmacion;
     
+    MenuAdmin menuAdmin= new MenuAdmin();
+    MenuBedel menuBedel = new MenuBedel();
+    
+    
     // gestores
     private GestorBedel gestorBedel= GestorBedel.getInstance();
     private GestorLogin gestorLogin= GestorLogin.getInstance();
@@ -73,20 +80,24 @@ public Interfaz() {
     baseFrame.getPanel1().add(mainPanel);
        
     //Login
-    InicioSesion login=new InicioSesion();
+    InicioSesion login= new InicioSesion();
     mainPanel.add(login,"login");
 
       login.setListener(new InicioSesion.Listener(){
           @Override
           public void ingresar(){
               try{
-              if(){
+              UsuarioDTO usuarioDTO = new UsuarioDTO(null,null,null,null);
+                  
+              Boolean esAdmin = gestorLogin.validarLogin(usuarioDTO);
+                  
+              if(esAdmin){
                   showMenuAdmin();
               }
               else{
                   showMenuBedel();
               }
-          } catch(){
+          } catch(DAOException e){
               alerta.setText(e.getMessage());
               baseFrame.getPanel2().add(alerta);
               baseFrame.setPanel2Up();
@@ -105,7 +116,7 @@ public Interfaz() {
     // Admin
     private void showMenuAdmin() {
         if(!existeVista("menuAdmin")){
-        MenuAdmin menuAdmin= new MenuAdmin();
+        
         mainPanel.add(menuAdmin, "menuAdmin");
 
         menuAdmin.setListener(new MenuAdmin.Listener() {
@@ -124,58 +135,62 @@ public Interfaz() {
     
     // Bedel
     private void showBuscarBedel() {
-        if(!existeVista("buscarBedel")){
-        BuscarBedel buscarBedel = new BuscarBedel();
+        if (!existeVista("buscarBedel")) {
+            BuscarBedel buscarBedel = new BuscarBedel();
 
+            mainPanel.add(buscarBedel, "buscarBedel");
+            baseFrame.revalidate();
 
-        mainPanel.add(buscarBedel, "buscarBedel");
-        baseFrame.revalidate();
-
-        
-
-
-        buscarBedel.setListener(new BuscarBedel.Listener() {
-            @Override
-            public void back() {
-                alertaConfirmacion.setText("¿Esta seguro que desea regresar?");
-                baseFrame.getPanel2().add(alertaConfirmacion);
-                baseFrame.setPanel2Up();
-            }
-
-            @Override
-            public void next() {
-                try {
-                    List<BedelDTO> bedelesBuscados;
-                    if(buscarBedel.getSeleccionado().equals("Apellido"))
-                        bedelesBuscados=gestorBedel.buscar(buscarBedel.getApellido());
-                    else
-                        bedelesBuscados=gestorBedel.buscar(buscarBedel.getTurno());
-                 
-            showResultadosBusquedaBedel(bedelesBuscados);
-
-
-                } catch (NullPointerException| Exceptions.ValueException e) {
-                    alerta.setText(e.getMessage());
-                    baseFrame.getPanel2().add(alerta);
+            buscarBedel.setListener(new BuscarBedel.Listener() {
+                @Override
+                public void back() {
+                    alertaConfirmacion.setText("¿Esta seguro que desea regresar?");
+                    baseFrame.getPanel2().add(alertaConfirmacion);
                     baseFrame.setPanel2Up();
-                } catch (Exceptions.DAOException ex) {
-                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        });
-    cardLayout.show(mainPanel, "buscarBedel");
+
+                @Override
+                public void next() {
+                    try {
+                        List<BedelDTO> bedelesBuscados;
+                        if (buscarBedel.getSeleccionado().equals("Apellido")) {
+                            bedelesBuscados = gestorBedel.buscar(buscarBedel.getApellido());
+                        } else {
+                            bedelesBuscados = gestorBedel.buscar(buscarBedel.getTurno());
+                        }
+
+                        showResultadosBusquedaBedel(bedelesBuscados);
+
+                    } catch (NullPointerException | Exceptions.ValueException e) {
+                        alerta.setText(e.getMessage());
+                        baseFrame.getPanel2().add(alerta);
+                        baseFrame.setPanel2Up();
+                    } catch (Exceptions.DAOException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            cardLayout.show(mainPanel, "buscarBedel");
+        }
     }
+    
     
     public void showResultadosBusquedaBedel(List<BedelDTO> bedeles){
         if(!existeVista("resultadosBusquedaBedel")){
-            ResultadosBusquedaBedel resultadosBusquedaBedel= new ResultadosBusquedaBedel(bedeles);
+            try {
+                ResultadosBusquedaBedel resultadosBusquedaBedel= new ResultadosBusquedaBedel(bedeles);
+                
+            } catch (ValueException e){
+                System.out.println("COMPLETA ESTO MATI");
+            }
                     
         }
         cardLayout.show(mainPanel,"resultadosBusquedaBedel");
     }
 
     private void showRegistroBedel() {
-        registrarBedel = new RegistrarBedel();
+        
+        RegistrarBedel registrarBedel = new RegistrarBedel();
 
         mainPanel.add(registrarBedel, "registrarBedel");
 
