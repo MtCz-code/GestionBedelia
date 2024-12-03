@@ -14,12 +14,25 @@ public class Bedel extends Usuario{
         this.turno=turno;
         this.habilitado=habilitado;
     }
-    public Bedel(Integer id,String nombre, String apellido, TurnoBedel turno, boolean habilitado){
+    
+    public Bedel(int id, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
         super(id,nombre,apellido);
         this.turno=turno;
         this.habilitado=habilitado;
     }
+    
+    public Bedel(int id,String id_login, String nombre, String apellido, TurnoBedel turno, boolean habilitado){
+        super(id,id_login,nombre,apellido);
+        this.turno=turno;
+        this.habilitado=habilitado;
+    }
 
+    public Bedel(int idUsuario, String idLogin, String contrasena, String nombre, String apellido, TurnoBedel turno, boolean habilitado) {
+        super(idUsuario, idLogin, contrasena, nombre, apellido);
+        this.turno = turno;
+        this.habilitado = habilitado;
+    }
+    
     public TurnoBedel getTurno() {
         return turno;
     }

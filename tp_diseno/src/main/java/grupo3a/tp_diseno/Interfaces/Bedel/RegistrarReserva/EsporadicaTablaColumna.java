@@ -26,13 +26,11 @@ public class EsporadicaTablaColumna extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         cbMartesHorario = new javax.swing.JComboBox<>();
         cbMartesHorario1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
 
-        setLayout(new java.awt.GridLayout());
-        add(jDateChooser2);
+        setLayout(new java.awt.GridLayout(1, 0));
 
         cbMartesHorario.setBackground(new java.awt.Color(40, 40, 40));
         cbMartesHorario.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,6 +84,5 @@ public class EsporadicaTablaColumna extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbMartesHorario;
     private javax.swing.JComboBox<String> cbMartesHorario1;
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     // End of variables declaration//GEN-END:variables
 }

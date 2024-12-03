@@ -32,7 +32,6 @@ public class EsporadicaDias extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel11 = new javax.swing.JPanel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         cbMartesHorario = new javax.swing.JComboBox<>();
         cbMartesHorario1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
@@ -48,8 +47,7 @@ public class EsporadicaDias extends javax.swing.JPanel {
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
 
-        jPanel11.setLayout(new java.awt.GridLayout());
-        jPanel11.add(jDateChooser2);
+        jPanel11.setLayout(new java.awt.GridLayout(1, 0));
 
         cbMartesHorario.setBackground(new java.awt.Color(40, 40, 40));
         cbMartesHorario.setForeground(new java.awt.Color(255, 255, 255));
@@ -250,7 +248,6 @@ public class EsporadicaDias extends javax.swing.JPanel {
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbMartesHorario;
     private javax.swing.JComboBox<String> cbMartesHorario1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

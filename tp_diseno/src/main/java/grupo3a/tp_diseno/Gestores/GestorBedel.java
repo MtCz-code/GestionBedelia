@@ -43,6 +43,13 @@ public class GestorBedel {
         idLogin = idLogin.trim();
 
         try {
+            validar(bedelDTO);
+        } catch(ValueException e){
+            throw new ValueException(e.getMessage());
+        }
+              
+        
+        /*try {
             if (DAO.validarIdLogin(idLogin)) {
                 throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
             }
@@ -97,7 +104,7 @@ public class GestorBedel {
         // o Si la contraseña debe contener al menos un dígito.
         if (!contains(contraseña, '0', '9')) {
             throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
-        }
+        }*/
 
         // TODO:
         Bedel bedel = new Bedel(idLogin, BCrypt.hashpw(contraseña, BCrypt.gensalt()), nombre, apellido, turno, true);
@@ -109,6 +116,95 @@ public class GestorBedel {
         }
 
     }
+    
+    public Integer modificar(BedelDTO bedelDTO) throws Exceptions.ValueException {
+
+        try {
+            validar(bedelDTO);
+        } catch(ValueException e){
+            throw new ValueException(e.getMessage());
+        }
+
+        // TODO:
+        Bedel bedel = convertirAModelo(bedelDTO);
+
+        try {
+            DAO.modificar(bedel);
+        } catch (DAOException ex) {
+            throw new ValueException("Ocurrio un error interno al intentar guardar");
+        }
+        
+        return bedel.getIdUsuario();
+    }
+    
+    public void validar(BedelDTO bedelDTO) throws Exceptions.ValueException {
+        String nombre = bedelDTO.getNombre();
+        String apellido = bedelDTO.getApellido();
+        String idLogin = bedelDTO.getIdLogin();
+        TurnoBedel turno = bedelDTO.getTurno();
+        String contraseña = bedelDTO.getContrasena();
+
+        idLogin = idLogin.trim();
+
+        try {
+            if (DAO.validarIdLogin(idLogin)) {
+                throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
+            }
+        } catch (DAOException e) {
+            throw new ValueException("Error con la consulta." + e.getMessage());
+        }
+
+        
+            String patronIdLogin = "^[a-zA-Z0-9_]+$";
+            
+            Pattern patternIdLogin = Pattern.compile(patronIdLogin);
+            if (!patternIdLogin.matcher(idLogin).matches()) {
+                throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
+            }
+
+            nombre = nombre.trim();
+
+            String regex = "([a-zA-Z])+";
+            Pattern pattern = Pattern.compile(regex);
+            if (!pattern.matcher(nombre).matches()) {
+                throw new ValueException("Introduzca un nombre válido.");
+            }
+
+            // apellido
+            apellido = apellido.trim();
+            if (!pattern.matcher(apellido).matches()) {
+                throw new ValueException("Introduzca un apellido válido.");
+            }
+
+            // contraseña
+            if (contraseña.length() == 0) {
+                throw new ValueException("Introduzca una contraseña.");
+            }
+
+            // o Longitud mínima de la contraseña
+            int largoMin = 8;
+            if (contraseña.length() < largoMin) {
+                throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
+            }
+
+            // o Si la contraseña debe contener signos especiales (@#$%&*)
+            if (!(contraseña.contains("@") || contraseña.contains("#")
+                    || contraseña.contains("$") || contraseña.contains("%")
+                    || contraseña.contains("*"))) {
+                throw new ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
+            }
+
+            // o Si la contraseña debe contener al menos una letra mayúscula.
+            if (!contains(contraseña, 'A', 'Z')) {
+                throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
+            }
+
+            // o Si la contraseña debe contener al menos un dígito.
+            if (!contains(contraseña, '0', '9')) {
+                throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
+            } 
+    }
+    
 
     public List<BedelDTO> buscarBedel(String datoCriterio) throws Exceptions.ValueException, DAOException {
         List<BedelDTO> bedeles = new ArrayList<>();
@@ -124,7 +220,7 @@ public class GestorBedel {
                 throw new ValueException("Introduzca un apellido válido.");
             }
         }
-        bedelesAux = DAO.buscarBedel(datoCriterio);
+        bedelesAux = DAO.buscar(datoCriterio);
         
         for(Bedel bedel : bedelesAux){
             BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
@@ -139,7 +235,7 @@ public class GestorBedel {
         List<BedelDTO> bedeles = new ArrayList<>();
         List<Bedel> bedelesAux = new ArrayList<>();
         
-       bedelesAux = DAO.buscarBedel(datoCriterio);
+       bedelesAux = DAO.buscar(datoCriterio);
         
         for(Bedel bedel : bedelesAux){
             BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
@@ -163,6 +259,39 @@ public class GestorBedel {
         }
         return null;
     }
+    
+    public Bedel convertirAModelo(BedelDTO bdto){
+        int id = bdto.getIdUsuario();
+        String nombre = bdto.getNombre();
+        String apellido = bdto.getApellido();
+        String idLogin = bdto.getIdLogin();
+        TurnoBedel turno = bdto.getTurno();
+        String contraseña = bdto.getContrasena();
+        boolean habilitado = bdto.isHabilitado();
+
+        idLogin = idLogin.trim();
+        
+        Bedel b = new Bedel(id, idLogin, contraseña, nombre, apellido, turno, habilitado);
+        
+        return b;
+    }
+    
+    public BedelDTO convertirADTO(Bedel b){
+        int id = b.getIdUsuario();
+        String nombre = b.getNombre();
+        String apellido = b.getApellido();
+        String idLogin = b.getIdLogin();
+        TurnoBedel turno = b.getTurno();
+        String contraseña = b.getContrasena();
+        boolean habilitado = b.isHabilitado();
+
+        idLogin = idLogin.trim();
+        
+        BedelDTO bdto = new BedelDTO(id, idLogin, contraseña, nombre, apellido, turno, habilitado);
+        
+        return bdto;
+    }
+    
     
     // utilidades
     public static boolean contains(String s, char a, char b) {
