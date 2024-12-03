@@ -85,6 +85,33 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             throw new DAOException("Error con la consulta." + e.getMessage());
         }
     }
+
+    @Override
+    public Usuario buscarPorIdLogin(String id) throws DAOException {
+
+        String query = "SELECT U.id_usuario,U.id_login,U.nombre,U.apellido,U.contrasena " +
+            "FROM usuario U WHERE U.id_login = ?;";
+
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
+            stmtBed.setString(1, id);
+            ResultSet rs = stmtBed.executeQuery();
+            if (rs.next()){
+                int id_usuario = rs.getInt("id_usuario");
+                String id_login = rs.getString("id_login");
+                String contrasena = rs.getString("contrasena");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                Usuario usuario = new Usuario(id_usuario,id_login,contrasena,nombre,apellido);
+                
+                return usuario;
+                
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al recuperar el usuario: " + e.getMessage());
+        }
+        return null;
+    }
     
 }
 

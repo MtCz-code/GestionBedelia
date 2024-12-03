@@ -103,7 +103,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             throw new DAOException("Error al buscar el bedel: " + e.getMessage());
         }  
     }
-
+    
     @Override
     public void eliminar(Bedel bedel) throws DAOException {
         
@@ -159,6 +159,8 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
         
     }
 
+    
+    
     @Override
     public Bedel buscarPorId(Integer id) throws DAOException {
 
