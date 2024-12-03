@@ -19,4 +19,5 @@ public interface BedelDAO extends UsuarioDAO {
     List buscar(TurnoBedel datoCriterio) throws DAOException;
     void eliminar(Bedel bedel) throws DAOException;
     void modificar(Bedel vedel) throws DAOException;
+    Bedel buscarPorId(Integer id) throws DAOException;
 }
