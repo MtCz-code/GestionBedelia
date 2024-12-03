@@ -131,9 +131,9 @@ public class Interfaz {
                 try {
                     List<BedelDTO> bedelesBuscados;
                     if(buscarBedel.getSeleccionado().equals("Apellido"))
-                        bedelesBuscados=gestorBedel.buscarBedel(buscarBedel.getApellido());
+                        bedelesBuscados=gestorBedel.buscar(buscarBedel.getApellido());
                     else
-                        bedelesBuscados=gestorBedel.buscarBedel(buscarBedel.getTurno());
+                        bedelesBuscados=gestorBedel.buscar(buscarBedel.getTurno());
                  
             showResultadosBusquedaBedel(bedelesBuscados);
 
