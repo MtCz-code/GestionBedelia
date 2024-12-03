@@ -111,7 +111,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.id_usuario = ?;";
         
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
-            stmtBed.setString(1, bedel.getTurno().toString());
+            stmtBed.setInt(1, bedel.getIdUsuario());
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
                 int id = rs.getInt("id_usuario");
@@ -157,6 +157,33 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             throw new DAOException("Error al modificar el bedel: " + e.getMessage());
         }
         
+    }
+
+    @Override
+    public Bedel buscarPorId(Integer id) throws DAOException {
+
+        String query = "SELECT B.id_usuario,U.id_login,U.nombre,U.apellido,B.turno " +
+            "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.id_usuario = ?;";
+
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
+            stmtBed.setInt(1, id);
+            ResultSet rs = stmtBed.executeQuery();
+            if (rs.next()){
+                int id_usuario = rs.getInt("id_usuario");
+                String id_login = rs.getString("id_login");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
+                Bedel bedel = new Bedel(id_usuario,id_login,nombre,apellido,turno,false);
+                
+                return bedel;
+                
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al recuperar el bedel: " + e.getMessage());
+        }
+        return null;
     }
 
 }

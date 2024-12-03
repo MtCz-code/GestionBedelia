@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.ReservaDAO;
+import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
@@ -18,11 +16,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import org.json.JSONArray;
 
-
-/**
- *
- * @author exero
- */
 public class ReservaSqlDAO implements ReservaDAO{
 
     public ReservaSqlDAO() {

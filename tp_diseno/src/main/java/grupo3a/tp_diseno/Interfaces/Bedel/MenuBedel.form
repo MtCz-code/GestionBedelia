@@ -137,7 +137,8 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Listar reservas para un d&#xed;a"/>
+            <Property name="text" type="java.lang.String" value="Listar reservas por d&#xed;a"/>
+            <Property name="horizontalTextPosition" type="int" value="10"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarReservaPorDiaActionPerformed"/>
@@ -151,7 +152,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Listar reservas para un curso"/>
+            <Property name="text" type="java.lang.String" value="Listar reservas por curso"/>
+            <Property name="actionCommand" type="java.lang.String" value="Listar reservas por curso"/>
+            <Property name="horizontalTextPosition" type="int" value="10"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarReservaPorCursoActionPerformed"/>

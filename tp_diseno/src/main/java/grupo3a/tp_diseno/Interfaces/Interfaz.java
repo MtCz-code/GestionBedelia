@@ -8,13 +8,12 @@ import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
+import grupo3a.tp_diseno.Gestores.GestorLogin;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
 import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
 import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
 import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
 import grupo3a.tp_diseno.Interfaces.Administrador.ResultadosBusquedaBedel;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,15 +23,16 @@ import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaDias;
 import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
+import grupo3a.tp_diseno.Interfaces.Login.InicioSesion;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import static grupo3a.tp_diseno.Tp_diseno.convertirFormatoAula;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
@@ -43,7 +43,6 @@ public class Interfaz {
     public static Interfaz getInstance() {
         if (interfazInstance == null)
             interfazInstance = new Interfaz();
-        
         return interfazInstance;
     }
     
@@ -52,12 +51,9 @@ public class Interfaz {
     // pantalla auxiliar que se usa para poder presentar alertas
     private BaseFrame baseFrame;
     
-    private MenuAdmin menuAdmin;
-    CardLayout cardLayout = new CardLayout();
-    JPanel mainPanel = new JPanel(cardLayout);
-    private MenuBedel menuBedel; 
-    private RegistrarBedel registrarBedel;
-    private BuscarBedel buscarBedel;
+    private 
+    CardLayout cardLayout;
+    JPanel mainPanel;
     
     // paneles generales de alerta y confirmacion
     private Alerta alerta;
@@ -65,33 +61,52 @@ public class Interfaz {
     
     // gestores
     private GestorBedel gestorBedel= GestorBedel.getInstance();
+    private GestorLogin gestorLogin= GestorLogin.getInstance();
     
-    public Interfaz() {
-        baseFrame = new BaseFrame();
-        baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
-        baseFrame.getPanel1().add(mainPanel);
+public Interfaz() {
+    baseFrame = new BaseFrame();
+    alerta = new Alerta();
+    alertaConfirmacion = new AlertaConfirmacion();
+    cardLayout= new CardLayout();
+    mainPanel= new JPanel(cardLayout);
+    baseFrame.getPanel1().setLayout(new BorderLayout());
+    baseFrame.getPanel1().add(mainPanel);
+       
+    //Login
+    InicioSesion login=new InicioSesion();
+    mainPanel.add(login,"login");
 
-        menuAdmin = new MenuAdmin();
-        mainPanel.add(menuAdmin,"menuAdmin");
+      login.setListener(new InicioSesion.Listener(){
+          @Override
+          public void ingresar(){
+              try{
+              if(){
+                  showMenuAdmin();
+              }
+              else{
+                  showMenuBedel();
+              }
+          } catch(){
+              alerta.setText(e.getMessage());
+              baseFrame.getPanel2().add(alerta);
+              baseFrame.setPanel2Up();
+          }
+          }
+          
+      });
+      
+      cardLayout.show(mainPanel, "login");
 
-        menuAdmin = new MenuAdmin();
-        menuBedel = new MenuBedel();
-        
-        gestorBedel = new GestorBedel();
-
-        baseFrame.getPanel1().setLayout(new BorderLayout());
         baseFrame.setVisible(true);
-        
-//        showMenuAdmin();
-        showMenuBedel();
-        
-        
+
+
     }
     
     // Admin
     private void showMenuAdmin() {
-        baseFrame.getPanel1().add(menuAdmin, BorderLayout.CENTER);
+        if(!existeVista("menuAdmin")){
+        MenuAdmin menuAdmin= new MenuAdmin();
+        mainPanel.add(menuAdmin, "menuAdmin");
 
         menuAdmin.setListener(new MenuAdmin.Listener() {
             @Override
@@ -103,18 +118,19 @@ public class Interfaz {
                 showBuscarBedel();
             }
         });
-            baseFrame.setVisible(true);
+        }
+        cardLayout.show(mainPanel,"menuAdmin");
     }
     
     // Bedel
     private void showBuscarBedel() {
-        buscarBedel = new BuscarBedel();
-        alerta = new Alerta();
-        alertaConfirmacion = new AlertaConfirmacion();
+        if(!existeVista("buscarBedel")){
+        BuscarBedel buscarBedel = new BuscarBedel();
+
 
         mainPanel.add(buscarBedel, "buscarBedel");
         baseFrame.revalidate();
-        baseFrame.repaint();
+
         
 
 
@@ -145,22 +161,21 @@ public class Interfaz {
                 } catch (Exceptions.DAOException ex) {
                     Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-
-
             }
         });
     cardLayout.show(mainPanel, "buscarBedel");
     }
     
     public void showResultadosBusquedaBedel(List<BedelDTO> bedeles){
-        
+        if(!existeVista("resultadosBusquedaBedel")){
+            ResultadosBusquedaBedel resultadosBusquedaBedel= new ResultadosBusquedaBedel(bedeles);
+                    
+        }
+        cardLayout.show(mainPanel,"resultadosBusquedaBedel");
     }
 
     private void showRegistroBedel() {
         registrarBedel = new RegistrarBedel();
-        alerta = new Alerta();
-        alertaConfirmacion = new AlertaConfirmacion();
 
         mainPanel.add(registrarBedel, "registrarBedel");
 
@@ -479,5 +494,13 @@ public class Interfaz {
             }
         });
     }
+    private boolean existeVista(String nombre) {
+    for (Component c : mainPanel.getComponents()) {
+        if (c.getName() != null && c.getName().equals(nombre)) {
+            return true;
+        }
+    }
+    return false;
+}
     
 }
