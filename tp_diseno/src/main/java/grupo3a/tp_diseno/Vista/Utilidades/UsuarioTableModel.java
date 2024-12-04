@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces.Utilidades;
+package grupo3a.tp_diseno.Vista.Utilidades;
 
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import java.lang.reflect.Field;

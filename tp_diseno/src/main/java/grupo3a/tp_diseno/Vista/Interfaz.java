@@ -1,7 +1,7 @@
 
-package grupo3a.tp_diseno.Interfaces;
+package grupo3a.tp_diseno.Vista;
 
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.EsporadicaDias;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
@@ -13,20 +13,20 @@ import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Gestores.GestorLogin;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
-import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
-import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
-import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
-import grupo3a.tp_diseno.Interfaces.Administrador.ResultadosBusquedaBedel;
+import grupo3a.tp_diseno.Vista.Administrador.BuscarBedel;
+import grupo3a.tp_diseno.Vista.Administrador.MenuAdmin;
+import grupo3a.tp_diseno.Vista.Administrador.RegistrarBedel;
+import grupo3a.tp_diseno.Vista.Administrador.ResultadosBusquedaBedel;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import grupo3a.tp_diseno.Interfaces.Bedel.MenuBedel;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.RegistrarReservaDatos;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaDias;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
-import grupo3a.tp_diseno.Interfaces.Login.InicioSesion;
+import grupo3a.tp_diseno.Vista.Bedel.MenuBedel;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.RegistrarReservaDatos;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.ResultadosAulas;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaDias;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
+import grupo3a.tp_diseno.Vista.Login.InicioSesion;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import static grupo3a.tp_diseno.Tp_diseno.convertirFormatoAula;
@@ -83,10 +83,8 @@ public Interfaz() {
     InicioSesion login= new InicioSesion();
     mainPanel.add(login,"login");
 
-      login.setListener(new InicioSesion.Listener(){
-          @Override
-          public void ingresar(){
-              try{
+      login.setListener(() -> {
+          try{
               UsuarioDTO usuarioDTO = new UsuarioDTO(null,null,null,null);
                   
               Boolean esAdmin = gestorLogin.validarLogin(usuarioDTO);
@@ -102,12 +100,11 @@ public Interfaz() {
               baseFrame.getPanel2().add(alerta);
               baseFrame.setPanel2Up();
           }
-          }
-          
-      });
+    });
       
       cardLayout.show(mainPanel, "login");
 
+      baseFrame
         baseFrame.setVisible(true);
 
 
@@ -118,11 +115,12 @@ public Interfaz() {
         if(!existeVista("menuAdmin")){
         
         mainPanel.add(menuAdmin, "menuAdmin");
+        baseFrame.revalidate();
 
         menuAdmin.setListener(new MenuAdmin.Listener() {
             @Override
             public void registrarBedel() {
-                showRegistroBedel();
+                showRegistrarBedel();
             }
             @Override
             public void buscarBedel() {
@@ -188,11 +186,12 @@ public Interfaz() {
         cardLayout.show(mainPanel,"resultadosBusquedaBedel");
     }
 
-    private void showRegistroBedel() {
-        
+    private void showRegistrarBedel() {
+        if (!existeVista("registrarBedel")) {
         RegistrarBedel registrarBedel = new RegistrarBedel();
 
         mainPanel.add(registrarBedel, "registrarBedel");
+        baseFrame.revalidate();
 
 
         registrarBedel.setListener(new RegistrarBedel.Listener() {
@@ -234,11 +233,8 @@ public Interfaz() {
                 baseFrame.setPanel2Up();
                 alerta.setListener(() -> {
                     baseFrame.getPanel2().remove(alerta);
-                    baseFrame.getPanel1().remove(mainPanel);
-                    baseFrame.getPanel1().add(menuAdmin);
                     baseFrame.setPanel1Up();
-                    baseFrame.revalidate();
-                    baseFrame.repaint();
+                    cardLayout.show(mainPanel,"menuAdmin");
                 });
 
             }
@@ -260,47 +256,44 @@ public Interfaz() {
             @Override
             public void next() {
                 baseFrame.getPanel2().remove(alertaConfirmacion);
-                baseFrame.getPanel1().remove(mainPanel);
-                baseFrame.getPanel1().add(menuAdmin);
                 baseFrame.setPanel1Up();
-                baseFrame.revalidate();
-                baseFrame.repaint();
+                cardLayout.show(mainPanel, "menuAdmin");
+
             }
 
         });
-
+            cardLayout.show(mainPanel, "registrarBedel");
+        }
     }
 
     
     // Reserva
     private void showMenuBedel() {
-        baseFrame.getPanel1().add(menuBedel, BorderLayout.CENTER);
+        if (!existeVista("menuBedel")) {
 
+        mainPanel.add(menuBedel, "menuBedel");
+        baseFrame.revalidate();
+        
         menuBedel.setListener(new MenuBedel.Listener() {
             @Override
             public void registrarReserva() {
-                baseFrame.getPanel1().remove(menuBedel);
                 showRegistrarReserva();
             }
 
             @Override
             public void buscarAulas() {
-                baseFrame.getPanel1().remove(menuAdmin);
-//                showbuscarAulas();
             }
 
             @Override
             public void listarReservasParaUnCurso() {
-                baseFrame.getPanel1().remove(menuAdmin);
-//                showlistarReservasParaUnCurso();
             }
 
             @Override
             public void listarReservasParaUnDia() {
-                baseFrame.getPanel1().remove(menuAdmin);
-//                showlistarReservasParaUnDia();
             }
         });
+                    cardLayout.show(mainPanel, "menuBedel");
+        }
     }
     
     

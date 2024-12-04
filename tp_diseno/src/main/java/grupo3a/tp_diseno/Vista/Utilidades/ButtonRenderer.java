@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces.Utilidades;
+package grupo3a.tp_diseno.Vista.Utilidades;
 
 import java.awt.Component;
 import javax.swing.JButton;

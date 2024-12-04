@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces.Login;
+package grupo3a.tp_diseno.Vista.Login;
 
 public class InicioSesion extends javax.swing.JPanel {
 
@@ -43,6 +43,8 @@ public class InicioSesion extends javax.swing.JPanel {
         lblContraseña = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
+
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(26, 26, 26));
         jPanel1.setForeground(new java.awt.Color(19, 66, 125));
@@ -185,16 +187,7 @@ public class InicioSesion extends javax.swing.JPanel {
                 .addGap(125, 125, 125))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed

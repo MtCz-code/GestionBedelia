@@ -1,12 +1,12 @@
 
-package grupo3a.tp_diseno.Interfaces.Administrador;
+package grupo3a.tp_diseno.Vista.Administrador;
 
 import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
-import grupo3a.tp_diseno.Interfaces.Utilidades.ButtonEditor;
-import grupo3a.tp_diseno.Interfaces.Utilidades.ButtonRenderer;
-import grupo3a.tp_diseno.Interfaces.Utilidades.UsuarioTableModel;
+import grupo3a.tp_diseno.Vista.Utilidades.ButtonEditor;
+import grupo3a.tp_diseno.Vista.Utilidades.ButtonRenderer;
+import grupo3a.tp_diseno.Vista.Utilidades.UsuarioTableModel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.JTableHeader;

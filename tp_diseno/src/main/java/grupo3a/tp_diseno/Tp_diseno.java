@@ -1,28 +1,19 @@
 package grupo3a.tp_diseno;
 
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.EsporadicaDias;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.ResultadosAulas;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.RegistrarReservaDatos;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.TipoPeriodicaDias;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva;
-import grupo3a.tp_diseno.Interfaces.Administrador.MenuAdmin;
-import grupo3a.tp_diseno.DTOs.BedelDTO;
-import grupo3a.tp_diseno.Interfaces.Administrador.RegistrarBedel;
+import grupo3a.tp_diseno.Vista.Interfaz;
+import grupo3a.tp_diseno.Vista.Alerta;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.EsporadicaDias;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.ResultadosAulas;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.RegistrarReservaDatos;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaDias;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Gestores.GestorReserva;
-import grupo3a.tp_diseno.Interfaces.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
-import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
-import grupo3a.tp_diseno.Exceptions.Exceptions;
-import grupo3a.tp_diseno.Exceptions.Exceptions.UIException;
-import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
-import grupo3a.tp_diseno.Interfaces.Administrador.BuscarBedel;
-import java.awt.BorderLayout;
 
 import java.awt.CardLayout;
 import java.sql.Time;

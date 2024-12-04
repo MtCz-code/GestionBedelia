@@ -10,7 +10,7 @@ import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoPizarron;
 import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import grupo3a.tp_diseno.Gestores.*;
-import grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
 import java.sql.Time;
 import java.time.LocalDate;

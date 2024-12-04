@@ -1,8 +1,8 @@
 
-package grupo3a.tp_diseno.Interfaces.Administrador;
+package grupo3a.tp_diseno.Vista.Administrador;
 
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
-import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
+import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 import java.awt.CardLayout;
 
 public class BuscarBedel extends javax.swing.JPanel {

@@ -1,5 +1,5 @@
 
-package grupo3a.tp_diseno.Interfaces.Administrador;
+package grupo3a.tp_diseno.Vista.Administrador;
 
 
 public class MenuAdmin extends javax.swing.JPanel {

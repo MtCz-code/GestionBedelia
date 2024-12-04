@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
+package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Enumerations.TipoAula;
-import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
+import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 
 /**
  *

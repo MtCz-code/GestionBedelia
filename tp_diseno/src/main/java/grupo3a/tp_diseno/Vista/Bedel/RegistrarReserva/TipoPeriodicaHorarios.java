@@ -1,7 +1,7 @@
 
-package grupo3a.tp_diseno.Interfaces.Bedel.RegistrarReserva;
+package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
-import grupo3a.tp_diseno.Interfaces.Utilidades.BordesRedondeados;
+import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 import java.time.LocalTime;
 import javax.swing.DefaultComboBoxModel;
 
