@@ -104,7 +104,7 @@ public Interfaz() {
       
       cardLayout.show(mainPanel, "login");
 
-      baseFrame
+      baseFrame.setLocationRelativeTo(null);
         baseFrame.setVisible(true);
 
 
@@ -131,7 +131,7 @@ public Interfaz() {
         cardLayout.show(mainPanel,"menuAdmin");
     }
     
-    // Bedel
+    //acciones admin
     private void showBuscarBedel() {
         if (!existeVista("buscarBedel")) {
             BuscarBedel buscarBedel = new BuscarBedel();
@@ -168,6 +168,10 @@ public Interfaz() {
                     }
                 }
             });
+                    alerta.setListener(() -> {
+            baseFrame.setPanel1Up();
+            baseFrame.getPanel2().remove(alerta);
+        });
             cardLayout.show(mainPanel, "buscarBedel");
         }
     }
@@ -177,6 +181,8 @@ public Interfaz() {
         if(!existeVista("resultadosBusquedaBedel")){
             try {
                 ResultadosBusquedaBedel resultadosBusquedaBedel= new ResultadosBusquedaBedel(bedeles);
+                mainPanel.add(resultadosBusquedaBedel,"resultadosBusquedaBedel");
+                baseFrame.revalidate();
                 
             } catch (ValueException e){
                 System.out.println("COMPLETA ESTO MATI");

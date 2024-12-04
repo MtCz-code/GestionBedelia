@@ -34,7 +34,6 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         tableBedeles.setRowHeight(40);
         JTableHeader tableHeader = tableBedeles.getTableHeader();
         tableHeader.setReorderingAllowed(false);
-        System.out.println("hola");
     }
 
         private void actualizarTabla() throws Exceptions.ValueException {
