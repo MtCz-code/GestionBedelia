@@ -37,7 +37,6 @@ public class GestorLogin {
         
         if(usuarioDAO.validarIdLogin(idLogin)){
             Usuario u = usuarioDAO.buscarPorIdLogin(idLogin);
-            
             // Check that an unencrypted password matches one that has previously been hashed
             if (BCrypt.checkpw(contrasena, u.getContrasena())){
                 

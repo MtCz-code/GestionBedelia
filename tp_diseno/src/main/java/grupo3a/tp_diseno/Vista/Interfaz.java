@@ -83,10 +83,9 @@ public Interfaz() {
     InicioSesion login= new InicioSesion();
     mainPanel.add(login,"login");
 
-      login.setListener(() -> {
+      login.setListener((String idLogin, String contrasena) -> {
           try{
-              UsuarioDTO usuarioDTO = new UsuarioDTO(null,null,null,null);
-                  
+              UsuarioDTO usuarioDTO = new UsuarioDTO(idLogin,contrasena,null,null);
               Boolean esAdmin = gestorLogin.validarLogin(usuarioDTO);
                   
               if(esAdmin){
