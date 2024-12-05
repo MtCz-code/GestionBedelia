@@ -27,8 +27,8 @@ import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaDias;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
 import grupo3a.tp_diseno.Vista.Login.InicioSesion;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
+import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
-import static grupo3a.tp_diseno.Tp_diseno.convertirFormatoAula;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -598,6 +598,31 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaDatos");
             }
         });
+    }
+    
+    private String[][] convertirFormatoAula(AulaGeneral[] aulas) {
+        String[][] str = new String[aulas.length][];
+
+        for (int i = 0; i < aulas.length; i++) {
+            // TODO: sacar tipo (solo se debe mostrar la ubicacion creo, verificar) 
+
+            String ubicacion = aulas[i].getTipo().toString() + " " + aulas[i].getUbicacion();
+            String capacidad = aulas[i].getCapacidad() + "alumnos";
+            String caracteristicas = "pizarron: " + aulas[i].getTipoDePizarron().toString();
+
+            // TODO: agregar ventiladores y eso
+            if (aulas[i].getTipo() == TipoAula.GENERAL) {
+                // TODO
+            } else if (aulas[i].getTipo() == TipoAula.LABORATORIO) {
+                caracteristicas += " " + ((AulaLaboratorio) aulas[i]).getCantidadDePCs();
+            } else if (aulas[i].getTipo() == TipoAula.MULTIMEDIOS) {
+                // TODO
+            }
+
+            str[i] = new String[]{ubicacion, capacidad, caracteristicas};
+
+        }
+        return str;
     }
 
 }
