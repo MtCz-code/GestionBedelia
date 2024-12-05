@@ -226,7 +226,7 @@ public class Interfaz {
                 }
             }
         });
-        // buscarBedel
+        // resultadosBusquedaBedel
         resultadosBusquedaBedel.setListener(new ResultadosBusquedaBedel.Listener() {
             @Override
             public void back() {
