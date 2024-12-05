@@ -62,10 +62,12 @@ public class GestorReserva {
     
     public List<CuatrimestreDTO> recuperarCuatrimestres(){
         List<CuatrimestreDTO> cdto = new ArrayList();
-       // List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+        List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
         for(Cuatrimestre c : cuatrimestres){
             
         }
+        
+        return cdto;
     }
     
     
