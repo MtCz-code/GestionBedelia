@@ -4,7 +4,15 @@
  */
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.Renderers.TableController;
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
+import java.awt.BorderLayout;
+import java.util.Date;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.DefaultTableModel;
+
 
 
 /**
@@ -18,10 +26,64 @@ public class EsporadicaDias extends javax.swing.JPanel {
     /**
      * Creates new form RegistrarAulaEsporadicaDias1
      */
+    private String[] columnNames = {"Dias", "hora", "duracion", "eliminar"};
+    private Object[][] defaultData = {
+//            {new Date(), "16:30", "00:30"},
+//            {new Date(), "16:30", "00:30"},
+//            {new Date(), "16:30", "00:30"},
+//            {new Date(), "16:30", "00:30"}
+        };
+
+    private DefaultTableModel defaultModel = new DefaultTableModel(defaultData, columnNames);
+    
+    private TableController tableController;
+    
+    public interface Listener {
+        void back();
+        void next();
+    }
+    
+    private Listener listener;
+    
     public EsporadicaDias() {
         initComponents();
+        
+        JTable table = new JTable(defaultModel);
+        table.setRowHeight(30);
+        table.setCellSelectionEnabled(false);
+        
+        tableController = new TableController(table);
+//        Object[][] data = new Object[][] {
+//            new Object[]{new Date(), "08:00", "00:30"}
+//        };
+//        tableController.setData(data);
+        tableController.setData(defaultData);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        panelTable.add(scrollPane);
+        
+//        tableController = new TableController(jTable1);
+//        tableController.setData(null);
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    
+    public void setTableData(Object[][] data){
+        data = new Object[][] {
+            new Object[]{new Date(), "08:00", "00:30"}
+        };
+        tableController.setData(data);
+    }
+    
+    // TODO: cast
+    public Object[][] getData(){
+        return tableController.getTableData();
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,49 +93,17 @@ public class EsporadicaDias extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel11 = new javax.swing.JPanel();
-        cbMartesHorario = new javax.swing.JComboBox<>();
-        cbMartesHorario1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        panelTable = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         btnRegistrar = new javax.swing.JButton();
-
-        jPanel11.setLayout(new java.awt.GridLayout(1, 0));
-
-        cbMartesHorario.setBackground(new java.awt.Color(40, 40, 40));
-        cbMartesHorario.setForeground(new java.awt.Color(255, 255, 255));
-        cbMartesHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        cbMartesHorario.setDoubleBuffered(true);
-        cbMartesHorario.setEnabled(false);
-        cbMartesHorario.setFocusable(false);
-        cbMartesHorario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMartesHorarioActionPerformed(evt);
-            }
-        });
-        jPanel11.add(cbMartesHorario);
-
-        cbMartesHorario1.setBackground(new java.awt.Color(40, 40, 40));
-        cbMartesHorario1.setForeground(new java.awt.Color(255, 255, 255));
-        cbMartesHorario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ingrese..." }));
-        cbMartesHorario1.setDoubleBuffered(true);
-        cbMartesHorario1.setEnabled(false);
-        cbMartesHorario1.setFocusable(false);
-        cbMartesHorario1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMartesHorario1ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(cbMartesHorario1);
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -105,18 +135,7 @@ public class EsporadicaDias extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione su aula a reservar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        panelTable.setLayout(new javax.swing.BoxLayout(panelTable, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -125,12 +144,9 @@ public class EsporadicaDias extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
-                        .addGap(61, 61, 61))))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                    .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,8 +154,7 @@ public class EsporadicaDias extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -227,37 +242,27 @@ public class EsporadicaDias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        if (listener != null)
+            listener.back();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
+        if(listener != null)
+            listener.next();
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void cbMartesHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMartesHorarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbMartesHorarioActionPerformed
-
-    private void cbMartesHorario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMartesHorario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbMartesHorario1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JComboBox<String> cbMartesHorario;
-    private javax.swing.JComboBox<String> cbMartesHorario1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel panelTable;
     // End of variables declaration//GEN-END:variables
 }

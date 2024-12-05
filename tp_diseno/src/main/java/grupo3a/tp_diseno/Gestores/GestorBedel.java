@@ -214,7 +214,11 @@ public class GestorBedel {
     public List<BedelDTO> buscar(TurnoBedel turno) throws Exceptions.ValueException, DAOException {
         
         List<BedelDTO> bedeles = new ArrayList<>();
+        
         List<Bedel> bedelesAux;
+//        BedelDTO bdtoTmp = new BedelDTO("nomap", "contr", "nom", "ap", TurnoBedel.MAÑANA, true);
+//        bedeles.add(bdtoTmp);
+        
         
         bedelesAux = DAO.buscar(turno);
         

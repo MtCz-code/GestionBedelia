@@ -104,6 +104,9 @@ public class GestorReserva {
     public void tipoReserva(int tipo) {
         reservaTipoReserva = tipo;
     }
+    public int getTipoReserva(){
+        return reservaTipoReserva;
+    }
 
     public void diasSeleccionados(List<DiaSemana> dias) {
         reservaDiasSeleccionadosSemana = dias;

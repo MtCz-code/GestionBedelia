@@ -1,4 +1,3 @@
-
 package grupo3a.tp_diseno.Vista.Administrador;
 
 import grupo3a.tp_diseno.DTOs.BedelDTO;
@@ -13,44 +12,49 @@ import javax.swing.table.JTableHeader;
 
 public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
-        public interface Listener {
+    public interface Listener {
+
         void back();
     }
-    
+
     String apellido;
-    TurnoBedel turno;     
+    TurnoBedel turno;
     List<BedelDTO> bedeles;
     private Listener listener;
-    
-    public void setListener(Listener listener){
-        this.listener=listener;
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
-    
-    public ResultadosBusquedaBedel(List<BedelDTO> bedeles) throws Exceptions.ValueException {
+
+    public ResultadosBusquedaBedel() {
         initComponents();
-        this.bedeles=bedeles;
-        actualizarTabla();
+//        this.bedeles = bedeles;
+//        actualizarTabla();
         this.tableBedeles.setAutoResizeMode(5);
         tableBedeles.setRowHeight(40);
         JTableHeader tableHeader = tableBedeles.getTableHeader();
         tableHeader.setReorderingAllowed(false);
     }
+    
+    public void updateBedeles(List<BedelDTO> bedeles) {
+        this.bedeles = bedeles;
+        actualizarTabla();
+    }
 
-        private void actualizarTabla() throws Exceptions.ValueException {
-        String[] columnNames = {"Nombre", "Apellido", "Turno", "Habilitado","", ""};
-        
+    private void actualizarTabla() {
+        String[] columnNames = {"Nombre", "Apellido", "Turno", "Habilitado", "", ""};
+
         tableBedeles.setModel(new UsuarioTableModel(bedeles, columnNames));
-        
+
         tableBedeles.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Editar"));
         tableBedeles.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Borrar"));
 
         // Editores para las columnas
         tableBedeles.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor("Editar"));
-        tableBedeles.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor("Borrar")); 
-
+        tableBedeles.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor("Borrar"));
 
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -193,7 +197,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         if (listener != null)
-        listener.back();
+            listener.back();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -201,7 +205,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void tableBedelesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBedelesMouseClicked
-        
+
     }//GEN-LAST:event_tableBedelesMouseClicked
 
 

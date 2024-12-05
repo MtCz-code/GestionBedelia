@@ -9,7 +9,7 @@ public class DataBaseConnection {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/tp_diseno";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
+    private static final String PASSWORD = "root";
 
     public static Connection getConnection() {
         try {
