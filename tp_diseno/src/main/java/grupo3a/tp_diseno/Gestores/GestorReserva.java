@@ -41,12 +41,28 @@ public class GestorReserva {
     private AulaGeneral reservaAulaSeleccionada; // TODO: estas se pueden simplificar
     private int reservaAulaSeleccionadaIdx; //
 
+    
+    private static GestorReserva gestorReservaInstance;
+    
+    public static GestorReserva getInstance() {
+        if(gestorReservaInstance == null)
+            gestorReservaInstance = new GestorReserva();
+        
+        return gestorReservaInstance;
+    }
+    
+    private GestorReserva() {
+        
+    }
+    
+    
     // solo se usa para reserva esporadica
     public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
         return true;
     }
 
     // NO ES NECESARIO VALIDAR NADA EN EL GESTOR, SE PUEDEN VALIDAR EN LA INTERFAZ
+    // rta: esta en el diagrama de secuencia
     public Reserva validarDatosReserva(ReservaDTO reservaDTO) {
 
         return null;
@@ -113,7 +129,6 @@ public class GestorReserva {
     }
 
     public void horariosSeleccionados(List<DetalleReserva> detalles) {
-
         // FIXME: detalles estan incompletos
         reservaDetalleReservas = detalles;
     }

@@ -27,7 +27,7 @@ public class GestorBedel {
         return GestorBedel.instance;
     }
 
-    public GestorBedel() {
+    private GestorBedel() {
     }
 
     private BedelDAO DAO = BedelSqlDAO.getInstance();

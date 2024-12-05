@@ -19,7 +19,7 @@ public class GestorLogin {
         return GestorLogin.instance;
     }
 
-    public GestorLogin() {
+    private GestorLogin() {
     }
 
     private UsuarioDAO usuarioDAO = UsuarioSqlDAO.getInstance();

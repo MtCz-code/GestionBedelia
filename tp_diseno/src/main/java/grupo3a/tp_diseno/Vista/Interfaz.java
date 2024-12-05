@@ -83,7 +83,7 @@ public class Interfaz {
     // gestores
     private GestorBedel gestorBedel = GestorBedel.getInstance();
     private GestorLogin gestorLogin = GestorLogin.getInstance();
-    private GestorReserva gestorReserva = new GestorReserva();  //TODO: change
+    private GestorReserva gestorReserva = GestorReserva.getInstance();
 
     public Interfaz() {
         baseFrame = new BaseFrame();
@@ -496,6 +496,8 @@ public class Interfaz {
                 int cantidadAlumnos = regRsvaDatos.getCantidadAlumnos();
                 TipoAula tipoAula = regRsvaDatos.getTipoAula();
 
+                
+                // TODO: agregar cartel error por los datos
                 gestorReserva.validarDatos(
                         nombreDocente,
                         apellidoDocente,
