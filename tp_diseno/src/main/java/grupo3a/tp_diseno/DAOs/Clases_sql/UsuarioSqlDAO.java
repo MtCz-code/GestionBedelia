@@ -85,6 +85,32 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             throw new DAOException("Error con la consulta." + e.getMessage());
         }
     }
+    
+    @Override
+    // DEVUELVE TRUE SI YA EXISTE UN USUARIO CON ESE IDLOGIN
+    public boolean validarIdLogin(String idLogin, int id) throws DAOException { 
+        // PARA MODIFICAR -> validar que el id_login exista, exceptuando el id_login de ese usuario 
+        // (para los casos en que el idlogin no se modifica, sino siempre estaria repetido).
+        String query = "SELECT id_login FROM usuario where id_login = ? AND id_usuario != ?;";
+    
+ 
+        try (Connection conn = DataBaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1,idLogin);
+            stmt.setInt(2,id);
+        
+        
+            try(ResultSet rs = stmt.executeQuery()){
+                
+                return rs.next();
+                
+            }
+        } catch (SQLException e) {
+            System.out.println("Error con la consulta." + e.getMessage());
+            throw new DAOException("Error con la consulta." + e.getMessage());
+        }
+    }
 
     @Override
     public Usuario buscarPorIdLogin(String id) throws DAOException {

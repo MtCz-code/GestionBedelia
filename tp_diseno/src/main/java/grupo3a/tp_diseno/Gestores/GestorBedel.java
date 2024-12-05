@@ -37,11 +37,13 @@ public class GestorBedel {
 
         // cortar espacios
         bedelDTO.setIdLogin(bedelDTO.getIdLogin().trim());
+        String idLogin = bedelDTO.getIdLogin();
         
         
         // validar
         try {
-            validar(bedelDTO);
+            validarCampos(bedelDTO);
+            validarIdLogin(idLogin);
         } catch(ValueException e){
             throw new ValueException(e.getMessage());
         }
@@ -64,7 +66,8 @@ public class GestorBedel {
         bedelDTO.setIdLogin(bedelDTO.getIdLogin().trim());
         
         try {
-            validar(bedelDTO);
+            validarCampos(bedelDTO);
+            validarIdLogin(bedelDTO);
         } catch(ValueException e){
             throw new ValueException(e.getMessage());
         }
@@ -82,7 +85,27 @@ public class GestorBedel {
         return bedel.getIdUsuario();
     }
     
-    public void validar(BedelDTO bedelDTO) throws Exceptions.ValueException {
+    public void validarIdLogin(BedelDTO b) throws Exceptions.ValueException {
+       try {
+            if (DAO.validarIdLogin(b.getIdLogin(), b.getIdUsuario())) {
+                throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
+            }
+        } catch (DAOException e) {
+            throw new ValueException("Error con la consulta." + e.getMessage());
+        }
+    }
+    
+    public void validarIdLogin(String idLogin) throws Exceptions.ValueException {
+       try {
+            if (DAO.validarIdLogin(idLogin)) {
+                throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
+            }
+        } catch (DAOException e) {
+            throw new ValueException("Error con la consulta." + e.getMessage());
+        }
+    }
+    
+    public void validarCampos(BedelDTO bedelDTO) throws Exceptions.ValueException {
         String nombre = bedelDTO.getNombre();
         String apellido = bedelDTO.getApellido();
         String idLogin = bedelDTO.getIdLogin();
@@ -91,14 +114,9 @@ public class GestorBedel {
 
         idLogin = idLogin.trim();
 
-        try {
-            if (DAO.validarIdLogin(idLogin)) {
-                throw new ValueException("<html>Nombre de usuario en uso, <br>introduzca uno diferente.</html>");
-            }
-        } catch (DAOException e) {
-            throw new ValueException("Error con la consulta." + e.getMessage());
-        }
-
+        // FALTA VALIDAR LA LONGITUD MAXIMA DE LOS VARCHAR, correspondiendose al tamaño maximo en la bd
+        
+        
             String patronIdLogin = "^[a-zA-Z0-9_]+$";
             
             Pattern patternIdLogin = Pattern.compile(patronIdLogin);

@@ -24,13 +24,13 @@ public class GestorLogin {
     
     public Boolean validarLogin(UsuarioDTO usuarioDTO) throws DAOException{
         
-        /*try{
-            
-        }catch(){
-            
-        }*/
+        // Check that an unencrypted password matches one that has previously been hashed
+        /*if (BCrypt.checkpw(candidate, hashed))
+	System.out.println("It matches");
+        else
+	System.out.println("It does not match");*/
         
-        
+        System.out.println("IMPLEMETAR VALIDACION");
         
         
         return true;

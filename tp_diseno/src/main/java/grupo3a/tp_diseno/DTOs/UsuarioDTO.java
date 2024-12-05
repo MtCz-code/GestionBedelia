@@ -19,6 +19,7 @@ public class UsuarioDTO {
     
 
     public UsuarioDTO(String idLogin, String contrasena, String nombre, String apellido) {
+        this.idUsuario = 0;
         this.idLogin = idLogin;
         this.contrasena = contrasena;
         this.nombre = nombre;

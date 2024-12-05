@@ -3,7 +3,7 @@ insert into usuario (id_login,contrasena,nombre,apellido) values ('PerrenSanti',
 insert into usuario (id_login,contrasena,nombre,apellido) values ('Admin','admin','Admin','Admin');
 
 insert into bedel values (1, 'NOCHE', true);
-insert into bedel values(2,'DIA',true);
+insert into bedel values(2,'MAÑANA',true);
 
 insert into administrador values(3);
 
