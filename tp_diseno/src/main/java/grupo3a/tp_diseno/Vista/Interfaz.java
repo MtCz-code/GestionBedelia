@@ -2,6 +2,7 @@ package grupo3a.tp_diseno.Vista;
 
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
+import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
@@ -526,7 +527,9 @@ public class Interfaz {
                 gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
 
                 try {
-                    gestorReserva.crearReserva();
+                    // ARREGLAR EL FLUJO DE CREAR RESERVA
+                    ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0);
+                    gestorReserva.crearReserva(rdto);
 
                     System.err.println("reservado");
                     alerta.setText("reserva realizada con exito");
