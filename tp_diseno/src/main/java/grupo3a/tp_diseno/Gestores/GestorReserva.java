@@ -24,9 +24,14 @@ public class GestorReserva {
     public final static int RESERVA_SEGUNDO_CUATRIMESTRE = 2;
     public final static int RESERVA_ESPORADICA = 3;
 
-    private final AulaDAO aulaDAO = new AulaSqlDAO();
-    private final ReservaDAO reservaDAO = new ReservaSqlDAO();
-    private final DetalleReservaDAO detalleReservaDAO = new DetalleReservaSqlDAO();
+    private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
+    private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
+    
+    private final DetalleReservaDAO detalleReservaDAO = DetalleReservaSqlDAO.getInstance();
+    
+    private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
+    
+    private final GestorAula gestorAula = GestorAula.getInstance();
 
     private int reservaTipoReserva = -1;
     private List<DiaSemana> reservaDiasSeleccionadosSemana;
@@ -55,6 +60,21 @@ public class GestorReserva {
         
     }
     
+    public List<CuatrimestreDTO> recuperarCuatrimestres(){
+        List<CuatrimestreDTO> cdto = new ArrayList();
+        List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+        for(Cuatrimestre c : cuatrimestres){
+            
+        }
+        
+        return cdto;
+    }
+    
+    
+    // solo se usa para reserva esporadica
+    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva, ArrayList<CuatrimestreDTO> cuatrimestres) {
+        return true;
+    }
     
     // solo se usa para reserva esporadica
     public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
@@ -63,10 +83,36 @@ public class GestorReserva {
 
     // NO ES NECESARIO VALIDAR NADA EN EL GESTOR, SE PUEDEN VALIDAR EN LA INTERFAZ
     // rta: esta en el diagrama de secuencia
-    public Reserva validarDatosReserva(ReservaDTO reservaDTO) {
-
+    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO) {
+        
+        validarCantidadAlumnos(reservaDTO);
+        
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
+        
         return null;
     }
+    
+    public boolean validarCantidadAlumnos(ReservaDTO r){
+        return true;
+    }
+    
+    
+    public int crearReserva(ReservaDTO reserva){
+        
+        return 1;
+    }
+    
+    
+    
+    
+    public ReservaDTO convertirADTO(Reserva r){
+        
+        
+        ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0);
+        return rdto;
+    }
+    
+    
 
     /*
     public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO,
@@ -200,7 +246,7 @@ public class GestorReserva {
         reservaAulaSeleccionadaIdx = idx;
     }
 
-    public void crearReserva() {
+    /*public void crearReserva() {
         Reserva reserva;
         int reservaIdDocente = 0;
         int reservaIdCatedra = 0;
@@ -269,6 +315,6 @@ public class GestorReserva {
 
         
 
-    }
+    }*/
 
 }

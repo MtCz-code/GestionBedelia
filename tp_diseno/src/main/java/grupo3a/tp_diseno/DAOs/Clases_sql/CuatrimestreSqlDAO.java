@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CuatrimestreSqlDAO implements CuatrimestreDAO{
@@ -26,9 +27,11 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
     }
     
     @Override
-    public ArrayList listar(){
-        String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre";
-        ArrayList<Cuatrimestre> cuatrimestres = new ArrayList<>();
+    public List<Cuatrimestre> getCuatrimestresActuales(){
+        String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre"+
+                "WHERE EXTRACT(YEAR FROM fecha_inicio_cuatrimestre) = EXTRACT(YEAR FROM CURRENT_DATE) " +
+                "OR EXTRACT(YEAR FROM fecha_fin_cuatrimestre) = EXTRACT(YEAR FROM CURRENT_DATE);";
+        List<Cuatrimestre> cuatrimestres = new ArrayList<>();
         try(Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery()){

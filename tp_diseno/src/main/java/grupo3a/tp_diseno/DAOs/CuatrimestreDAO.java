@@ -4,12 +4,14 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Modelos.Cuatrimestre;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author exero
  */
 public interface CuatrimestreDAO {
-    ArrayList listar();
+    List<Cuatrimestre> getCuatrimestresActuales();
 }

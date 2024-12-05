@@ -5,6 +5,9 @@
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.AulaDAO;
+import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Modelos.AulaGeneral;
+import java.util.List;
 
 /**
  *
@@ -20,4 +23,19 @@ public class AulaSqlDAO implements AulaDAO{
         if(AulaSqlDAO.instance == null)AulaSqlDAO.instance =  new AulaSqlDAO();
         return AulaSqlDAO.instance;
     }
+
+    @Override
+    public List<AulaGeneral> getByTipoYCapacidad(TipoAula tipo, Integer capacidad) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
