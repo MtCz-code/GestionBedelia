@@ -33,8 +33,11 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.sql.Time;
+import java.util.Date;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JPanel;
 
 public class Interfaz {
@@ -142,21 +145,11 @@ public class Interfaz {
     private void configureListeners() {
 
         // login
-        login.setListener(() -> {
+        login.setListener((String idLogin, String contrasena) -> {
             try {
-                String nombre = login.getNombreUsuario();
-                String contraseña = login.getContraseña();
-
-                UsuarioDTO usuarioDTO = new UsuarioDTO(null, null, null, null);
-
+                UsuarioDTO usuarioDTO = new UsuarioDTO(idLogin, contrasena, null, null);
                 Boolean esAdmin = gestorLogin.validarLogin(usuarioDTO);
-                // TODO
-                esAdmin = false;
-                if (nombre.equals("a")) {
-                    esAdmin = true;
-                }
 
-//                mainPanel.remove(login);
                 if (esAdmin) {
                     showMenuAdmin();
                 } else {
@@ -164,9 +157,15 @@ public class Interfaz {
                 }
             } catch (DAOException e) {
                 alerta.setText(e.getMessage());
+                alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
-                //TODO: agregar listener de alerta
+            } catch (ValueException e) {
+                alerta.setText(e.getMessage());
+                alerta.setListener(() -> baseFrame.setPanel1Up());
+                alertaCardLayout.show(alertaPanel, "alerta");
+                baseFrame.setPanel2Up();
+                Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, e);
             }
         });
 
@@ -349,7 +348,6 @@ public class Interfaz {
         cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
 
         // TODO: pasar listeners a configuraListeners()
-        
         // seleccion tipo reserva
         regRsvaSeleccionTipoReserva.setListener(() -> {
             if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.ANUAL) {
@@ -419,9 +417,9 @@ public class Interfaz {
                 if (horarios[0] != null) {
                     DetalleReserva tmp = new DetalleReserva();
                     tmp.setDiaReserva(DiaSemana.LUNES);
-                    tmp.setHorarioInicio(Time.valueOf(horarios[0]));
+                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[0]));
 
-                    Time time = Time.valueOf(duraciones[0]);
+                    java.sql.Time time = java.sql.Time.valueOf(duraciones[0]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     tmp.setCantModulos(minutosCompletos / 30);
@@ -430,9 +428,9 @@ public class Interfaz {
                 if (horarios[1] != null) {
                     DetalleReserva tmp = new DetalleReserva();
                     tmp.setDiaReserva(DiaSemana.MARTES);
-                    tmp.setHorarioInicio(Time.valueOf(horarios[1]));
+                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[1]));
 
-                    Time time = Time.valueOf(duraciones[1]);
+                    java.sql.Time time = java.sql.Time.valueOf(duraciones[1]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     tmp.setCantModulos(minutosCompletos / 30);
@@ -441,9 +439,9 @@ public class Interfaz {
                 if (horarios[2] != null) {
                     DetalleReserva tmp = new DetalleReserva();
                     tmp.setDiaReserva(DiaSemana.MIERCOLES);
-                    tmp.setHorarioInicio(Time.valueOf(horarios[2]));
+                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[2]));
 
-                    Time time = Time.valueOf(duraciones[2]);
+                    java.sql.Time time = java.sql.Time.valueOf(duraciones[2]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     tmp.setCantModulos(minutosCompletos / 30);
@@ -452,9 +450,9 @@ public class Interfaz {
                 if (horarios[3] != null) {
                     DetalleReserva tmp = new DetalleReserva();
                     tmp.setDiaReserva(DiaSemana.JUEVES);
-                    tmp.setHorarioInicio(Time.valueOf(horarios[3]));
+                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[3]));
 
-                    Time time = Time.valueOf(duraciones[3]);
+                    java.sql.Time time = java.sql.Time.valueOf(duraciones[3]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     tmp.setCantModulos(minutosCompletos / 30);
@@ -463,9 +461,9 @@ public class Interfaz {
                 if (horarios[4] != null) {
                     DetalleReserva tmp = new DetalleReserva();
                     tmp.setDiaReserva(DiaSemana.VIERNES);
-                    tmp.setHorarioInicio(Time.valueOf(horarios[4]));
+                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[4]));
 
-                    Time time = Time.valueOf(duraciones[4]);
+                    java.sql.Time time = java.sql.Time.valueOf(duraciones[4]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     tmp.setCantModulos(minutosCompletos / 30);
@@ -546,7 +544,7 @@ public class Interfaz {
                 }
             }
         });
-        
+
         regAulaEsporadicaDias.setListener(new EsporadicaDias.Listener() {
             @Override
             public void back() {
@@ -555,18 +553,49 @@ public class Interfaz {
 
             @Override
             public void next() {
+
+                Object[][] datos = regAulaEsporadicaDias.getData();
+
+                ArrayList<DetalleReserva> detalleReserva = new ArrayList<>();
+
+                for (int i = 0; i < datos.length; i++) {
+                    Date dia = (Date) datos[i][0];
+                    LocalTime horario = (LocalTime) datos[i][1];
+                    LocalTime duracion = (LocalTime) datos[i][2];
+                    DetalleReserva tmp = new DetalleReserva();
+                    
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dia);
+
+                    int dow = calendar.get(Calendar.DAY_OF_WEEK);
+                    if (dow == 1)
+                        tmp.setDiaReserva(DiaSemana.LUNES);
+                    else if (dow == 2)
+                        tmp.setDiaReserva(DiaSemana.MARTES);
+                    else if (dow == 3)
+                        tmp.setDiaReserva(DiaSemana.MIERCOLES);
+                    else if (dow == 4)
+                        tmp.setDiaReserva(DiaSemana.JUEVES);
+                    else if (dow == 5)
+                        tmp.setDiaReserva(DiaSemana.MARTES);
+                    else {
+                        // TODO excepcion (sabado / domingo)
+                    }
+                    
+                    tmp.setHorarioInicio(Time.valueOf(horario));
+                    Time time = Time.valueOf(duracion);
+                    int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
+
+                    tmp.setCantModulos(minutosCompletos / 30);
+                    detalleReserva.add(tmp);
+                }
+
+                // TODO: cambiar nombre metodo en diagrama de secuencia
+                gestorReserva.horariosSeleccionados(detalleReserva);
                 
+                cardLayout.show(mainPanel, "regRsvaDatos");
             }
         });
-    }
-
-    private boolean existeVista(String nombre) {
-        for (Component c : mainPanel.getComponents()) {
-            if (c.getName() != null && c.getName().equals(nombre)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

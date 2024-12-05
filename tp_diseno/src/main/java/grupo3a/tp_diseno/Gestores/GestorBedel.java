@@ -116,7 +116,7 @@ public class GestorBedel {
 
         // FALTA VALIDAR LA LONGITUD MAXIMA DE LOS VARCHAR, correspondiendose al tamaño maximo en la bd
         
-        
+            // id login
             String patronIdLogin = "^[a-zA-Z0-9_]+$";
             
             Pattern patternIdLogin = Pattern.compile(patronIdLogin);
@@ -124,6 +124,13 @@ public class GestorBedel {
                 throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
             }
 
+            // longitud maxima del id_login
+            int largoMaxIdLogin = 30;
+            if (nombre.length() >= largoMaxIdLogin) {
+                throw new ValueException("<html>El nombre de usuario debe contener menos de <br>" + largoMaxIdLogin + " caracteres.</html>");
+            }
+            
+            // nombre
             nombre = nombre.trim();
 
             String regex = "([a-zA-Z])+";
@@ -131,11 +138,24 @@ public class GestorBedel {
             if (!pattern.matcher(nombre).matches()) {
                 throw new ValueException("Introduzca un nombre válido.");
             }
+            
+            // longitud maxima del nombre
+            int largoMaxNombre = 50;
+            if (nombre.length() >= largoMaxNombre) {
+                throw new ValueException("<html>El nombre debe contener menos de <br>" + largoMaxNombre + " caracteres.</html>");
+            }
+
 
             // apellido
             apellido = apellido.trim();
             if (!pattern.matcher(apellido).matches()) {
                 throw new ValueException("Introduzca un apellido válido.");
+            }
+            
+            // longitud maxima del apellido
+            int largoMaxApellido = 50;
+            if (apellido.length() >= largoMaxApellido) {
+                throw new ValueException("<html>El apellido debe contener menos de <br>" + largoMaxApellido + " caracteres.</html>");
             }
 
             // contraseña
@@ -143,25 +163,31 @@ public class GestorBedel {
                 throw new ValueException("Introduzca una contraseña.");
             }
 
-            // o Longitud mínima de la contraseña
-            int largoMin = 8;
-            if (contraseña.length() < largoMin) {
-                throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMin + " caracteres.</html>");
+            // longitud mínima de la contraseña
+            int largoMinContrasena = 8;
+            if (contraseña.length() < largoMinContrasena) {
+                throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMinContrasena + " caracteres.</html>");
+            }
+            
+            // longitud maxima de la contrasena
+            int largoMaxContrasena = 60;
+            if (contraseña.length() >= largoMaxContrasena) {
+                throw new ValueException("<html>La contrasena debe contener menos de <br>" + largoMaxContrasena + " caracteres.</html>");
             }
 
-            // o Si la contraseña debe contener signos especiales (@#$%&*)
+            // si la contraseña debe contener signos especiales (@#$%&*)
             if (!(contraseña.contains("@") || contraseña.contains("#")
                     || contraseña.contains("$") || contraseña.contains("%")
                     || contraseña.contains("*"))) {
                 throw new ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
             }
 
-            // o Si la contraseña debe contener al menos una letra mayúscula.
+            // si la contraseña debe contener al menos una letra mayúscula.
             if (!contains(contraseña, 'A', 'Z')) {
                 throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
             }
 
-            // o Si la contraseña debe contener al menos un dígito.
+            // si la contraseña debe contener al menos un dígito.
             if (!contains(contraseña, '0', '9')) {
                 throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
             } 
@@ -258,6 +284,11 @@ public class GestorBedel {
         return bdto;
     }
     
+    public boolean esBedel(int id) throws DAOException{
+        if(DAO.buscarPorId(id) != null) return true;
+        
+        return false;
+    }
     
     // utilidades
     public static boolean contains(String s, char a, char b) {

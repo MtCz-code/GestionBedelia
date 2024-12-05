@@ -9,7 +9,7 @@ public class InicioSesion extends javax.swing.JPanel {
     private Listener listener;
     
     public interface Listener {
-        void ingresar();
+        void ingresar(String idLogin, String contrasena);
     }
     public void setListener(Listener listener){
         this.listener=listener;
@@ -193,7 +193,9 @@ public class InicioSesion extends javax.swing.JPanel {
         nombreUsuario=txtNombre.getText();
         contraseña=txtContraseña.getText();
         
-        if(listener!=null) listener.ingresar();
+        
+        //tiene que mandar como parametro el nombre y la contraseña
+        if(listener!=null) listener.ingresar(nombreUsuario,contraseña);
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 

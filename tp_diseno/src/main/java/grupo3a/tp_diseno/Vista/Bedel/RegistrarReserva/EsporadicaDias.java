@@ -7,6 +7,7 @@ package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.Renderers.TableController;
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 import java.awt.BorderLayout;
+import java.time.LocalTime;
 import java.util.Date;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -78,9 +79,19 @@ public class EsporadicaDias extends javax.swing.JPanel {
         tableController.setData(data);
     }
     
-    // TODO: cast
+    // {dia(Date), horario(LocalTime), duracion(LocalTime)
     public Object[][] getData(){
-        return tableController.getTableData();
+        Object[][] data = tableController.getTableData();
+        
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                String time = (String) data[i][j + 1];
+                LocalTime t = Renderers.getTime(time);
+                data[i][j + 1] = t;
+            }
+        }
+        
+        return data;
     }
 
     

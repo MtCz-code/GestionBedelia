@@ -109,7 +109,7 @@ public class Renderers {
         void delRow(int idx);
     }
 
-    private static LocalTime getTime(String s) {
+    public static LocalTime getTime(String s) {
         String[] parts = s.split(":");
         return LocalTime.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
