@@ -42,8 +42,8 @@ public class InicioSesion extends javax.swing.JPanel {
         txtNombre = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         lblContraseña = new javax.swing.JLabel();
+        txtContraseña = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
-        pfContraseña = new javax.swing.JPasswordField();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -77,7 +77,6 @@ public class InicioSesion extends javax.swing.JPanel {
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jLabel6.setPreferredSize(new java.awt.Dimension(20, 16));
 
-        txtNombre.setBackground(new java.awt.Color(40, 40, 40));
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setPreferredSize(new java.awt.Dimension(64, 20));
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +94,14 @@ public class InicioSesion extends javax.swing.JPanel {
         lblContraseña.setText("Contraseña");
         lblContraseña.setPreferredSize(new java.awt.Dimension(70, 20));
 
+        txtContraseña.setForeground(new java.awt.Color(255, 255, 255));
+        txtContraseña.setPreferredSize(new java.awt.Dimension(64, 20));
+        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContraseñaActionPerformed(evt);
+            }
+        });
+
         btnIngresar.setBackground(new java.awt.Color(17, 17, 17));
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("Ingresar");
@@ -104,21 +111,19 @@ public class InicioSesion extends javax.swing.JPanel {
             }
         });
 
-        pfContraseña.setBackground(new java.awt.Color(40, 40, 40));
-        pfContraseña.setForeground(new java.awt.Color(255, 255, 255));
-        pfContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pfContraseñaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -129,13 +134,8 @@ public class InicioSesion extends javax.swing.JPanel {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addComponent(pfContraseña)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,9 +150,9 @@ public class InicioSesion extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pfContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
                 .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -181,18 +181,18 @@ public class InicioSesion extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContraseñaActionPerformed
+
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         nombreUsuario=txtNombre.getText();
-        contraseña=new String(pfContraseña.getPassword());
+        contraseña=txtContraseña.getText();
         
         
-        
+        //tiene que mandar como parametro el nombre y la contraseña
         if(listener!=null) listener.ingresar(nombreUsuario,contraseña);
     }//GEN-LAST:event_btnIngresarActionPerformed
-
-    private void pfContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pfContraseñaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -206,7 +206,7 @@ public class InicioSesion extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lblContraseña;
-    private javax.swing.JPasswordField pfContraseña;
+    private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
