@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class prueba {
+public class pruebaBedel {
 
     public static void main(String[] args) {
         GestorBedel gestorBedel = GestorBedel.getInstance();
@@ -27,7 +27,7 @@ public class prueba {
                 System.out.println("no existe god");
             }
         } catch (Exceptions.DAOException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
         }*/
         
         
@@ -44,7 +44,7 @@ public class prueba {
             gestorBedel.crear(bedel1);
             System.out.println("bedel1 creado exitosamente");
         } catch (Exceptions.ValueException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         
@@ -53,7 +53,7 @@ public class prueba {
             gestorBedel.crear(bedel2);
             System.out.println("bedel2 creado exitosamente");
         } catch (Exceptions.ValueException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         
@@ -64,12 +64,13 @@ public class prueba {
             gestorBedel.crear(bedel2);
             System.out.println("bedel2 creado exitosamente");
         } catch (Exceptions.ValueException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
-        }*/
+        }
+        */
         
-        /*// MODIFICAR
-        bedel1.setIdUsuario(4);
+        // MODIFICAR
+        bedel1.setIdUsuario(11);
         bedel1.setContrasena("Bedel_prueba2$");
         bedel1.setIdLogin("bedel_prueba1");
         bedel1.setTurno(TurnoBedel.NOCHE);
@@ -78,21 +79,20 @@ public class prueba {
             gestorBedel.modificar(bedel1);
             System.out.println("bedel1 modificado exitosamente");
         } catch (Exceptions.ValueException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
              System.out.println(ex.getMessage());
         }
-        */
         
-        /*// ELIMINAR
+        
+        // ELIMINAR
         try {
-            
             gestorBedel.eliminar(bedelEliminar.getIdUsuario());
             System.out.println("bedelEliminar eliminado exitosamente");
         } catch (Exceptions.DAOException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
-        */
+        
         
         // BUSCAR
             
@@ -102,7 +102,7 @@ public class prueba {
             System.out.println("bedel buscado por ID: id = " + bedelBuscarID.getIdUsuario() + 
                     " - idLogin = " + bedelBuscarID.getIdLogin());
         } catch (Exceptions.DAOException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         
@@ -116,19 +116,19 @@ public class prueba {
            }
             
         } catch (Exceptions.DAOException | Exceptions.ValueException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         
         try {
-            List<BedelDTO> bedelesBuscarTurno = gestorBedel.buscar(TurnoBedel.MAÑANA);
+            List<BedelDTO> bedelesBuscarTurno = gestorBedel.buscar(TurnoBedel.TARDE);
             System.out.println("Bedeles buscados por TURNO (TARDE):");
             for(BedelDTO b : bedelesBuscarTurno){
                System.out.println("id = " + b.getIdUsuario() + 
                     " - idLogin = " + b.getIdLogin() + " - Turno = " + b.getTurno());
            }
         } catch (Exceptions.ValueException | Exceptions.DAOException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
         
