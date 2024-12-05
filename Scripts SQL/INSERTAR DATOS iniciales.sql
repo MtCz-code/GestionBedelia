@@ -1,6 +1,6 @@
-insert into usuario (id_login,contrasena,nombre,apellido) values ('PedroFacha123',1234,'Pedro','Sanchez');
-insert into usuario (id_login,contrasena,nombre,apellido) values ('PerrenSanti',4321,'Santiago','Perren');
-insert into usuario (id_login,contrasena,nombre,apellido) values ('Admin','admin','Admin','Admin');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('bedel_prueba1', '$2a$10$GNSeI6qYWnOdOWVluqaWQ.pdm2gNUPHC1VwBDJExvS7sDPnY7cIKe'/*contraseña: Bedel_prueba1$*/, 'bedel', 'prueba');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('bedel_prueba2', '$2a$10$4tiIF1RBLc01duBvB8tYgOpAZnvqSCR2cO.oTK3PkKE6/K.xG5.o2'/*contraseña: Bedel_prueba2$*/, 'bedel', 'prueba');
+insert into usuario (id_login,contrasena,nombre,apellido) values ('Admin','$2a$10$yNBczGnUsKjUACLs3EfZ.OnkKUWuZ9otvhEfG9NJPadXAMCamnaUG'/*contraseña: Admin_general$1*/,'Admin','Admin');
 
 insert into bedel values (1, 'NOCHE', true);
 insert into bedel values(2,'MAÑANA',true);

@@ -280,6 +280,11 @@ public class GestorBedel {
         return bdto;
     }
     
+    public boolean esBedel(int id) throws DAOException{
+        if(DAO.buscarPorId(id) != null) return true;
+        
+        return false;
+    }
     
     // utilidades
     public static boolean contains(String s, char a, char b) {

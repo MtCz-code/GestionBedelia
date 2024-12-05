@@ -24,20 +24,32 @@ public class GestorLogin {
 
     private UsuarioDAO usuarioDAO = UsuarioSqlDAO.getInstance();
     
+    private GestorBedel gestorBedel = GestorBedel.getInstance();
     
-    public Boolean validarLogin(UsuarioDTO udto) throws DAOException{
+    
+    public Boolean validarLogin(UsuarioDTO udto) throws DAOException, ValueException{
+        
+        // SI ES BEDEL RETORNA FALSO, si es admin retorna true
+        
         String idLogin = udto.getIdLogin();
         String contrasena = udto.getContrasena();
         
         
         if(usuarioDAO.validarIdLogin(idLogin)){
             Usuario u = usuarioDAO.buscarPorIdLogin(idLogin);
+            
             // Check that an unencrypted password matches one that has previously been hashed
-            if (BCrypt.checkpw(contrasena, u.getContrasena()))
+            if (BCrypt.checkpw(contrasena, u.getContrasena())){
+                
+                if(gestorBedel.esBedel(u.getIdUsuario())){
+                    return false; 
+                }
                 return true;
+            } 
+            else throw new ValueException("<html>Usuario o contraseña incorrectos</html>");
         }
+        else throw new ValueException("<html>Usuario o contraseña incorrectos</html>");
         
-        return false;
     }
     
     

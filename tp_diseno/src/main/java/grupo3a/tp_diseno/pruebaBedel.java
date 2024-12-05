@@ -32,8 +32,11 @@ public class pruebaBedel {
         
         
         // PRUEBA MODIFICAR, CREAR, ELIMINAR Y BUSCAR BEDEL
-        BedelDTO bedelBuscar = new BedelDTO(1, "PedroFacha123", "1234", "Pedro", "Sanchez", TurnoBedel.NOCHE, true);
-        BedelDTO bedelEliminar = new BedelDTO(2, "PerrenSanti", "4321", "Santiago", "Perren", TurnoBedel.MAÑANA, true);
+        
+        // NO FUNCIONAN, CAMBIAMOS LOS DATOS INICIALES
+        /*BedelDTO bedelBuscar = new BedelDTO(1, "PedroFacha123", "1234", "Pedro", "Sanchez", TurnoBedel.NOCHE, true);
+        BedelDTO bedelEliminar = new BedelDTO(2, "PerrenSanti", "4321", "Santiago", "Perren", TurnoBedel.MAÑANA, true);*/ 
+        
         BedelDTO bedel1 = new BedelDTO("bedel_prueba", "Bedel_prueba1$", "prueba", "prueba", TurnoBedel.TARDE, true);     
         BedelDTO bedel2 = new BedelDTO("bedel_prueba", "Bedel_prueba1$", "prueba", "prueba", TurnoBedel.TARDE, true);   
     
@@ -68,7 +71,7 @@ public class pruebaBedel {
             System.out.println(ex.getMessage());
         }
         */
-        
+        /*
         // MODIFICAR
         bedel1.setIdUsuario(11);
         bedel1.setContrasena("Bedel_prueba2$");
@@ -131,7 +134,7 @@ public class pruebaBedel {
             Logger.getLogger(pruebaBedel.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
-        
+        */
     }
         
  }
