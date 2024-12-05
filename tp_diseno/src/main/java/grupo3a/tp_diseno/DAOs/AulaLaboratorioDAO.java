@@ -4,10 +4,18 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Modelos.AulaGeneral;
+import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
+import java.util.List;
+
 /**
  *
  * @author exero
  */
 public interface AulaLaboratorioDAO {
+    
+        List<AulaLaboratorio> getByTipoYCapacidad(TipoAula tipo, Integer capacidad);
+
     
 }
