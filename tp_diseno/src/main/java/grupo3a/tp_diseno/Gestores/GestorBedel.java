@@ -113,84 +113,80 @@ public class GestorBedel {
         String contraseña = bedelDTO.getContrasena();
 
         idLogin = idLogin.trim();
+        nombre = nombre.trim();
 
-        // FALTA VALIDAR LA LONGITUD MAXIMA DE LOS VARCHAR, correspondiendose al tamaño maximo en la bd
-        
-            // id login
-            String patronIdLogin = "^[a-zA-Z0-9_]+$";
-            
-            Pattern patternIdLogin = Pattern.compile(patronIdLogin);
-            if (!patternIdLogin.matcher(idLogin).matches()) {
-                throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
-            }
+       
 
-            // longitud maxima del id_login
-            int largoMaxIdLogin = 30;
-            if (nombre.length() >= largoMaxIdLogin) {
-                throw new ValueException("<html>El nombre de usuario debe contener menos de <br>" + largoMaxIdLogin + " caracteres.</html>");
-            }
-            
-            // nombre
-            nombre = nombre.trim();
+        // longitud maxima del id_login
+        int largoMaxIdLogin = 30;
+        if (nombre.length() >= largoMaxIdLogin) {
+            throw new ValueException("<html>El nombre de usuario debe contener menos de <br>" + largoMaxIdLogin + " caracteres.</html>");
+        }
 
-            String regex = "([a-zA-Z])+";
-            Pattern pattern = Pattern.compile(regex);
-            if (!pattern.matcher(nombre).matches()) {
-                throw new ValueException("Introduzca un nombre válido.");
-            }
-            
-            // longitud maxima del nombre
-            int largoMaxNombre = 50;
-            if (nombre.length() >= largoMaxNombre) {
-                throw new ValueException("<html>El nombre debe contener menos de <br>" + largoMaxNombre + " caracteres.</html>");
-            }
+        // id login
+        String patronIdLogin = "^[a-zA-Z0-9_]+$";
+        Pattern patternIdLogin = Pattern.compile(patronIdLogin);
+        if (!patternIdLogin.matcher(idLogin).matches()) {
+            throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
+        }
 
+        // longitud maxima del nombre
+        int largoMaxNombre = 50;
+        if (nombre.length() >= largoMaxNombre) {
+            throw new ValueException("<html>El nombre debe contener menos de <br>" + largoMaxNombre + " caracteres.</html>");
+        }
 
-            // apellido
-            apellido = apellido.trim();
-            if (!pattern.matcher(apellido).matches()) {
-                throw new ValueException("Introduzca un apellido válido.");
-            }
-            
-            // longitud maxima del apellido
-            int largoMaxApellido = 50;
-            if (apellido.length() >= largoMaxApellido) {
-                throw new ValueException("<html>El apellido debe contener menos de <br>" + largoMaxApellido + " caracteres.</html>");
-            }
+        // longitud maxima del apellido
+        int largoMaxApellido = 50;
+        if (apellido.length() >= largoMaxApellido) {
+            throw new ValueException("<html>El apellido debe contener menos de <br>" + largoMaxApellido + " caracteres.</html>");
+        }
 
-            // contraseña
-            if (contraseña.length() == 0) {
-                throw new ValueException("Introduzca una contraseña.");
-            }
+        // longitud mínima de la contraseña
+        int largoMinContrasena = 8;
+        if (contraseña.length() < largoMinContrasena) {
+            throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMinContrasena + " caracteres.</html>");
+        }
 
-            // longitud mínima de la contraseña
-            int largoMinContrasena = 8;
-            if (contraseña.length() < largoMinContrasena) {
-                throw new ValueException("<html>La contraseña debe contener al menos <br>" + largoMinContrasena + " caracteres.</html>");
-            }
-            
-            // longitud maxima de la contrasena
-            int largoMaxContrasena = 60;
-            if (contraseña.length() >= largoMaxContrasena) {
-                throw new ValueException("<html>La contrasena debe contener menos de <br>" + largoMaxContrasena + " caracteres.</html>");
-            }
+        // longitud maxima de la contrasena
+        int largoMaxContrasena = 60;
+        if (contraseña.length() >= largoMaxContrasena) {
+            throw new ValueException("<html>La contrasena debe contener menos de <br>" + largoMaxContrasena + " caracteres.</html>");
+        }
 
-            // si la contraseña debe contener signos especiales (@#$%&*)
-            if (!(contraseña.contains("@") || contraseña.contains("#")
-                    || contraseña.contains("$") || contraseña.contains("%")
-                    || contraseña.contains("*"))) {
-                throw new ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
-            }
+        String regex = "([a-zA-Z])+";
+        Pattern pattern = Pattern.compile(regex);
+        if (!pattern.matcher(nombre).matches()) {
+            throw new ValueException("Introduzca un nombre válido.");
+        }
 
-            // si la contraseña debe contener al menos una letra mayúscula.
-            if (!contains(contraseña, 'A', 'Z')) {
-                throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
-            }
+        // apellido
+        apellido = apellido.trim();
+        if (!pattern.matcher(apellido).matches()) {
+            throw new ValueException("Introduzca un apellido válido.");
+        }
 
-            // si la contraseña debe contener al menos un dígito.
-            if (!contains(contraseña, '0', '9')) {
-                throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
-            } 
+        // contraseña
+        if (contraseña.length() == 0) {
+            throw new ValueException("Introduzca una contraseña.");
+        }
+
+        // si la contraseña debe contener signos especiales (@#$%&*)
+        if (!(contraseña.contains("@") || contraseña.contains("#")
+                || contraseña.contains("$") || contraseña.contains("%")
+                || contraseña.contains("*"))) {
+            throw new ValueException("<html>La contraseña debe contener <br> caracteres especiales (@#$%&*)</html>");
+        }
+
+        // si la contraseña debe contener al menos una letra mayúscula.
+        if (!contains(contraseña, 'A', 'Z')) {
+            throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
+        }
+
+        // si la contraseña debe contener al menos un dígito.
+        if (!contains(contraseña, '0', '9')) {
+            throw new ValueException("<html>La contraseña debe contener <br>al menos un dígito</html>");
+        }
     }
     
     public void eliminar(int id) throws DAOException{
@@ -203,10 +199,12 @@ public class GestorBedel {
         }
     }
     
-    public BedelDTO buscarPorID(Integer id) throws DAOException {
+    public BedelDTO buscarPorID(Integer id) throws DAOException, ValueException {
         
         try{
             Bedel b = DAO.buscarPorId(id);
+            if(b == null) throw new ValueException("No existe bedel con ese ID");
+            
             return convertirADTO(b);
         } catch(DAOException e){
             throw new DAOException(e.getMessage());
@@ -228,6 +226,8 @@ public class GestorBedel {
         
         bedelesAux = DAO.buscar(apellido);
         
+        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles con ese criterio");
+        
         for(Bedel bedel : bedelesAux){
             /*BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
             bedeles.add(BedelDTOaux);*/
@@ -247,6 +247,8 @@ public class GestorBedel {
         
         
         bedelesAux = DAO.buscar(turno);
+        
+        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles con ese criterio");
         
         for(Bedel bedel : bedelesAux){
             /*BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());

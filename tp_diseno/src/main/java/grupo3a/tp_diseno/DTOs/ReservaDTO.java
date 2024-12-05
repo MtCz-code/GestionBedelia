@@ -22,6 +22,7 @@ public class ReservaDTO {
     private int idCatedra;
     private String nombreCatedra;
     private LocalDateTime fechaRegistro;
+    private int cantidadAlumnos;
     private int idBedel;
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
@@ -31,7 +32,7 @@ public class ReservaDTO {
     
 
     public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
-            int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, TipoReservaPeriodica tipo,
+            int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, TipoReservaPeriodica tipo,
             List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
@@ -41,6 +42,7 @@ public class ReservaDTO {
         this.idCatedra = idCatedra;
         this.nombreCatedra = nombreCatedra;
         this.fechaRegistro = fechaRegistro;
+        this.cantidadAlumnos = cantidadAlumnos;
         this.idBedel = idBedel;
         this.tipo = tipo;
         this.diasSemana = diasSemana;
@@ -55,6 +57,14 @@ public class ReservaDTO {
 
     public void setDetallesReserva(List<DetalleReservaDTO> detallesReserva) {
         this.detallesReserva = detallesReserva;
+    }
+
+    public int getCantidadAlumnos() {
+        return cantidadAlumnos;
+    }
+
+    public void setCantidadAlumnos(int cantidadAlumnos) {
+        this.cantidadAlumnos = cantidadAlumnos;
     }
     
 
