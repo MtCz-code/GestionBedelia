@@ -53,20 +53,22 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
 
     @Override
     public List buscar(String datoCriterio) throws DAOException {
-        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado FROM"
+        String query = "SELECT B.id_usuario,U.id_login,U.nombre,U.contrasena,U.apellido,B.turno,B.habilitado FROM"
                 + " usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE apellido ILIKE ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
-            stmtBed.setString(1,"%" +query+ "%");
+            stmtBed.setString(1,"%" +datoCriterio+ "%");
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
                 int id = rs.getInt("id_usuario");
+                String id_login = rs.getString("id_login");
+                String contrasena = rs.getString("contrasena");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
                 boolean habilitado = rs.getBoolean("habilitado");
                 
-                Bedel bedel = new Bedel(id,nombre,apellido,turno,habilitado);
+                Bedel bedel = new Bedel(id,id_login,contrasena,nombre,apellido,turno,habilitado);
                 bedeles.add(bedel);
             }
             return bedeles;
@@ -80,20 +82,23 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
     @Override
     public List buscar(TurnoBedel datoCriterio) throws DAOException {
 
-        String query = "SELECT B.id_usuario,U.nombre,U.apellido,B.turno,B.habilitado " +
+        String query = "SELECT B.id_usuario,U.id_login,U.nombre,U.contrasena,U.nombre,U.apellido,B.turno,B.habilitado " +
 "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.turno = ?;";
         List<Bedel> bedeles = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
-            stmtBed.setString(1,query);
+            
+            stmtBed.setString(1,datoCriterio.toString());
             ResultSet rs = stmtBed.executeQuery();
             if (rs.next()){
                 int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
+                String id_login = rs.getString("id_login");
+                String contrasena = rs.getString("contrasena");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
                 boolean habilitado = rs.getBoolean("habilitado");
                 
-                Bedel bedel = new Bedel(id,nombre,apellido,turno,habilitado);
+                Bedel bedel = new Bedel(id,id_login,contrasena,nombre,apellido,turno,habilitado);
                 bedeles.add(bedel);
             }
             return bedeles;
@@ -116,12 +121,11 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             if (rs.next()){
                 int id = rs.getInt("id_usuario");
                 String id_login = rs.getString("id_login");
-                String contraseña = rs.getString("contrasena");
+                String contrasena = rs.getString("contrasena");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
-                Bedel bedelElim = new Bedel(id,id_login, contraseña,nombre,apellido,turno,false);
-                
+                Bedel bedelElim = new Bedel(id,id_login, contrasena,nombre,apellido,turno,false);
                 this.modificar(bedelElim);
                 
             }
@@ -134,8 +138,8 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
     @Override
     public void modificar(Bedel bedel) throws DAOException {
         
-        String queryU = "UPDATE TABLE usuario (nombre,apellido,id_login,contrasena) VALUES(?,?,?,?);";
-        String queryB = "UPDATE TABLE bedel (turno,habilitado) VALUES (?,?);";
+        String queryU = "UPDATE usuario SET nombre = ?, apellido = ?, id_login = ?, contrasena = ? WHERE id_usuario = ?;";
+        String queryB = "UPDATE bedel SET turno = ?, habilitado = ? WHERE id_usuario = ?;";
         try(Connection conn = DataBaseConnection.getConnection();
                 PreparedStatement stmtU = conn.prepareStatement(queryU);
                 PreparedStatement stmtB = conn.prepareStatement(queryB)){
@@ -144,10 +148,12 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             stmtU.setString(2, bedel.getApellido());
             stmtU.setString(3, bedel.getIdLogin());
             stmtU.setString(4, bedel.getContrasena());
+            stmtU.setInt(5, bedel.getIdUsuario());
             stmtU.executeUpdate();
             
             stmtB.setString(1,bedel.getTurno().toString());
             stmtB.setBoolean(2,bedel.isHabilitado());
+            stmtB.setInt(3, bedel.getIdUsuario());
             stmtB.executeUpdate();
             
             conn.commit();
@@ -164,7 +170,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
     @Override
     public Bedel buscarPorId(Integer id) throws DAOException {
 
-        String query = "SELECT B.id_usuario,U.id_login,U.nombre,U.apellido,B.turno " +
+        String query = "SELECT B.id_usuario,U.id_login,U.nombre,U.apellido,B.turno,B.habilitado,U.contrasena " +
             "FROM usuario U LEFT JOIN bedel B ON U.id_usuario=B.id_usuario WHERE B.id_usuario = ?;";
 
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
@@ -173,11 +179,12 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             if (rs.next()){
                 int id_usuario = rs.getInt("id_usuario");
                 String id_login = rs.getString("id_login");
+                String contrasena = rs.getString("contrasena");
+                Boolean habilitado = rs.getBoolean("habilitado");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
                 TurnoBedel turno = TurnoBedel.valueOf(rs.getString("turno"));
-                Bedel bedel = new Bedel(id_usuario,id_login,nombre,apellido,turno,false);
-                
+                Bedel bedel = new Bedel(id_usuario,id_login,contrasena,nombre,apellido,turno,habilitado);
                 return bedel;
                 
             }

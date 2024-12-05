@@ -6,6 +6,7 @@ import grupo3a.tp_diseno.DTOs.BedelDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Gestores.GestorBedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Modelos.Bedel;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,7 +68,8 @@ public class prueba {
             System.out.println(ex.getMessage());
         }*/
         
-        // MODIFICAR
+        /*// MODIFICAR
+        bedel1.setIdUsuario(4);
         bedel1.setContrasena("Bedel_prueba2$");
         bedel1.setIdLogin("bedel_prueba1");
         bedel1.setTurno(TurnoBedel.NOCHE);
@@ -79,16 +81,18 @@ public class prueba {
             Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
              System.out.println(ex.getMessage());
         }
+        */
         
-        // ELIMINAR
+        /*// ELIMINAR
         try {
+            
             gestorBedel.eliminar(bedelEliminar.getIdUsuario());
             System.out.println("bedelEliminar eliminado exitosamente");
         } catch (Exceptions.DAOException ex) {
             Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
-        
+        */
         
         // BUSCAR
             
@@ -105,7 +109,7 @@ public class prueba {
          // buscar por apellido
         try {
            List<BedelDTO> bedelesBuscarApellido = gestorBedel.buscar(bedelBuscar.getApellido());
-            System.out.println("Bedeles buscados por Apellido ( " + bedelBuscar.getApellido() + "):");
+            System.out.println("Bedeles buscados por Apellido (" + bedelBuscar.getApellido() + "):");
            for(BedelDTO b : bedelesBuscarApellido){
                System.out.println("id = " + b.getIdUsuario() + 
                     " - idLogin = " + b.getIdLogin() + " - Apellido = " + b.getApellido());
@@ -117,7 +121,7 @@ public class prueba {
         }
         
         try {
-            List<BedelDTO> bedelesBuscarTurno = gestorBedel.buscar(TurnoBedel.TARDE);
+            List<BedelDTO> bedelesBuscarTurno = gestorBedel.buscar(TurnoBedel.MAÑANA);
             System.out.println("Bedeles buscados por TURNO (TARDE):");
             for(BedelDTO b : bedelesBuscarTurno){
                System.out.println("id = " + b.getIdUsuario() + 
