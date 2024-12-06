@@ -33,6 +33,7 @@ import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import grupo3a.tp_diseno.Vista.Utilidades.FuncionInterface.Fun;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.sql.Time;
 import java.util.Date;
 import java.time.LocalTime;
@@ -87,12 +88,12 @@ public class Interfaz {
 
     public Interfaz() {
         baseFrame = new BaseFrame();
-
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
+        baseFrame.setResizable(true);
         baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(mainPanel);
+        baseFrame.getPanel1().add(mainPanel,BorderLayout.CENTER);
 
         // alertas
         alertaCardLayout = new CardLayout();
@@ -114,6 +115,8 @@ public class Interfaz {
         buscarBedel = new BuscarBedel();
         resultadosBusquedaBedel = new ResultadosBusquedaBedel();
         registrarBedel = new RegistrarBedel();
+        
+
         // Reserva
         regRsvaSeleccionTipoReserva = new SeleccionTipoReserva();
         regRsvaTipoPeriodicaDias = new TipoPeriodicaDias();
