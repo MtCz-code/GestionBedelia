@@ -32,10 +32,8 @@ import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Component;
 import java.sql.Time;
 import java.util.Date;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -157,16 +155,17 @@ public class Interfaz {
                     showMenuBedel();
                 }
             } catch (DAOException e) {
+                System.out.println(e.getMessage());
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
             } catch (ValueException e) {
+                System.out.println(e.getMessage());
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
-                Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, e);
             }
         });
 
@@ -227,7 +226,8 @@ public class Interfaz {
                 }
             }
         });
-        // buscarBedel
+        
+        // resultadosBusquedaBedel
         resultadosBusquedaBedel.setListener(new ResultadosBusquedaBedel.Listener() {
             @Override
             public void back() {
@@ -285,7 +285,7 @@ public class Interfaz {
                 }
 
                 alerta.setText("Bedel registrado con éxito");
-                baseFrame.getPanel2().add(alerta);
+                alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
                 alerta.setListener(() -> {
                     baseFrame.setPanel1Up();

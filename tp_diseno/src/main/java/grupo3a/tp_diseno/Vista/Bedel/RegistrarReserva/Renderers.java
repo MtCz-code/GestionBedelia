@@ -1,42 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-/**
- *
- * @author imsac
- */
+
 public class Renderers {
 
     private static final String[] HORARIOS = {
@@ -100,7 +86,7 @@ public class Renderers {
         "14:00"
     };
 
-    private interface TableListener {
+    public interface TableListener {
 
         void addRow();
 
@@ -125,9 +111,7 @@ public class Renderers {
         int limit = DURACIONES.length - idx;
 
         String[] duraciones = new String[limit];
-        for (int i = 0; i < limit; i++) {
-            duraciones[i] = DURACIONES[i];
-        }
+        System.arraycopy(DURACIONES, 0, duraciones, 0, limit);
         return duraciones;
     }
 
@@ -156,7 +140,7 @@ public class Renderers {
                 System.out.println("updateData(" + row + ", 2): "  + time);
                 Object[][] data = getTableData();
                 data[row][1] = time;
-                data[row][2] = DURACIONES[0];;
+                data[row][2] = DURACIONES[0];
                 updateData(data);
 //                updateData(null);
 
@@ -336,19 +320,12 @@ public class Renderers {
         public DateEditor(JTable table, TableListener listener) {
             panel = new JPanel(new BorderLayout());
             dateChooser = new JDateChooser();
-            dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-
-                }
+            dateChooser.addPropertyChangeListener((PropertyChangeEvent e) -> {
             });
             addBtn = new JButton("agregar");
-            addBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (listener != null) {
-                        listener.addRow();
-                    }
+            addBtn.addActionListener((ActionEvent e) -> {
+                if (listener != null) {
+                    listener.addRow();
                 }
             });
             panel.add(dateChooser, BorderLayout.CENTER);
@@ -496,8 +473,8 @@ public class Renderers {
         private void actualizarItems(String[] items) {
             cb.removeAllItems();
 
-            for (int i = 0; i < items.length; i++) {
-                cb.addItem(items[i]);
+            for (String item : items) {
+                cb.addItem(item);
             }
 
         }
@@ -558,12 +535,9 @@ public class Renderers {
 
             panel.add(button, BorderLayout.CENTER);
 
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int row = table.getSelectedRow();
-                    listener.delRow(row);
-                }
+            button.addActionListener((ActionEvent e) -> {
+                int row = table.getSelectedRow();
+                listener.delRow(row);
             });
         }
 
