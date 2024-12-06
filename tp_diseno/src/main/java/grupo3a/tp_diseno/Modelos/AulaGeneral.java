@@ -30,6 +30,22 @@ public class AulaGeneral {
         this.aireAcondicionado=aireAcondicionado;
         this.habilitado=habilitado;
     }
+
+    public AulaGeneral(int id, TipoAula tipo_aula, String ubicacion, Boolean estado, Integer capacidadAula, Integer piso, TipoPizarron tipo_pizarron, Boolean ventiladores, Boolean aire_acondicionado, Boolean habilitado) {
+        
+        this.idAula = id;
+        this.tipo=tipo_aula;
+        this.ubicacion=ubicacion;
+        this.estado=estado;
+        this.capacidad=capacidadAula;
+        this.piso=piso;
+        this.tipoDePizarron=tipo_pizarron;
+        this.ventiladores=ventiladores;
+        this.aireAcondicionado=aire_acondicionado;
+        this.habilitado=habilitado;
+    
+    
+    }
         
         
     public int getIdAula() {

@@ -59,7 +59,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setString(1,"%" +datoCriterio+ "%");
             ResultSet rs = stmtBed.executeQuery();
-            if (rs.next()){
+            while (rs.next()){
                 int id = rs.getInt("id_usuario");
                 String id_login = rs.getString("id_login");
                 String contrasena = rs.getString("contrasena");

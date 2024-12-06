@@ -6,6 +6,8 @@ package grupo3a.tp_diseno.DAOs;
 
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface AulaGeneralDAO {
     
     
     
-    List<AulaGeneral> getByTipoYCapacidad(TipoAula tipo, Integer capacidad);
+    List<AulaGeneral> getByCapacidad(Integer capacidad) throws DAOException;
             
             
 }

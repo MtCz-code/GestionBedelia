@@ -3,11 +3,13 @@ package grupo3a.tp_diseno.Gestores;
 import grupo3a.tp_diseno.DAOs.BedelDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.BedelSqlDAO;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
+import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
+import grupo3a.tp_diseno.Modelos.Administrador;
 //import static grupo3a.tp_diseno.Tp_diseno.contains;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,20 @@ public class GestorBedel {
         } catch(ValueException e){
             throw new ValueException(e.getMessage());
         }
+    }
+
+    /*public void crear(UsuarioDTO usuarioDTO){
+       
+        if(usuarioDTO.getTurno() != null){ // crear BEDEL
+           Bedel b = new Bedel( BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido(),
+                   usuarioDTO.getTurno(), usuarioDTO.isHabilitado()); //habilitado true
+           DAO.crear(b);
+       }
+       /*else { // crear admin
+           Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()),
+                   usuarioDTO.getNombre(), usuarioDTO.getApellido() );
+           DAO.crear(a);
+        }
         
         // encriptar contraseña
         bedelDTO.setContrasena(BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()));
@@ -61,7 +77,7 @@ public class GestorBedel {
         }
 
     }
-    
+    */
     public Integer modificar(BedelDTO bedelDTO) throws Exceptions.ValueException {
         bedelDTO.setIdLogin(bedelDTO.getIdLogin().trim());
         
