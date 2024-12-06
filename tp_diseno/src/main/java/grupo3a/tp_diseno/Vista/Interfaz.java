@@ -89,12 +89,12 @@ public class Interfaz {
 
     public Interfaz() {
         baseFrame = new BaseFrame();
-
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
+        baseFrame.setResizable(true);
         baseFrame.getPanel1().setLayout(new BorderLayout());
-        baseFrame.getPanel1().add(mainPanel);
+        baseFrame.getPanel1().add(mainPanel, BorderLayout.CENTER);
 
         // alertas
         alertaCardLayout = new CardLayout();
@@ -116,6 +116,7 @@ public class Interfaz {
         buscarBedel = new BuscarBedel();
         resultadosBusquedaBedel = new ResultadosBusquedaBedel();
         registrarBedel = new RegistrarBedel();
+
         // Reserva
         regRsvaSeleccionTipoReserva = new SeleccionTipoReserva();
         regRsvaTipoPeriodicaDias = new TipoPeriodicaDias();
@@ -268,7 +269,7 @@ public class Interfaz {
                 baseFrame.setPanel2Up();
                 alertaCardLayout.show(alertaPanel, "alertaConfirmacion");
             }
-            
+
             @Override
             public void habilitar(BedelDTO elegido, Fun fun) {
                 alertaConfirmacion.setText("¿Esta seguro que desea habilitar el usuario" + elegido.getIdLogin() + "?");
@@ -325,7 +326,6 @@ public class Interfaz {
 
             @Override
             public void modificarError(Exception e) {
-                System.out.println("modificar error interfaz");  //TODO:
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
@@ -403,74 +403,31 @@ public class Interfaz {
             }
         });
 
-    }
-
-    private void showLogin() {
-        cardLayout.show(mainPanel, "login");
-    }
-
-    private void showMenuAdmin() {
-        cardLayout.show(mainPanel, "menuAdmin");
-    }
-
-    private void showBuscarBedel() {
-        cardLayout.show(mainPanel, "buscarBedel");
-    }
-
-    public void showResultadosBusquedaBedel(List<BedelDTO> bedeles) {
-        resultadosBusquedaBedel.updateBedeles(bedeles);
-        cardLayout.show(mainPanel, "resultadosBusquedaBedel");
-    }
-
-    private void showRegistrarBedel() {
-
-        cardLayout.show(mainPanel, "registrarBedel");
-    }
-
-    // Reserva
-    private void showMenuBedel() {
-        menuBedel.setListener(new MenuBedel.Listener() {
-            @Override
-            public void registrarReserva() {
-//                mainPanel.remove(menuBedel);
-                showRegistrarReserva();
-            }
-
-            @Override
-            public void buscarAulas() {
-            }
-
-            @Override
-            public void listarReservasParaUnCurso() {
-            }
-
-            @Override
-            public void listarReservasParaUnDia() {
-            }
-        });
-        cardLayout.show(mainPanel, "menuBedel");
-//        }
-    }
-
-    private void showRegistrarReserva() {
-
-        cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
-
-        // TODO: pasar listeners a configuraListeners()
-        // seleccion tipo reserva
+        //registrarReserva
         regRsvaSeleccionTipoReserva.setListener(() -> {
-            if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.ANUAL) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else {  //esporadica
+            if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
                 gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
                 cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+            } else {
+                switch (regRsvaSeleccionTipoReserva.getSelected()) {
+                    case ANUAL -> {
+                        gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
+                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                    }
+                    case PRIMER_CUATRIMESTRE -> {
+                        gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
+                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                    }
+                    case SEGUNDO_CUATRIMESTRE -> {
+                        gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
+                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                    }
+                    default -> {
+                        //esporadica
+                        gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                        cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                    }
+                }
             }
         });
 
@@ -587,88 +544,7 @@ public class Interfaz {
             }
         });
 
-        regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
-            @Override
-            public void back() {
-                if (gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA) {
-                    cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-                } else {
-                    cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
-                }
-            }
-
-            @Override
-            public void next() {
-                String nombreDocente = regRsvaDatos.getNombreDocente();
-                String apellidoDocente = regRsvaDatos.getApellidoDocente();
-                String nombreCatedra = regRsvaDatos.getNombreCatedra();
-                String correo = regRsvaDatos.getCorreo();
-                int cantidadAlumnos = regRsvaDatos.getCantidadAlumnos();
-                TipoAula tipoAula = regRsvaDatos.getTipoAula();
-
-                try {
-                    ReservaDTO reserva = new ReservaDTO(-1, nombreDocente, -1, apellidoDocente, correo, 
-                            -1, nombreCatedra, null, cantidadAlumnos, -1, null, 
-                            null, true, -1, -1);
-                    DisponibilidadDTO disp = gestorReserva.validarDatos(reserva, tipoAula);
-//                    gestorReserva.validarDatos(
-//                            nombreDocente,
-//                            apellidoDocente,
-//                            nombreCatedra,
-//                            correo,
-//                            cantidadAlumnos,
-//                            tipoAula
-//                    );
-                } catch (ValueException e) {
-                    alerta.setText(e.getMessage());
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
-                    return;
-                }
-
-                AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
-                regRsvaAula.setTable(convertirFormatoAula(aulas));
-
-                cardLayout.show(mainPanel, "regRsvaAula");
-
-            }
-        });
-
-        regRsvaAula.setListener(new ResultadosAulas.Listener() {
-            @Override
-            public void back() {
-                cardLayout.show(mainPanel, "regRsvaDatos");
-            }
-
-            @Override
-            public void next() {
-                gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
-
-                try {
-                    // ARREGLAR EL FLUJO DE CREAR RESERVA
-                    ReservaDTO rdto = new ReservaDTO(0, null, 0, null, null, 0, null, null, 0, 0, null, null, false, 0, 0);
-                    gestorReserva.crearReserva(rdto);
-
-                    System.err.println("reservado");
-                    alerta.setText("reserva realizada con exito");
-                    alerta.setListener(() -> {
-                        showMenuBedel();
-                        baseFrame.setPanel1Up();
-                    });
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
-
-                } catch (Exception e) {//TODO: hacer todas las validaciones(otros catch)
-                    e.printStackTrace();
-                    alerta.setText("no se pudo realizar la reserva");
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
-                }
-            }
-        });
-
+        //esporadicaDias
         regAulaEsporadicaDias.setListener(new EsporadicaDias.Listener() {
             @Override
             public void back() {
@@ -679,7 +555,6 @@ public class Interfaz {
             public void next() {
 
                 Object[][] datos = regAulaEsporadicaDias.getData();
-
                 ArrayList<DetalleReservaDTO> detalleReserva = new ArrayList<>();
 
                 try {
@@ -687,13 +562,13 @@ public class Interfaz {
                         Date dia = (Date) datos[i][0];
                         LocalTime horario = (LocalTime) datos[i][1];
                         LocalTime duracion = (LocalTime) datos[i][2];
-//                    DetalleReservaDTO tmp = new DetalleReservaDTO();
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(dia);
 
                         DiaSemana ds = DiaSemana.LUNES;
                         int dow = calendar.get(Calendar.DAY_OF_WEEK);
+
                         if (dow == 1) {
                             ds = DiaSemana.LUNES;
                         } else if (dow == 2) {
@@ -727,6 +602,142 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaDatos");
             }
         });
+
+        //registroReservaDatos
+        regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
+            @Override
+            public void back() {
+                if (gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA) {
+                    cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                } else {
+                    cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
+                }
+            }
+
+            @Override
+            public void next() {
+                String nombreDocente = regRsvaDatos.getNombreDocente();
+                String apellidoDocente = regRsvaDatos.getApellidoDocente();
+                String nombreCatedra = regRsvaDatos.getNombreCatedra();
+                String correo = regRsvaDatos.getCorreo();
+                int cantidadAlumnos = regRsvaDatos.getCantidadAlumnos();
+                TipoAula tipoAula = regRsvaDatos.getTipoAula();
+
+                try {
+                    ReservaDTO reserva = new ReservaDTO(-1, nombreDocente, -1, apellidoDocente, correo,
+                            -1, nombreCatedra, null, cantidadAlumnos, -1, null,
+                            null, true, -1, -1);
+                    DisponibilidadDTO disp = gestorReserva.validarDatos(reserva, tipoAula);
+//                    gestorReserva.validarDatos(
+//                            nombreDocente,
+//                            apellidoDocente,
+//                            nombreCatedra,
+//                            correo,
+//                            cantidadAlumnos,
+//                            tipoAula
+//                    );
+                } catch (ValueException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                }
+
+                AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
+                regRsvaAula.setTable(convertirFormatoAula(aulas));
+
+                cardLayout.show(mainPanel, "regRsvaAula");
+
+            }
+        });
+
+        //registroResultadosAulas
+        regRsvaAula.setListener(new ResultadosAulas.Listener() {
+            @Override
+            public void back() {
+                cardLayout.show(mainPanel, "regRsvaDatos");
+            }
+
+            @Override
+            public void next() {
+                gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
+
+                try {
+                    // ARREGLAR EL FLUJO DE CREAR RESERVA
+                    ReservaDTO rdto = new ReservaDTO(0, null, 0, null, null, 0, null, null, 0, 0, null, null, false, 0, 0);
+                    gestorReserva.crearReserva(rdto);
+
+                    System.err.println("reservado");
+                    alerta.setText("reserva realizada con exito");
+                    alerta.setListener(() -> {
+                        showMenuBedel();
+                        baseFrame.setPanel1Up();
+                    });
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+
+                } catch (Exception e) { //TODO: hacer todas las validaciones(otros catch)
+                    alerta.setText("no se pudo realizar la reserva");
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                }
+            }
+        });
+
+    }
+
+    private void showLogin() {
+        cardLayout.show(mainPanel, "login");
+    }
+
+    private void showMenuAdmin() {
+        cardLayout.show(mainPanel, "menuAdmin");
+    }
+
+    private void showBuscarBedel() {
+        cardLayout.show(mainPanel, "buscarBedel");
+    }
+
+    public void showResultadosBusquedaBedel(List<BedelDTO> bedeles) {
+        resultadosBusquedaBedel.updateBedeles(bedeles);
+        cardLayout.show(mainPanel, "resultadosBusquedaBedel");
+    }
+
+    private void showRegistrarBedel() {
+
+        cardLayout.show(mainPanel, "registrarBedel");
+    }
+
+    // Reserva
+    private void showMenuBedel() {
+        menuBedel.setListener(new MenuBedel.Listener() {
+            @Override
+            public void registrarReserva() {
+                showRegistrarReserva();
+            }
+
+            @Override
+            public void buscarAulas() {
+            }
+
+            @Override
+            public void listarReservasParaUnCurso() {
+                
+            }
+
+            @Override
+            public void listarReservasParaUnDia() {
+                
+            }
+        });
+        cardLayout.show(mainPanel, "menuBedel");
+    }
+
+    private void showRegistrarReserva() {
+
+        cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
     }
 
     private String[][] convertirFormatoAula(AulaGeneral[] aulas) {

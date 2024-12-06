@@ -14,7 +14,6 @@ import grupo3a.tp_diseno.Modelos.Administrador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import static javax.management.Query.value;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class GestorBedel {
@@ -32,6 +31,7 @@ public class GestorBedel {
     private GestorBedel() {
     }
 
+
     private BedelDAO DAO = BedelSqlDAO.getInstance();
 
     
@@ -48,6 +48,7 @@ public class GestorBedel {
             validarIdLogin(idLogin);
         } catch(ValueException e){
             throw new ValueException(e.getMessage());
+
         }
     }
 
@@ -62,6 +63,7 @@ public class GestorBedel {
            Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()),
                    usuarioDTO.getNombre(), usuarioDTO.getApellido() );
            DAO.crear(a);
+>>>>>>> 099c40b28cecd8b5ca673f40b47a621ae070a8dd
         }
         
         // encriptar contraseña
