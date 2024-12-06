@@ -1,23 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
-import javax.swing.ComboBoxModel;
-import javax.swing.JColorChooser;
-import javax.swing.event.ListDataListener;
 
-/**
- *
- * @author imsac
- */
+
 public class SeleccionTipoReserva extends javax.swing.JPanel {
 
-    /**
-     * Creates new form RegistrarAula
-     */
     public enum TIPO_RESERVA {
         ANUAL,
         PRIMER_CUATRIMESTRE,
@@ -26,7 +14,8 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
     }
     
     public interface Listener {
-        public void next();
+        void back();
+         void next();
     }
 
     private TIPO_RESERVA selectedTipoReserva = null;
@@ -232,7 +221,8 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
     }//GEN-LAST:event_boxTipoDeReservaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    }//GEN-LAST:event_btnCancelarActionPerformed
+if (listener != null)
+        listener.back();    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         

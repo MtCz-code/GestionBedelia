@@ -403,32 +403,35 @@ public class Interfaz {
             }
         });
 
-        //registrarReserva
-        regRsvaSeleccionTipoReserva.setListener(() -> {
-            if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
-                cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-            } else {
-                switch (regRsvaSeleccionTipoReserva.getSelected()) {
-                    case ANUAL -> {
-                        gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
-                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-                    }
-                    case PRIMER_CUATRIMESTRE -> {
-                        gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
-                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-                    }
-                    case SEGUNDO_CUATRIMESTRE -> {
-                        gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
-                        cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-                    }
-                    default -> {
-                        //esporadica
+                regRsvaSeleccionTipoReserva.setListener(new SeleccionTipoReserva.Listener(){
+                    @Override
+                    public void back(){
+                        showMenuBedel();
+}
+                    @Override
+                    public void next(){
+                    if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
                         gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
                         cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-                    }
-                }
-            }
+                    } else switch (regRsvaSeleccionTipoReserva.getSelected()) {
+                        case ANUAL -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        case PRIMER_CUATRIMESTRE -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        case SEGUNDO_CUATRIMESTRE -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        default -> {
+                            //esporadica
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                            cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                        }
+                    }}
         });
 
         // periodica seleccionar dias
