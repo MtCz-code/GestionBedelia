@@ -23,12 +23,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Tp_diseno {
-    
-    private static Interfaz interfaz;
-    
-    public static void main(String[] args) {
-        interfaz = Interfaz.getInstance(); 
 
+    /*
+        bedel_prueba1 contraseña: Bedel_prueba1$
+        bedel_prueba2 contraseña: Bedel_prueba2$
+        Admin contraseña: Admin_general$1
+    */
+    private static Interfaz interfaz;
+
+    public static void main(String[] args) {
+        interfaz = Interfaz.getInstance();
 
     }
 }

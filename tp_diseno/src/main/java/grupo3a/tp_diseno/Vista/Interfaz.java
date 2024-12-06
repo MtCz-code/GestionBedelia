@@ -157,16 +157,17 @@ public class Interfaz {
                     showMenuBedel();
                 }
             } catch (DAOException e) {
+                System.out.println(e.getMessage());
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
             } catch (ValueException e) {
+                System.out.println(e.getMessage());
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
-                Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, e);
             }
         });
 
@@ -227,6 +228,7 @@ public class Interfaz {
                 }
             }
         });
+        
         // resultadosBusquedaBedel
         resultadosBusquedaBedel.setListener(new ResultadosBusquedaBedel.Listener() {
             @Override
@@ -285,7 +287,7 @@ public class Interfaz {
                 }
 
                 alerta.setText("Bedel registrado con éxito");
-                baseFrame.getPanel2().add(alerta);
+                alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
                 alerta.setListener(() -> {
                     baseFrame.setPanel1Up();
