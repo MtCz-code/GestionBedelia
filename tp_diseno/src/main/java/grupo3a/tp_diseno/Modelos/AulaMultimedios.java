@@ -18,6 +18,14 @@ public class AulaMultimedios extends AulaGeneral{
         this.canon=canon;
         this.computadora=computadora;
     }
+
+    public AulaMultimedios(int id, TipoAula tipo_aula, String ubicacion, Boolean estado, Integer capacidadAula, Integer piso, TipoPizarron tipo_pizarron, Boolean ventiladores, Boolean aire_acondicionado, Boolean habilitado, Boolean televisor, Boolean canon, Boolean computadora) {
+        super(id,tipo_aula,ubicacion,estado,capacidadAula,piso,tipo_pizarron,ventiladores,aire_acondicionado,habilitado);
+        this.televisor=televisor;
+        this.canon=canon;
+        this.computadora=computadora;
+
+    }
     
     public boolean isTelevisor() {
         return televisor;

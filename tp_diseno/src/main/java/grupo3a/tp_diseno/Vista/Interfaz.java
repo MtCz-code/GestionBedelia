@@ -30,6 +30,7 @@ import grupo3a.tp_diseno.Vista.Login.InicioSesion;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import grupo3a.tp_diseno.Vista.Utilidades.FuncionInterface.Fun;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.sql.Time;
@@ -226,13 +227,85 @@ public class Interfaz {
                 }
             }
         });
-        
+
         // resultadosBusquedaBedel
         resultadosBusquedaBedel.setListener(new ResultadosBusquedaBedel.Listener() {
             @Override
             public void back() {
                 showBuscarBedel();
             }
+
+            @Override
+            public void eliminar(BedelDTO elegido, Fun fun) {
+                alertaConfirmacion.setText("¿Esta seguro que desea eliminar el usuario" + elegido.getIdLogin() + "?");
+               
+                alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
+                    @Override
+                    public void back() {
+                        baseFrame.setPanel1Up();
+                    }
+
+                    @Override
+                    public void next() {
+                        try {
+                            gestorBedel.eliminar(elegido.getIdUsuario());
+
+                            alerta.setText("bedel eliminado con exito");
+                            alerta.setListener(()-> baseFrame.setPanel1Up());
+                            
+                            alertaCardLayout.show(alertaPanel, "alerta");
+                            baseFrame.setPanel2Up();
+                            
+                            fun.call(Boolean.TRUE);
+                        } catch (Exceptions.DAOException ex) {
+                            fun.call(Boolean.FALSE, ex);
+                        }
+                    }
+                });
+                baseFrame.setPanel2Up();
+                alertaCardLayout.show(alertaPanel, "alertaConfirmacion");
+            }
+
+            @Override
+            public boolean modificar(BedelDTO bedel) {
+                System.out.println("modificar interfaz");
+                try {
+                    gestorBedel.modificar(bedel);
+
+                    alerta.setText("Bedel modificado con éxito");
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return true;
+
+                } catch (ValueException ex) {
+                    alerta.setText("no se pudo modificar el bedel");
+                    System.out.println(ex.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return false;
+                }
+            }
+
+            @Override
+            public void modificarError(Exception e) {
+                System.out.println("modificar error interfaz");  //TODO:
+                alerta.setText(e.getMessage());
+                alerta.setListener(() -> baseFrame.setPanel1Up());
+                alertaCardLayout.show(alertaPanel, "alerta");
+                baseFrame.setPanel2Up();
+            }
+
+            @Override
+            public void eliminarError(Exception e) {
+                System.out.println("eliminar error interfaz");
+                alerta.setText(e.getMessage());
+                alerta.setListener(() -> baseFrame.setPanel1Up());
+                alertaCardLayout.show(alertaPanel, "alerta");
+                baseFrame.setPanel2Up();
+            }
+
         });
 
         // registrarBedel
@@ -497,7 +570,6 @@ public class Interfaz {
                 int cantidadAlumnos = regRsvaDatos.getCantidadAlumnos();
                 TipoAula tipoAula = regRsvaDatos.getTipoAula();
 
-                
                 // TODO: agregar cartel error por los datos
                 gestorReserva.validarDatos(
                         nombreDocente,
@@ -528,7 +600,7 @@ public class Interfaz {
 
                 try {
                     // ARREGLAR EL FLUJO DE CREAR RESERVA
-                    ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0);
+                    ReservaDTO rdto = new ReservaDTO(0, null, 0, null, null, 0, null, null, 0, 0, null, null, false, 0, 0);
                     gestorReserva.crearReserva(rdto);
 
                     System.err.println("reservado");
@@ -568,25 +640,25 @@ public class Interfaz {
                     LocalTime horario = (LocalTime) datos[i][1];
                     LocalTime duracion = (LocalTime) datos[i][2];
                     DetalleReserva tmp = new DetalleReserva();
-                    
+
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(dia);
 
                     int dow = calendar.get(Calendar.DAY_OF_WEEK);
-                    if (dow == 1)
+                    if (dow == 1) {
                         tmp.setDiaReserva(DiaSemana.LUNES);
-                    else if (dow == 2)
+                    } else if (dow == 2) {
                         tmp.setDiaReserva(DiaSemana.MARTES);
-                    else if (dow == 3)
+                    } else if (dow == 3) {
                         tmp.setDiaReserva(DiaSemana.MIERCOLES);
-                    else if (dow == 4)
+                    } else if (dow == 4) {
                         tmp.setDiaReserva(DiaSemana.JUEVES);
-                    else if (dow == 5)
+                    } else if (dow == 5) {
                         tmp.setDiaReserva(DiaSemana.MARTES);
-                    else {
+                    } else {
                         // TODO excepcion (sabado / domingo)
                     }
-                    
+
                     tmp.setHorarioInicio(Time.valueOf(horario));
                     Time time = Time.valueOf(duracion);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
@@ -597,12 +669,12 @@ public class Interfaz {
 
                 // TODO: cambiar nombre metodo en diagrama de secuencia
                 gestorReserva.horariosSeleccionados(detalleReserva);
-                
+
                 cardLayout.show(mainPanel, "regRsvaDatos");
             }
         });
     }
-    
+
     private String[][] convertirFormatoAula(AulaGeneral[] aulas) {
         String[][] str = new String[aulas.length][];
 
