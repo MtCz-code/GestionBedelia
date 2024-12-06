@@ -215,6 +215,16 @@ public class GestorBedel {
         }
     }
     
+    public void habilitar(int id) throws DAOException{
+        try{
+           Bedel b = DAO.buscarPorId(id);
+           b.setHabilitado(true);
+           DAO.modificar(b);
+        } catch(DAOException e){
+            throw new DAOException(e.getMessage());
+        }
+    }
+    
     public BedelDTO buscarPorID(Integer id) throws DAOException, ValueException {
         
         try{

@@ -58,7 +58,7 @@ public class UsuarioTableModel<T> extends AbstractTableModel {
                         return "Editar";
                     }
                     case 5 -> {
-                        return "Borrar";
+                        return bedel.isHabilitado() ? "Deshabilitar" : "Habilitar";
                     }
                 }
             } else {

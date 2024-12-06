@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DTOs;
 
+import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import java.sql.Time;
 import java.time.LocalDate;
 
@@ -16,10 +17,10 @@ public class DetalleReservaDTO {
     private Time horarioInicio;
     private int cantModulos;
     private LocalDate fecha;
-    private String diaReserva;
+    private DiaSemana diaReserva;
     private int idAula;
 
-    public DetalleReservaDTO(int idReserva, Time horarioInicio, int cantModulos, LocalDate fecha, String diaReserva, int idAula) {
+    public DetalleReservaDTO(int idReserva, Time horarioInicio, int cantModulos, LocalDate fecha, DiaSemana diaReserva, int idAula) {
         this.idReserva = idReserva;
         this.horarioInicio = horarioInicio;
         this.cantModulos = cantModulos;
@@ -60,11 +61,11 @@ public class DetalleReservaDTO {
         this.fecha = fecha;
     }
 
-    public String getDiaReserva() {
+    public DiaSemana getDiaReserva() {
         return diaReserva;
     }
 
-    public void setDiaReserva(String diaReserva) {
+    public void setDiaReserva(DiaSemana diaReserva) {
         this.diaReserva = diaReserva;
     }
 

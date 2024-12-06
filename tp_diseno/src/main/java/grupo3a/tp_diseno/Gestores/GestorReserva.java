@@ -9,6 +9,7 @@ import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoPizarron;
 import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Gestores.*;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
@@ -16,6 +17,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 public class GestorReserva {
 
@@ -35,7 +37,7 @@ public class GestorReserva {
 
     private int reservaTipoReserva = -1;
     private List<DiaSemana> reservaDiasSeleccionadosSemana;
-    private List<DetalleReserva> reservaDetalleReservas;
+    private List<DetalleReservaDTO> reservaDetalleReservas;
     private String reservaNombreDocente;
     private String reservaApellidoDocente;
     private String reservaNombreCatedra;
@@ -64,7 +66,9 @@ public class GestorReserva {
         List<CuatrimestreDTO> cdto = new ArrayList();
         List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
         for(Cuatrimestre c : cuatrimestres){
-            
+            System.out.println("cuatrimestre:" + c.getIdCuatrimestre() 
+                    + "\ninicio: " + c.getFechaInicio().toString() 
+                    + "\nfin: " + c.getFechaFin());
         }
         
         return cdto;
@@ -72,29 +76,26 @@ public class GestorReserva {
     
     
     // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva, ArrayList<CuatrimestreDTO> cuatrimestres) {
+    public boolean validarDias(List<DetalleReservaDTO> diasReserva, List<CuatrimestreDTO> cuatrimestres) {
         return true;
     }
     
-    // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
-        return true;
-    }
+    
 
     // NO ES NECESARIO VALIDAR NADA EN EL GESTOR, SE PUEDEN VALIDAR EN LA INTERFAZ
     // rta: esta en el diagrama de secuencia
-    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO) {
-        
-        validarCantidadAlumnos(reservaDTO);
-        
-        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
-        
-        return null;
-    }
-    
-    public boolean validarCantidadAlumnos(ReservaDTO r){
-        return true;
-    }
+//    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO) {
+//        
+//        validarCantidadAlumnos(reservaDTO);
+//        
+//        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
+//        
+//        return null;
+//    }
+//    
+//    public boolean validarCantidadAlumnos(ReservaDTO r){
+//        return true;
+//    }
     
     
     public int crearReserva(ReservaDTO reserva){
@@ -162,35 +163,88 @@ public class GestorReserva {
     }*/
 
     // --------------------------------------------------------------------------------------------------------------------
-
+    List<Cuatrimestre> cuatrimestres;
     public void tipoReserva(int tipo) {
         reservaTipoReserva = tipo;
+        cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+//        if(tipo == RESERVA_ANUAL) {
+//            
+//        }
+//        else if(tipo == RESERVA_PRIMER_CUATRIMESTRE) {
+//            
+//        }
+//        else if(tipo == RESERVA_SEGUNDO_CUATRIMESTRE) {
+//            
+//        }
+//        else if(tipo == RESERVA_ESPORADICA) {
+//            
+//        }
+        
+//        Date now = new Date();
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(now);
+//        int yearNow = cal.get(Calendar.YEAR);
+//        for (int i = 0; i < c.size(); i++) {
+//            LocalDate ld = c.get(i).getFechaInicio();
+//            Date inicioCuatr = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//            cal.setTime(inicioCuatr);
+//            int yearCuatr = cal.get(Calendar.YEAR);
+//            if(yearNow == yearCuatr);
+//        }
     }
     public int getTipoReserva(){
         return reservaTipoReserva;
     }
 
+    // periodica
     public void diasSeleccionados(List<DiaSemana> dias) {
         reservaDiasSeleccionadosSemana = dias;
     }
 
-    public void horariosSeleccionados(List<DetalleReserva> detalles) {
-        // FIXME: detalles estan incompletos
+    // periodica
+    public void horariosSeleccionados(List<DetalleReservaDTO> detalles) {
         reservaDetalleReservas = detalles;
     }
+    
+    // esporadica
+    public void seleccionarDiasYHorarios(List<DetalleReservaDTO> detalles) throws Exceptions.ValueException{
+        reservaDetalleReservas = detalles;
+        if (!validarDias(detalles)){
+            throw new Exceptions.ValueException("no se puden seleccionar dias repetidos");
+        }
+    }
+    
+    // solo se usa para reserva esporadica
+    public boolean validarDias(List<DetalleReservaDTO> diasReserva) {
+        // TODO: check
+        return true;
+    }
 
-    public void validarDatos(String nombreDocente, String apellidoDocente,
-            String nombreCatedra, String correo,
-            int cantidadAlumnos, TipoAula tipoAula) {
-        reservaNombreDocente = nombreDocente;
-        reservaApellidoDocente = apellidoDocente;
-        reservaNombreCatedra = nombreCatedra;
-        reservaCorreo = correo;
-        reservaCantidadAlumnos = cantidadAlumnos;
-        reservaTipoAula = tipoAula;
-
-        // TODO: validar datos
-
+    // TODO: FIX
+//    public void validarDatos(String nombreDocente, String apellidoDocente,
+//            String nombreCatedra, String correo,
+//            int cantidadAlumnos, TipoAula tipoAula) throws Exceptions.ValueException {
+//        reservaNombreDocente = nombreDocente;
+//        reservaApellidoDocente = apellidoDocente;
+//        reservaNombreCatedra = nombreCatedra;
+//        reservaCorreo = correo;
+//        reservaCantidadAlumnos = cantidadAlumnos;
+//        reservaTipoAula = tipoAula;
+//         TODO: validar datos
+//         validarAlumnos()
+//    }
+    // TODO: FIX
+    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO, TipoAula tipoAula) throws Exceptions.ValueException {
+        
+        validarCantidadAlumnos(reservaDTO);
+        
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
+        
+        return null;
+    }
+    
+    public boolean validarCantidadAlumnos(ReservaDTO r){
+        return true;
     }
 
     public AulaGeneral[] getAulasDisponibles() {

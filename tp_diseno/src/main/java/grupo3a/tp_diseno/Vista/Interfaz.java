@@ -2,6 +2,8 @@ package grupo3a.tp_diseno.Vista;
 
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
+import grupo3a.tp_diseno.DTOs.DetalleReservaDTO;
+import grupo3a.tp_diseno.DTOs.DisponibilidadDTO;
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
@@ -236,9 +238,9 @@ public class Interfaz {
             }
 
             @Override
-            public void eliminar(BedelDTO elegido, Fun fun) {
-                alertaConfirmacion.setText("¿Esta seguro que desea eliminar el usuario" + elegido.getIdLogin() + "?");
-               
+            public void deshabilitar(BedelDTO elegido, Fun fun) {
+                alertaConfirmacion.setText("¿Esta seguro que desea deshabilitar el usuario" + elegido.getIdLogin() + "?");
+
                 alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
                     @Override
                     public void back() {
@@ -248,14 +250,47 @@ public class Interfaz {
                     @Override
                     public void next() {
                         try {
+                            // TODO: cambiar nombre funcion
                             gestorBedel.eliminar(elegido.getIdUsuario());
 
-                            alerta.setText("bedel eliminado con exito");
-                            alerta.setListener(()-> baseFrame.setPanel1Up());
-                            
+                            alerta.setText("bedel deshabilitado con exito");
+                            alerta.setListener(() -> baseFrame.setPanel1Up());
+
                             alertaCardLayout.show(alertaPanel, "alerta");
                             baseFrame.setPanel2Up();
-                            
+
+                            fun.call(Boolean.TRUE);
+                        } catch (Exceptions.DAOException ex) {
+                            fun.call(Boolean.FALSE, ex);
+                        }
+                    }
+                });
+                baseFrame.setPanel2Up();
+                alertaCardLayout.show(alertaPanel, "alertaConfirmacion");
+            }
+            
+            @Override
+            public void habilitar(BedelDTO elegido, Fun fun) {
+                alertaConfirmacion.setText("¿Esta seguro que desea habilitar el usuario" + elegido.getIdLogin() + "?");
+
+                alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
+                    @Override
+                    public void back() {
+                        baseFrame.setPanel1Up();
+                    }
+
+                    @Override
+                    public void next() {
+                        try {
+                            // TODO: cambiar nombre funcion
+                            gestorBedel.habilitar(elegido.getIdUsuario());
+
+                            alerta.setText("bedel habilitado con exito");
+                            alerta.setListener(() -> baseFrame.setPanel1Up());
+
+                            alertaCardLayout.show(alertaPanel, "alerta");
+                            baseFrame.setPanel2Up();
+
                             fun.call(Boolean.TRUE);
                         } catch (Exceptions.DAOException ex) {
                             fun.call(Boolean.FALSE, ex);
@@ -483,64 +518,65 @@ public class Interfaz {
             @Override
             public void next() {
 
-                ArrayList<DetalleReserva> detalle = new ArrayList<>();
+                ArrayList<DetalleReservaDTO> detalle = new ArrayList<>();
 
                 LocalTime[] horarios = regRsvaPeriodicaHorarios.getHorariosSeleccionados();
                 LocalTime[] duraciones = regRsvaPeriodicaHorarios.getDuracionesSeleccionadas();
 
                 if (horarios[0] != null) {
-                    DetalleReserva tmp = new DetalleReserva();
-                    tmp.setDiaReserva(DiaSemana.LUNES);
-                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[0]));
+
+                    DiaSemana ds = DiaSemana.LUNES;
+                    Time horarioInicio = java.sql.Time.valueOf(horarios[0]);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[0]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
-                    tmp.setCantModulos(minutosCompletos / 30);
+                    int cantModulos = (minutosCompletos / 30);
+                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
                     detalle.add(tmp);
                 }
                 if (horarios[1] != null) {
-                    DetalleReserva tmp = new DetalleReserva();
-                    tmp.setDiaReserva(DiaSemana.MARTES);
-                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[1]));
+                    DiaSemana ds = DiaSemana.MARTES;
+                    Time horarioInicio = java.sql.Time.valueOf(horarios[1]);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[1]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
-                    tmp.setCantModulos(minutosCompletos / 30);
+                    int cantModulos = (minutosCompletos / 30);
+                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
                     detalle.add(tmp);
                 }
                 if (horarios[2] != null) {
-                    DetalleReserva tmp = new DetalleReserva();
-                    tmp.setDiaReserva(DiaSemana.MIERCOLES);
-                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[2]));
+                    DiaSemana ds = DiaSemana.MIERCOLES;
+                    Time horarioInicio = java.sql.Time.valueOf(horarios[2]);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[2]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
-                    tmp.setCantModulos(minutosCompletos / 30);
+                    int cantModulos = (minutosCompletos / 30);
+                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
                     detalle.add(tmp);
                 }
                 if (horarios[3] != null) {
-                    DetalleReserva tmp = new DetalleReserva();
-                    tmp.setDiaReserva(DiaSemana.JUEVES);
-                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[3]));
+                    DiaSemana ds = DiaSemana.JUEVES;
+                    Time horarioInicio = java.sql.Time.valueOf(horarios[3]);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[3]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
-                    tmp.setCantModulos(minutosCompletos / 30);
+                    int cantModulos = (minutosCompletos / 30);
+                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
                     detalle.add(tmp);
                 }
                 if (horarios[4] != null) {
-                    DetalleReserva tmp = new DetalleReserva();
-                    tmp.setDiaReserva(DiaSemana.VIERNES);
-                    tmp.setHorarioInicio(java.sql.Time.valueOf(horarios[4]));
+                    DiaSemana ds = DiaSemana.VIERNES;
+                    Time horarioInicio = java.sql.Time.valueOf(horarios[4]);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[4]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
-                    tmp.setCantModulos(minutosCompletos / 30);
+                    int cantModulos = (minutosCompletos / 30);
+                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
                     detalle.add(tmp);
                 }
 
@@ -570,15 +606,26 @@ public class Interfaz {
                 int cantidadAlumnos = regRsvaDatos.getCantidadAlumnos();
                 TipoAula tipoAula = regRsvaDatos.getTipoAula();
 
-                // TODO: agregar cartel error por los datos
-                gestorReserva.validarDatos(
-                        nombreDocente,
-                        apellidoDocente,
-                        nombreCatedra,
-                        correo,
-                        cantidadAlumnos,
-                        tipoAula
-                );
+                try {
+                    ReservaDTO reserva = new ReservaDTO(-1, nombreDocente, -1, apellidoDocente, correo, 
+                            -1, nombreCatedra, null, cantidadAlumnos, -1, null, 
+                            null, true, -1, -1);
+                    DisponibilidadDTO disp = gestorReserva.validarDatos(reserva, tipoAula);
+//                    gestorReserva.validarDatos(
+//                            nombreDocente,
+//                            apellidoDocente,
+//                            nombreCatedra,
+//                            correo,
+//                            cantidadAlumnos,
+//                            tipoAula
+//                    );
+                } catch (ValueException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                }
 
                 AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
                 regRsvaAula.setTable(convertirFormatoAula(aulas));
@@ -633,42 +680,49 @@ public class Interfaz {
 
                 Object[][] datos = regAulaEsporadicaDias.getData();
 
-                ArrayList<DetalleReserva> detalleReserva = new ArrayList<>();
+                ArrayList<DetalleReservaDTO> detalleReserva = new ArrayList<>();
 
-                for (int i = 0; i < datos.length; i++) {
-                    Date dia = (Date) datos[i][0];
-                    LocalTime horario = (LocalTime) datos[i][1];
-                    LocalTime duracion = (LocalTime) datos[i][2];
-                    DetalleReserva tmp = new DetalleReserva();
+                try {
+                    for (int i = 0; i < datos.length; i++) {
+                        Date dia = (Date) datos[i][0];
+                        LocalTime horario = (LocalTime) datos[i][1];
+                        LocalTime duracion = (LocalTime) datos[i][2];
+//                    DetalleReservaDTO tmp = new DetalleReservaDTO();
 
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(dia);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(dia);
 
-                    int dow = calendar.get(Calendar.DAY_OF_WEEK);
-                    if (dow == 1) {
-                        tmp.setDiaReserva(DiaSemana.LUNES);
-                    } else if (dow == 2) {
-                        tmp.setDiaReserva(DiaSemana.MARTES);
-                    } else if (dow == 3) {
-                        tmp.setDiaReserva(DiaSemana.MIERCOLES);
-                    } else if (dow == 4) {
-                        tmp.setDiaReserva(DiaSemana.JUEVES);
-                    } else if (dow == 5) {
-                        tmp.setDiaReserva(DiaSemana.MARTES);
-                    } else {
-                        // TODO excepcion (sabado / domingo)
+                        DiaSemana ds = DiaSemana.LUNES;
+                        int dow = calendar.get(Calendar.DAY_OF_WEEK);
+                        if (dow == 1) {
+                            ds = DiaSemana.LUNES;
+                        } else if (dow == 2) {
+                            ds = DiaSemana.MARTES;
+                        } else if (dow == 3) {
+                            ds = DiaSemana.MIERCOLES;
+                        } else if (dow == 4) {
+                            ds = DiaSemana.JUEVES;
+                        } else if (dow == 5) {
+                            ds = DiaSemana.MARTES;
+                        } else {
+                            throw new Exceptions.ValueException("no se puede registar una reserva un dia sabado/domingo");
+                        }
+                        Time horarioInicio = Time.valueOf(horario);
+                        Time time = Time.valueOf(duracion);
+                        int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
+
+                        int cantModulos = (minutosCompletos / 30);
+                        DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                        detalleReserva.add(tmp);
                     }
 
-                    tmp.setHorarioInicio(Time.valueOf(horario));
-                    Time time = Time.valueOf(duracion);
-                    int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
-
-                    tmp.setCantModulos(minutosCompletos / 30);
-                    detalleReserva.add(tmp);
+                    gestorReserva.seleccionarDiasYHorarios(detalleReserva);
+                } catch (ValueException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
                 }
-
-                // TODO: cambiar nombre metodo en diagrama de secuencia
-                gestorReserva.horariosSeleccionados(detalleReserva);
 
                 cardLayout.show(mainPanel, "regRsvaDatos");
             }

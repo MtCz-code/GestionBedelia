@@ -23,12 +23,14 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
         void back();
 
-        void eliminar(BedelDTO bedel, Fun fun);
+        void deshabilitar(BedelDTO bedel, Fun fun);
+
+        void habilitar(BedelDTO bedel, Fun fun);
 
         boolean modificar(BedelDTO bedel);
-        
+
         void eliminarError(Exception e);
-        
+
         void modificarError(Exception e);
     }
 
@@ -37,7 +39,6 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 //    Alerta alerta= new Alerta();
 //    AlertaConfirmacion alertaConfirmacion=new AlertaConfirmacion();
     private Listener listener;
-    
 
     public void setListener(Listener listener) {
         this.listener = listener;
@@ -49,16 +50,16 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         tableBedeles.setRowHeight(40);
         JTableHeader tableHeader = tableBedeles.getTableHeader();
         tableHeader.setReorderingAllowed(false);
-        
+
         rootPanel.add(modificarPanel, "modificarPanel");
         showBuscar();
     }
-    
-    public void showBuscar(){
+
+    public void showBuscar() {
         CardLayout cl = (CardLayout) rootPanel.getLayout();
         cl.show(rootPanel, "card2");
     }
-    
+
     public void showModificar() {
         CardLayout cl = (CardLayout) rootPanel.getLayout();
         cl.show(rootPanel, "modificarPanel");
@@ -1186,19 +1187,34 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 //                modificarFrame.setLocationRelativeTo(null);
 //                modificarFrame.setVisible(true);
             } else if (columna == 5) {
-                
+
                 if (listener != null) {
-                    listener.eliminar(elegido, (Object... o) -> {
-                        Boolean b = (Boolean) o[0];
-                        if (b) {
-                            bedeles.remove(elegido);
-                            updateBedeles(bedeles);
-                            
-                        } else {
-                            listener.eliminarError((Exception) o[1]);
-                        }
-                        return null;
-                    });
+                    if (elegido.isHabilitado()) {
+                        listener.deshabilitar(elegido, (Object... o) -> {
+                            Boolean b = (Boolean) o[0];
+                            if (b) {
+//                            bedeles.remove(elegido);
+                                elegido.setHabilitado(false);
+                                updateBedeles(bedeles);
+
+                            } else {
+                                listener.eliminarError((Exception) o[1]);
+                            }
+                            return null;
+                        });
+                    } else {
+                        listener.habilitar(elegido, (Object... o) -> {
+                            Boolean b = (Boolean) o[0];
+                            if (b) {
+                                elegido.setHabilitado(true);
+                                updateBedeles(bedeles);
+
+                            } else {
+                                listener.eliminarError((Exception) o[1]);
+                            }
+                            return null;
+                        });
+                    }
                 }
             }
         }
@@ -1257,18 +1273,17 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
             BedelDTO bedelDTO = new BedelDTO(idLogin, contraseña, nombre, apellido, turno, true);
 
-            if (listener != null){
+            if (listener != null) {
                 listener.modificar(bedelDTO);
             }
-            
 
         } catch (Exceptions.UIException e) {
-            if (listener != null)
+            if (listener != null) {
                 listener.modificarError(e);
+            }
             return;
         }
 
-        
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -1324,14 +1339,14 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
             BedelDTO bedelDTO = new BedelDTO(idLogin, contraseña, nombre, apellido, turno, true);
 
-            if (listener != null){
+            if (listener != null) {
                 listener.modificar(bedelDTO);
             }
-            
 
         } catch (Exceptions.UIException e) {
-            if (listener != null)
+            if (listener != null) {
                 listener.modificarError(e);
+            }
             return;
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
