@@ -2,9 +2,11 @@ package grupo3a.tp_diseno.Gestores;
 
 import grupo3a.tp_diseno.DAOs.AulaDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.AulaSqlDAO;
+import grupo3a.tp_diseno.DTOs.AulaDTO;
 import grupo3a.tp_diseno.DTOs.DisponibilidadDTO;
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestorAula {
@@ -27,11 +29,12 @@ public class GestorAula {
     
     
     public DisponibilidadDTO obtenerDisponibilidadAulas(ReservaDTO reserva){
-        
+        List<AulaDTO> aulas = new ArrayList();
+        DisponibilidadDTO d = new DisponibilidadDTO(aulas, false);
         
         
        // List<AulaGeneral> aulasElegibles = aulaDAO.GetByTipoYCapacidad(reserva.getTipo(), reserva.getCantidadAlumnos());
         
-        return null;
+        return d;
     }
 }

@@ -630,7 +630,7 @@ public class Interfaz {
                     ReservaDTO reserva = new ReservaDTO(-1, nombreDocente, -1, apellidoDocente, correo,
                             -1, nombreCatedra, null, cantidadAlumnos, -1, null,
                             null, true, -1, -1);
-                    DisponibilidadDTO disp = gestorReserva.validarDatos(reserva, tipoAula);
+                    DisponibilidadDTO disp = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
 //                    gestorReserva.validarDatos(
 //                            nombreDocente,
 //                            apellidoDocente,
@@ -645,6 +645,11 @@ public class Interfaz {
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
                     return;
+                } catch (Exceptions.NoExisteAulaException ex) {
+                    // MANEJAR ESTA EXCEPION NUEVA 
+                    
+                    // ----0
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
