@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author exero
  */
-public interface AulaDAO {
+public interface AulaGeneralDAO {
     
     
     

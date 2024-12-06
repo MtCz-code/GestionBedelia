@@ -528,7 +528,7 @@ public class Interfaz {
 
                 try {
                     // ARREGLAR EL FLUJO DE CREAR RESERVA
-                    ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0);
+                    ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0, null);
                     gestorReserva.crearReserva(rdto);
 
                     System.err.println("reservado");

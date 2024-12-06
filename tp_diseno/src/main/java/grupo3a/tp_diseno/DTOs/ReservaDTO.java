@@ -5,6 +5,7 @@
 package grupo3a.tp_diseno.DTOs;
 
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
+import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,13 +26,13 @@ public class ReservaDTO {
     private int cantidadAlumnos;
     private int idBedel;
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
-    private final List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
+    private List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
     private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     private int idCuatrimestre1; private int idCuatrimestre2;
     private List<DetalleReservaDTO> detallesReserva;
     
 
-    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
+    /*public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
             int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, TipoReservaPeriodica tipo,
             List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2) {
         this.idReserva = idReserva;
@@ -49,7 +50,27 @@ public class ReservaDTO {
         this.esEsporadica = esEsporadica; // 0 == periodica / 1 == esporadica
         this.idCuatrimestre1 = idCuatrimestre1;
         this.idCuatrimestre2 = idCuatrimestre2;
+    }*/
+
+    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2, List<DetalleReservaDTO> detallesReserva) {
+        this.idReserva = idReserva;
+        this.nombreDocente = nombreDocente;
+        this.idDocente = idDocente;
+        this.apellidoDocente = apellidoDocente;
+        this.emailDocente = emailDocente;
+        this.idCatedra = idCatedra;
+        this.nombreCatedra = nombreCatedra;
+        this.fechaRegistro = fechaRegistro;
+        this.cantidadAlumnos = cantidadAlumnos;
+        this.idBedel = idBedel;
+        this.tipo = tipo;
+        this.diasSemana = diasSemana;
+        this.esEsporadica = esEsporadica;
+        this.idCuatrimestre1 = idCuatrimestre1;
+        this.idCuatrimestre2 = idCuatrimestre2;
+        this.detallesReserva = detallesReserva;
     }
+
 
     public List<DetalleReservaDTO> getDetallesReserva() {
         return detallesReserva;
@@ -67,6 +88,7 @@ public class ReservaDTO {
         this.cantidadAlumnos = cantidadAlumnos;
     }
     
+    
 
     public int getIdReserva() {
         return idReserva;
@@ -74,6 +96,10 @@ public class ReservaDTO {
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
+    }
+    
+    public void setDiasSemana(List<DiaSemana> diasSemana) {
+        this.diasSemana = diasSemana;
     }
 
     public List<DiaSemana> getDiasSemana() {

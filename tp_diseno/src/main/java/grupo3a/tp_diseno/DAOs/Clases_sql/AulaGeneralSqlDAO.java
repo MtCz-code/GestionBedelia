@@ -4,24 +4,24 @@
  */
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
-import grupo3a.tp_diseno.DAOs.AulaDAO;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import java.util.List;
+import grupo3a.tp_diseno.DAOs.AulaGeneralDAO;
 
 /**
  *
  * @author exero
  */
-public class AulaSqlDAO implements AulaDAO{
+public class AulaGeneralSqlDAO implements AulaGeneralDAO{
 
-    public AulaSqlDAO() {
+    public AulaGeneralSqlDAO() {
     }
     //singleton
-    private static AulaSqlDAO instance;
-    public static AulaSqlDAO getInstance(){
-        if(AulaSqlDAO.instance == null)AulaSqlDAO.instance =  new AulaSqlDAO();
-        return AulaSqlDAO.instance;
+    private static AulaGeneralSqlDAO instance;
+    public static AulaGeneralSqlDAO getInstance(){
+        if(AulaGeneralSqlDAO.instance == null)AulaGeneralSqlDAO.instance =  new AulaGeneralSqlDAO();
+        return AulaGeneralSqlDAO.instance;
     }
 
     @Override

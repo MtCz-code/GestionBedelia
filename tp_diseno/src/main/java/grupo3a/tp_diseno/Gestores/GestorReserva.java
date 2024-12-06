@@ -8,7 +8,8 @@ import grupo3a.tp_diseno.DAOs.Clases_sql.*;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoPizarron;
-import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import grupo3a.tp_diseno.Gestores.*;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
@@ -24,16 +25,7 @@ public class GestorReserva {
     public final static int RESERVA_SEGUNDO_CUATRIMESTRE = 2;
     public final static int RESERVA_ESPORADICA = 3;
 
-    private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
-    private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
-    
-    private final DetalleReservaDAO detalleReservaDAO = DetalleReservaSqlDAO.getInstance();
-    
-    private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
-    
-    private final GestorAula gestorAula = GestorAula.getInstance();
-
-    private int reservaTipoReserva = -1;
+   /* private int reservaTipoReserva = -1;
     private List<DiaSemana> reservaDiasSeleccionadosSemana;
     private List<DetalleReserva> reservaDetalleReservas;
     private String reservaNombreDocente;
@@ -44,7 +36,17 @@ public class GestorReserva {
     private TipoAula reservaTipoAula;
     private AulaGeneral[] reservaAulasDisponibles; //
     private AulaGeneral reservaAulaSeleccionada; // TODO: estas se pueden simplificar
-    private int reservaAulaSeleccionadaIdx; //
+    private int reservaAulaSeleccionadaIdx; //*/
+    
+    
+    private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
+    private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
+    
+    private final DetalleReservaDAO detalleReservaDAO = DetalleReservaSqlDAO.getInstance();
+    
+    private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
+    
+    private final GestorAula gestorAula = GestorAula.getInstance();
 
     
     private static GestorReserva gestorReservaInstance;
@@ -60,11 +62,12 @@ public class GestorReserva {
         
     }
     
-    public List<CuatrimestreDTO> recuperarCuatrimestres(){
+    public List<CuatrimestreDTO> recuperarCuatrimestres() throws DAOException{
         List<CuatrimestreDTO> cdto = new ArrayList();
         List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+        
         for(Cuatrimestre c : cuatrimestres){
-            
+           cdto.add(convertirCuatrimestreADTO(c));
         }
         
         return cdto;
@@ -72,29 +75,63 @@ public class GestorReserva {
     
     
     // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva, ArrayList<CuatrimestreDTO> cuatrimestres) {
-        return true;
-    }
-    
-    // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
+    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva, ArrayList<CuatrimestreDTO> cuatrimestres) throws ValueException {
+        // Validar si los días de las reservas están dentro de algún cuatrimestre
+        for (DetalleReservaDTO detalle : diasReserva) {
+            boolean dentroDeCuatrimestre = false;
+            for (CuatrimestreDTO cuatrimestre : cuatrimestres) {
+                if (!detalle.getFecha().isBefore(cuatrimestre.getFechaInicio())
+                        && !detalle.getFecha().isAfter(cuatrimestre.getFechaFin())) {
+                    dentroDeCuatrimestre = true;
+                    break;
+                }
+            }
+            if (!dentroDeCuatrimestre) {
+                throw new ValueException("La fecha " + detalle.getFecha() + " no está dentro de ningún cuatrimestre.");
+            }
+        }
+
+        // Validar si hay días repetidos
+        if (!validarDias(diasReserva)) {
+            throw new ValueException("Se ha ingresado un día más de una vez.");
+        }
+
         return true;
     }
 
-    // NO ES NECESARIO VALIDAR NADA EN EL GESTOR, SE PUEDEN VALIDAR EN LA INTERFAZ
-    // rta: esta en el diagrama de secuencia
-    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO) {
+        // solo se usa para reserva esporadica
+    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
+        HashSet<LocalDate> fechasUnicas = new HashSet<>();
         
-        validarCantidadAlumnos(reservaDTO);
-        
-        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
-        
-        return null;
-    }
-    
-    public boolean validarCantidadAlumnos(ReservaDTO r){
+        for (DetalleReservaDTO detalle : diasReserva) {
+            if (!fechasUnicas.add(detalle.getFecha())) {
+                // Si no se puede agregar al conjunto, significa que está repetido
+                return false;
+            }
+        }
         return true;
     }
+
+
+    
+    public DisponibilidadDTO validarDatosYObtenerAulas(ReservaDTO reservaDTO, TipoAula tipoAula, int capacidad) throws ValueException, DAOException {
+        
+        if(validarCantidadAlumnos(reservaDTO)){
+            throw new ValueException("La cantidad de alumnos debe ser mayor a 0");
+        }
+        
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO, tipoAula, capacidad);
+        
+        return d;
+    }
+    
+    
+    public boolean validarCantidadAlumnos(ReservaDTO r){
+        
+        
+        return true;
+    }
+    
     
     
     public int crearReserva(ReservaDTO reserva){
@@ -108,61 +145,71 @@ public class GestorReserva {
     public ReservaDTO convertirADTO(Reserva r){
         
         
-        ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0);
+        int id = r.getIdReserva();
+        String nombreDocente = r.getNombreDocente();
+        String apellidoDocente = r.getApellidoDocente();
+        int idDocente = r.getIdDocente();
+        String emailDocente = r.getEmailDocente();
+        int idCatedra = r.getIdCatedra();
+        String nombreCatedra = r.getNombreCatedra();
+        LocalDateTime fechaRegistro = r.getFechaRegistro();
+        int idBedel = r.getIdBedel();
+        List<DetalleReservaDTO> detallesReserva = convertirListaDetallesADTO(r.getDetallesReserva());
+        
+        
+        ReservaDTO rdto = new ReservaDTO(id,nombreDocente, idDocente, apellidoDocente,
+                                emailDocente, idCatedra, nombreCatedra, fechaRegistro, 0, idBedel,
+                                null, null, false, 0, 0, // datos especificos de reservaPeriodica
+                                detallesReserva);
+        
+        // Variables especificas
+        if(r instanceof ReservaEsporadica){
+            rdto.setEsEsporadica(true);
+        }
+        else{
+            rdto.setEsEsporadica(false);
+            
+            ReservaPeriodica rp = (ReservaPeriodica) r;
+            
+            rdto.setTipo(rp.getTipo());
+            rdto.setDiasSemana(rp.getDiasSemana());
+            rdto.setIdCuatrimestre1(rp.getCuatrimestre1().getIdCuatrimestre());
+            rdto.setIdCuatrimestre2(rp.getCuatrimestre2().getIdCuatrimestre());
+        }
+        
+        
         return rdto;
     }
     
+    private List<DetalleReservaDTO> convertirListaDetallesADTO(List<DetalleReserva> detallesReserva) {
+        List<DetalleReservaDTO> listadr = new ArrayList();
+        
+        for(DetalleReserva d : detallesReserva){
+            DetalleReservaDTO dr = new DetalleReservaDTO(d.getIdReserva(), d.getHorarioInicio(), d.getCantModulos(),
+                                                        d.getFecha(), d.getDiaReserva(), d.getIdAula());
+            
+            listadr.add(dr);
+            
+        }
+        
+        return listadr;
+    }
     
-
-    /*
-    public void aulaSeleccionada(ReservaDTO reservaDTO, ArrayList<DetalleReservaDTO> detallesReservaDTO,
-            AulaDTO aulaDTO) {
-        // Obtener el aula seleccionada y asociarla a la reserva
-
-        Reserva reserva;
-
-        if (reservaDTO.isEsEsporadica()) {
-            // Crear una instancia de ReservaEsporadica
-            ReservaEsporadica reservaEsporadica = new ReservaEsporadica(
-                    reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
-                    reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
-                    reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
-                    reservaDTO.getIdBedel(), reservaDTO.getFechaRegistro());
-
-            reservaEsporadica.setIdReserva(reservaDAO.crear(reservaEsporadica));
-            reserva = reservaEsporadica; // Asignamos a reserva la instancia específica
-        } else {
-            // Crear una instancia de ReservaPeriodica
-            ReservaPeriodica reservaPeriodica = new ReservaPeriodica(
-                    reservaDTO.getNombreCatedra(), reservaDTO.getIdDocente(),
-                    reservaDTO.getApellidoDocente(), reservaDTO.getEmailDocente(),
-                    reservaDTO.getIdCatedra(), reservaDTO.getNombreCatedra(),
-                    reservaDTO.getIdBedel(), reservaDTO.getFechaRegistro(),
-                    reservaDTO.getTipo(), reservaDTO.getDiasSemana());
-
-            reservaPeriodica.setIdReserva(reservaDAO.crear(reservaPeriodica));
-            reserva = reservaPeriodica; // Asignamos a reserva la instancia específica
-        }
-
-        for (DetalleReservaDTO i : detallesReservaDTO) {
-
-            DetalleReserva detalleReserva = new DetalleReserva(
-                    reserva.getIdReserva(),
-                    i.getHorarioInicio(), 
-                    i.getCantModulos(), 
-                    i.getFecha(), 
-                    DiaSemana.JUEVES,// FIXME: i.getDiaReserva(), 
-                    aulaDTO.getIdAula());
-            detalleReservaDAO.crear(detalleReserva);
-        }
-
-        reservaDAO.asociarCuatrimestre(reserva.getIdReserva(), reservaDTO.getIdCuatrimestre1(),
-                reservaDTO.getIdCuatrimestre2());
-
-    }*/
+    private CuatrimestreDTO convertirCuatrimestreADTO(Cuatrimestre c) {
+        int id = c.getIdCuatrimestre();
+        LocalDate fechaInicio = c.getFechaInicio();
+        LocalDate fechaFin = c.getFechaFin();
+        
+        return new CuatrimestreDTO(id, fechaInicio, fechaFin);
+    }
+    
+    
+   
 
     // --------------------------------------------------------------------------------------------------------------------
 
+    /*
+    
     public void tipoReserva(int tipo) {
         reservaTipoReserva = tipo;
     }
@@ -246,7 +293,7 @@ public class GestorReserva {
         reservaAulaSeleccionadaIdx = idx;
     }
 
-    /*public void crearReserva() {
+    public void crearReserva() {
         Reserva reserva;
         int reservaIdDocente = 0;
         int reservaIdCatedra = 0;
@@ -316,5 +363,11 @@ public class GestorReserva {
         
 
     }*/
+
+    
+
+    
+
+    
 
 }
