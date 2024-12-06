@@ -16,7 +16,7 @@ public class DataBaseConnection {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.out.println("Error al conectar con la base de datos: " + e.getMessage());
-            throw e;
+            return null;
         }
     }
 }
