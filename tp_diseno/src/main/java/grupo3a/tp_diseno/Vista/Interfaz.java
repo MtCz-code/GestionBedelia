@@ -33,7 +33,6 @@ import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import grupo3a.tp_diseno.Vista.Utilidades.FuncionInterface.Fun;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.sql.Time;
 import java.util.Date;
 import java.time.LocalTime;
@@ -293,7 +292,6 @@ public class Interfaz {
 
             @Override
             public void modificarError(Exception e) {
-                System.out.println("modificar error interfaz");  //TODO:
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
                 alertaCardLayout.show(alertaPanel, "alerta");
@@ -370,78 +368,33 @@ public class Interfaz {
 
             }
         });
-
-    }
-
-    private void showLogin() {
-        cardLayout.show(mainPanel, "login");
-    }
-
-    private void showMenuAdmin() {
-        cardLayout.show(mainPanel, "menuAdmin");
-    }
-
-    private void showBuscarBedel() {
-        cardLayout.show(mainPanel, "buscarBedel");
-    }
-
-    public void showResultadosBusquedaBedel(List<BedelDTO> bedeles) {
-        resultadosBusquedaBedel.updateBedeles(bedeles);
-        cardLayout.show(mainPanel, "resultadosBusquedaBedel");
-    }
-
-    private void showRegistrarBedel() {
-
-        cardLayout.show(mainPanel, "registrarBedel");
-    }
-
-    // Reserva
-    private void showMenuBedel() {
-        menuBedel.setListener(new MenuBedel.Listener() {
-            @Override
-            public void registrarReserva() {
-//                mainPanel.remove(menuBedel);
-                showRegistrarReserva();
-            }
-
-            @Override
-            public void buscarAulas() {
-            }
-
-            @Override
-            public void listarReservasParaUnCurso() {
-            }
-
-            @Override
-            public void listarReservasParaUnDia() {
-            }
+        
+        //registrarReserva
+                regRsvaSeleccionTipoReserva.setListener(() -> {
+                    if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
+                        gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                        cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                    } else switch (regRsvaSeleccionTipoReserva.getSelected()) {
+                        case ANUAL -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        case PRIMER_CUATRIMESTRE -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        case SEGUNDO_CUATRIMESTRE -> {
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
+                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                        }
+                        default -> {
+                            //esporadica
+                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                            cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                        }
+                    }
         });
-        cardLayout.show(mainPanel, "menuBedel");
-//        }
-    }
-
-    private void showRegistrarReserva() {
-
-        cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
-
-        // TODO: pasar listeners a configuraListeners()
-        // seleccion tipo reserva
-        regRsvaSeleccionTipoReserva.setListener(() -> {
-            if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.ANUAL) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
-                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-            } else {  //esporadica
-                gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
-                cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-            }
-        });
-
+                
         // periodica seleccionar dias
         regRsvaTipoPeriodicaDias.setListener(new TipoPeriodicaDias.Listener() {
             @Override
@@ -475,8 +428,8 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
             }
         });
-
-        // periodicas seleccionar horarios
+        
+               // periodicas seleccionar horarios
         regRsvaPeriodicaHorarios.setListener(new TipoPeriodicaHorarios.Listener() {
             @Override
             public void back() {
@@ -553,8 +506,55 @@ public class Interfaz {
 
             }
         });
+        
+        //esporadicaDias
+            regAulaEsporadicaDias.setListener(new EsporadicaDias.Listener() {
+            @Override
+            public void back() {
+                cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
+            }
 
-        regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
+            @Override
+            public void next() {
+
+                Object[][] datos = regAulaEsporadicaDias.getData();
+
+                ArrayList<DetalleReserva> detalleReserva = new ArrayList<>();
+
+                for (Object[] dato : datos) {
+                    Date dia = (Date) dato[0];
+                    LocalTime horario = (LocalTime) dato[1];
+                    LocalTime duracion = (LocalTime) dato[2];
+                    DetalleReserva tmp = new DetalleReserva();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dia);
+                    int dow = calendar.get(Calendar.DAY_OF_WEEK);
+                    switch (dow) {
+                        case 1 -> tmp.setDiaReserva(DiaSemana.LUNES);
+                        case 2 -> tmp.setDiaReserva(DiaSemana.MARTES);
+                        case 3 -> tmp.setDiaReserva(DiaSemana.MIERCOLES);
+                        case 4 -> tmp.setDiaReserva(DiaSemana.JUEVES);
+                        case 5 -> tmp.setDiaReserva(DiaSemana.MARTES);
+                        default -> {
+                        }
+                    }
+                    // TODO excepcion (sabado / domingo)
+                    tmp.setHorarioInicio(Time.valueOf(horario));
+                    Time time = Time.valueOf(duracion);
+                    int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
+                    tmp.setCantModulos(minutosCompletos / 30);
+                    detalleReserva.add(tmp);
+                }
+
+                // TODO: cambiar nombre metodo en diagrama de secuencia
+                gestorReserva.horariosSeleccionados(detalleReserva);
+
+                cardLayout.show(mainPanel, "regRsvaDatos");
+            }
+        });
+        
+        //registroReservaDatos
+              regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
             @Override
             public void back() {
                 if (gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA) {
@@ -590,8 +590,9 @@ public class Interfaz {
 
             }
         });
-
-        regRsvaAula.setListener(new ResultadosAulas.Listener() {
+              
+           //registroResultadosAulas
+            regRsvaAula.setListener(new ResultadosAulas.Listener() {
             @Override
             public void back() {
                 cardLayout.show(mainPanel, "regRsvaDatos");
@@ -615,8 +616,7 @@ public class Interfaz {
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
 
-                } catch (Exception e) {//TODO: hacer todas las validaciones(otros catch)
-                    e.printStackTrace();
+                } catch (Exception e) { //TODO: hacer todas las validaciones(otros catch)
                     alerta.setText("no se pudo realizar la reserva");
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
@@ -625,57 +625,57 @@ public class Interfaz {
             }
         });
 
-        regAulaEsporadicaDias.setListener(new EsporadicaDias.Listener() {
+    }
+
+    private void showLogin() {
+        cardLayout.show(mainPanel, "login");
+    }
+
+    private void showMenuAdmin() {
+        cardLayout.show(mainPanel, "menuAdmin");
+    }
+
+    private void showBuscarBedel() {
+        cardLayout.show(mainPanel, "buscarBedel");
+    }
+
+    public void showResultadosBusquedaBedel(List<BedelDTO> bedeles) {
+        resultadosBusquedaBedel.updateBedeles(bedeles);
+        cardLayout.show(mainPanel, "resultadosBusquedaBedel");
+    }
+
+    private void showRegistrarBedel() {
+
+        cardLayout.show(mainPanel, "registrarBedel");
+    }
+
+    // Reserva
+    private void showMenuBedel() {
+        menuBedel.setListener(new MenuBedel.Listener() {
             @Override
-            public void back() {
-                cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
+            public void registrarReserva() {
+                showRegistrarReserva();
             }
 
             @Override
-            public void next() {
+            public void buscarAulas() {
+            }
 
-                Object[][] datos = regAulaEsporadicaDias.getData();
+            @Override
+            public void listarReservasParaUnCurso() {
+            }
 
-                ArrayList<DetalleReserva> detalleReserva = new ArrayList<>();
-
-                for (int i = 0; i < datos.length; i++) {
-                    Date dia = (Date) datos[i][0];
-                    LocalTime horario = (LocalTime) datos[i][1];
-                    LocalTime duracion = (LocalTime) datos[i][2];
-                    DetalleReserva tmp = new DetalleReserva();
-
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(dia);
-
-                    int dow = calendar.get(Calendar.DAY_OF_WEEK);
-                    if (dow == 1) {
-                        tmp.setDiaReserva(DiaSemana.LUNES);
-                    } else if (dow == 2) {
-                        tmp.setDiaReserva(DiaSemana.MARTES);
-                    } else if (dow == 3) {
-                        tmp.setDiaReserva(DiaSemana.MIERCOLES);
-                    } else if (dow == 4) {
-                        tmp.setDiaReserva(DiaSemana.JUEVES);
-                    } else if (dow == 5) {
-                        tmp.setDiaReserva(DiaSemana.MARTES);
-                    } else {
-                        // TODO excepcion (sabado / domingo)
-                    }
-
-                    tmp.setHorarioInicio(Time.valueOf(horario));
-                    Time time = Time.valueOf(duracion);
-                    int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
-
-                    tmp.setCantModulos(minutosCompletos / 30);
-                    detalleReserva.add(tmp);
-                }
-
-                // TODO: cambiar nombre metodo en diagrama de secuencia
-                gestorReserva.horariosSeleccionados(detalleReserva);
-
-                cardLayout.show(mainPanel, "regRsvaDatos");
+            @Override
+            public void listarReservasParaUnDia() {
             }
         });
+        cardLayout.show(mainPanel, "menuBedel");
+//        }
+    }
+
+    private void showRegistrarReserva() {
+
+        cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
     }
 
     private String[][] convertirFormatoAula(AulaGeneral[] aulas) {
