@@ -30,6 +30,7 @@ public class GestorBedel {
     private GestorBedel() {
     }
 
+<<<<<<< Updated upstream
     private BedelDAO DAO = BedelSqlDAO.getInstance();
 
     
@@ -46,6 +47,19 @@ public class GestorBedel {
             validarIdLogin(idLogin);
         } catch(ValueException e){
             throw new ValueException(e.getMessage());
+=======
+    public void crear(UsuarioDTO usuarioDTO){
+       
+        if(usuarioDTO.getTurno() != null){ // crear BEDEL
+           Bedel b = new Bedel( BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido(),
+                   usuarioDTO.getTurno(), usuarioDTO.isHabilitado()); //habilitado true
+           DAO.crear(b);
+       }
+       else { // crear admin
+           Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()),
+                   usuarioDTO.getNombre(), usuarioDTO.getApellido() );
+           DAO.crear(a);
+>>>>>>> Stashed changes
         }
         
         // encriptar contraseña

@@ -78,7 +78,7 @@ public class BaseFrame extends javax.swing.JFrame {
         panel1.setForeground(new java.awt.Color(19, 66, 126));
         panel1.setOpaque(false);
         panel1.setPreferredSize(new java.awt.Dimension(424, 100));
-        panel1.setLayout(new javax.swing.BoxLayout(panel1, javax.swing.BoxLayout.LINE_AXIS));
+        panel1.setLayout(new java.awt.BorderLayout());
 
         panel2.setBackground(new Color(20, 20, 20, 50));
         panel2.setOpaque(false);
@@ -118,19 +118,7 @@ public class BaseFrame extends javax.swing.JFrame {
                     .addGap(0, 0, 0)))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layeredPanel, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(layeredPanel)
-                .addGap(0, 0, 0))
-        );
+        getContentPane().add(layeredPanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
