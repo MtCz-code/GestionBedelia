@@ -12,6 +12,11 @@ public class AulaLaboratorio extends AulaGeneral{
         super(tipo,ubicacion,estado,capacidad,piso,tipoDePizarron,ventiladores,aireAcondicionado,habilitado);
         this.cantidadDePCs=cantidadDePCs;
     }
+
+    public AulaLaboratorio(int id, TipoAula tipo_aula, String ubicacion, Boolean estado, Integer capacidadAula, Integer piso, TipoPizarron tipo_pizarron, Boolean ventiladores, Boolean aire_acondicionado, Boolean habilitado, Integer cantidadPcs) {
+        super(id,tipo_aula,ubicacion,estado,capacidadAula,piso,tipo_pizarron,ventiladores,aire_acondicionado,habilitado);
+        this.cantidadDePCs=cantidadPcs;    
+    }
     
     public int getCantidadDePCs() {
         return cantidadDePCs;
