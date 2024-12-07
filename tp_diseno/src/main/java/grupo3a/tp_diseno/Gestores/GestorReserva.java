@@ -10,6 +10,7 @@ import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoPizarron;
 import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.NoExisteAulaException;
 import grupo3a.tp_diseno.Gestores.*;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
@@ -219,6 +220,20 @@ public class GestorReserva {
         // TODO: check
         return true;
     }
+    
+    public DisponibilidadDTO validarDatosYObtenerAulas(ReservaDTO reservaDTO, TipoAula tipoAula) throws Exceptions.ValueException, NoExisteAulaException {
+        
+        validarCantidadAlumnos(reservaDTO);
+        
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
+        
+        if(d.getAulasDisponibles() == null) throw new NoExisteAulaException("No hay aulas con esa capacidad de alumnos");
+        return d;
+    }
+    
+    public boolean validarCantidadAlumnos(ReservaDTO r){
+        return true;
+    }
 
     // TODO: FIX
 //    public void validarDatos(String nombreDocente, String apellidoDocente,
@@ -234,18 +249,7 @@ public class GestorReserva {
 //         validarAlumnos()
 //    }
     // TODO: FIX
-    public DisponibilidadDTO validarDatos(ReservaDTO reservaDTO, TipoAula tipoAula) throws Exceptions.ValueException {
-        
-        validarCantidadAlumnos(reservaDTO);
-        
-        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
-        
-        return null;
-    }
     
-    public boolean validarCantidadAlumnos(ReservaDTO r){
-        return true;
-    }
 
     public AulaGeneral[] getAulasDisponibles() {
 
