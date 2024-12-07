@@ -31,10 +31,10 @@ import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
 import grupo3a.tp_diseno.Vista.Login.InicioSesion;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
-import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import grupo3a.tp_diseno.Vista.Utilidades.FuncionInterface.Fun;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.sql.Time;
 import java.util.Date;
 import java.time.LocalTime;
@@ -240,7 +240,7 @@ public class Interfaz {
 
             @Override
             public void deshabilitar(BedelDTO elegido, Fun fun) {
-                alertaConfirmacion.setText("¿Esta seguro que desea deshabilitar el usuario" + elegido.getIdLogin() + "?");
+                alertaConfirmacion.setText("¿Esta seguro que desea deshabilitar el usuario " + elegido.getIdLogin() + "?");
 
                 alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
                     @Override
@@ -272,7 +272,8 @@ public class Interfaz {
 
             @Override
             public void habilitar(BedelDTO elegido, Fun fun) {
-                alertaConfirmacion.setText("¿Esta seguro que desea habilitar el usuario" + elegido.getIdLogin() + "?");
+                alertaConfirmacion.setText("¿Esta seguro que desea habilitar el usuario " + elegido.getIdLogin() + "?");
+                
 
                 alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
                     @Override
@@ -304,14 +305,31 @@ public class Interfaz {
 
             @Override
             public boolean modificar(BedelDTO bedel) {
-                System.out.println("modificar interfaz");
                 try {
                     gestorBedel.modificar(bedel);
 
                     alerta.setText("Bedel modificado con éxito");
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                     try {
+                    List<BedelDTO> bedelesBuscados;
+                    if (buscarBedel.getSeleccionado().equals("Apellido")) {
+                        bedelesBuscados = gestorBedel.buscar(buscarBedel.getApellido());
+                    } else {
+                        bedelesBuscados = gestorBedel.buscar(buscarBedel.getTurno());
+                    }
+
+                    showResultadosBusquedaBedel(bedelesBuscados);
+
+                } catch (NullPointerException | Exceptions.ValueException e) {
+                    alerta.setText(e.getMessage());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                } catch (Exceptions.DAOException ex) {
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                }
                     return true;
 
                 } catch (ValueException ex) {

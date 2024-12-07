@@ -89,6 +89,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         jPanel11 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        idModificar = new javax.swing.JTextField();
         jPanel28 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -173,6 +174,13 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("<html>La contraseña debe tener una longitud mínima de 8 caracteres,  debe contener signos especiales (@#$%&*), <br>  al menos una letra mayúscula, y al menos un dígito</html>");
 
+        idModificar.setText("jTextField1");
+        idModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idModificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -182,11 +190,17 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(150, 150, 150))
             .addComponent(jLabel13)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(629, 629, 629)
+                .addComponent(idModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addGap(0, 43, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(idModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,7 +229,6 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
 
         tfLogin1.setBackground(new java.awt.Color(40, 40, 40));
         tfLogin1.setForeground(new java.awt.Color(255, 255, 255));
-        tfLogin1.setEnabled(false);
         tfLogin1.setPreferredSize(new java.awt.Dimension(64, 20));
         tfLogin1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,7 +477,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel41Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(btnCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jPanel42.setBackground(new java.awt.Color(26, 26, 26));
@@ -504,14 +517,14 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+                .addComponent(jPanel41, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel42, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1357, Short.MAX_VALUE)
+                .addComponent(jPanel42, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE))
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap(459, Short.MAX_VALUE)
                 .addComponent(jPanel28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(475, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -531,7 +544,7 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 1357, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -653,27 +666,27 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         jPanel19.setLayout(jPanel19Layout);
         jPanel19Layout.setHorizontalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
+            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addContainerGap(629, Short.MAX_VALUE))
             .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                     .addGap(176, 176, 176)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
                     .addGap(151, 151, 151)))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel19Layout.createSequentialGroup()
                 .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
                     .addGap(152, 152, 152)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addGap(131, 131, 131)))
         );
 
@@ -700,6 +713,8 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         if (!tableBedeles.getValueAt(fila, 0).equals("") && !tableBedeles.getValueAt(fila, 1).equals("")
                 && !tableBedeles.getValueAt(fila, 2).equals("") && !tableBedeles.getValueAt(fila, 3).equals("")) {
             if (columna == 4) {
+                idModificar.setVisible(false);
+                idModificar.setText(String.valueOf(elegido.getIdUsuario()));
                 tfLogin1.setText(elegido.getIdLogin());
                 tfApellido1.setText(elegido.getApellido());
                 tfNombre1.setText(elegido.getNombre());
@@ -824,10 +839,11 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
                 throw new Exceptions.UIException("Las contraseñas no coinciden.");
             }
 
-            BedelDTO bedelDTO = new BedelDTO(idLogin, contraseña, nombre, apellido, turno, true);
+            BedelDTO bedelDTO = new BedelDTO(Integer.parseInt(idModificar.getText()),idLogin, contraseña, nombre, apellido, turno, true);
 
             if (listener != null) {
                 listener.modificar(bedelDTO);
+                showBuscar();
             }
 
         } catch (Exceptions.UIException e) {
@@ -837,12 +853,17 @@ public class ResultadosBusquedaBedel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
+    private void idModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnModificar1;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbTurno1;
+    private javax.swing.JTextField idModificar;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
