@@ -12,6 +12,7 @@ import java.util.List;
 import grupo3a.tp_diseno.DAOs.AulaGeneralDAO;
 import grupo3a.tp_diseno.DTOs.AulaDTO;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 
 public class GestorAula {
     
@@ -34,7 +35,7 @@ public class GestorAula {
     private final AulaMultimediosDAO aulaMultimediosDAO = AulaMultimediosSqlDAO.getInstance();
     
     
-    public DisponibilidadDTO obtenerDisponibilidadAulas(ReservaDTO reserva, TipoAula tipoAula, int capacidad){
+    public DisponibilidadDTO obtenerDisponibilidadAulas(ReservaDTO reserva, TipoAula tipoAula, int capacidad) throws DAOException{
         Object listaAulas;
        
         if(tipoAula == TipoAula.GENERAL){
