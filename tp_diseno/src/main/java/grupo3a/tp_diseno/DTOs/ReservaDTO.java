@@ -25,11 +25,13 @@ public class ReservaDTO {
     private LocalDateTime fechaRegistro;
     private int cantidadAlumnos;
     private int idBedel;
+    private List<DetalleReservaDTO> detallesReserva;
+    private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
+    
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
-    private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     private int idCuatrimestre1; private int idCuatrimestre2;
-    private List<DetalleReservaDTO> detallesReserva;
+    
     
 
     /*public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
@@ -52,6 +54,7 @@ public class ReservaDTO {
         this.idCuatrimestre2 = idCuatrimestre2;
     }*/
 
+    //CONSTRUCTOR PERIODICA
     public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2, List<DetalleReservaDTO> detallesReserva) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
@@ -70,6 +73,24 @@ public class ReservaDTO {
         this.idCuatrimestre2 = idCuatrimestre2;
         this.detallesReserva = detallesReserva;
     }
+
+    // CONSTRUCTOR ESPORADICA
+    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, List<DetalleReservaDTO> detallesReserva, boolean esEsporadica) {
+        this.idReserva = idReserva;
+        this.nombreDocente = nombreDocente;
+        this.idDocente = idDocente;
+        this.apellidoDocente = apellidoDocente;
+        this.emailDocente = emailDocente;
+        this.idCatedra = idCatedra;
+        this.nombreCatedra = nombreCatedra;
+        this.fechaRegistro = fechaRegistro;
+        this.cantidadAlumnos = cantidadAlumnos;
+        this.idBedel = idBedel;
+        this.detallesReserva = detallesReserva;
+        this.esEsporadica = esEsporadica;
+    }
+    
+    
 
 
     public List<DetalleReservaDTO> getDetallesReserva() {

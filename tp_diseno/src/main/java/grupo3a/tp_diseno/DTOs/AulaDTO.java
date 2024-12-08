@@ -45,6 +45,21 @@ public class AulaDTO {
         this.computadora = computadora;
     }
 
+    public AulaDTO(int idAula, TipoAula tipo, String ubicacion, boolean estado, int capacidad, int piso, TipoPizarron tipoDePizarron, boolean ventiladores, boolean aireAcondicionado, boolean habilitado) {
+        this.idAula = idAula;
+        this.tipo = tipo;
+        this.ubicacion = ubicacion;
+        this.estado = estado;
+        this.capacidad = capacidad;
+        this.piso = piso;
+        this.tipoDePizarron = tipoDePizarron;
+        this.ventiladores = ventiladores;
+        this.aireAcondicionado = aireAcondicionado;
+        this.habilitado = habilitado;
+    }
+    
+    
+
     public int getIdAula() {
         return idAula;
     }

@@ -5,6 +5,9 @@
 package grupo3a.tp_diseno.DAOs;
 
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -13,4 +16,5 @@ import grupo3a.tp_diseno.Modelos.DetalleReserva;
 public interface DetalleReservaDAO {
     
     public void crear(DetalleReserva detalleReserva);
+    public List<DetalleReserva> getByDiaYHorario(LocalDate fecha, Time horarioInicio, int cantModulos);
 }

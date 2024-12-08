@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.util.List;
 
 public class DetalleReservaSqlDAO implements DetalleReservaDAO{
 
@@ -48,5 +50,11 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
         } catch (SQLException e) {
             System.out.println("Error al agregar el detalle de la reserva: " + e.getMessage());
         }
+    }
+
+    @Override
+    // OBTENER TODOS LOS DETALLE RESERVA DE EL DIA ESPECIFICADO, QUE TENGAN AL MENOS UN MODULO EN EL HORARIO PASADO COMO PARAMETRO (HORARIO INNICIO * CANT MODULOS)
+    public List<DetalleReserva> getByDiaYHorario(LocalDate fecha, Time horarioInicio, int cantModulos) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

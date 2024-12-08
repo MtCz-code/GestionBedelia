@@ -122,13 +122,13 @@ public class GestorReserva {
 
 
     
-    public DisponibilidadDTO validarDatosYObtenerAulas(ReservaDTO reservaDTO, TipoAula tipoAula, int capacidad) throws ValueException, DAOException {
+    public DisponibilidadDTO validarDatosYObtenerAulas(ReservaDTO reservaDTO, TipoAula tipoAula) throws ValueException, DAOException, NoExisteAulaException {
         
         if(validarCantidadAlumnos(reservaDTO)){
             throw new ValueException("La cantidad de alumnos debe ser mayor a 0");
         }
         
-        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO, tipoAula, capacidad);
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO, tipoAula);
         
         return d;
     }
