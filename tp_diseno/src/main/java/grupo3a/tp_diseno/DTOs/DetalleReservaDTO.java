@@ -18,7 +18,7 @@ public class DetalleReservaDTO {
     private int cantModulos;
     private LocalDate fecha;
     private DiaSemana diaReserva;
-    private int idAula;
+    private int idAula; 
 
     public DetalleReservaDTO(int idReserva, Time horarioInicio, int cantModulos, LocalDate fecha, DiaSemana diaReserva, int idAula) {
         this.idReserva = idReserva;

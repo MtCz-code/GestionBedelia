@@ -53,7 +53,7 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
     }
 
     @Override
-    // OBTENER TODOS LOS DETALLE RESERVA DE EL DIA ESPECIFICADO, QUE TENGAN AL MENOS UN MODULO EN EL HORARIO PASADO COMO PARAMETRO (HORARIO INNICIO * CANT MODULOS)
+    // OBTENER TODOS LOS DETALLE RESERVA DE EL DIA ESPECIFICADO, QUE TENGAN AL MENOS UN MODULO EN EL HORARIO PASADO COMO PARAMETRO (HORARIO INNICIO * CANT MODULOS) 
     public List<DetalleReserva> getByDiaYHorario(LocalDate fecha, Time horarioInicio, int cantModulos) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
