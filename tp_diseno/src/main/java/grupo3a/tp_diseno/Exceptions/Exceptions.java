@@ -26,4 +26,10 @@ public class Exceptions {
             super(msg);
         }
     }
+    
+    public static class NoExisteAulaException extends Exception {
+        public NoExisteAulaException(String msg) {
+            super(msg);
+        }
+    }
 }

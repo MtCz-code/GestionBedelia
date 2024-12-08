@@ -10,6 +10,9 @@ import grupo3a.tp_diseno.Enumerations.TipoAula;
 import grupo3a.tp_diseno.Enumerations.TipoPizarron;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
+import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
+import grupo3a.tp_diseno.Exceptions.Exceptions;
+import grupo3a.tp_diseno.Exceptions.Exceptions.NoExisteAulaException;
 import grupo3a.tp_diseno.Gestores.*;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
@@ -17,6 +20,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 public class GestorReserva {
 
@@ -27,7 +31,7 @@ public class GestorReserva {
 
    /* private int reservaTipoReserva = -1;
     private List<DiaSemana> reservaDiasSeleccionadosSemana;
-    private List<DetalleReserva> reservaDetalleReservas;
+    private List<DetalleReservaDTO> reservaDetalleReservas;
     private String reservaNombreDocente;
     private String reservaApellidoDocente;
     private String reservaNombreCatedra;
@@ -68,6 +72,10 @@ public class GestorReserva {
         
         for(Cuatrimestre c : cuatrimestres){
            cdto.add(convertirCuatrimestreADTO(c));
+           
+            System.out.println("cuatrimestre:" + c.getIdCuatrimestre() 
+                    + "\ninicio: " + c.getFechaInicio().toString() 
+                    + "\nfin: " + c.getFechaFin());
         }
         
         return cdto;
@@ -210,35 +218,92 @@ public class GestorReserva {
 
     /*
     
+    List<Cuatrimestre> cuatrimestres;
     public void tipoReserva(int tipo) {
         reservaTipoReserva = tipo;
+        cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+//        if(tipo == RESERVA_ANUAL) {
+//            
+//        }
+//        else if(tipo == RESERVA_PRIMER_CUATRIMESTRE) {
+//            
+//        }
+//        else if(tipo == RESERVA_SEGUNDO_CUATRIMESTRE) {
+//            
+//        }
+//        else if(tipo == RESERVA_ESPORADICA) {
+//            
+//        }
+        
+//        Date now = new Date();
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(now);
+//        int yearNow = cal.get(Calendar.YEAR);
+//        for (int i = 0; i < c.size(); i++) {
+//            LocalDate ld = c.get(i).getFechaInicio();
+//            Date inicioCuatr = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//            cal.setTime(inicioCuatr);
+//            int yearCuatr = cal.get(Calendar.YEAR);
+//            if(yearNow == yearCuatr);
+//        }
     }
     public int getTipoReserva(){
         return reservaTipoReserva;
     }
 
+    // periodica
     public void diasSeleccionados(List<DiaSemana> dias) {
         reservaDiasSeleccionadosSemana = dias;
     }
 
-    public void horariosSeleccionados(List<DetalleReserva> detalles) {
-        // FIXME: detalles estan incompletos
+    // periodica
+    public void horariosSeleccionados(List<DetalleReservaDTO> detalles) {
         reservaDetalleReservas = detalles;
     }
-
-    public void validarDatos(String nombreDocente, String apellidoDocente,
-            String nombreCatedra, String correo,
-            int cantidadAlumnos, TipoAula tipoAula) {
-        reservaNombreDocente = nombreDocente;
-        reservaApellidoDocente = apellidoDocente;
-        reservaNombreCatedra = nombreCatedra;
-        reservaCorreo = correo;
-        reservaCantidadAlumnos = cantidadAlumnos;
-        reservaTipoAula = tipoAula;
-
-        // TODO: validar datos
-
+    
+    // esporadica
+    public void seleccionarDiasYHorarios(List<DetalleReservaDTO> detalles) throws Exceptions.ValueException{
+        reservaDetalleReservas = detalles;
+        if (!validarDias(detalles)){
+            throw new Exceptions.ValueException("no se puden seleccionar dias repetidos");
+        }
     }
+    
+    // solo se usa para reserva esporadica
+    public boolean validarDias(List<DetalleReservaDTO> diasReserva) {
+        // TODO: check
+        return true;
+    }
+    
+    public DisponibilidadDTO validarDatosYObtenerAulas(ReservaDTO reservaDTO, TipoAula tipoAula) throws Exceptions.ValueException, NoExisteAulaException {
+        
+        validarCantidadAlumnos(reservaDTO);
+        
+        DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO);
+        
+        if(d.getAulasDisponibles() == null) throw new NoExisteAulaException("No hay aulas con esa capacidad de alumnos");
+        return d;
+    }
+    
+    public boolean validarCantidadAlumnos(ReservaDTO r){
+        return true;
+    }
+
+    // TODO: FIX
+//    public void validarDatos(String nombreDocente, String apellidoDocente,
+//            String nombreCatedra, String correo,
+//            int cantidadAlumnos, TipoAula tipoAula) throws Exceptions.ValueException {
+//        reservaNombreDocente = nombreDocente;
+//        reservaApellidoDocente = apellidoDocente;
+//        reservaNombreCatedra = nombreCatedra;
+//        reservaCorreo = correo;
+//        reservaCantidadAlumnos = cantidadAlumnos;
+//        reservaTipoAula = tipoAula;
+//         TODO: validar datos
+//         validarAlumnos()
+//    }
+    // TODO: FIX
+    
 
     public AulaGeneral[] getAulasDisponibles() {
 

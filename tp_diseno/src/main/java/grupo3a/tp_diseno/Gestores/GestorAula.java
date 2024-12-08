@@ -5,9 +5,11 @@ import grupo3a.tp_diseno.DAOs.AulaMultimediosDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.AulaLaboratorioSqlDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.AulaMultimediosSqlDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.AulaGeneralSqlDAO;
+import grupo3a.tp_diseno.DTOs.AulaDTO;
 import grupo3a.tp_diseno.DTOs.DisponibilidadDTO;
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Modelos.AulaGeneral;
+import java.util.ArrayList;
 import java.util.List;
 import grupo3a.tp_diseno.DAOs.AulaGeneralDAO;
 import grupo3a.tp_diseno.DTOs.AulaDTO;
@@ -36,6 +38,10 @@ public class GestorAula {
     
     
     public DisponibilidadDTO obtenerDisponibilidadAulas(ReservaDTO reserva, TipoAula tipoAula, int capacidad) throws DAOException{
+        List<AulaDTO> aulas = new ArrayList();
+        DisponibilidadDTO d = new DisponibilidadDTO(aulas, false);
+        
+        
         Object listaAulas;
        
         if(tipoAula == TipoAula.GENERAL){
@@ -46,7 +52,6 @@ public class GestorAula {
            listaAulas = aulaMultimediosDAO.getByCapacidad(capacidad);
        }
        
-        
         
         return null;
     }

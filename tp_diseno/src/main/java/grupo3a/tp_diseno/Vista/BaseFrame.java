@@ -78,7 +78,17 @@ public class BaseFrame extends javax.swing.JFrame {
         panel1.setForeground(new java.awt.Color(19, 66, 126));
         panel1.setOpaque(false);
         panel1.setPreferredSize(new java.awt.Dimension(424, 100));
-        panel1.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 989, Short.MAX_VALUE)
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
 
         panel2.setBackground(new Color(20, 20, 20, 50));
         panel2.setOpaque(false);
