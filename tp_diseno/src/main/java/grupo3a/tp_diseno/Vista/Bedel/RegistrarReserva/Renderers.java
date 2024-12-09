@@ -333,7 +333,9 @@ public class Renderers {
         public DateEditor(JTable table, TableListener listener) {
             panel = new JPanel(new BorderLayout());
             dateChooser = new JDateChooser();
-            dateChooser.addPropertyChangeListener((PropertyChangeEvent e) -> {
+            dateChooser.setMinSelectableDate(new Date());
+            dateChooser.getDateEditor().addPropertyChangeListener("date", (PropertyChangeEvent evt) -> {
+                stopCellEditing();
             });
             addBtn = new JButton("agregar");
             addBtn.addActionListener((ActionEvent e) -> {

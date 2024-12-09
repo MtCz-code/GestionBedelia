@@ -177,6 +177,8 @@ public class Interfaz {
                     showMenuAdmin();
                 } else {
                     showMenuBedel();
+                    idBedel = 1;
+                    // TODO: idBedel = gestorLogin.getIdBedel(usuarioDTO);
                 }
             } catch (DAOException e) {
                 System.out.println(e.getMessage());
@@ -653,24 +655,15 @@ public class Interfaz {
 
                 Object[][] datos = regAulaEsporadicaDias.getData();
                 detalleReservaDto = new ArrayList<>();
-                for (int i = 0; i < datos.length; i++) {
-                    Object[] row = datos[i];
-                    Date d = (Date) row[0];
-//                    String h = (String) row[1];
-//                    String a = (String) row[2];
-                    System.out.println("date: " + d);
-//                    System.out.println("h: " + h);
-//                    System.out.println("d: " + a);
-                }
 
                 try {
                     for (int i = 0; i < datos.length; i++) {
                         Date dia = (Date) datos[i][0];
                         LocalTime horario = (LocalTime) datos[i][1];
                         LocalTime duracion = (LocalTime) datos[i][2];
-//                        System.out.println(dia.toString());
-//                        System.out.pri/ntln(horario.toString());
-//                        System.out.println(duracion.toString());
+                        System.out.println(dia.toString());
+                        System.out.println(horario.toString());
+                        System.out.println(duracion.toString());
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(dia);
@@ -718,6 +711,8 @@ public class Interfaz {
                     }
 
                     reserva.setDetallesReserva(detalleReservaDto);
+                    
+                    gestorReserva.validarDias(detalleReservaDto, cuatrimestres);
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
@@ -816,7 +811,7 @@ public class Interfaz {
                 //nombreDocente, apellidoDocente, correo, nombreCatedra, cantidadAlumnos
                 AulaDTO aula = (AulaDTO) disponibilidadDeAulas.getAulasDisponibles().keySet().toArray()[idx];
                 reserva.setFechaRegistro(LocalDateTime.now());
-                reserva.setIdBedel(idx); // cambiar id
+                reserva.setIdBedel(idBedel); // cambiar id
 
                 /*
                 idReserva

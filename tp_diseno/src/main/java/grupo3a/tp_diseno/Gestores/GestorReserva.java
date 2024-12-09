@@ -110,7 +110,7 @@ public class GestorReserva {
     }
 
         // solo se usa para reserva esporadica
-    public boolean validarDias(List<DetalleReservaDTO> diasReserva) {
+    private boolean validarDias(List<DetalleReservaDTO> diasReserva) {
         HashSet<LocalDate> fechasUnicas = new HashSet<>();
         
         for (DetalleReservaDTO detalle : diasReserva) {
