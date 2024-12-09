@@ -22,8 +22,29 @@ public class Alerta extends javax.swing.JPanel {
     public void setListener(Listener listener) {
         this.listener = listener;
     }
+    
+    private String[] split(String text, int size){
+        
+        int arraySize = (int) Math.ceil((double) text.length() / size); // Calcula el tamaño del array
+        
+        String[] strs = new String[arraySize];
+        
+        for (int i = 0; i < text.length(); i += size) {
+            int fin = Math.min(i + size, text.length());
+            strs[i / size] = text.substring(i, fin);
+        }
+        return strs;
+    }
 
     public void setText(String text) {
+//        String txt = "<html>";
+//        String[] strs = split(text, 40);
+//        for (int i = 0; i < strs.length; i++) {
+//            txt += strs[i];
+//            if (i != strs.length - 1)
+//                txt += "<br>";
+//        }
+//        lb.setText(txt);
         lb.setText(text);
     }
     

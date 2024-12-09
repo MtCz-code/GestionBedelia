@@ -20,39 +20,39 @@ import java.sql.Timestamp;
  *
  * @author exero
  */
-public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO{
-    
-    private ReservaDAO DAO = ReservaSqlDAO.getInstance();
+public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO {
 
+    private ReservaDAO DAO = ReservaSqlDAO.getInstance();
 
     //singleton
     private static ReservaEsporadicaSqlDAO instance;
-    public static ReservaEsporadicaSqlDAO getInstance(){
-        if(ReservaEsporadicaSqlDAO.instance == null)ReservaEsporadicaSqlDAO.instance =  new ReservaEsporadicaSqlDAO();
+
+    public static ReservaEsporadicaSqlDAO getInstance() {
+        if (ReservaEsporadicaSqlDAO.instance == null) {
+            ReservaEsporadicaSqlDAO.instance = new ReservaEsporadicaSqlDAO();
+        }
         return ReservaEsporadicaSqlDAO.instance;
     }
 
-    
     @Override
-    public Integer crear(ReservaEsporadica reserva) throws DAOException{
-    
+    public Integer crear(ReservaEsporadica reserva) throws DAOException {
+
         String query = "INSERT INTO reserva_esporadica (id_reserva) VALUES (?)";
-        try(Connection conn = DataBaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)){
+        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             conn.setAutoCommit(false);
 
             int idReserva = DAO.crear(reserva);
 
-                stmt.setInt(1,idReserva);
-                stmt.executeUpdate();
-                System.out.println("Reserva insertada exitosamente.");
-                conn.commit();
+            stmt.setInt(1, idReserva);
+            stmt.executeUpdate();
+            System.out.println("Reserva insertada exitosamente.");
+            conn.commit();
             return idReserva;
-        } catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error al agregar la reserva esporadica");
             throw new DAOException("Error al agregar la reserva esporadica: " + e.getMessage());
         }
-        
+
     }
-     
+
 }

@@ -768,7 +768,7 @@ public class Interfaz {
                     baseFrame.setPanel2Up();
                     return;
                 } catch (DAOException e) {
-                    alerta.setText(e.getMessage());
+                    alerta.setText("<html>no se pudo seleccionar el aula<br>Ocurrio un error en la base de datos");
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
@@ -842,8 +842,8 @@ public class Interfaz {
                     regRsvaDatos.resetInterface();
                     regAulaEsporadicaDias.resetInterface();
 
-                } catch (Exception e) { //TODO: hacer todas las validaciones(otros catch)
-                    alerta.setText("no se pudo realizar la reserva");
+                } catch (DAOException e) {
+                    alerta.setText("<html>no se pudo realizar la reserva<br>ocurrio un error en la base de datos");
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
