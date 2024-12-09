@@ -7,11 +7,42 @@ insert into bedel values(2,'MAÑANA',true);
 
 insert into administrador values(3);
 
-insert into cuatrimestre (fecha_inicio_cuatrimestre,fecha_fin_cuatrimestre) values ('2024-03-27','2024-07-06');
-insert into cuatrimestre (fecha_inicio_cuatrimestre,fecha_fin_cuatrimestre) values ('2024-08-06','2024-12-04');
+INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
+VALUES ('2024-02-01', '2024-06-30');
 
-insert into aula_general (tipo,ubicacion,estado,capacidad,piso,tipo_pizarron,ventiladores,aire_acondicionado,habilitado) values ('multimedios','2° piso aula 15',true,50,2,'tiza',true,true,true);
-insert into aula_general (tipo,ubicacion,estado,capacidad,piso,tipo_pizarron,ventiladores,aire_acondicionado,habilitado) values ('laboratorio','1° piso aula 10',true,25,1,'fibron',true,true,true);
+INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
+VALUES ('2024-08-01', '2024-12-31');
 
-insert into aula_laboratorio values (2,15);
-insert into aula_multimedios values (1,true,true,true);
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('GENERAL', 'A1', TRUE, 30, 1, 'TIZA', TRUE, TRUE, TRUE);
+
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('GENERAL', 'A2', TRUE, 30, 1, 'TIZA', FALSE, TRUE, TRUE);
+
+-- Insertar Reserva 1
+INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel)
+VALUES (101, 'Juan', 'Pérez', 'juan.perez@universidad.edu', 10, 'Matemáticas', NOW(), 1);
+
+INSERT INTO reserva_periodica (id_reserva, tipo, dias_semana)
+VALUES (1, 'CUATRIMESTRAL', '["LUNES"]');
+
+INSERT INTO periodo_asignado (id_cuatrimestre, id_reserva_periodica)
+VALUES (1, 1); -- Cuatrimestre 1, Reserva Periódica 1
+
+INSERT INTO detalle_reserva (id_reserva, horario_inicio, fecha, cant_modulos, dia_reserva, id_aula)
+VALUES (1, '09:00:00', '2024-01-10', 2, 'LUNES', 1);
+
+
+-- Insertar Reserva 2
+INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel)
+VALUES (102, 'Ana', 'Gómez', 'ana.gomez@universidad.edu', 20, 'Física', NOW(), 2);
+
+INSERT INTO reserva_periodica (id_reserva, tipo, dias_semana)
+VALUES (2, 'CUATRIMESTRAL', '["LUNES"]');
+
+INSERT INTO periodo_asignado (id_cuatrimestre, id_reserva_periodica)
+VALUES (1, 2); 
+
+INSERT INTO detalle_reserva (id_reserva, horario_inicio, fecha, cant_modulos, dia_reserva, id_aula)
+VALUES (2, '10:30:00', '2024-01-10', 3, 'LUNES', 2);
+

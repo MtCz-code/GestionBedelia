@@ -433,20 +433,20 @@ public class Interfaz {
                         cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                     } else switch (regRsvaSeleccionTipoReserva.getSelected()) {
                         case ANUAL -> {
-                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
+                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
                             cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
                         }
                         case PRIMER_CUATRIMESTRE -> {
-                            gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
+                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
                             cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
                         }
                         case SEGUNDO_CUATRIMESTRE -> {
-                            gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
+                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
                             cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
                         }
                         default -> {
                             //esporadica
-                            gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
                             cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                         }
                     }}
@@ -479,7 +479,7 @@ public class Interfaz {
                     dias.add(DiaSemana.VIERNES);
                 }
 
-                gestorReserva.diasSeleccionados(dias);
+                //gestorReserva.diasSeleccionados(dias);
 
                 regRsvaPeriodicaHorarios.setDiasHabilitados(regRsvaTipoPeriodicaDias.getDiasSeleccionados());
                 cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
@@ -558,7 +558,7 @@ public class Interfaz {
                     detalle.add(tmp);
                 }
 
-                gestorReserva.horariosSeleccionados(detalle);
+                //gestorReserva.horariosSeleccionados(detalle);
                 
                 
                 
@@ -614,7 +614,7 @@ public class Interfaz {
                         detalleReserva.add(tmp);
                     }
 
-                    gestorReserva.seleccionarDiasYHorarios(detalleReserva);
+                   // gestorReserva.seleccionarDiasYHorarios(detalleReserva);
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
@@ -630,7 +630,7 @@ public class Interfaz {
         regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
             @Override
             public void back() {
-                if (gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA) {
+                if (/*gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA*/true) {
                     cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                 } else {
                     cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
@@ -649,7 +649,7 @@ public class Interfaz {
                 try {
                     ReservaDTO reserva = new ReservaDTO(0, nombreDocente, 0, apellidoDocente, correo,
                             0, nombreCatedra, null, cantidadAlumnos, 0, null,
-                            null, true, 0, 0);
+                            null, true, 0, 0, null);
                     DisponibilidadDTO disp = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
 //                    gestorReserva.validarDatos(
 //                            nombreDocente,
@@ -676,8 +676,8 @@ public class Interfaz {
                     Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
-                regRsvaAula.setTable(convertirFormatoAula(aulas));
+                /*AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
+                regRsvaAula.setTable(convertirFormatoAula(aulas));*/
 
                 cardLayout.show(mainPanel, "regRsvaAula");
 
@@ -693,7 +693,7 @@ public class Interfaz {
 
             @Override
             public void next() {
-                gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
+                //gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
 
                 try {
                     // ARREGLAR EL FLUJO DE CREAR RESERVA

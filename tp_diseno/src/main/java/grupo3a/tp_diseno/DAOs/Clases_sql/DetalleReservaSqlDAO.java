@@ -77,7 +77,7 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
                 
                 Time finalDetalle = new Time(inicioDetalles.toLocalTime().plusMinutes(cantModDetalle*30).toNanoOfDay() / 1_000_000);
                 
-                if(inicioDetalles.before(horarioFin) && finalDetalle.after(horarioInicio)){
+                if(inicioDetalles.before(horarioFin) && finalDetalle.after(horarioInicio) && !finalDetalle.equals(horarioInicio)){
                     
                     
                     int idReserva = rs.getInt("id_reserva");
@@ -97,6 +97,10 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             
             
             System.out.println("Busqueda realizada con exito");
+            for(DetalleReserva dr: detallesConSolapamiento){
+                System.out.println("holaaa");
+            }
+            
             return detallesConSolapamiento;
             
             
@@ -104,6 +108,9 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
         } catch (SQLException e) {
             System.out.println("Error al buscar solapamiento" + e.getMessage());
         }
+        
+      
+        
         return null;
     }
 }
