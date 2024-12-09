@@ -32,6 +32,21 @@ public class Reserva {
         this.fechaRegistro=fechaRegistro;
     }
 
+    public Reserva(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, List<DetalleReserva> detallesReserva) {
+        this.idReserva = idReserva;
+        this.nombreDocente = nombreDocente;
+        this.idDocente = idDocente;
+        this.apellidoDocente = apellidoDocente;
+        this.emailDocente = emailDocente;
+        this.idCatedra = idCatedra;
+        this.nombreCatedra = nombreCatedra;
+        this.fechaRegistro = fechaRegistro;
+        this.idBedel = idBedel;
+        this.detallesReserva = detallesReserva;
+    }
+    
+    
+
     public List<DetalleReserva> getDetallesReserva() {
         return detallesReserva;
     }

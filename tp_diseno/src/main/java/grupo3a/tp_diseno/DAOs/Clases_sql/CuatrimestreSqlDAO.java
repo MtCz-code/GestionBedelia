@@ -26,6 +26,14 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
         return CuatrimestreSqlDAO.instance;
     }
     
+    
+    @Override
+    public Cuatrimestre buscarPorId(int id){
+        
+        
+        return null;
+    }
+    
     @Override
     public List<Cuatrimestre> getCuatrimestresActuales(){
         String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre"+

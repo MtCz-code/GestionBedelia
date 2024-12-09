@@ -13,5 +13,6 @@ import java.util.List;
  * @author exero
  */
 public interface CuatrimestreDAO {
-    List<Cuatrimestre> getCuatrimestresActuales();
+    public Cuatrimestre buscarPorId(int id);
+    public List<Cuatrimestre> getCuatrimestresActuales();
 }
