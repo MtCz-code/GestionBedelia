@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,15 +70,17 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             stmt.setDate(1, Date.valueOf(fecha));
             
             ResultSet rs = stmt.executeQuery();
-            Time horarioFin = new Time(horarioInicio.toLocalTime().plusMinutes(30*cantModulos).toNanoOfDay() / 1_000_000);
+            LocalTime horarioInic = horarioInicio.toLocalTime();
+            LocalTime horarioFin = horarioInic.plusMinutes(30*cantModulos);
             while(rs.next()){
                 
-                Time inicioDetalles = rs.getTime("horario_inicio");
+                LocalTime inicioDetalles = rs.getTime("horario_inicio").toLocalTime();
                 int cantModDetalle = rs.getInt("cant_modulos");
                 
-                Time finalDetalle = new Time(inicioDetalles.toLocalTime().plusMinutes(cantModDetalle*30).toNanoOfDay() / 1_000_000);
+                LocalTime finalDetalle = inicioDetalles.plusMinutes(cantModDetalle*30);
                 
-                if(inicioDetalles.before(horarioFin) && finalDetalle.after(horarioInicio) && !finalDetalle.equals(horarioInicio)){
+                
+                if(inicioDetalles.isBefore(horarioFin) && finalDetalle.isAfter(horarioInic) && !finalDetalle.equals(horarioInic)){
                     
                     
                     int idReserva = rs.getInt("id_reserva");
