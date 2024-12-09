@@ -37,7 +37,7 @@ public class AulaMultimediosSqlDAO implements AulaMultimediosDAO{
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setInt(1,capacidad);
             ResultSet rs = stmtBed.executeQuery();
-            if (rs.next()){
+            while (rs.next()){
                 int id = rs.getInt("id_aula");
                 TipoAula tipo_aula = TipoAula.valueOf(rs.getString("tipo"));
                 String ubicacion = rs.getString("ubicacion");

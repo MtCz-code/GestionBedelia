@@ -97,9 +97,7 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             
             
             System.out.println("Busqueda realizada con exito");
-            for(DetalleReserva dr: detallesConSolapamiento){
-                System.out.println("holaaa");
-            }
+           
             
             return detallesConSolapamiento;
             
