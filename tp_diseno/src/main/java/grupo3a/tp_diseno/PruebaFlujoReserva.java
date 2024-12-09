@@ -34,8 +34,8 @@ public class PruebaFlujoReserva {
 
     List<DetalleReservaDTO> dr = Arrays.asList(
             new DetalleReservaDTO(0,
-                    Time.valueOf("09:00:00"), // Horario de inicio
-                    1,
+                    Time.valueOf("08:00:00"), // Horario de inicio
+                    6,
                     LocalDate.of(2024, 1, 10), // Fecha de la reserva// Cantidad de módulos (1 módulo = 30 minutos)
                     DiaSemana.LUNES, // Día de la semana
                     0 // ID del aula (será determinado por disponibilidad)
