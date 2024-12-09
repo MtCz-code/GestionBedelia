@@ -4,8 +4,10 @@
  */
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
+import grupo3a.tp_diseno.DAOs.ReservaDAO;
 import grupo3a.tp_diseno.DAOs.ReservaPeriodicaDAO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.ReservaPeriodica;
 import grupo3a.tp_diseno.database.DataBaseConnection;
 import java.sql.Connection;
@@ -22,6 +24,8 @@ import org.json.JSONArray;
  */
 public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
 
+    private ReservaDAO DAO = ReservaSqlDAO.getInstance();
+
     public ReservaPeriodicaSqlDAO() {
     }
     
@@ -33,63 +37,40 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
     }
     
     @Override
-    public Integer crear(ReservaPeriodica reserva) {
-        String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,?,?)";
-    
+    public Integer crear(ReservaPeriodica reserva) throws DAOException {
+        
+    String query = "INSERT INTO reserva_periodica (id_reserva,tipo,dias_semana) VALUES (?,?,?)";
  
         try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            conn.setAutoCommit(false);
+            
+            int idReserva = DAO.crear(reserva);
+                    
+       
+            stmt.setInt(1,idReserva);
+            stmt.setString(2, reserva.getTipo().toString());
 
-            
-            
-            stmt.setInt(1, reserva.getIdDocente());
-            stmt.setString(2, reserva.getNombreDocente());
-            stmt.setString(3, reserva.getApellidoDocente());
-            stmt.setString(4, reserva.getEmailDocente());
-            stmt.setInt(5, reserva.getIdCatedra());
-            stmt.setString(6, reserva.getNombreCatedra());
-            Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
-            stmt.setTimestamp(7, timestamp);
-            stmt.setInt(8, reserva.getIdBedel());
-            
-            
-            
-            stmt.executeUpdate();
-            
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int idReserva = generatedKeys.getInt(1);
-                    String queryE = "INSERT INTO reserva_periodica (id_reserva,tipo,dias_semana) VALUES (?,?,?)";
-                    try(PreparedStatement stmtPer = conn.prepareStatement(queryE)){
-                        stmtPer.setInt(1,idReserva);
-                        stmtPer.setString(2, reserva.getTipo().toString());
-                        
-                        JSONArray diasSemanaJson = new JSONArray();
-                        for (DiaSemana dia : reserva.getDiasSemana()) {
-                            diasSemanaJson.put(dia.name()); 
-                        }
-                        
-                        stmtPer.setObject(3, diasSemanaJson.toString(), java.sql.Types.OTHER);                        
-                        
-                        stmtPer.executeUpdate();
-                        System.out.println("Reserva periodica asignada con exito.");
-                    } catch(SQLException e){
-                        System.out.println("Error al agregar la reserva periodica"+ e.getMessage());
-                    } 
-                return idReserva;
-                } else {
-                    System.out.println("No se pudo obtener el ID de la reserva.");
-                }
+            JSONArray diasSemanaJson = new JSONArray();
+            for (DiaSemana dia : reserva.getDiasSemana()) {
+                diasSemanaJson.put(dia.name()); 
             }
+            stmt.setObject(3, diasSemanaJson.toString(), java.sql.Types.OTHER);                        
+
+            stmt.executeUpdate();
+                        
+            conn.commit();
+            System.out.println("Reserva insertada exitosamente.");
+
+            return idReserva;
         } catch (SQLException e) {
-            System.out.println("Error al agregar la reserva: " + e.getMessage());
-            return null;
+            System.out.println("Error al agregar la reserva periodica: " + e.getMessage());
         }    
         return null;
     }
     
     @Override
-    public void asociarCuatrimestre(int idReserva, int cuat1, int cuat2){
+    public void asociarCuatrimestre(int idReserva, int cuat1, int cuat2)  throws DAOException{
         
         
         
@@ -120,7 +101,7 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
     }
     
     @Override
-    public void asociarCuatrimestre(int idReserva, int idCuatrimestre) {
+    public void asociarCuatrimestre(int idReserva, int idCuatrimestre)  throws DAOException{
         String queryCuat = "INSERT INTO periodo_asignado (id_cuatrimestre,id_reserva_periodica) VALUES (?,?)";
         try(Connection conn = DataBaseConnection.getConnection();
                 PreparedStatement stmtCuat = conn.prepareStatement(queryCuat)){

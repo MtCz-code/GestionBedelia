@@ -4,7 +4,9 @@
  */
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
+import grupo3a.tp_diseno.DAOs.ReservaDAO;
 import grupo3a.tp_diseno.DAOs.ReservaEsporadicaDAO;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
 import grupo3a.tp_diseno.database.DataBaseConnection;
 import java.sql.Connection;
@@ -19,6 +21,10 @@ import java.sql.Timestamp;
  * @author exero
  */
 public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO{
+    
+    private ReservaDAO DAO = ReservaSqlDAO.getInstance();
+
+
     //singleton
     private static ReservaEsporadicaSqlDAO instance;
     public static ReservaEsporadicaSqlDAO getInstance(){
@@ -28,54 +34,26 @@ public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO{
 
     
     @Override
-    public Integer crear(ReservaEsporadica reserva) {
-        String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,?,?)";
+    public Integer crear(ReservaEsporadica reserva) throws DAOException{
     
- 
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        String query = "INSERT INTO reserva_esporadica (id_reserva) VALUES (?)";
+        try(Connection conn = DataBaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query)){
+            conn.setAutoCommit(false);
 
-            
-            
-            stmt.setInt(1, reserva.getIdDocente());
-            stmt.setString(2, reserva.getNombreDocente());
-            stmt.setString(3, reserva.getApellidoDocente());
-            stmt.setString(4, reserva.getEmailDocente());
-            stmt.setInt(5, reserva.getIdCatedra());
-            stmt.setString(6, reserva.getNombreCatedra());
-            Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
-            stmt.setTimestamp(7, timestamp);
-            stmt.setInt(8, reserva.getIdBedel());
-            
-        
-            stmt.executeUpdate();
-            
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int idReserva = generatedKeys.getInt(1);
-                    String queryE = "INSERT INTO reserva_esporadica (id_reserva) VALUES (?)";
-                    try(PreparedStatement stmtEsp = conn.prepareStatement(queryE)){
-                        stmtEsp.setInt(1,idReserva);
-                        stmtEsp.executeUpdate();
-                        System.out.println("Reserva insertada exitosamente.");
-                    } catch(SQLException e){
-                        System.out.println("Error al agregar la reserva esporadica");
-                    }
-                    
-                return idReserva;
-                } else {
-                    System.out.println("No se pudo obtener el ID de la reserva.");
-                }
-            }
-        
-            
-            
-            
-            
-        } catch (SQLException e) {
-            System.out.println("Error al agregar la reserva: " + e.getMessage());
-            return 0;
-        }    
+            int idReserva = DAO.crear(reserva);
+
+                stmt.setInt(1,idReserva);
+                stmt.executeUpdate();
+                System.out.println("Reserva insertada exitosamente.");
+                conn.commit();
+            return idReserva;
+        } catch(SQLException e){
+            System.out.println("Error al agregar la reserva esporadica");
+        }
+
         return null;
+        
     }
+     
 }
