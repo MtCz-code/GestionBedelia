@@ -35,30 +35,35 @@ public class PruebaFlujoReserva {
      */
     public static void main(String[] args) {
         GestorReserva gestorReserva = GestorReserva.getInstance();
-        List<CuatrimestreDTO> cuatrimestresActuales = null;
+    List<DetalleReservaDTO> dr = Arrays.asList(
+            new DetalleReservaDTO(0,
+                    Time.valueOf("11:00:00"), // Horario de inicio
+                    6,
+                    LocalDate.of(2024, 1, 10), // Fecha de la reserva// Cantidad de módulos (1 módulo = 30 minutos)
+                    DiaSemana.LUNES, // Día de la semana
+                    0 // ID del aula (será determinado por disponibilidad)
+            )
+    );
+
+    // nueva reserva esporadica
+    ReservaDTO nuevaReserva = new ReservaDTO(0, "Exe", 103, "Sandriarda", "kuka@kuk-12.com", 1, "intro al lol",
+            null, 20, 1, dr, true);
+
+ 
+        for(DetalleReservaDTO dr1 : nuevaReserva.getDetallesReserva()){
+            dr1.setIdAula(1); // un aula cualquiera, solo para probar
+        }
         
+        int reservaCreada = 0;
         try {
-            cuatrimestresActuales = gestorReserva.recuperarCuatrimestres();
+            reservaCreada = gestorReserva.crearReserva(nuevaReserva);
         } catch (Exceptions.DAOException ex) {
             Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        List<DiaSemana> diasSemana = Arrays.asList(DiaSemana.LUNES, DiaSemana.MARTES);
-        List<Time> horariosInicio = Arrays.asList(Time.valueOf("09:00:00"), Time.valueOf("09:00:00"));
-        List<Integer> cantModulos = Arrays.asList(2, 3);
-        
-        List<DetalleReservaDTO> dr = gestorReserva.generarDetallesReserva(cuatrimestresActuales, diasSemana, horariosInicio, cantModulos);
-        
-        for(DetalleReservaDTO d : dr){
-            System.out.println("Fecha: " + d.getFecha() + " - Horario Inicio: " + d.getHorarioInicio() + " - CANT MODULOS: " + d.getCantModulos() + " Dia Semana: " + d.getDiaReserva());
-        }
-        
-        try {
-            gestorReserva.validarDias(dr, cuatrimestresActuales);
-        } catch (Exceptions.ValueException ex) {
-            Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        System.out.println("reserva creada con id = " + reservaCreada);
     }
+    
     
     public void pruebaRecuperarCuatrimestreValidarDiasYGenerarDR(){
         
@@ -83,6 +88,7 @@ public class PruebaFlujoReserva {
         
         try {
             gestorReserva.validarDias(dr, cuatrimestresActuales);
+            System.out.println("DIAS VALIDADOS");
         } catch (Exceptions.ValueException ex) {
             Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,19 +152,6 @@ public class PruebaFlujoReserva {
             }
         }
         
-        
-        for(DetalleReservaDTO dr1 : nuevaReserva.getDetallesReserva()){
-            dr1.setIdAula(1);
-        }
-        
-        int reservaCreada = 0;
-        try {
-            reservaCreada = gestorReserva.crearReserva(nuevaReserva);
-        } catch (Exceptions.DAOException ex) {
-            Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        System.out.println("reserva creada con id = " + reservaCreada);
     }
     
     public void pruebaCrearReserva(){

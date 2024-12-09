@@ -44,7 +44,7 @@ public class ReservaSqlDAO implements ReservaDAO{
  
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            conn.setAutoCommit(false);
+            //conn.setAutoCommit(false);
             
             
             stmt.setInt(1, reserva.getIdDocente());
@@ -69,7 +69,7 @@ public class ReservaSqlDAO implements ReservaDAO{
                     DAO.crear(dr);
                 }
             }
-            conn.commit();
+            //conn.commit();
             return idReserva;
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva: " + e.getMessage());
