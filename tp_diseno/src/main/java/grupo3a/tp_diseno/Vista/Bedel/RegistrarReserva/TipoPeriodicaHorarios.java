@@ -1,4 +1,3 @@
-
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
@@ -76,10 +75,10 @@ public class TipoPeriodicaHorarios extends javax.swing.JPanel {
     };
 
     private Listener listener;
-    private LocalTime[] horariosSeleccionados = new LocalTime[] {
+    private LocalTime[] horariosSeleccionados = new LocalTime[]{
         null, null, null, null, null
     };
-    private LocalTime[] duracionesSeleccionadas = new LocalTime[] {
+    private LocalTime[] duracionesSeleccionadas = new LocalTime[]{
         null, null, null, null, null
     };
 
@@ -91,13 +90,28 @@ public class TipoPeriodicaHorarios extends javax.swing.JPanel {
         this.listener = listener;
     }
 
+    public void resetInterface() {
+        horariosSeleccionados[0] = null;
+        horariosSeleccionados[1] = null;
+        horariosSeleccionados[2] = null;
+        horariosSeleccionados[3] = null;
+        horariosSeleccionados[4] = null;
+        duracionesSeleccionadas[0] = null;
+        duracionesSeleccionadas[1] = null;
+        duracionesSeleccionadas[2] = null;
+        duracionesSeleccionadas[3] = null;
+        duracionesSeleccionadas[4] = null;
+        setDiasHabilitados(new boolean[] {true, true, true, true, true});
+        setDiasHabilitados(new boolean[] {false, false, false, false, false});
+    }
+
     public void setDiasHabilitados(boolean[] dias) {
         cbLunesHorario.setEnabled(dias[0]);
         cbMartesHorario.setEnabled(dias[1]);
         cbMiercolesHorario.setEnabled(dias[2]);
         cbJuevesHorario.setEnabled(dias[3]);
         cbViernesHorario.setEnabled(dias[4]);
-        
+
         cbLunesDuracion.setEnabled(false);
         cbMartesDuracion.setEnabled(false);
         cbMiercolesDuracion.setEnabled(false);
@@ -111,89 +125,83 @@ public class TipoPeriodicaHorarios extends javax.swing.JPanel {
             cbLunesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
             cbLunesHorario.setSelectedIndex(0);
             horariosSeleccionados[0] = getTime((String) cbLunesHorario.getSelectedItem());
-            
+
             s = (String) cbLunesHorario.getSelectedItem();
             duraciones = calcularDuraciones(s);
             cbLunesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
             cbLunesDuracion.setEnabled(true);
             duracionesSeleccionadas[0] = getTime((String) cbLunesDuracion.getSelectedItem());
-        }
-        else {
+        } else {
             cbLunesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
             cbLunesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
         }
-        
+
         if (dias[1]) {
             cbMartesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
             cbMartesHorario.setSelectedIndex(0);
             horariosSeleccionados[1] = getTime((String) cbMartesHorario.getSelectedItem());
-            
+
             s = (String) cbMartesHorario.getSelectedItem();
             duraciones = calcularDuraciones(s);
             cbMartesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
             cbMartesDuracion.setEnabled(true);
             duracionesSeleccionadas[1] = getTime((String) cbMartesDuracion.getSelectedItem());
-        }
-        else {
+        } else {
             cbMartesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
             cbMartesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
         }
-        
+
         if (dias[2]) {
             cbMiercolesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
             cbMiercolesHorario.setSelectedIndex(0);
             horariosSeleccionados[2] = getTime((String) cbMiercolesHorario.getSelectedItem());
-            
+
             s = (String) cbMiercolesHorario.getSelectedItem();
             duraciones = calcularDuraciones(s);
             cbMiercolesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
             cbMiercolesDuracion.setEnabled(true);
             duracionesSeleccionadas[2] = getTime((String) cbMiercolesDuracion.getSelectedItem());
-        }
-        else {
+        } else {
             cbMiercolesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
             cbMiercolesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
         }
-        
+
         if (dias[3]) {
             cbJuevesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
             cbJuevesHorario.setSelectedIndex(0);
             horariosSeleccionados[3] = getTime((String) cbJuevesHorario.getSelectedItem());
-            
+
             s = (String) cbJuevesHorario.getSelectedItem();
             duraciones = calcularDuraciones(s);
             cbJuevesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
             cbJuevesDuracion.setEnabled(true);
             duracionesSeleccionadas[3] = getTime((String) cbJuevesDuracion.getSelectedItem());
-        }
-        else {
+        } else {
             cbJuevesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
             cbJuevesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
         }
-        
+
         if (dias[4]) {
             cbViernesHorario.setModel(new DefaultComboBoxModel<>(HORARIOS));
             cbViernesHorario.setSelectedIndex(0);
             horariosSeleccionados[4] = getTime((String) cbViernesHorario.getSelectedItem());
-            
+
             s = (String) cbViernesHorario.getSelectedItem();
             duraciones = calcularDuraciones(s);
             cbViernesDuracion.setModel(new DefaultComboBoxModel<>(duraciones));
             cbViernesDuracion.setEnabled(true);
             duracionesSeleccionadas[4] = getTime((String) cbViernesDuracion.getSelectedItem());
-        }
-        else {
+        } else {
             cbViernesHorario.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
             cbViernesDuracion.setModel(new DefaultComboBoxModel<>(new String[]{"ingrese..."}));
         }
-        
 
     }
 
     public LocalTime[] getHorariosSeleccionados() {
         return horariosSeleccionados;
     }
-    
+
     public LocalTime[] getDuracionesSeleccionadas() {
         return duracionesSeleccionadas;
     }
@@ -214,7 +222,7 @@ public class TipoPeriodicaHorarios extends javax.swing.JPanel {
         }
         return duraciones;
     }
-    
+
     private LocalTime getTime(String s) {
         String[] parts = s.split(":");
         return LocalTime.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
@@ -652,9 +660,10 @@ public class TipoPeriodicaHorarios extends javax.swing.JPanel {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRegistrarActionPerformed
 
-        if (listener != null)
+        if (listener != null) {
             listener.next();
-        
+        }
+
     }// GEN-LAST:event_btnRegistrarActionPerformed
 
     private void cbLunesHorarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cbLunesHorarioActionPerformed

@@ -54,6 +54,7 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             
         } catch (SQLException e) {
             System.out.println("Error al agregar el detalle de la reserva: " + e.getMessage());
+            throw new DAOException("Error al agregar el detalle de la reserva: " + e.getMessage());
         }
     }
 
@@ -108,10 +109,8 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO{
             
         } catch (SQLException e) {
             System.out.println("Error al buscar solapamiento" + e.getMessage());
+            throw new DAOException("Error al buscar solapamiento: " + e.getMessage());
         }
         
-      
-        
-        return null;
     }
 }

@@ -73,9 +73,8 @@ public class ReservaSqlDAO implements ReservaDAO{
             return idReserva;
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva: " + e.getMessage());
+            throw new DAOException("Error al agregar la reserva: " + e.getMessage());
         }   
-        
-        return 0;
     }
     
 }

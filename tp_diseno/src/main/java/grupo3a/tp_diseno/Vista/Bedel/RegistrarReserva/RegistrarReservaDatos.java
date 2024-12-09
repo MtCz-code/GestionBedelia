@@ -16,21 +16,22 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
     /**
      * Creates new form RegistrarAulaAnualDias1
      */
-    
     public interface Listener {
+
         void back();
+
         void next();
     }
-    
+
     private int cantidadAlumnos = -1;
     private TipoAula tipoAula = TipoAula.GENERAL;
     private String nombreCatedra;
     private String nombreDocente;
     private String apellidoDocente;
     private String correo;
-     
+
     private Listener listener;
-    
+
     public RegistrarReservaDatos() {
         initComponents();
     }
@@ -58,12 +59,27 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
     public TipoAula getTipoAula() {
         return tipoAula;
     }
-    
-    
-    
-    
-    public void setListener(Listener listener){
+
+    public void setListener(Listener listener) {
         this.listener = listener;
+    }
+
+    public void resetInterface() {
+        cantidadAlumnos = -1;
+        tipoAula = TipoAula.GENERAL;
+        nombreCatedra = "";
+        nombreDocente = "";
+        apellidoDocente = "";
+        correo = "";
+        tipoAula = TipoAula.GENERAL;
+        
+        
+        tfCantAlumnos.setText("");
+        tfNombreCatedra.setText("");
+        tfNombreDocente.setText("");
+        tfApellidoDocente.setText("");
+        tfCorreo.setText("");
+        cbTipoAula.setSelectedIndex(0);
     }
 
     /**
@@ -478,33 +494,36 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        if(listener != null)
+        if (listener != null) {
             listener.back();
-                
+        }
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
-        try{
+
+        try {
             cantidadAlumnos = Integer.parseInt(tfCantAlumnos.getText());
-        } catch(Exception ignore){}
+        } catch (Exception ignore) {
+            return;
+        }
         correo = tfCorreo.getText();
         nombreCatedra = tfNombreCatedra.getText();
         nombreDocente = tfNombreDocente.getText();
         apellidoDocente = tfApellidoDocente.getText();
         // TODO: verificar usando regex
-        
-        boolean check = nombreDocente != null && 
-                apellidoDocente != null && 
-                nombreCatedra != null &&
-                correo != null &&
-                cantidadAlumnos != -1 &&        
-                nombreDocente.length() > 1 &&
-                apellidoDocente.length() > 1 &&
-                nombreCatedra.length() > 1 &&
-                correo.length() > 1;
-        
-        if(check && listener != null)
+
+        boolean check = nombreDocente != null
+                && apellidoDocente != null
+                && nombreCatedra != null
+                && correo != null
+                && cantidadAlumnos != -1
+                && nombreDocente.length() > 1
+                && apellidoDocente.length() > 1
+                && nombreCatedra.length() > 1
+                && correo.length() > 1;
+
+        if (check && listener != null)
             listener.next();
         else {
             System.out.println("nombreDocente: " + nombreDocente);
@@ -518,40 +537,38 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
 
     private void tfApellidoDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoDocenteActionPerformed
         apellidoDocente = tfApellidoDocente.getText();
-        
+
     }//GEN-LAST:event_tfApellidoDocenteActionPerformed
 
     private void tfNombreDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreDocenteActionPerformed
         nombreDocente = tfNombreDocente.getText();
-        
+
     }//GEN-LAST:event_tfNombreDocenteActionPerformed
 
     private void tfNombreCatedraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNombreCatedraActionPerformed
         nombreCatedra = tfNombreCatedra.getText();
-        
+
     }//GEN-LAST:event_tfNombreCatedraActionPerformed
 
     private void cbTipoAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoAulaActionPerformed
-        
-        if(cbTipoAula.getSelectedIndex() == 0){ //estandar / general
+
+        if (cbTipoAula.getSelectedIndex() == 0) { //estandar / general
             tipoAula = TipoAula.GENERAL;
-        }
-        else if(cbTipoAula.getSelectedIndex() == 1){ //multimedios
+        } else if (cbTipoAula.getSelectedIndex() == 1) { //multimedios
             tipoAula = TipoAula.MULTIMEDIOS;
-        }
-        else if(cbTipoAula.getSelectedIndex() == 2){ //laboratorio
+        } else if (cbTipoAula.getSelectedIndex() == 2) { //laboratorio
             tipoAula = TipoAula.LABORATORIO;
         }
     }//GEN-LAST:event_cbTipoAulaActionPerformed
 
     private void tfCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCorreoActionPerformed
         correo = tfCorreo.getText();
-        
+
     }//GEN-LAST:event_tfCorreoActionPerformed
 
     private void tfCantAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCantAlumnosActionPerformed
         cantidadAlumnos = Integer.parseInt(tfCantAlumnos.getText());
-        
+
     }//GEN-LAST:event_tfCantAlumnosActionPerformed
 
 

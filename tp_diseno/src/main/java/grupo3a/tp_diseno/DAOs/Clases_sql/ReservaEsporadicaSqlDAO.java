@@ -50,9 +50,8 @@ public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO{
             return idReserva;
         } catch(SQLException e){
             System.out.println("Error al agregar la reserva esporadica");
+            throw new DAOException("Error al agregar la reserva esporadica: " + e.getMessage());
         }
-
-        return null;
         
     }
      

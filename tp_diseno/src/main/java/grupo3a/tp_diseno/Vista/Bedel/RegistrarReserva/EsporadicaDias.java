@@ -28,11 +28,8 @@ public class EsporadicaDias extends javax.swing.JPanel {
      * Creates new form RegistrarAulaEsporadicaDias1
      */
     private String[] columnNames = {"Dias", "hora", "duracion", "eliminar"};
-    private Object[][] defaultData = {
-//            {new Date(), "16:30", "00:30"},
-//            {new Date(), "16:30", "00:30"},
-//            {new Date(), "16:30", "00:30"},
-//            {new Date(), "16:30", "00:30"}
+    private Object[][] defaultData = new Object[][] {
+            new Object[]{new Date(), "08:00", "00:30"}
         };
 
     private DefaultTableModel defaultModel = new DefaultTableModel(defaultData, columnNames);
@@ -54,10 +51,6 @@ public class EsporadicaDias extends javax.swing.JPanel {
         table.setCellSelectionEnabled(false);
         
         tableController = new TableController(table);
-//        Object[][] data = new Object[][] {
-//            new Object[]{new Date(), "08:00", "00:30"}
-//        };
-//        tableController.setData(data);
         tableController.setData(defaultData);
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -70,25 +63,24 @@ public class EsporadicaDias extends javax.swing.JPanel {
     public void setListener(Listener listener) {
         this.listener = listener;
     }
+    
+    public void resetInterface() {
+        tableController.setData(defaultData);
+    }
 
     
-    public void setTableData(Object[][] data){
-        data = new Object[][] {
-            new Object[]{new Date(), "08:00", "00:30"}
-        };
-        tableController.setData(data);
-    }
-    
-    // {dia(Date), horario(LocalTime), duracion(LocalTime)
     public Object[][] getData(){
         Object[][] data = tableController.getTableData();
         
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < 2; j++) {
                 String time = (String) data[i][j + 1];
+                System.out.println("data:" + time);
                 LocalTime t = Renderers.getTime(time);
                 data[i][j + 1] = t;
             }
+            
+            System.out.println(((Date)(data[i][0])).toString());
         }
         
         return data;

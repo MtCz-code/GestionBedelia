@@ -1,13 +1,16 @@
 package grupo3a.tp_diseno.Vista;
 
+import grupo3a.tp_diseno.DTOs.AulaDTO;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.EsporadicaDias;
 import grupo3a.tp_diseno.DTOs.BedelDTO;
+import grupo3a.tp_diseno.DTOs.CuatrimestreDTO;
 import grupo3a.tp_diseno.DTOs.DetalleReservaDTO;
 import grupo3a.tp_diseno.DTOs.DisponibilidadDTO;
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.DTOs.UsuarioDTO;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
+import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import grupo3a.tp_diseno.Enumerations.TurnoBedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
@@ -36,11 +39,19 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import javax.swing.JPanel;
+import javax.swing.text.html.HTMLDocument;
 
 public class Interfaz {
 
@@ -86,6 +97,15 @@ public class Interfaz {
     private GestorBedel gestorBedel = GestorBedel.getInstance();
     private GestorLogin gestorLogin = GestorLogin.getInstance();
     private GestorReserva gestorReserva = GestorReserva.getInstance();
+
+    // datos reserva
+    private List<CuatrimestreDTO> cuatrimestres;
+    private CuatrimestreDTO cuat1, cuat2;
+    private ArrayList<DiaSemana> dias;
+    private ArrayList<DetalleReservaDTO> detalleReservaDto;
+    private DisponibilidadDTO disponibilidadDeAulas;
+    private ReservaDTO reserva;
+    private int idBedel;
 
     public Interfaz() {
         baseFrame = new BaseFrame();
@@ -273,7 +293,6 @@ public class Interfaz {
             @Override
             public void habilitar(BedelDTO elegido, Fun fun) {
                 alertaConfirmacion.setText("¿Esta seguro que desea habilitar el usuario " + elegido.getIdLogin() + "?");
-                
 
                 alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
                     @Override
@@ -312,24 +331,24 @@ public class Interfaz {
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
                     alerta.setListener(() -> baseFrame.setPanel1Up());
-                     try {
-                    List<BedelDTO> bedelesBuscados;
-                    if (buscarBedel.getSeleccionado().equals("Apellido")) {
-                        bedelesBuscados = gestorBedel.buscar(buscarBedel.getApellido());
-                    } else {
-                        bedelesBuscados = gestorBedel.buscar(buscarBedel.getTurno());
+                    try {
+                        List<BedelDTO> bedelesBuscados;
+                        if (buscarBedel.getSeleccionado().equals("Apellido")) {
+                            bedelesBuscados = gestorBedel.buscar(buscarBedel.getApellido());
+                        } else {
+                            bedelesBuscados = gestorBedel.buscar(buscarBedel.getTurno());
+                        }
+
+                        showResultadosBusquedaBedel(bedelesBuscados);
+
+                    } catch (NullPointerException | Exceptions.ValueException e) {
+                        alerta.setText(e.getMessage());
+                        alertaCardLayout.show(alertaPanel, "alerta");
+                        baseFrame.setPanel2Up();
+                        alerta.setListener(() -> baseFrame.setPanel1Up());
+                    } catch (Exceptions.DAOException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                    showResultadosBusquedaBedel(bedelesBuscados);
-
-                } catch (NullPointerException | Exceptions.ValueException e) {
-                    alerta.setText(e.getMessage());
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
-                } catch (Exceptions.DAOException ex) {
-                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
-                }
                     return true;
 
                 } catch (ValueException ex) {
@@ -421,35 +440,77 @@ public class Interfaz {
             }
         });
 
-                regRsvaSeleccionTipoReserva.setListener(new SeleccionTipoReserva.Listener(){
-                    @Override
-                    public void back(){
-                        showMenuBedel();
-}
-                    @Override
-                    public void next(){
+        regRsvaSeleccionTipoReserva.setListener(new SeleccionTipoReserva.Listener() {
+            @Override
+            public void back() {
+                showMenuBedel();
+            }
+
+            @Override
+            public void next() {
+                try {
+                    cuatrimestres = gestorReserva.recuperarCuatrimestres();
+                    reserva = new ReservaDTO(-1, null, -1, null, null, -1, null, null, -1, -1, null, false);
+
                     if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
-                      //  gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
+                        reserva.setEsEsporadica(true);
                         cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-                    } else switch (regRsvaSeleccionTipoReserva.getSelected()) {
-                        case ANUAL -> {
-                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_ANUAL);
-                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                    } else {
+                        switch (regRsvaSeleccionTipoReserva.getSelected()) {
+                            case ANUAL -> {
+                                reserva.setEsEsporadica(false);
+                                reserva.setTipo(TipoReservaPeriodica.ANUAL);
+                                cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
+                                cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
+                                if (cuat1 == null || cuat2 == null) {
+                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                }
+                                reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
+                                reserva.setIdCuatrimestre2(cuat2.getIdCuatrimestre());
+                                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                            }
+                            case PRIMER_CUATRIMESTRE -> {
+                                reserva.setEsEsporadica(false);
+                                reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
+                                cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
+                                if (cuat1 == null) {
+                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                }
+                                reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
+                                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                            }
+                            case SEGUNDO_CUATRIMESTRE -> {
+                                reserva.setEsEsporadica(false);
+                                reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
+                                cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
+                                if (cuat2 == null) {
+                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                }
+                                reserva.setIdCuatrimestre1(cuat2.getIdCuatrimestre());    //TODO: check
+                                cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
+                            }
+                            default -> {
+                                //esporadica
+                                reserva.setEsEsporadica(true);
+                                cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                            }
                         }
-                        case PRIMER_CUATRIMESTRE -> {
-                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_PRIMER_CUATRIMESTRE);
-                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-                        }
-                        case SEGUNDO_CUATRIMESTRE -> {
-                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_SEGUNDO_CUATRIMESTRE);
-                            cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
-                        }
-                        default -> {
-                            //esporadica
-                            //gestorReserva.tipoReserva(GestorReserva.RESERVA_ESPORADICA);
-                            cardLayout.show(mainPanel, "regAulaEsporadicaDias");
-                        }
-                    }}
+                    }
+                } catch (DAOException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                } catch (Exceptions.UIException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                }
+
+            }
         });
 
         // periodica seleccionar dias
@@ -461,7 +522,7 @@ public class Interfaz {
 
             @Override
             public void next() {
-                ArrayList<DiaSemana> dias = new ArrayList<>(0);
+                dias = new ArrayList<>(0);
 
                 if (regRsvaTipoPeriodicaDias.getDiasSeleccionados()[0]) {
                     dias.add(DiaSemana.LUNES);
@@ -480,8 +541,8 @@ public class Interfaz {
                 }
 
                 //gestorReserva.diasSeleccionados(dias);
-
                 regRsvaPeriodicaHorarios.setDiasHabilitados(regRsvaTipoPeriodicaDias.getDiasSeleccionados());
+                reserva.setDiasSemana(dias);
                 cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
             }
         });
@@ -496,7 +557,7 @@ public class Interfaz {
             @Override
             public void next() {
 
-                ArrayList<DetalleReservaDTO> detalle = new ArrayList<>();
+                ArrayList<DetalleReservaDTO> detallesDias = new ArrayList<>();
 
                 LocalTime[] horarios = regRsvaPeriodicaHorarios.getHorariosSeleccionados();
                 LocalTime[] duraciones = regRsvaPeriodicaHorarios.getDuracionesSeleccionadas();
@@ -511,7 +572,7 @@ public class Interfaz {
 
                     int cantModulos = (minutosCompletos / 30);
                     DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detalle.add(tmp);
+                    detallesDias.add(tmp);
                 }
                 if (horarios[1] != null) {
                     DiaSemana ds = DiaSemana.MARTES;
@@ -522,7 +583,7 @@ public class Interfaz {
 
                     int cantModulos = (minutosCompletos / 30);
                     DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detalle.add(tmp);
+                    detallesDias.add(tmp);
                 }
                 if (horarios[2] != null) {
                     DiaSemana ds = DiaSemana.MIERCOLES;
@@ -533,7 +594,7 @@ public class Interfaz {
 
                     int cantModulos = (minutosCompletos / 30);
                     DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detalle.add(tmp);
+                    detallesDias.add(tmp);
                 }
                 if (horarios[3] != null) {
                     DiaSemana ds = DiaSemana.JUEVES;
@@ -544,7 +605,7 @@ public class Interfaz {
 
                     int cantModulos = (minutosCompletos / 30);
                     DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detalle.add(tmp);
+                    detallesDias.add(tmp);
                 }
                 if (horarios[4] != null) {
                     DiaSemana ds = DiaSemana.VIERNES;
@@ -555,13 +616,26 @@ public class Interfaz {
 
                     int cantModulos = (minutosCompletos / 30);
                     DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detalle.add(tmp);
+                    detallesDias.add(tmp);
                 }
 
-                //gestorReserva.horariosSeleccionados(detalle);
-                
-                
-                
+                CuatrimestreDTO cuat;
+
+                detalleReservaDto = new ArrayList<>();
+                for (int i = 0; i < detallesDias.size(); i++) {
+                    DetalleReservaDTO detalleDeDia = detallesDias.get(i);
+
+                    if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
+                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
+                    } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
+                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
+                    } else {
+                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
+                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
+                    }
+
+                }
+                reserva.setDetallesReserva(detalleReservaDto);
                 cardLayout.show(mainPanel, "regRsvaDatos");
 
             }
@@ -578,13 +652,25 @@ public class Interfaz {
             public void next() {
 
                 Object[][] datos = regAulaEsporadicaDias.getData();
-                ArrayList<DetalleReservaDTO> detalleReserva = new ArrayList<>();
+                detalleReservaDto = new ArrayList<>();
+                for (int i = 0; i < datos.length; i++) {
+                    Object[] row = datos[i];
+                    Date d = (Date) row[0];
+//                    String h = (String) row[1];
+//                    String a = (String) row[2];
+                    System.out.println("date: " + d);
+//                    System.out.println("h: " + h);
+//                    System.out.println("d: " + a);
+                }
 
                 try {
                     for (int i = 0; i < datos.length; i++) {
                         Date dia = (Date) datos[i][0];
                         LocalTime horario = (LocalTime) datos[i][1];
                         LocalTime duracion = (LocalTime) datos[i][2];
+//                        System.out.println(dia.toString());
+//                        System.out.pri/ntln(horario.toString());
+//                        System.out.println(duracion.toString());
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(dia);
@@ -592,34 +678,52 @@ public class Interfaz {
                         DiaSemana ds = DiaSemana.LUNES;
                         int dow = calendar.get(Calendar.DAY_OF_WEEK);
 
-                        if (dow == 1) {
+//                        1: Domingo (Calendar.SUNDAY)
+//                        2: Lunes (Calendar.MONDAY)
+//                        3: Martes (Calendar.TUESDAY)
+//                        4: Miércoles (Calendar.WEDNESDAY)
+//                        5: Jueves (Calendar.THURSDAY)
+//                        6: Viernes (Calendar.FRIDAY)
+//                        7: Sábado (Calendar.SATURDAY)
+                        if (dow == 2) {
                             ds = DiaSemana.LUNES;
-                        } else if (dow == 2) {
-                            ds = DiaSemana.MARTES;
                         } else if (dow == 3) {
-                            ds = DiaSemana.MIERCOLES;
-                        } else if (dow == 4) {
-                            ds = DiaSemana.JUEVES;
-                        } else if (dow == 5) {
                             ds = DiaSemana.MARTES;
+                        } else if (dow == 4) {
+                            ds = DiaSemana.MIERCOLES;
+                        } else if (dow == 5) {
+                            ds = DiaSemana.JUEVES;
+                        } else if (dow == 6) {
+                            ds = DiaSemana.VIERNES;
                         } else {
                             throw new Exceptions.ValueException("no se puede registar una reserva un dia sabado/domingo");
                         }
+                        System.out.println(ds.toString());
                         Time horarioInicio = Time.valueOf(horario);
                         Time time = Time.valueOf(duracion);
                         int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                         int cantModulos = (minutosCompletos / 30);
-                        DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                        detalleReserva.add(tmp);
+                        /*
+                            idReserva
+                            horarioInicio
+                            cantModulos
+                            fecha
+                            diaReserva
+                            idAula
+                         */
+                        LocalDate localDate = dia.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, localDate, ds, -1);
+                        detalleReservaDto.add(tmp);
                     }
 
-                   // gestorReserva.seleccionarDiasYHorarios(detalleReserva);
+                    reserva.setDetallesReserva(detalleReservaDto);
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
+                    return;
                 }
 
                 cardLayout.show(mainPanel, "regRsvaDatos");
@@ -647,38 +751,35 @@ public class Interfaz {
                 TipoAula tipoAula = regRsvaDatos.getTipoAula();
 
                 try {
-                    ReservaDTO reserva = new ReservaDTO(0, nombreDocente, 0, apellidoDocente, correo,
-                            0, nombreCatedra, null, cantidadAlumnos, 0, null,
-                            null, true, 0, 0, null);
-                    DisponibilidadDTO disp = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
-//                    gestorReserva.validarDatos(
-//                            nombreDocente,
-//                            apellidoDocente,
-//                            nombreCatedra,
-//                            correo,
-//                            cantidadAlumnos,
-//                            tipoAula
-//                    );
+                    reserva.setNombreDocente(nombreDocente);
+                    reserva.setApellidoDocente(apellidoDocente);
+                    reserva.setNombreCatedra(nombreCatedra);
+                    reserva.setEmailDocente(correo);
+                    reserva.setCantidadAlumnos(cantidadAlumnos);
+
+                    disponibilidadDeAulas = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
+                    regRsvaAula.setTable(convertirFormatoAula(disponibilidadDeAulas));
+
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
                     return;
-                } catch (Exceptions.NoExisteAulaException ex) {
-                    // MANEJAR ESTA EXCEPION NUEVA 
-                    
-                    // ----0
-                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DAOException ex) {
-                    
-                    // MANEJAR EXCEPCION XD
-                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exceptions.NoExisteAulaException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                } catch (DAOException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    // deberia volver al menu?
+                    return;
                 }
-
-                /*AulaGeneral[] aulas = gestorReserva.getAulasDisponibles();
-                regRsvaAula.setTable(convertirFormatoAula(aulas));*/
-
                 cardLayout.show(mainPanel, "regRsvaAula");
 
             }
@@ -693,15 +794,45 @@ public class Interfaz {
 
             @Override
             public void next() {
-                //gestorReserva.aulaSeleccionada(regRsvaAula.getSelectedElementIndex());
+                int idx = regRsvaAula.getSelectedElementIndex();
+
+                /*  idReserva           -
+                    nombreDocente       *
+                    idDocente           ?
+                    apellidoDocente     *
+                    emailDocente        *
+                    idCatedra           ?
+                    nombreCatedra       *
+                    fechaRegistro       now()
+                    cantidadAlumnos     *
+                    idBedel             0
+                    tipo                0
+                    diasSemana          0
+                    esEsporadica        0
+                    idCuatrimestre1     0
+                    idCuatrimestre2     0
+                    detallesReserva     0
+                 */
+                //nombreDocente, apellidoDocente, correo, nombreCatedra, cantidadAlumnos
+                AulaDTO aula = (AulaDTO) disponibilidadDeAulas.getAulasDisponibles().keySet().toArray()[idx];
+                reserva.setFechaRegistro(LocalDateTime.now());
+                reserva.setIdBedel(idx); // cambiar id
+
+                /*
+                idReserva
+                horarioInicio
+                cantModulos
+                fecha
+                diaReserva
+                idAula
+                 */
+                for (int i = 0; i < detalleReservaDto.size(); i++) {
+                    detalleReservaDto.get(i).setIdAula(aula.getIdAula());
+                }
 
                 try {
-                    // ARREGLAR EL FLUJO DE CREAR RESERVA
-                    ReservaDTO rdto = new ReservaDTO(0,null,0,null,null, 0, null, null, 0, 0, null, null, false, 0, 0, null);
+                    gestorReserva.crearReserva(reserva);
 
-                    gestorReserva.crearReserva(rdto);
-
-                    System.err.println("reservado");
                     alerta.setText("reserva realizada con exito");
                     alerta.setListener(() -> {
                         showMenuBedel();
@@ -709,6 +840,12 @@ public class Interfaz {
                     });
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();
+
+                    regRsvaSeleccionTipoReserva.resetInterface();
+                    regRsvaTipoPeriodicaDias.resetInterface();
+                    regRsvaPeriodicaHorarios.resetInterface();
+                    regRsvaDatos.resetInterface();
+                    regAulaEsporadicaDias.resetInterface();
 
                 } catch (Exception e) { //TODO: hacer todas las validaciones(otros catch)
                     alerta.setText("no se pudo realizar la reserva");
@@ -757,12 +894,12 @@ public class Interfaz {
 
             @Override
             public void listarReservasParaUnCurso() {
-                
+
             }
 
             @Override
             public void listarReservasParaUnDia() {
-                
+
             }
         });
         cardLayout.show(mainPanel, "menuBedel");
@@ -773,29 +910,135 @@ public class Interfaz {
         cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
     }
 
-    private String[][] convertirFormatoAula(AulaGeneral[] aulas) {
-        String[][] str = new String[aulas.length][];
+    private String[][] convertirFormatoAula(DisponibilidadDTO disp) {
+        HashMap<AulaDTO, Integer> aulasDisponibles = disp.getAulasDisponibles();
 
-        for (int i = 0; i < aulas.length; i++) {
+        String[][] str = new String[aulasDisponibles.size()][];
+
+        Set<AulaDTO> aulas = aulasDisponibles.keySet();
+
+        Iterator<AulaDTO> it = aulas.iterator();
+        int i = 0;
+        while (it.hasNext()) {
             // TODO: sacar tipo (solo se debe mostrar la ubicacion creo, verificar) 
+            AulaDTO auladto = it.next();
+            String ubicacion = auladto.getUbicacion();
+            String capacidad = auladto.getCapacidad() + " personas";
 
-            String ubicacion = aulas[i].getTipo().toString() + " " + aulas[i].getUbicacion();
-            String capacidad = aulas[i].getCapacidad() + "alumnos";
-            String caracteristicas = "pizarron: " + aulas[i].getTipoDePizarron().toString();
-
-            // TODO: agregar ventiladores y eso
-            if (aulas[i].getTipo() == TipoAula.GENERAL) {
-                // TODO
-            } else if (aulas[i].getTipo() == TipoAula.LABORATORIO) {
-                caracteristicas += " " + ((AulaLaboratorio) aulas[i]).getCantidadDePCs();
-            } else if (aulas[i].getTipo() == TipoAula.MULTIMEDIOS) {
-                // TODO
+            List<String> caracteristics = new ArrayList<>();
+            if (auladto.isAireAcondicionado()) {
+                caracteristics.add("aire acondicionado");
+            }
+            if (auladto.isCanon()) {
+                caracteristics.add("cañon");
+            }
+            if (auladto.isComputadora()) {
+                caracteristics.add("computadoras");
+            }
+            if (auladto.isTelevisor()) {
+                caracteristics.add("televisor");
+            }
+            if (auladto.isVentiladores()) {
+                caracteristics.add("ventiladores");
+            }
+            String caracteristicas = "";
+            for (int j = 0; j < caracteristics.size(); j++) {
+                caracteristicas += caracteristics.get(j);
+                if (j != caracteristics.size() - 1) {
+                    caracteristicas += " / ";
+                }
             }
 
+//            String ubicacion = aulas[i].getTipo().toString() + " " + aulas[i].getUbicacion();
+//            String capacidad = aulas[i].getCapacidad() + "alumnos";
+//            String caracteristicas = "pizarron: " + aulas[i].getTipoDePizarron().toString();
+            // TODO: agregar ventiladores y eso
+//            if (aulas[i].getTipo() == TipoAula.GENERAL) {
+            // TODO
+//            } else if (aulas[i].getTipo() == TipoAula.LABORATORIO) {
+//                caracteristicas += " " + ((AulaLaboratorio) aulas[i]).getCantidadDePCs();
+//            } else if (aulas[i].getTipo() == TipoAula.MULTIMEDIOS) {
+            // TODO
+//            }
             str[i] = new String[]{ubicacion, capacidad, caracteristicas};
-
+            i++;
         }
         return str;
+    }
+
+    private CuatrimestreDTO obtenerCuatrimestreActual(List<CuatrimestreDTO> cuats, int numofcuat) {
+        if (cuats == null || cuats.size() == 0) {
+            return null;
+        }
+        int yearNow = LocalDate.now().getYear();
+
+        for (int i = 0; i < cuats.size(); i++) {
+            CuatrimestreDTO cuat = cuats.get(i);
+            // buscar en cuatrimestres de este año
+            if (cuat.getFechaInicio().getYear() == yearNow) {
+                if (cuat.getFechaInicio().getMonthValue() < 6 && numofcuat == 1) {
+                    return cuat;
+                } else if (cuat.getFechaInicio().getMonthValue() >= 6 && numofcuat == 2) {
+                    return cuat;
+                }
+            }
+        }
+        return null;
+    }
+
+    private List<DetalleReservaDTO> obtenerDiasCuatrimestre(CuatrimestreDTO cuat, DetalleReservaDTO detalleDeDia) {
+        LocalDate fin = cuat.getFechaFin();
+
+        LocalDate iterator = cuat.getFechaFin();
+        DayOfWeek dow = diaSemana2DawOfWeek(detalleDeDia.getDiaReserva());
+        System.out.println(dow.toString());
+        while (iterator.getDayOfWeek() != diaSemana2DawOfWeek(detalleDeDia.getDiaReserva())) {
+            iterator = iterator.plusDays(1);
+            System.out.println(iterator.toString());
+        }
+
+        List<DetalleReservaDTO> detalles = new ArrayList<>();
+
+        while (iterator.isBefore(fin) || iterator.equals(fin)) {
+            System.out.println(iterator.toString());
+            /*
+            idReserva
+            horarioInicio
+            cantModulos
+            fecha
+            diaReserva
+            idAula
+             */
+            DetalleReservaDTO detalle = new DetalleReservaDTO(
+                    -1,
+                    detalleDeDia.getHorarioInicio(),
+                    detalleDeDia.getCantModulos(),
+                    iterator,
+                    detalleDeDia.getDiaReserva(),
+                    detalleDeDia.getIdAula()
+            );
+            detalles.add(detalle);
+            iterator = iterator.plusDays(7);
+
+        }
+
+        return detalles;
+    }
+
+    private DayOfWeek diaSemana2DawOfWeek(DiaSemana d) {
+        if (d == DiaSemana.LUNES) {
+            return DayOfWeek.MONDAY;
+        } else if (d == DiaSemana.MARTES) {
+            return DayOfWeek.THURSDAY;
+        } else if (d == DiaSemana.MIERCOLES) {
+            return DayOfWeek.WEDNESDAY;
+        } else if (d == DiaSemana.JUEVES) {
+            return DayOfWeek.TUESDAY;
+        } else if (d == DiaSemana.VIERNES) {
+            return DayOfWeek.FRIDAY;
+        } else {
+            return null;
+        }
     }
 
 }

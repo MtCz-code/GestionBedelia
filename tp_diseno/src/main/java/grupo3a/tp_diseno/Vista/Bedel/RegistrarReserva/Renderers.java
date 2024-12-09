@@ -137,12 +137,12 @@ public class Renderers {
 
             @Override
             public void horarioChange(int row, String time) {
-                System.out.println("updateData(" + row + ", 2): "  + time);
                 Object[][] data = getTableData();
                 data[row][1] = time;
                 data[row][2] = DURACIONES[0];
                 updateData(data);
-//                updateData(null);
+                
+                printData();
 
             }
 
@@ -266,6 +266,19 @@ public class Renderers {
             }
             tableData[data.length] = new Object[]{null, "", "", ""};
             return tableData;
+        }
+        
+        private void printData() {
+            Object[][] td = getTableData();
+            for (int i = 0; i < td.length; i++) {
+                Object[] row = td[i];
+                Date d = (Date) row[0];
+                String h = (String) row[1];
+                String a = (String) row[2];
+                System.out.println("date: " + d);
+                System.out.println("h: " + h);
+                System.out.println("d: " + a);
+            }
         }
 
     }

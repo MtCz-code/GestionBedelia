@@ -91,10 +91,10 @@ public class GestorAula {
             listaDRSolapados.add(detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
         }
 
-        
-        for(DetalleReserva dr : listaDRSolapados.get(0)){
-            System.out.println();
-        };
+        // rompe todo cuando no hay aulas
+//        for(DetalleReserva dr : listaDRSolapados.get(0)){
+//            System.out.println();
+//        };
         
         
         // Filtrar por criterio (aulas sin solapamiento o con menor solapamiento)

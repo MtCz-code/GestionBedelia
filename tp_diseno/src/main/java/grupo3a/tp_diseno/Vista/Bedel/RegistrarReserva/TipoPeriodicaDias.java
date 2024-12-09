@@ -42,6 +42,19 @@ public class TipoPeriodicaDias extends javax.swing.JPanel {
     public void setListener(Listener listener){
         this.listener = listener;
     }
+    
+    public void resetInterface() {
+        diasSeleccionados[0] = false;
+        diasSeleccionados[1] = false;
+        diasSeleccionados[2] = false;
+        diasSeleccionados[3] = false;
+        diasSeleccionados[4] = false;
+        rbtnLunes.setSelected(false);
+        rbtnMartes.setSelected(false);
+        rbtnMiercoles.setSelected(false);
+        rbtnJueves.setSelected(false);
+        rbtnViernes.setSelected(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

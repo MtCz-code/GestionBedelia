@@ -57,7 +57,12 @@ public class ReservaDTO {
     
 
     //CONSTRUCTOR PERIODICA
-    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2, List<DetalleReservaDTO> detallesReserva) {
+    public ReservaDTO(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, 
+                    String emailDocente, int idCatedra, String nombreCatedra, 
+                    LocalDateTime fechaRegistro, int cantidadAlumnos, int idBedel, 
+                    TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, 
+                    boolean esEsporadica, int idCuatrimestre1, int idCuatrimestre2, 
+                    List<DetalleReservaDTO> detallesReserva) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
         this.idDocente = idDocente;

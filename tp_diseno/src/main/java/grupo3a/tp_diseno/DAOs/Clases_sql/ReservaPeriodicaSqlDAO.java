@@ -65,8 +65,8 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
             return idReserva;
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva periodica: " + e.getMessage());
+            throw new DAOException("Error al agregar la reserva periodica: " + e.getMessage());
         }    
-        return null;
     }
     
     @Override
@@ -89,12 +89,14 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
                     stmtCuat2.executeUpdate();
                     System.out.println("Periodo 2 asignado con exito.");
                 } catch(SQLException e){
-                    System.out.println("Error al asignar el segundo periodo" + e.getMessage());
+                    System.out.println("Error al asignar el segundo periodo: " + e.getMessage());
+                    throw new DAOException("error no se pudo asignar el segundo periodo: " + e.getMessage());
                 }
             }
 
         }catch(SQLException e){
-            System.out.println("Error al asignar el periodo a la reserva." + e.getMessage());
+            System.out.println("Error al asignar el periodo a la reserva: " + e.getMessage());
+            throw new DAOException("Error al asignar el periodo a la reserva: " + e.getMessage());
 
         }
         
@@ -110,8 +112,8 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
             stmtCuat.executeUpdate();
             System.out.println("Periodo asignado con exito.");
         }catch(SQLException e){
-            System.out.println("Error al asignar el periodo a la reserva." + e.getMessage());
-
+            System.out.println("Error al asignar el periodo a la reserva: " + e.getMessage());
+            throw new DAOException("Error al asignar el periodo a la reserva: " + e.getMessage());
         }
     }
     
