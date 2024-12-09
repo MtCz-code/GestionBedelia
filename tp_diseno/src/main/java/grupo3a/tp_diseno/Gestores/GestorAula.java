@@ -58,6 +58,7 @@ public class GestorAula {
         // Obtener aulas elegibles según el tipo y capacidad
         if (tipoAula == TipoAula.GENERAL) {
             List<AulaGeneral> aulas = aulaGeneralDAO.getByCapacidad(capacidad);
+            
             for (AulaGeneral a : aulas) {
                 listaAulas.add(convertirADTO(a));
             }
@@ -78,6 +79,11 @@ public class GestorAula {
         if (listaAulas.isEmpty()) {
             throw new NoExisteAulaException("No existen aulas con la capacidad de alumnos requerida");
         }
+        
+        System.out.println("Aulas disponibles:");
+            for(AulaDTO a : listaAulas){
+                System.out.println(a.getUbicacion());
+            }
 
         // Obtener las reservas existentes que se solapan con los horarios y fechas de la nueva reserva
         List<List<DetalleReserva>> listaDRSolapados = new ArrayList<>();
@@ -85,6 +91,10 @@ public class GestorAula {
             listaDRSolapados.add(detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
         }
 
+        
+        for(DetalleReserva dr : listaDRSolapados.get(0)){
+            System.out.println();
+        };
         
         
         // Filtrar por criterio (aulas sin solapamiento o con menor solapamiento)

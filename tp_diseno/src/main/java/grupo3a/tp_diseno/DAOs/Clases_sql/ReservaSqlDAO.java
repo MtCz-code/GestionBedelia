@@ -32,7 +32,7 @@ public class ReservaSqlDAO implements ReservaDAO{
     @Override
     public Integer crear(Reserva reserva) throws DAOException {
         
-        String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,?,?)";
+        String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,NOW(),?)";
     
  
         try (Connection conn = DataBaseConnection.getConnection();
@@ -46,9 +46,9 @@ public class ReservaSqlDAO implements ReservaDAO{
             stmt.setString(4, reserva.getEmailDocente());
             stmt.setInt(5, reserva.getIdCatedra());
             stmt.setString(6, reserva.getNombreCatedra());
-            Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
-            stmt.setTimestamp(7, timestamp);
-            stmt.setInt(8, reserva.getIdBedel());
+            //Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
+            //stmt.setTimestamp(7, timestamp);
+            stmt.setInt(7, reserva.getIdBedel());
             
         
             stmt.executeUpdate();

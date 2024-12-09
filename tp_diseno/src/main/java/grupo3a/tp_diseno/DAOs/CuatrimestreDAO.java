@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Cuatrimestre;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
  */
 public interface CuatrimestreDAO {
     public Cuatrimestre buscarPorId(int id);
-    public List<Cuatrimestre> getCuatrimestresActuales();
+    public List<Cuatrimestre> getCuatrimestresActuales() throws DAOException;
 }

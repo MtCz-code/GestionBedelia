@@ -2,6 +2,7 @@
 package grupo3a.tp_diseno.DAOs.Clases_sql;
 
 import grupo3a.tp_diseno.DAOs.CuatrimestreDAO;
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Cuatrimestre;
 import grupo3a.tp_diseno.database.DataBaseConnection;
 import java.sql.Connection;
@@ -35,8 +36,8 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
     }
     
     @Override
-    public List<Cuatrimestre> getCuatrimestresActuales(){
-        String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre"+
+    public List<Cuatrimestre> getCuatrimestresActuales() throws DAOException{
+        String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre "+
                 "WHERE EXTRACT(YEAR FROM fecha_inicio_cuatrimestre) = EXTRACT(YEAR FROM CURRENT_DATE) " +
                 "OR EXTRACT(YEAR FROM fecha_fin_cuatrimestre) = EXTRACT(YEAR FROM CURRENT_DATE);";
         List<Cuatrimestre> cuatrimestres = new ArrayList<>();
@@ -46,8 +47,8 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             
             while(rs.next()){
                 int id = rs.getInt("id_cuatrimestre");
-                Date fechaIni = rs.getDate("fecha_inicio_cuatrimesttre");
-                Date fechaF = rs.getDate("fecha_fin_cuatrimesttre");
+                Date fechaIni = rs.getDate("fecha_inicio_cuatrimestre");
+                Date fechaF = rs.getDate("fecha_fin_cuatrimestre");
                 
                 LocalDate fechaInicio = fechaIni.toLocalDate();
                 LocalDate fechaFin = fechaF.toLocalDate();
@@ -57,7 +58,8 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             }            
             
         } catch (SQLException ex) {
-            System.out.println("Error al listar los cuatrimestres. Se devolvera lista vacia.");
+            throw new DAOException(ex.getMessage());
+            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return cuatrimestres;

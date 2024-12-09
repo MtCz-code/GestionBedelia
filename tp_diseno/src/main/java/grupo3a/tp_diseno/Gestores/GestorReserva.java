@@ -85,7 +85,7 @@ public class GestorReserva {
     
     
     // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva, ArrayList<CuatrimestreDTO> cuatrimestres) throws ValueException {
+    public boolean validarDias(List<DetalleReservaDTO> diasReserva, List<CuatrimestreDTO> cuatrimestres) throws ValueException {
         // Validar si los días de las reservas están dentro de algún cuatrimestre
         for (DetalleReservaDTO detalle : diasReserva) {
             boolean dentroDeCuatrimestre = false;
@@ -110,7 +110,7 @@ public class GestorReserva {
     }
 
         // solo se usa para reserva esporadica
-    public boolean validarDias(ArrayList<DetalleReservaDTO> diasReserva) {
+    public boolean validarDias(List<DetalleReservaDTO> diasReserva) {
         HashSet<LocalDate> fechasUnicas = new HashSet<>();
         
         for (DetalleReservaDTO detalle : diasReserva) {
@@ -120,6 +120,38 @@ public class GestorReserva {
             }
         }
         return true;
+    }
+    
+    public List<DetalleReservaDTO> generarDetallesReserva(List<CuatrimestreDTO> cuatrimestres, List<DiaSemana> diasSemana, List<Time> horariosInicio, List<Integer> cantModulos) {
+
+        List<DetalleReservaDTO> detallesReserva = new ArrayList<>();
+
+        for (CuatrimestreDTO cuatrimestre : cuatrimestres) {
+            LocalDate inicio = cuatrimestre.getFechaInicio();
+            LocalDate fin = cuatrimestre.getFechaFin();
+
+            // Iterar por los días de la semana seleccionados
+            for (int i = 0; i < diasSemana.size(); i++) {
+                DiaSemana diaSeleccionado = diasSemana.get(i);
+                Time horarioInicio = horariosInicio.get(i);
+                int modulos = cantModulos.get(i);
+
+                // Obtener la primera ocurrencia del día seleccionado dentro del cuatrimestre
+                LocalDate primeraFecha = obtenerPrimeraFecha(inicio, diaSeleccionado);
+
+                // Generar todas las fechas del día seleccionado dentro del rango del cuatrimestre
+                for (LocalDate fecha = primeraFecha; 
+                     !fecha.isAfter(fin); 
+                     fecha = fecha.plusWeeks(1)) {
+
+                    DetalleReservaDTO detalle = new DetalleReservaDTO(0, horarioInicio, modulos, fecha, diaSeleccionado, 0);
+
+                    detallesReserva.add(detalle);
+                }
+            }
+        }
+
+        return detallesReserva;
     }
 
 
@@ -160,37 +192,7 @@ public class GestorReserva {
         return id;
     }
     
-    public List<DetalleReservaDTO> generarDetallesReserva(List<CuatrimestreDTO> cuatrimestres, List<DiaSemana> diasSemana, List<Time> horariosInicio, List<Integer> cantModulos) {
-
-        List<DetalleReservaDTO> detallesReserva = new ArrayList<>();
-
-        for (CuatrimestreDTO cuatrimestre : cuatrimestres) {
-            LocalDate inicio = cuatrimestre.getFechaInicio();
-            LocalDate fin = cuatrimestre.getFechaFin();
-
-            // Iterar por los días de la semana seleccionados
-            for (int i = 0; i < diasSemana.size(); i++) {
-                DiaSemana diaSeleccionado = diasSemana.get(i);
-                Time horarioInicio = horariosInicio.get(i);
-                int modulos = cantModulos.get(i);
-
-                // Obtener la primera ocurrencia del día seleccionado dentro del cuatrimestre
-                LocalDate primeraFecha = obtenerPrimeraFecha(inicio, diaSeleccionado);
-
-                // Generar todas las fechas del día seleccionado dentro del rango del cuatrimestre
-                for (LocalDate fecha = primeraFecha; 
-                     !fecha.isAfter(fin); 
-                     fecha = fecha.plusWeeks(1)) {
-
-                    DetalleReservaDTO detalle = new DetalleReservaDTO(0, horarioInicio, modulos, fecha, diaSeleccionado, 0);
-
-                    detallesReserva.add(detalle);
-                }
-            }
-        }
-
-        return detallesReserva;
-    }
+    
 
     private LocalDate obtenerPrimeraFecha(LocalDate inicio, DiaSemana diaSeleccionado) {
         DayOfWeek diaJava = convertirDiaSemana(diaSeleccionado);
