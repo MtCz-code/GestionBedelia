@@ -50,21 +50,6 @@ public class GestorBedel {
             throw new ValueException(e.getMessage());
 
         }
-    }
-
-    /*public void crear(UsuarioDTO usuarioDTO){
-       
-        if(usuarioDTO.getTurno() != null){ // crear BEDEL
-           Bedel b = new Bedel( BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()), usuarioDTO.getNombre(), usuarioDTO.getApellido(),
-                   usuarioDTO.getTurno(), usuarioDTO.isHabilitado()); //habilitado true
-           DAO.crear(b);
-       }
-       /*else { // crear admin
-           Administrador a = new Administrador(BCrypt.hashpw(usuarioDTO.getContrasena(), BCrypt.gensalt()),
-                   usuarioDTO.getNombre(), usuarioDTO.getApellido() );
-           DAO.crear(a);
->>>>>>> 099c40b28cecd8b5ca673f40b47a621ae070a8dd
-        }
         
         // encriptar contraseña
         bedelDTO.setContrasena(BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()));
@@ -77,9 +62,10 @@ public class GestorBedel {
         } catch (Exceptions.DAOException ex) {
             throw new ValueException("Ocurrio un error interno al intentar guardar" + ex.getMessage());
         }
-
+        
     }
-    */
+
+    
     public Integer modificar(BedelDTO bedelDTO) throws Exceptions.ValueException {
         bedelDTO.setIdLogin(bedelDTO.getIdLogin().trim());
         

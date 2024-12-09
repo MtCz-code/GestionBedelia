@@ -559,7 +559,9 @@ public class Interfaz {
                 }
 
                 gestorReserva.horariosSeleccionados(detalle);
-
+                
+                
+                
                 cardLayout.show(mainPanel, "regRsvaDatos");
 
             }
@@ -645,9 +647,9 @@ public class Interfaz {
                 TipoAula tipoAula = regRsvaDatos.getTipoAula();
 
                 try {
-                    ReservaDTO reserva = new ReservaDTO(-1, nombreDocente, -1, apellidoDocente, correo,
-                            -1, nombreCatedra, null, cantidadAlumnos, -1, null,
-                            null, true, -1, -1);
+                    ReservaDTO reserva = new ReservaDTO(0, nombreDocente, 0, apellidoDocente, correo,
+                            0, nombreCatedra, null, cantidadAlumnos, 0, null,
+                            null, true, 0, 0);
                     DisponibilidadDTO disp = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
 //                    gestorReserva.validarDatos(
 //                            nombreDocente,
@@ -667,6 +669,10 @@ public class Interfaz {
                     // MANEJAR ESTA EXCEPION NUEVA 
                     
                     // ----0
+                    Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (DAOException ex) {
+                    
+                    // MANEJAR EXCEPCION XD
                     Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                 }
 

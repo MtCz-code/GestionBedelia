@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DTOs;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,22 +12,16 @@ import java.util.List;
  * @author gabic
  */
 public class DisponibilidadDTO {
-    private List<AulaDTO> aulasDisponibles; 
+    private HashMap<AulaDTO, Integer> aulasDisponibles; // el integer representa la cantidad de solapamiento en modulos. si nno tiene es 0 
     private Boolean solapamiento;
-    private List<Integer> modulosSolapamiento;
+    //private List<Integer> modulosSolapamiento;
 
     public DisponibilidadDTO() {
     }
 
-    public DisponibilidadDTO(List<AulaDTO> aulasDisponibles, Boolean solapamiento) {
+    public DisponibilidadDTO(HashMap<AulaDTO, Integer> aulasDisponibles, Boolean solapamiento) {
         this.aulasDisponibles = aulasDisponibles;
         this.solapamiento = solapamiento;
-    }
-
-    public DisponibilidadDTO(List<AulaDTO> aulasDisponibles, Boolean solapamiento, List<Integer> modulosSolapamiento) {
-        this.aulasDisponibles = aulasDisponibles;
-        this.solapamiento = solapamiento;
-        this.modulosSolapamiento = modulosSolapamiento;
     }
 
     public Boolean getSolapamiento() {
@@ -37,22 +32,13 @@ public class DisponibilidadDTO {
         this.solapamiento = solapamiento;
     }
 
-    public List<Integer> getModulosSolapamiento() {
-        return modulosSolapamiento;
-    }
-
-    public void setModulosSolapamiento(List<Integer> modulosSolapamiento) {
-        this.modulosSolapamiento = modulosSolapamiento;
-    }
     
     
-
-    
-    public List<AulaDTO> getAulasDisponibles() {
+    public HashMap<AulaDTO, Integer> getAulasDisponibles() {
         return aulasDisponibles;
     }
 
-    public void setAulasDisponibles(List<AulaDTO> aulasDisponibles) {
+    public void setAulasDisponibles(HashMap<AulaDTO, Integer> aulasDisponibles) {
         this.aulasDisponibles = aulasDisponibles;
     }
 
