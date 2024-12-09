@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.ReservaPeriodica;
 
 /**
@@ -12,7 +13,7 @@ import grupo3a.tp_diseno.Modelos.ReservaPeriodica;
  */
 public interface ReservaPeriodicaDAO {
     
-    Integer crear(ReservaPeriodica reserva);
-    void asociarCuatrimestre(int idReserva, int cuat1, int cuat2);
-    void asociarCuatrimestre(int idReserva, int cuat);
+    Integer crear(ReservaPeriodica reserva) throws DAOException;
+    void asociarCuatrimestre(int idReserva, int cuat1, int cuat2) throws DAOException;
+    void asociarCuatrimestre(int idReserva, int cuat) throws DAOException;
 }

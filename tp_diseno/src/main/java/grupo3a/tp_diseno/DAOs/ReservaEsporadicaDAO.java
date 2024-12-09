@@ -4,6 +4,7 @@
  */
 package grupo3a.tp_diseno.DAOs;
 
+import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
 
 /**
@@ -11,5 +12,5 @@ import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
  * @author exero
  */
 public interface ReservaEsporadicaDAO {
-    public Integer crear(ReservaEsporadica reserva);
+    public Integer crear(ReservaEsporadica reserva) throws DAOException;
 }
