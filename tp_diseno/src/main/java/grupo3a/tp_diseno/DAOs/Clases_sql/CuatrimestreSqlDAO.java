@@ -96,7 +96,7 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
-        return (List)anios;
+        return new ArrayList<>(anios);
         
 
 

@@ -72,7 +72,7 @@ public class GestorReserva {
     
     public List<Year> recuperarAñosDisponibles() throws DAOException{
         
-        return cuatrimestreDAO.recuperarAñosCuatrimestre();
+        return cuatrimestreDAO.recuperarAñosCuatrimestres();
     }
     
     public List<CuatrimestreDTO> recuperarCuatrimestresPorAño(Year año) throws DAOException{

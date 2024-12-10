@@ -30,12 +30,12 @@ public class BuscarBedel extends javax.swing.JPanel {
         this.listener = listener;
     }
         
-public String getSeleccionado() {
-    if (seleccionado == null) {
-        throw new NullPointerException("Seleccione un criterio");
+    public String getSeleccionado() {
+        if (seleccionado == "Seleccione un criterio") {
+            throw new NullPointerException("Seleccione un criterio");
+        }
+        return seleccionado;
     }
-    return seleccionado;
-}
        
         public String getApellido() {
         return apellido;

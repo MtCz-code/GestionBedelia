@@ -80,8 +80,8 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        boxAñoReserva = new javax.swing.JComboBox<>();
         boxTipoDeReserva = new javax.swing.JComboBox<>();
+        boxAñoReserva = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
@@ -121,20 +121,9 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jPanel5.setBackground(new java.awt.Color(26, 26, 26));
         jPanel5.setLayout(new java.awt.BorderLayout(0, 30));
 
-        boxAñoReserva.setBackground(new java.awt.Color(40, 40, 40));
-        boxAñoReserva.setForeground(new java.awt.Color(255, 255, 255));
-        boxAñoReserva.setModel(new javax.swing.DefaultComboBoxModel<>(tipoDeReservas));
-        boxAñoReserva.setToolTipText("");
-        boxAñoReserva.setPreferredSize(new java.awt.Dimension(250, 25));
-        boxAñoReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxAñoReservaActionPerformed(evt);
-            }
-        });
-        jPanel5.add(boxAñoReserva, java.awt.BorderLayout.CENTER);
-
         boxTipoDeReserva.setBackground(new java.awt.Color(40, 40, 40));
         boxTipoDeReserva.setForeground(new java.awt.Color(255, 255, 255));
+        boxTipoDeReserva.setModel(new javax.swing.DefaultComboBoxModel<>(tipoDeReservas));
         boxTipoDeReserva.setToolTipText("");
         boxTipoDeReserva.setPreferredSize(new java.awt.Dimension(250, 25));
         boxTipoDeReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +131,18 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
                 boxTipoDeReservaActionPerformed(evt);
             }
         });
-        jPanel5.add(boxTipoDeReserva, java.awt.BorderLayout.PAGE_START);
+        jPanel5.add(boxTipoDeReserva, java.awt.BorderLayout.CENTER);
+
+        boxAñoReserva.setBackground(new java.awt.Color(40, 40, 40));
+        boxAñoReserva.setForeground(new java.awt.Color(255, 255, 255));
+        boxAñoReserva.setToolTipText("");
+        boxAñoReserva.setPreferredSize(new java.awt.Dimension(250, 25));
+        boxAñoReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxAñoReservaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(boxAñoReserva, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -248,8 +248,8 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boxTipoDeReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoDeReservaActionPerformed
-        String s = (String)boxTipoDeReserva.getSelectedItem();
+    private void boxAñoReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxAñoReservaActionPerformed
+        String s = (String)boxAñoReserva.getSelectedItem();
         if(s.equals(tipoDeReservas[0]))
             selectedTipoReserva = null;
         else if (s.equals(tipoDeReservas[1])) 
@@ -260,7 +260,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
             selectedTipoReserva = TIPO_RESERVA.SEGUNDO_CUATRIMESTRE;
         else if (s.equals(tipoDeReservas[4]))
             selectedTipoReserva = TIPO_RESERVA.ESPORADICA;
-    }//GEN-LAST:event_boxTipoDeReservaActionPerformed
+    }//GEN-LAST:event_boxAñoReservaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 if (listener != null)
@@ -273,9 +273,9 @@ if (listener != null)
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void boxAñoReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxAñoReservaActionPerformed
+    private void boxTipoDeReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoDeReservaActionPerformed
         
-    }//GEN-LAST:event_boxAñoReservaActionPerformed
+    }//GEN-LAST:event_boxTipoDeReservaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
