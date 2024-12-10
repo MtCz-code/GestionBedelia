@@ -43,13 +43,10 @@ public class GestorBedel {
         
         
         // validar
-        try {
-            validarCampos(bedelDTO);
-            validarIdLogin(idLogin);
-        } catch(ValueException e){
-            throw new ValueException(e.getMessage());
-
-        }
+        
+        validarCampos(bedelDTO);
+        validarIdLogin(idLogin);
+        
         
         // encriptar contraseña
         bedelDTO.setContrasena(BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()));
@@ -69,12 +66,8 @@ public class GestorBedel {
     public Integer modificar(BedelDTO bedelDTO) throws Exceptions.ValueException {
         bedelDTO.setIdLogin(bedelDTO.getIdLogin().trim());
         
-        try {
-            validarCampos(bedelDTO);
-            validarIdLogin(bedelDTO);
-        } catch(ValueException e){
-            throw new ValueException(e.getMessage());
-        }
+        validarCampos(bedelDTO);
+        validarIdLogin(bedelDTO);
         
         bedelDTO.setContrasena(BCrypt.hashpw(bedelDTO.getContrasena(), BCrypt.gensalt()));
 
@@ -123,7 +116,7 @@ public class GestorBedel {
 
         // longitud maxima del id_login
         int largoMaxIdLogin = 30;
-        if (nombre.length() >= largoMaxIdLogin) {
+        if (idLogin.length() >= largoMaxIdLogin) {
             throw new ValueException("<html>El nombre de usuario debe contener menos de <br>" + largoMaxIdLogin + " caracteres.</html>");
         }
 

@@ -20,7 +20,7 @@ import java.sql.Timestamp;
  *
  * @author exero
  */
-public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO {
+public class ReservaEsporadicaSqlDAO extends ReservaSqlDAO implements ReservaEsporadicaDAO {
 
     private ReservaDAO DAO = ReservaSqlDAO.getInstance();
 
@@ -41,15 +41,20 @@ public class ReservaEsporadicaSqlDAO implements ReservaEsporadicaDAO {
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             conn.setAutoCommit(false);
 
-            int idReserva = DAO.crear(reserva);
-
-            stmt.setInt(1, idReserva);
-            stmt.executeUpdate();
-            System.out.println("Reserva insertada exitosamente.");
-            conn.commit();
-            return idReserva;
+            try {
+                reserva.setIdReserva(super.crear(reserva, conn)); 
+                
+                stmt.setInt(1, reserva.getIdReserva());
+                stmt.executeUpdate();
+                System.out.println("Reserva insertada exitosamente.");
+                conn.commit();
+                return reserva.getIdReserva();
+            } catch (Exception e){
+                conn.rollback();
+                throw new DAOException("Error al crear la reserva esporadica: "+ e.getMessage());
+            }
         } catch (SQLException e) {
-            System.out.println("Error al agregar la reserva esporadica");
+            // System.out.println("Error al agregar la reserva esporadica");
             throw new DAOException("Error al agregar la reserva esporadica: " + e.getMessage());
         }
 

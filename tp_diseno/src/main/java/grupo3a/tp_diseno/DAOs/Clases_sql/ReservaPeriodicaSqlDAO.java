@@ -22,7 +22,7 @@ import org.json.JSONArray;
  *
  * @author exero
  */
-public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
+public class ReservaPeriodicaSqlDAO extends ReservaSqlDAO implements ReservaPeriodicaDAO{
 
     private ReservaDAO DAO = ReservaSqlDAO.getInstance();
 
@@ -45,24 +45,30 @@ public class ReservaPeriodicaSqlDAO implements ReservaPeriodicaDAO{
              PreparedStatement stmt = conn.prepareStatement(query)) {
             conn.setAutoCommit(false);
             
-            int idReserva = DAO.crear(reserva);
-                    
-       
-            stmt.setInt(1,idReserva);
-            stmt.setString(2, reserva.getTipo().toString());
+            try{
+                reserva.setIdReserva(super.crear(reserva, conn));
+                
 
-            JSONArray diasSemanaJson = new JSONArray();
-            for (DiaSemana dia : reserva.getDiasSemana()) {
-                diasSemanaJson.put(dia.name()); 
+
+                stmt.setInt(1,reserva.getIdReserva());
+                stmt.setString(2, reserva.getTipo().toString());
+
+                JSONArray diasSemanaJson = new JSONArray();
+                for (DiaSemana dia : reserva.getDiasSemana()) {
+                    diasSemanaJson.put(dia.name()); 
+                }
+                stmt.setObject(3, diasSemanaJson.toString(), java.sql.Types.OTHER);                        
+
+                stmt.executeUpdate();
+
+                conn.commit();
+                System.out.println("Reserva insertada exitosamente.");
+
+                return reserva.getIdReserva();
+            }catch(DAOException e){
+                conn.rollback();
+                throw new DAOException("Error al crear la reserva periodica"+e.getMessage());
             }
-            stmt.setObject(3, diasSemanaJson.toString(), java.sql.Types.OTHER);                        
-
-            stmt.executeUpdate();
-                        
-            conn.commit();
-            System.out.println("Reserva insertada exitosamente.");
-
-            return idReserva;
         } catch (SQLException e) {
             System.out.println("Error al agregar la reserva periodica: " + e.getMessage());
             throw new DAOException("Error al agregar la reserva periodica: " + e.getMessage());

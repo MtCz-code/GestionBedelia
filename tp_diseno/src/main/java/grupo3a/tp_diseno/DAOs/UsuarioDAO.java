@@ -8,6 +8,7 @@ import grupo3a.tp_diseno.Modelos.Administrador;
 import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
 import grupo3a.tp_diseno.Modelos.Usuario;
+import java.sql.Connection;
 
 /**
  *
@@ -16,7 +17,7 @@ import grupo3a.tp_diseno.Modelos.Usuario;
 public interface UsuarioDAO {
     
     
-    Integer crear(Usuario usuario) throws DAOException;
+    Integer crear(Usuario usuario, Connection conn) throws DAOException;
     boolean validarIdLogin(String idLogin)  throws DAOException;
     Usuario buscarPorIdLogin(String idLogin) throws DAOException;
     public boolean validarIdLogin(String idLogin, int id) throws DAOException;

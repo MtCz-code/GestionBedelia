@@ -30,12 +30,11 @@ public class UsuarioSqlDAO implements UsuarioDAO{
     
     
     @Override
-    public Integer crear(Usuario usuario) throws DAOException {
+    public Integer crear(Usuario usuario, Connection conn) throws DAOException {
         String query = "INSERT INTO usuario (id_login, contrasena, nombre, apellido) VALUES (?, ?, ?, ?)";
     
  
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, usuario.getIdLogin());
             stmt.setString(2, usuario.getContraseña());

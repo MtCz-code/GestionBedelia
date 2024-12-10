@@ -193,7 +193,7 @@ public class GestorReserva {
     
     
     public void validarDatosReserva(ReservaDTO r) throws ValueException{
-        String nombreDocente = r.getNombreCatedra();
+        String nombreDocente = r.getNombreDocente();
         String apellidoDocente = r.getApellidoDocente();
         String emailDocente = r.getEmailDocente();
         String nombreCatedra = r.getNombreCatedra();
@@ -212,7 +212,7 @@ public class GestorReserva {
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         
-        
+        nombreDocente = nombreDocente.trim();
         if (!pattern.matcher(nombreDocente).matches()) {
             throw new ValueException("Nombre de docente inválido.");
         }

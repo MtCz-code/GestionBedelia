@@ -35,15 +35,14 @@ public class ReservaSqlDAO implements ReservaDAO{
     }
 
     @Override
-    public Integer crear(Reserva reserva) throws DAOException {
+    public Integer crear(Reserva reserva, Connection conn) throws DAOException {
         
         String query = "INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel) VALUES (?, ?, ?,?,?,?,NOW(),?)";
 
         Integer idReserva = null;
 
  
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             //conn.setAutoCommit(false);
             
             
@@ -66,7 +65,7 @@ public class ReservaSqlDAO implements ReservaDAO{
                 
                 for(DetalleReserva dr : reserva.getDetallesReserva()){
                     dr.setIdReserva(idReserva);
-                    DAO.crear(dr);
+                    DAO.crear(dr,conn);
                 }
             }
             //conn.commit();
