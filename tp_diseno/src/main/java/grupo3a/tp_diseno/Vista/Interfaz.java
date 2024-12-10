@@ -796,13 +796,15 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaAula");
                 
                 if(disponibilidadDeAulas.getSolapamiento()){
-                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
-                    alerta.setText("no existen aulas sin solapamiento");
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    regRsvaAula.setTitle("<html>Seleccione su aula a reservar<br>no existen aulas sin solapamiento");
+//                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
+//                    alerta.setText("no existen aulas sin solapamiento");
+//                    alerta.setListener(() -> baseFrame.setPanel1Up());
+//                    alertaCardLayout.show(alertaPanel, "alerta");
+//                    baseFrame.setPanel2Up();
                 }
-
+                else 
+                    regRsvaAula.setTitle("Seleccione su aula a reservar<");
             }
         });
 
@@ -959,7 +961,7 @@ public class Interfaz {
             AulaDTO auladto = it.next();
             String ubicacion = auladto.getUbicacion();
             String capacidad = auladto.getCapacidad() + " personas";
-            String solap = aulasDisponibles.get(auladto) + "";
+            String solap = (aulasDisponibles.get(auladto) / disp.get) + "";
 
             List<String> caracteristics = new ArrayList<>();
             if (auladto.isAireAcondicionado()) {

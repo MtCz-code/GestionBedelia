@@ -20,6 +20,10 @@ public class ResultadosAulas extends javax.swing.JPanel {
         initComponents();
         this.jTable1.setAutoResizeMode(5);
     }
+    
+    public void setTitle(String text) {
+        jLabel1.setText(text);
+    }
 
     public void setListener(Listener listener) {
         this.listener = listener;
