@@ -53,6 +53,8 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         for(Year y : listaAños){
             boxAñoReserva.addItem(y.toString());
         }
+        
+        boxAñoReserva.setSelectedIndex(0);
     }
 
     public TIPO_RESERVA getSelectedTipoReserva() {
@@ -249,17 +251,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void boxAñoReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxAñoReservaActionPerformed
-        String s = (String)boxAñoReserva.getSelectedItem();
-        if(s.equals(tipoDeReservas[0]))
-            selectedTipoReserva = null;
-        else if (s.equals(tipoDeReservas[1])) 
-            selectedTipoReserva = TIPO_RESERVA.ANUAL;
-        else if (s.equals(tipoDeReservas[2]))
-            selectedTipoReserva = TIPO_RESERVA.PRIMER_CUATRIMESTRE;
-        else if (s.equals(tipoDeReservas[3]))
-            selectedTipoReserva = TIPO_RESERVA.SEGUNDO_CUATRIMESTRE;
-        else if (s.equals(tipoDeReservas[4]))
-            selectedTipoReserva = TIPO_RESERVA.ESPORADICA;
+        
     }//GEN-LAST:event_boxAñoReservaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -274,7 +266,17 @@ if (listener != null)
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void boxTipoDeReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoDeReservaActionPerformed
-        
+        String s = (String)boxTipoDeReserva.getSelectedItem();
+        if(s.equals(tipoDeReservas[0]))
+            selectedTipoReserva = null;
+        else if (s.equals(tipoDeReservas[1])) 
+            selectedTipoReserva = TIPO_RESERVA.ANUAL;
+        else if (s.equals(tipoDeReservas[2]))
+            selectedTipoReserva = TIPO_RESERVA.PRIMER_CUATRIMESTRE;
+        else if (s.equals(tipoDeReservas[3]))
+            selectedTipoReserva = TIPO_RESERVA.SEGUNDO_CUATRIMESTRE;
+        else if (s.equals(tipoDeReservas[4]))
+            selectedTipoReserva = TIPO_RESERVA.ESPORADICA;
     }//GEN-LAST:event_boxTipoDeReservaActionPerformed
 
 

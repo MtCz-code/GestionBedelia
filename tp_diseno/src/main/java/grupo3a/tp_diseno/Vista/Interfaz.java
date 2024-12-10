@@ -457,14 +457,17 @@ public class Interfaz {
             @Override
             public void next() {
                 try {
+                    System.out.println("HASTA ACA LLEGO");
                     Year año = regRsvaSeleccionTipoReserva.getSelectedAño();
                     cuatrimestres = gestorReserva.recuperarCuatrimestresPorAño(año);
                     reserva = new ReservaDTO(-1, null, -1, null, null, -1, null, null, -1, -1, null, false);
                     
-
+                     System.out.println("HASTA ACA LLEGO 2");
                     if (null == regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {  //esporadica
-                        reserva.setEsEsporadica(true);
-                        cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                        alerta.setText("Seleccione un tipo de reserva");
+                        alerta.setListener(() -> baseFrame.setPanel1Up());
+                        alertaCardLayout.show(alertaPanel, "alerta");
+                        baseFrame.setPanel2Up();
                     } else {
                         switch (regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {
                             case ANUAL -> {
@@ -510,16 +513,18 @@ public class Interfaz {
                         }
                     }
                 } catch (DAOException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 } catch (Exceptions.UIException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 }
 
@@ -808,13 +813,15 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaAula");
                 
                 if(disponibilidadDeAulas.getSolapamiento()){
-                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
-                    alerta.setText("no existen aulas sin solapamiento");
-                    alerta.setListener(() -> baseFrame.setPanel1Up());
-                    alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    regRsvaAula.setTitle("<html>Seleccione su aula a reservar<br>no existen aulas sin solapamiento");
+//                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
+//                    alerta.setText("no existen aulas sin solapamiento");
+//                    alerta.setListener(() -> baseFrame.setPanel1Up());
+//                    alertaCardLayout.show(alertaPanel, "alerta");
+//                    baseFrame.setPanel2Up();
                 }
-
+                else 
+                    regRsvaAula.setTitle("Seleccione su aula a reservar<");
             }
         });
 
@@ -985,7 +992,9 @@ public class Interfaz {
             AulaDTO auladto = it.next();
             String ubicacion = auladto.getUbicacion();
             String capacidad = auladto.getCapacidad() + " personas";
-            String solap = aulasDisponibles.get(auladto) + "";
+            int modulosSolapados = aulasDisponibles.get(auladto);
+            int modulosTotales = disp.getCantidadModulosTotales();
+            String solap = ((float) modulosSolapados / (float)modulosTotales) + "%";
 
             List<String> caracteristics = new ArrayList<>();
             if (auladto.isAireAcondicionado()) {

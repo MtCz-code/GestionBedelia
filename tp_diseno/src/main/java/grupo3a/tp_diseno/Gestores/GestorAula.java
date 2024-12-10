@@ -140,6 +140,7 @@ public class GestorAula {
 
         if (!aulasSinSolapamiento.isEmpty()) {
             disponibilidad.setAulasDisponibles(inicializarHashMap(aulasSinSolapamiento));
+            disponibilidad.setCantidadModulosTotales(totalModulosReserva);
             disponibilidad.setSolapamiento(false);
             return disponibilidad;
         }
@@ -167,7 +168,7 @@ public class GestorAula {
             resultado.put(aula, aulasConSolapamiento.get(aula));
         }
         disponibilidad.setAulasDisponibles(resultado);
-        
+        disponibilidad.setCantidadModulosTotales(totalModulosReserva);
         disponibilidad.setSolapamiento(true);
 
         return disponibilidad;
