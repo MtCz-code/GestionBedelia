@@ -212,7 +212,7 @@ public class GestorReserva {
         String regex = "([a-zA-Z])+";
         Pattern pattern = Pattern.compile(regex);
         
-        
+        nombreDocente = nombreDocente.trim();
         if (!pattern.matcher(nombreDocente).matches()) {
             throw new ValueException("Nombre de docente inválido.");
         }
