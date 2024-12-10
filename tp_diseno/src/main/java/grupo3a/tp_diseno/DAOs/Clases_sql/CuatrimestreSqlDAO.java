@@ -13,7 +13,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.postgresql.jdbc.EscapedFunctions;
 
 
@@ -72,7 +74,7 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
         
         String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre; ";
                 
-        List<Year> anios = new ArrayList<>();
+        Set<Year> anios = new HashSet<>();
         try(Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery()){
@@ -94,7 +96,7 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
-        return anios;
+        return (List)anios;
         
 
 
