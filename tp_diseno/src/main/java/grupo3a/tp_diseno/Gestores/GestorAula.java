@@ -101,30 +101,35 @@ public class GestorAula {
         return filtrarPorCriterio(listaAulas, reserva.getDetallesReserva(), listaDRSolapados);
     }
     
-    public DisponibilidadDTO filtrarPorCriterio(List<AulaDTO> listaAulas, List<DetalleReservaDTO> detallesReserva, List<List<DetalleReserva>> reservasSolapadas) {
+    public DisponibilidadDTO filtrarPorCriterio(List<AulaDTO> listaAulas, List<DetalleReservaDTO> detallesReserva, List<List<DetalleReserva>> reservasSolapadas) throws NoExisteAulaException {
         DisponibilidadDTO disponibilidad = new DisponibilidadDTO();
-        
+
         HashMap<AulaDTO, Integer> aulasConSolapamiento = inicializarHashMap(listaAulas);
-        
+
         // Crear un mapa para buscar aulas rápidamente por ID
         Map<Integer, AulaDTO> mapAulas = listaAulas.stream()
                 .collect(Collectors.toMap(AulaDTO::getIdAula, Function.identity()));
-        
+
+        // Calcular el total de módulos de la nueva reserva
+        int totalModulosReserva = detallesReserva.stream()
+                .mapToInt(DetalleReservaDTO::getCantModulos)
+                .sum();
+
         // Calcular solapamiento para cada aula
-    for (int i = 0; i < detallesReserva.size(); i++) {
-        DetalleReservaDTO nuevaReserva = detallesReserva.get(i);
-        List<DetalleReserva> solapadas = reservasSolapadas.get(i);
+        for (int i = 0; i < detallesReserva.size(); i++) {
+            DetalleReservaDTO nuevaReserva = detallesReserva.get(i);
+            List<DetalleReserva> solapadas = reservasSolapadas.get(i);
 
-        for (DetalleReserva reservaExistente : solapadas) {
-            
-            AulaDTO aula = mapAulas.get(reservaExistente.getIdAula());
+            for (DetalleReserva reservaExistente : solapadas) {
 
-            if (aula != null) {
-                int solapamientoActual = aulasConSolapamiento.get(aula);
-                aulasConSolapamiento.put(aula, solapamientoActual + calcularSolapamiento(nuevaReserva, reservaExistente));
+                AulaDTO aula = mapAulas.get(reservaExistente.getIdAula());
+
+                if (aula != null) {
+                    int solapamientoActual = aulasConSolapamiento.get(aula);
+                    aulasConSolapamiento.put(aula, solapamientoActual + calcularSolapamiento(nuevaReserva, reservaExistente));
+                }
             }
         }
-    }
 
         // Filtrar aulas sin solapamiento
         List<AulaDTO> aulasSinSolapamiento = aulasConSolapamiento.entrySet()
@@ -139,23 +144,32 @@ public class GestorAula {
             return disponibilidad;
         }
 
-        // Si no hay aulas sin solapamiento, encontrar las 3 con menor solapamiento
-        List<AulaDTO> aulasMenorSolapamiento = aulasConSolapamiento.entrySet()
+        // Filtrar aulas cuyo solapamiento no exceda el 50% del total de módulos
+        Map<AulaDTO, Integer> aulasFiltradas = aulasConSolapamiento.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() <= totalModulosReserva * 0.5)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        
+        if (aulasFiltradas.isEmpty()) {
+            throw new NoExisteAulaException("No existen aulas del tipo requerido disponibles");
+        }
+
+        // Encontrar las 3 aulas con menor solapamiento
+        List<AulaDTO> aulasMenorSolapamiento = aulasFiltradas.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
                 .limit(3)
                 .map(Map.Entry::getKey)
                 .toList();
 
-        disponibilidad.setAulasDisponibles(inicializarHashMap(
-                aulasConSolapamiento.entrySet()
-                        .stream()
-                        .filter(entry -> aulasMenorSolapamiento.contains(entry.getKey()))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-        ));
+        HashMap<AulaDTO, Integer> resultado = new HashMap<>();
+        for (AulaDTO aula : aulasMenorSolapamiento) {
+            resultado.put(aula, aulasConSolapamiento.get(aula));
+        }
+        disponibilidad.setAulasDisponibles(resultado);
+        
         disponibilidad.setSolapamiento(true);
-        
-        
+
         return disponibilidad;
     }
 
@@ -183,9 +197,6 @@ public class GestorAula {
 
 
 
-    public static HashMap<AulaDTO, Integer> inicializarHashMap(Map<AulaDTO, Integer> mapaExistente) {
-        return new HashMap<>(mapaExistente); // Copia los valores originales
-    }
     
     public static HashMap<AulaDTO, Integer> inicializarHashMap(List<AulaDTO> listaAulas) {
         HashMap<AulaDTO, Integer> mapaAulas = new HashMap<>();
