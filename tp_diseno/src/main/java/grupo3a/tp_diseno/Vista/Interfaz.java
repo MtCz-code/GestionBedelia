@@ -748,7 +748,7 @@ public class Interfaz {
         regRsvaDatos.setListener(new RegistrarReservaDatos.Listener() {
             @Override
             public void back() {
-                if (/*gestorReserva.getTipoReserva() == GestorReserva.RESERVA_ESPORADICA*/true) {
+                if (reserva.isEsEsporadica()) {
                     cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                 } else {
                     cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
