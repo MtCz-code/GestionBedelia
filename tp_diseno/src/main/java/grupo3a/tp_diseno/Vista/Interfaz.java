@@ -560,7 +560,9 @@ public class Interfaz {
             public void next() {
 
                 ArrayList<DetalleReservaDTO> detallesDias = new ArrayList<>();
-
+                
+                List<Time> horariosInicio = new ArrayList();
+                List<Integer> modulos = new ArrayList();
                 LocalTime[] horarios = regRsvaPeriodicaHorarios.getHorariosSeleccionados();
                 LocalTime[] duraciones = regRsvaPeriodicaHorarios.getDuracionesSeleccionadas();
 
@@ -568,61 +570,75 @@ public class Interfaz {
 
                     DiaSemana ds = DiaSemana.LUNES;
                     Time horarioInicio = java.sql.Time.valueOf(horarios[0]);
-
+                    
+                    horariosInicio.add(horarioInicio);
+                    
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[0]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     int cantModulos = (minutosCompletos / 30);
-                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detallesDias.add(tmp);
+                    modulos.add(cantModulos);
+                    /*DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                    detallesDias.add(tmp);*/
                 }
                 if (horarios[1] != null) {
                     DiaSemana ds = DiaSemana.MARTES;
                     Time horarioInicio = java.sql.Time.valueOf(horarios[1]);
+                    
+                    horariosInicio.add(horarioInicio);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[1]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     int cantModulos = (minutosCompletos / 30);
-                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detallesDias.add(tmp);
+                    modulos.add(cantModulos);
+                    /*DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                    detallesDias.add(tmp);*/
                 }
                 if (horarios[2] != null) {
                     DiaSemana ds = DiaSemana.MIERCOLES;
                     Time horarioInicio = java.sql.Time.valueOf(horarios[2]);
+                    
+                    horariosInicio.add(horarioInicio);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[2]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     int cantModulos = (minutosCompletos / 30);
-                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detallesDias.add(tmp);
+                    modulos.add(cantModulos);
+                    /*DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                    detallesDias.add(tmp);*/
                 }
                 if (horarios[3] != null) {
                     DiaSemana ds = DiaSemana.JUEVES;
                     Time horarioInicio = java.sql.Time.valueOf(horarios[3]);
 
+                    horariosInicio.add(horarioInicio);
+                    
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[3]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     int cantModulos = (minutosCompletos / 30);
-                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detallesDias.add(tmp);
+                    modulos.add(cantModulos);
+                    /*DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                    detallesDias.add(tmp);*/
                 }
                 if (horarios[4] != null) {
                     DiaSemana ds = DiaSemana.VIERNES;
                     Time horarioInicio = java.sql.Time.valueOf(horarios[4]);
+                    
+                    horariosInicio.add(horarioInicio);
 
                     java.sql.Time time = java.sql.Time.valueOf(duraciones[4]);
                     int minutosCompletos = time.toLocalTime().getHour() * 60 + time.toLocalTime().getMinute();
 
                     int cantModulos = (minutosCompletos / 30);
-                    DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
-                    detallesDias.add(tmp);
+                    modulos.add(cantModulos);
+                    /*DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, null, ds, -1);
+                    detallesDias.add(tmp);*/
                 }
 
-                CuatrimestreDTO cuat;
-
+                /*CuatrimestreDTO cuat;
                 detalleReservaDto = new ArrayList<>();
                 for (int i = 0; i < detallesDias.size(); i++) {
                     DetalleReservaDTO detalleDeDia = detallesDias.get(i);
@@ -636,7 +652,10 @@ public class Interfaz {
                         detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
                     }
 
-                }
+                }*/
+                
+                
+                detalleReservaDto = (ArrayList) gestorReserva.generarDetallesReserva(cuatrimestres, reserva.getDiasSemana(), horariosInicio, modulos);
                 reserva.setDetallesReserva(detalleReservaDto);
                 cardLayout.show(mainPanel, "regRsvaDatos");
 
@@ -810,8 +829,11 @@ public class Interfaz {
                  */
                 //nombreDocente, apellidoDocente, correo, nombreCatedra, cantidadAlumnos
                 AulaDTO aula = (AulaDTO) disponibilidadDeAulas.getAulasDisponibles().keySet().toArray()[idx];
-                reserva.setFechaRegistro(LocalDateTime.now());
-                reserva.setIdBedel(idBedel); // cambiar id
+                
+                /* estos 2 ya se hacen desde el gestor/dao
+                    reserva.setFechaRegistro(LocalDateTime.now());
+                    reserva.setIdBedel(idBedel); 
+                */
 
                 /*
                 idReserva
@@ -824,7 +846,9 @@ public class Interfaz {
                 for (int i = 0; i < detalleReservaDto.size(); i++) {
                     detalleReservaDto.get(i).setIdAula(aula.getIdAula());
                 }
-
+                
+                reserva.setDetallesReserva(detalleReservaDto);
+                
                 try {
                     gestorReserva.crearReserva(reserva);
 
@@ -844,6 +868,13 @@ public class Interfaz {
 
                 } catch (DAOException e) {
                     alerta.setText("<html>no se pudo realizar la reserva<br>ocurrio un error en la base de datos");
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                } catch (ValueException ex) {
+                    // esta excepcion se tiraria si al buscar el bedel que crea la reserva con gestorBedel.buscarPorId() 
+                    // (en la funcion crearReserva->convertirAModelo) el bedel NO existe, esto no deberia pasar nunca.
+                    alerta.setText("<html>no se pudo realizar la reserva<br>ocurrió un error al obtener el bedel logueado");
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
                     baseFrame.setPanel2Up();

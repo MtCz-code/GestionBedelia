@@ -13,7 +13,7 @@ public class Reserva {
     private int idCatedra;
     private String nombreCatedra;
     private LocalDateTime fechaRegistro;
-    private int idBedel;
+    private Bedel bedel;
     private List<DetalleReserva> detallesReserva;
     
     public Reserva(){
@@ -21,18 +21,18 @@ public class Reserva {
     }
     
     public Reserva(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra, int idBedel ,LocalDateTime fechaRegistro){
+            int idCatedra,String nombreCatedra, Bedel bedel ,LocalDateTime fechaRegistro){
         this.nombreDocente=nombreDocente;
         this.idDocente=idDocente;
         this.apellidoDocente=apellidoDocente;
         this.emailDocente=emailDocente;
         this.idCatedra=idCatedra;
         this.nombreCatedra=nombreCatedra;
-        this.idBedel = idBedel;
+        this.bedel = bedel;
         this.fechaRegistro=fechaRegistro;
     }
 
-    public Reserva(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, List<DetalleReserva> detallesReserva) {
+    public Reserva(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, Bedel bedel, List<DetalleReserva> detallesReserva) {
         this.idReserva = idReserva;
         this.nombreDocente = nombreDocente;
         this.idDocente = idDocente;
@@ -41,7 +41,7 @@ public class Reserva {
         this.idCatedra = idCatedra;
         this.nombreCatedra = nombreCatedra;
         this.fechaRegistro = fechaRegistro;
-        this.idBedel = idBedel;
+        this.bedel = bedel;
         this.detallesReserva = detallesReserva;
     }
     
@@ -59,12 +59,12 @@ public class Reserva {
         return idReserva;
     }
 
-    public int getIdBedel() {
-        return idBedel;
+    public Bedel getBedel() {
+        return bedel;
     }
 
-    public void setIdBedel(int idBedel) {
-        this.idBedel = idBedel;
+    public void setBedel(Bedel bedel) {
+        this.bedel = bedel;
     }
 
     public void setIdReserva(int idReserva) {

@@ -55,7 +55,7 @@ public class ReservaSqlDAO implements ReservaDAO{
             stmt.setString(6, reserva.getNombreCatedra());
             //Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
             //stmt.setTimestamp(7, timestamp);
-            stmt.setInt(7, reserva.getIdBedel());
+            stmt.setInt(7, reserva.getBedel().getIdUsuario());
             
         
             stmt.executeUpdate();

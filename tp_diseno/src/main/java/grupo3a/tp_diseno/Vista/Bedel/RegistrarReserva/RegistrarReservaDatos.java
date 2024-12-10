@@ -207,7 +207,7 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
         jLabel10.setText("Tipo de aula");
 
         cbTipoAula.setBackground(new java.awt.Color(153, 153, 153));
-        cbTipoAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estandar", "Multimedios", "Laboratorio" }));
+        cbTipoAula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General", "Multimedios", "Laboratorio" }));
         cbTipoAula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbTipoAulaActionPerformed(evt);

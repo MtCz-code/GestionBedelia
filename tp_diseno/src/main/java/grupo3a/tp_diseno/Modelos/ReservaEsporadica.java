@@ -10,14 +10,14 @@ public class ReservaEsporadica extends Reserva{
     }
     
     public ReservaEsporadica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra,int idBedel,LocalDateTime fechaRegistro){
+            int idCatedra,String nombreCatedra,Bedel bedel,LocalDateTime fechaRegistro){
         
         super(nombreDocente,idDocente,apellidoDocente,emailDocente,
-            idCatedra,nombreCatedra,idBedel,fechaRegistro);
+            idCatedra,nombreCatedra,bedel,fechaRegistro);
     }
 
-    public ReservaEsporadica(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, List<DetalleReserva> detallesReserva) {
-        super(idReserva, nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, fechaRegistro, idBedel, detallesReserva);
+    public ReservaEsporadica(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, Bedel bedel, List<DetalleReserva> detallesReserva) {
+        super(idReserva, nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, fechaRegistro, bedel, detallesReserva);
     }
     
     

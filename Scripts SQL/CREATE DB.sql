@@ -57,7 +57,7 @@ CREATE TABLE detalle_reserva (
     dia_reserva VARCHAR(10) NOT NULL,
     id_aula INT REFERENCES aula_general(id_aula),
     CONSTRAINT detalle_reserva_pk PRIMARY KEY(id_detalle_reserva),
-    CONSTRAINT id_aula_horario_inicio_fecha_uq UNIQUE(id_aula, horario_inicio, fecha)
+    --CONSTRAINT id_aula_horario_inicio_fecha_uq UNIQUE(id_aula, horario_inicio, fecha, ) eliminada ya que si se puede repetir la reserva.
 );
 
 -- Tabla aula_multimedios

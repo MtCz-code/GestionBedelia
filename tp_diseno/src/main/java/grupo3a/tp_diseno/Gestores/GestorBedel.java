@@ -240,7 +240,7 @@ public class GestorBedel {
         
         bedelesAux = DAO.buscar(apellido);
         
-        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles con ese criterio");
+        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles con ese apellido");
         
         for(Bedel bedel : bedelesAux){
             /*BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
@@ -262,7 +262,7 @@ public class GestorBedel {
         
         bedelesAux = DAO.buscar(turno);
         
-        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles con ese criterio");
+        if(bedelesAux == null) throw new ValueException("No se encontraron bedeles que trabajen en ese turno");
         
         for(Bedel bedel : bedelesAux){
             /*BedelDTO BedelDTOaux = new BedelDTO(bedel.getIdUsuario(), bedel.getNombre(), bedel.getApellido(), bedel.getTurno(), bedel.isHabilitado());
@@ -300,11 +300,11 @@ public class GestorBedel {
         return bdto;
     }
     
-    public boolean esBedel(int id) throws DAOException{
+    /*public boolean esBedel(int id) throws DAOException{
         if(DAO.buscarPorId(id) != null) return true;
         
         return false;
-    }
+    }*/
     
     // utilidades
     public static boolean contains(String s, char a, char b) {

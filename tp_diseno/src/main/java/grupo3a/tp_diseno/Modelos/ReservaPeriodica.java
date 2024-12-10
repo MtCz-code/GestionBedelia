@@ -17,16 +17,16 @@ public class ReservaPeriodica extends Reserva{
     this.diasSemana= new ArrayList<>();}
     
     public ReservaPeriodica(String nombreDocente,int idDocente,String apellidoDocente,String emailDocente,
-            int idCatedra,String nombreCatedra, int idBedel, LocalDateTime fechaRegistro,TipoReservaPeriodica tipo,List<DiaSemana> diasSemana){
-            super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,idBedel,fechaRegistro); 
+            int idCatedra,String nombreCatedra, Bedel bedel, LocalDateTime fechaRegistro,TipoReservaPeriodica tipo,List<DiaSemana> diasSemana){
+            super(nombreDocente,idDocente,apellidoDocente,emailDocente,idCatedra,nombreCatedra,bedel,fechaRegistro); 
             this.tipo=tipo;
             this.diasSemana=diasSemana;
     }
 
     public ReservaPeriodica(String nombreDocente, int idDocente, String apellidoDocente, String emailDocente, int idCatedra,
-                            String nombreCatedra, int idBedel, LocalDateTime fechaRegistro,
+                            String nombreCatedra, Bedel bedel, LocalDateTime fechaRegistro,
                                 TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, Cuatrimestre cuatrimestre1, Cuatrimestre cuatrimestre2) {
-        super(nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, idBedel, fechaRegistro);
+        super(nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, bedel, fechaRegistro);
         this.tipo = tipo;
         this.diasSemana = diasSemana;
         this.cuatrimestre1 = cuatrimestre1;
@@ -36,9 +36,9 @@ public class ReservaPeriodica extends Reserva{
     
 
     public ReservaPeriodica(int idReserva, String nombreDocente, int idDocente, String apellidoDocente, String emailDocente,
-            int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, int idBedel, List<DetalleReserva> detallesReserva,
+            int idCatedra, String nombreCatedra, LocalDateTime fechaRegistro, Bedel bedel, List<DetalleReserva> detallesReserva,
             TipoReservaPeriodica tipo, List<DiaSemana> diasSemana, Cuatrimestre cuatrimestre1, Cuatrimestre cuatrimestre2) {
-        super(idReserva, nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, fechaRegistro, idBedel, detallesReserva);
+        super(idReserva, nombreDocente, idDocente, apellidoDocente, emailDocente, idCatedra, nombreCatedra, fechaRegistro, bedel, detallesReserva);
         this.tipo = tipo;
         this.diasSemana = diasSemana;
         this.cuatrimestre1 = cuatrimestre1;

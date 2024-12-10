@@ -59,6 +59,8 @@ public class PruebaFlujoReserva {
             reservaCreada = gestorReserva.crearReserva(nuevaReserva);
         } catch (Exceptions.DAOException ex) {
             Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exceptions.ValueException ex) {
+            Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         System.out.println("reserva creada con id = " + reservaCreada);
@@ -180,6 +182,8 @@ public class PruebaFlujoReserva {
         try {
             reservaCreada = gestorReserva.crearReserva(nuevaReserva);
         } catch (Exceptions.DAOException ex) {
+            Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exceptions.ValueException ex) {
             Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
         }
         

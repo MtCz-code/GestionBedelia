@@ -80,10 +80,10 @@ public class GestorAula {
             throw new NoExisteAulaException("No existen aulas con la capacidad de alumnos requerida");
         }
         
-        System.out.println("Aulas disponibles:");
+        /*System.out.println("Aulas disponibles:");
             for(AulaDTO a : listaAulas){
                 System.out.println(a.getUbicacion());
-            }
+            }*/
 
         // Obtener las reservas existentes que se solapan con los horarios y fechas de la nueva reserva
         List<List<DetalleReserva>> listaDRSolapados = new ArrayList<>();
@@ -162,7 +162,7 @@ public class GestorAula {
 
     // Calcula el solapamiento en módulos entre los detalles de la nueva reserva y una reserva existente
     private int calcularSolapamiento(DetalleReservaDTO nuevaReserva, DetalleReserva reservaExistente) {
-        // Convertir horarios de inicio y fin en minutos totales desde la medianoche
+        
         int inicioNueva = nuevaReserva.getHorarioInicio().toLocalTime().toSecondOfDay() / 60;
         int finNueva = inicioNueva + nuevaReserva.getCantModulos() * 30;
 
@@ -174,11 +174,10 @@ public class GestorAula {
             return 0;
         }
 
-        // Calcular la intersección de los intervalos
         int inicioSolapamiento = Math.max(inicioNueva, inicioExistente);
         int finSolapamiento = Math.min(finNueva, finExistente);
 
-        return finSolapamiento - inicioSolapamiento; // Solapamiento en minutos
+        return (finSolapamiento - inicioSolapamiento) / 30; // Solapamiento en MODULOS
     }
 
 

@@ -11,6 +11,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class GestorLogin {
     
     private static GestorLogin instance;
+    private Integer idUsuarioLogueado;
 
     public static GestorLogin getInstance() {
         if (GestorLogin.instance == null) {
@@ -37,18 +38,32 @@ public class GestorLogin {
         
         if(usuarioDAO.validarIdLogin(idLogin)){
             Usuario u = usuarioDAO.buscarPorIdLogin(idLogin);
-            // Check that an unencrypted password matches one that has previously been hashed
+            
             if (BCrypt.checkpw(contrasena, u.getContrasena())){
                 
-                if(gestorBedel.esBedel(u.getIdUsuario())){
-                    return false; 
+                try{
+                    if(gestorBedel.buscarPorID(u.getIdUsuario()).isHabilitado()){ // si no existe bedel con ese id, pasa a la clausula catch.
+                        idUsuarioLogueado = u.getIdUsuario();
+                        return false; // si existe y esta habilitado, retorna false (indica que el usuario es bedel)
+                    } 
+                    else {
+                        throw new ValueException("El usuario bedel ingresado no está habilitado"); // si existe y no esta habilitado, throwea una nueva excepcion
+                    }
+                    
+                } catch(ValueException e){
+                    idUsuarioLogueado = u.getIdUsuario();
+                    return true;
                 }
-                return true;
+                
             } 
             else throw new ValueException("<html>Usuario o contraseña incorrectos</html>");
         }
         else throw new ValueException("<html>Usuario o contraseña incorrectos</html>");
         
+    }
+
+    public Integer getIdUsuarioLogueado() {
+        return idUsuarioLogueado;
     }
     
     
