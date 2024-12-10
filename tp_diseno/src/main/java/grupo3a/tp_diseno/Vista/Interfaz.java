@@ -794,6 +794,14 @@ public class Interfaz {
                     return;
                 }
                 cardLayout.show(mainPanel, "regRsvaAula");
+                
+                if(disponibilidadDeAulas.getSolapamiento()){
+                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
+                    alerta.setText("no existen aulas sin solapamiento");
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                }
 
             }
         });
@@ -937,6 +945,8 @@ public class Interfaz {
 
     private String[][] convertirFormatoAula(DisponibilidadDTO disp) {
         HashMap<AulaDTO, Integer> aulasDisponibles = disp.getAulasDisponibles();
+        
+        boolean solapamiento = disp.getSolapamiento();
 
         String[][] str = new String[aulasDisponibles.size()][];
 
@@ -949,6 +959,7 @@ public class Interfaz {
             AulaDTO auladto = it.next();
             String ubicacion = auladto.getUbicacion();
             String capacidad = auladto.getCapacidad() + " personas";
+            String solap = aulasDisponibles.get(auladto) + "";
 
             List<String> caracteristics = new ArrayList<>();
             if (auladto.isAireAcondicionado()) {
@@ -985,7 +996,7 @@ public class Interfaz {
 //            } else if (aulas[i].getTipo() == TipoAula.MULTIMEDIOS) {
             // TODO
 //            }
-            str[i] = new String[]{ubicacion, capacidad, caracteristicas};
+            str[i] = new String[]{ubicacion, capacidad, caracteristicas, solap};
             i++;
         }
         return str;

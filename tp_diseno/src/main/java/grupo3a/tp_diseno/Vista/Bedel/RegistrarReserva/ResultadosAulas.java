@@ -27,7 +27,7 @@ public class ResultadosAulas extends javax.swing.JPanel {
 
     public void setTable(String[][] elements) {
         this.elements = elements;
-        String[] columnNames = {"Ubicacion", "Capacidad", "Caracteristicas"};
+        String[] columnNames = {"Ubicacion", "Capacidad", "Caracteristicas", "solapamiento"};
         jTable1.setModel(new DefaultTableModel(elements, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
