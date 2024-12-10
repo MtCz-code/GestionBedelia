@@ -1,4 +1,3 @@
-
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
@@ -7,14 +6,16 @@ import javax.swing.table.DefaultTableModel;
 public class ResultadosAulas extends javax.swing.JPanel {
 
     public interface Listener {
+
         void back();
+
         void next();
     }
-    
+
     private Listener listener;
     private String[][] elements;
     private int selectedElement;
-    
+
     public ResultadosAulas() {
         initComponents();
         this.jTable1.setAutoResizeMode(5);
@@ -23,22 +24,30 @@ public class ResultadosAulas extends javax.swing.JPanel {
     public void setListener(Listener listener) {
         this.listener = listener;
     }
-    
+
     public void setTable(String[][] elements) {
         this.elements = elements;
         String[] columnNames = {"Ubicacion", "Capacidad", "Caracteristicas"};
-        jTable1.setModel(new DefaultTableModel(elements, columnNames));
+        jTable1.setModel(new DefaultTableModel(elements, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
     }
-    
-    public int getSelectedElementIndex(){
+
+    public int getSelectedElementIndex() {
         return selectedElement;
     }
-    
-    public String[] getSelectedElement(){
-        if(elements != null && selectedElement > -1)
+
+    public String[] getSelectedElement() {
+        if (elements != null && selectedElement > -1) {
             return elements[selectedElement];
+        }
         return null;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -260,12 +269,12 @@ public class ResultadosAulas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        
-        if(jTable1.getSelectedRow() > -1 && listener != null){
+
+        if (jTable1.getSelectedRow() > -1 && listener != null) {
             selectedElement = jTable1.getSelectedRow();
             listener.next();
         }
-        
+
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
 
