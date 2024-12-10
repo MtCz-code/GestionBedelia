@@ -104,8 +104,8 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
     
     public List<Cuatrimestre> recuperarCuatrimestresPorAño(Year año) throws DAOException{
         String query = "SELECT id_cuatrimestre, fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre FROM cuatrimestre "+
-                "WHERE EXTRACT(YEAR FROM fecha_inicio_cuatrimestre) = EXTRACT(YEAR FROM ?) " +
-                "OR EXTRACT(YEAR FROM fecha_fin_cuatrimestre) = EXTRACT(YEAR FROM ?);";
+                "WHERE EXTRACT(YEAR FROM fecha_inicio_cuatrimestre) = EXTRACT(YEAR FROM CAST(? AS DATE)) " +
+                "OR EXTRACT(YEAR FROM fecha_fin_cuatrimestre) = EXTRACT(YEAR FROM CAST(? AS DATE));";
         List<Cuatrimestre> cuatrimestres = new ArrayList<>();
         try(Connection conn = DataBaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
