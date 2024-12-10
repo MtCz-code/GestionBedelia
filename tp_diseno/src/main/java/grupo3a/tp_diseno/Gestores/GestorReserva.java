@@ -193,7 +193,7 @@ public class GestorReserva {
     
     
     public void validarDatosReserva(ReservaDTO r) throws ValueException{
-        String nombreDocente = r.getNombreCatedra();
+        String nombreDocente = r.getNombreDocente();
         String apellidoDocente = r.getApellidoDocente();
         String emailDocente = r.getEmailDocente();
         String nombreCatedra = r.getNombreCatedra();
