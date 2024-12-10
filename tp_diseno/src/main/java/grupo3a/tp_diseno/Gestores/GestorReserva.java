@@ -21,6 +21,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Year;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.regex.Pattern;
@@ -69,16 +70,21 @@ public class GestorReserva {
         
     }
     
-    public List<CuatrimestreDTO> recuperarCuatrimestres() throws DAOException{
+    public List<Year> recuperarAñosDisponibles() throws DAOException{
+        
+        return cuatrimestreDAO.recuperarAñosCuatrimestre();
+    }
+    
+    public List<CuatrimestreDTO> recuperarCuatrimestresPorAño(Year año) throws DAOException{
         List<CuatrimestreDTO> cdto = new ArrayList();
-        List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.getCuatrimestresActuales();
+        List<Cuatrimestre> cuatrimestres = cuatrimestreDAO.recuperarCuatrimestresPorAño(año);
         
         for(Cuatrimestre c : cuatrimestres){
            cdto.add(convertirCuatrimestreADTO(c));
            
-            System.out.println("cuatrimestre:" + c.getIdCuatrimestre() 
+            /*System.out.println("cuatrimestre:" + c.getIdCuatrimestre() 
                     + "\ninicio: " + c.getFechaInicio().toString() 
-                    + "\nfin: " + c.getFechaFin());
+                    + "\nfin: " + c.getFechaFin());*/
         }
         
         return cdto;

@@ -2,6 +2,8 @@
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
+import java.time.Year;
+import java.util.List;
 
 
 public class SeleccionTipoReserva extends javax.swing.JPanel {
@@ -18,7 +20,10 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
          void next();
     }
 
+    private List<Year> listaAños = null;
     private TIPO_RESERVA selectedTipoReserva = null;
+    
+   
     private final String[] tipoDeReservas = new String[] {
         "Seleccione una opcion",
         "Anual",
@@ -26,6 +31,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         "Segundo Cuatrimestre",
         "Esporadica"
     };
+    
     private Listener listener;
     
     
@@ -37,13 +43,26 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         this.listener = listener;
     }
 
-    public TIPO_RESERVA getSelected() {
+    public Year getSelectedAño() {
+        return Year.parse((String) boxAñoReserva.getSelectedItem());
+    }
+    
+    public void setListaAños(List<Year> listaAños){
+        this.listaAños = listaAños;
+        
+        for(Year y : listaAños){
+            boxAñoReserva.addItem(y.toString());
+        }
+    }
+
+    public TIPO_RESERVA getSelectedTipoReserva() {
         return selectedTipoReserva;
     }
     
     public void resetInterface() {
         selectedTipoReserva = null;
         boxTipoDeReserva.setSelectedIndex(0);
+        boxAñoReserva.removeAllItems();
     }   
     
     /**
@@ -61,6 +80,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        boxAñoReserva = new javax.swing.JComboBox<>();
         boxTipoDeReserva = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -96,13 +116,25 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Montserrat Thin Light", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("seleccione el tipo de reserva");
+        jLabel1.setText("seleccione el año y tipo de reserva");
 
         jPanel5.setBackground(new java.awt.Color(26, 26, 26));
+        jPanel5.setLayout(new java.awt.BorderLayout(0, 30));
+
+        boxAñoReserva.setBackground(new java.awt.Color(40, 40, 40));
+        boxAñoReserva.setForeground(new java.awt.Color(255, 255, 255));
+        boxAñoReserva.setModel(new javax.swing.DefaultComboBoxModel<>(tipoDeReservas));
+        boxAñoReserva.setToolTipText("");
+        boxAñoReserva.setPreferredSize(new java.awt.Dimension(250, 25));
+        boxAñoReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxAñoReservaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(boxAñoReserva, java.awt.BorderLayout.CENTER);
 
         boxTipoDeReserva.setBackground(new java.awt.Color(40, 40, 40));
         boxTipoDeReserva.setForeground(new java.awt.Color(255, 255, 255));
-        boxTipoDeReserva.setModel(new javax.swing.DefaultComboBoxModel<>(tipoDeReservas));
         boxTipoDeReserva.setToolTipText("");
         boxTipoDeReserva.setPreferredSize(new java.awt.Dimension(250, 25));
         boxTipoDeReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -110,21 +142,24 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
                 boxTipoDeReservaActionPerformed(evt);
             }
         });
-        jPanel5.add(boxTipoDeReserva);
+        jPanel5.add(boxTipoDeReserva, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -151,7 +186,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 407, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(130, 130, 130)
@@ -189,7 +224,7 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 407, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -215,7 +250,9 @@ public class SeleccionTipoReserva extends javax.swing.JPanel {
 
     private void boxTipoDeReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipoDeReservaActionPerformed
         String s = (String)boxTipoDeReserva.getSelectedItem();
-        if (s.equals(tipoDeReservas[1])) 
+        if(s.equals(tipoDeReservas[0]))
+            selectedTipoReserva = null;
+        else if (s.equals(tipoDeReservas[1])) 
             selectedTipoReserva = TIPO_RESERVA.ANUAL;
         else if (s.equals(tipoDeReservas[2]))
             selectedTipoReserva = TIPO_RESERVA.PRIMER_CUATRIMESTRE;
@@ -236,8 +273,13 @@ if (listener != null)
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void boxAñoReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxAñoReservaActionPerformed
+        
+    }//GEN-LAST:event_boxAñoReservaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> boxAñoReserva;
     private javax.swing.JComboBox<String> boxTipoDeReserva;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;

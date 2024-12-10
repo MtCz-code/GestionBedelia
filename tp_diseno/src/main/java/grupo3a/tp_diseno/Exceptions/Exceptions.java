@@ -32,4 +32,10 @@ public class Exceptions {
             super(msg);
         }
     }
+    
+    public static class BedelDeshabilitadoException extends Exception {
+        public BedelDeshabilitadoException(String msg) {
+            super(msg);
+        }
+    }
 }
