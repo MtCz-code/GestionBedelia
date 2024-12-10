@@ -14,6 +14,7 @@ import java.util.List;
 public class DisponibilidadDTO {
     private HashMap<AulaDTO, Integer> aulasDisponibles; // el integer representa la cantidad de solapamiento en modulos. si nno tiene es 0 
     private Boolean solapamiento;
+    private Integer cantidadModulosTotales;
     //private List<Integer> modulosSolapamiento;
 
     public DisponibilidadDTO() {
@@ -24,6 +25,14 @@ public class DisponibilidadDTO {
         this.solapamiento = solapamiento;
     }
 
+    public Integer getCantidadModulosTotales() {
+        return cantidadModulosTotales;
+    }
+
+    public void setCantidadModulosTotales(Integer cantidadModulosTotales) {
+        this.cantidadModulosTotales = cantidadModulosTotales;
+    }
+    
     public Boolean getSolapamiento() {
         return solapamiento;
     }

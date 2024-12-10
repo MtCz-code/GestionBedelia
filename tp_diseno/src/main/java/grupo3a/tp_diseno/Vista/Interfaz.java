@@ -457,14 +457,17 @@ public class Interfaz {
             @Override
             public void next() {
                 try {
+                    System.out.println("HASTA ACA LLEGO");
                     Year año = regRsvaSeleccionTipoReserva.getSelectedAño();
                     cuatrimestres = gestorReserva.recuperarCuatrimestresPorAño(año);
                     reserva = new ReservaDTO(-1, null, -1, null, null, -1, null, null, -1, -1, null, false);
                     
-
+                     System.out.println("HASTA ACA LLEGO 2");
                     if (null == regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {  //esporadica
-                        reserva.setEsEsporadica(true);
-                        cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                        alerta.setText("Seleccione un tipo de reserva");
+                        alerta.setListener(() -> baseFrame.setPanel1Up());
+                        alertaCardLayout.show(alertaPanel, "alerta");
+                        baseFrame.setPanel2Up();
                     } else {
                         switch (regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {
                             case ANUAL -> {
@@ -510,16 +513,18 @@ public class Interfaz {
                         }
                     }
                 } catch (DAOException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 } catch (Exceptions.UIException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 }
 
