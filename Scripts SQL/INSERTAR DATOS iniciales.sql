@@ -14,10 +14,28 @@ INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
 VALUES ('2024-08-01', '2024-12-31');
 
 INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
-VALUES ('GENERAL', 'A1', TRUE, 30, 1, 'TIZA', TRUE, TRUE, TRUE);
+VALUES ('GENERAL', 'A1', TRUE, 30, 2, 'TIZA', TRUE, TRUE, TRUE);
 
 INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
-VALUES ('GENERAL', 'A2', TRUE, 30, 1, 'TIZA', FALSE, TRUE, TRUE);
+VALUES ('GENERAL', 'A2', TRUE, 25, 2, 'TIZA', FALSE, TRUE, TRUE);
+
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('LABORATORIO', 'A3', TRUE, 40, 3, 'FIBRON', FALSE, TRUE, TRUE);
+
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('LABORATORIO', 'A4', TRUE, 50, 3, 'FIBRON', FALSE, TRUE, TRUE);
+
+INSERT INTO aula_laboratorio(id_aula,cantidad_pc) VALUES (3,20);
+INSERT INTO aula_laboratorio(id_aula,cantidad_pc) VALUES (4,28);
+
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('MULTIMEDIOS', 'A5', TRUE, 20, 1, 'FIBRON', TRUE, TRUE, TRUE);
+
+INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
+VALUES ('MULTIMEDIOS', 'A6', TRUE, 30, 1, 'TIZA', FALSE, TRUE, TRUE);
+
+INSERT INTO aula_multimedios(id_aula,televisor,canon,computadora) VALUES(5,FALSE,TRUE,TRUE);
+INSERT INTO aula_multimedios(id_aula,televisor,canon,computadora) VALUES(6,TRUE,TRUE,TRUE);
 
 -- Insertar Reserva 1
 INSERT INTO reserva (id_docente, nombre_docente, apellido_docente, email_docente, id_catedra, nombre_catedra, fecha_registro, id_bedel)
