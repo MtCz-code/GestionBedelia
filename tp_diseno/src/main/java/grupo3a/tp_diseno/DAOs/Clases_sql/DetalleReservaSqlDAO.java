@@ -32,11 +32,11 @@ public class DetalleReservaSqlDAO implements DetalleReservaDAO {
     }
 
     @Override
-    public void crear(DetalleReserva detalleReserva) throws DAOException {
+    public void crear(DetalleReserva detalleReserva, Connection conn) throws DAOException {
 
         String query = "INSERT INTO detalle_reserva (id_reserva,horario_inicio,fecha,cant_modulos,dia_reserva,id_aula) VALUES (?,?,?,?,?,?);";
 
-        try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, detalleReserva.getIdReserva());
             stmt.setTime(2, detalleReserva.getHorarioInicio());

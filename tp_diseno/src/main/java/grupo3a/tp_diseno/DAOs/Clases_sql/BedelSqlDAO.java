@@ -34,16 +34,25 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
     @Override
     public void crear(Bedel bedel) throws DAOException {
         
-        bedel.setIdUsuario(super.crear(bedel));
+        
         
         String queryB = "INSERT INTO bedel (id_usuario,turno,habilitado) VALUES (?,?,?)";
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(queryB)) {
-            stmtBed.setInt(1, bedel.getIdUsuario());
-            stmtBed.setString(2, bedel.getTurno().toString());
-            stmtBed.setBoolean(3, bedel.isHabilitado());
-            stmtBed.executeUpdate();
+            conn.setAutoCommit(false);
+            try{
+                bedel.setIdUsuario(super.crear(bedel,conn));
 
-            System.out.println("Bedel ingresado con exito.");
+                stmtBed.setInt(1, bedel.getIdUsuario());
+                stmtBed.setString(2, bedel.getTurno().toString());
+                stmtBed.setBoolean(3, bedel.isHabilitado());
+                stmtBed.executeUpdate();
+
+                System.out.println("Bedel ingresado con exito.");
+                conn.commit();
+            }catch(DAOException e){
+                conn.rollback();
+                throw new DAOException("Error al crear el bedel"+e.getMessage());
+            }
         } catch (SQLException e) {
             System.out.println("Error al agregar el bedel: " + e.getMessage());
             throw new DAOException("Error al agregar el bedel: " + e.getMessage());
@@ -89,7 +98,7 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
             
             stmtBed.setString(1,datoCriterio.toString());
             ResultSet rs = stmtBed.executeQuery();
-            if (rs.next()){
+            while (rs.next()){
                 int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String id_login = rs.getString("id_login");
