@@ -992,7 +992,9 @@ public class Interfaz {
             AulaDTO auladto = it.next();
             String ubicacion = auladto.getUbicacion();
             String capacidad = auladto.getCapacidad() + " personas";
-            String solap = (aulasDisponibles.get(auladto) / disp.get) + "";
+            int modulosSolapados = aulasDisponibles.get(auladto);
+            int modulosTotales = disp.getCantidadModulosTotales();
+            String solap = ((float) modulosSolapados / (float)modulosTotales) + "%";
 
             List<String> caracteristics = new ArrayList<>();
             if (auladto.isAireAcondicionado()) {
