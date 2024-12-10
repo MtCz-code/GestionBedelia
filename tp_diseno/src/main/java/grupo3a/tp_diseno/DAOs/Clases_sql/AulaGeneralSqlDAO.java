@@ -38,7 +38,7 @@ public class AulaGeneralSqlDAO implements AulaGeneralDAO{
     @Override
     public List<AulaGeneral> getByCapacidad(Integer capacidad) throws DAOException {        
         String query = "SELECT id_aula, tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado "
-                + "FROM aula_general WHERE capacidad >= ? AND habilitado = true";
+                + "FROM aula_general WHERE capacidad >= ? AND habilitado = true AND tipo = 'GENERAL'";
         List<AulaGeneral> aulas = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setInt(1,capacidad);

@@ -44,6 +44,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.time.LocalTime;
+import java.time.Year;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -186,6 +187,12 @@ public class Interfaz {
                 alertaCardLayout.show(alertaPanel, "alerta");
                 baseFrame.setPanel2Up();
             } catch (ValueException e) {
+                System.out.println(e.getMessage());
+                alerta.setText(e.getMessage());
+                alerta.setListener(() -> baseFrame.setPanel1Up());
+                alertaCardLayout.show(alertaPanel, "alerta");
+                baseFrame.setPanel2Up();
+            } catch (Exceptions.BedelDeshabilitadoException e) {
                 System.out.println(e.getMessage());
                 alerta.setText(e.getMessage());
                 alerta.setListener(() -> baseFrame.setPanel1Up());
@@ -450,21 +457,26 @@ public class Interfaz {
             @Override
             public void next() {
                 try {
-                    cuatrimestres = gestorReserva.recuperarCuatrimestres();
+                    System.out.println("HASTA ACA LLEGO");
+                    Year año = regRsvaSeleccionTipoReserva.getSelectedAño();
+                    cuatrimestres = gestorReserva.recuperarCuatrimestresPorAño(año);
                     reserva = new ReservaDTO(-1, null, -1, null, null, -1, null, null, -1, -1, null, false);
-
-                    if (null == regRsvaSeleccionTipoReserva.getSelected()) {  //esporadica
-                        reserva.setEsEsporadica(true);
-                        cardLayout.show(mainPanel, "regAulaEsporadicaDias");
+                    
+                     System.out.println("HASTA ACA LLEGO 2");
+                    if (null == regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {  //esporadica
+                        alerta.setText("Seleccione un tipo de reserva");
+                        alerta.setListener(() -> baseFrame.setPanel1Up());
+                        alertaCardLayout.show(alertaPanel, "alerta");
+                        baseFrame.setPanel2Up();
                     } else {
-                        switch (regRsvaSeleccionTipoReserva.getSelected()) {
+                        switch (regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {
                             case ANUAL -> {
                                 reserva.setEsEsporadica(false);
                                 reserva.setTipo(TipoReservaPeriodica.ANUAL);
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat1 == null || cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados a este año");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 reserva.setIdCuatrimestre2(cuat2.getIdCuatrimestre());
@@ -474,8 +486,11 @@ public class Interfaz {
                                 reserva.setEsEsporadica(false);
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
+                                if(cuat1.getFechaFin().isBefore(LocalDate.now())) {
+                                    throw new Exceptions.UIException("No se puede reservar para un cuatrimestre pasado");
+                                }
                                 if (cuat1 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 1er cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
@@ -485,7 +500,7 @@ public class Interfaz {
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuantrimestres asociados a este año");
+                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 2do cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat2.getIdCuatrimestre());    //TODO: check
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
@@ -498,16 +513,18 @@ public class Interfaz {
                         }
                     }
                 } catch (DAOException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 } catch (Exceptions.UIException e) {
-                    alerta.setText(e.getMessage());
+                    System.out.println(e.getMessage());
+                    /*alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();
+                    baseFrame.setPanel2Up();*/
                     return;
                 }
 
@@ -920,7 +937,15 @@ public class Interfaz {
         menuBedel.setListener(new MenuBedel.Listener() {
             @Override
             public void registrarReserva() {
-                showRegistrarReserva();
+                try {
+                    showRegistrarReserva();
+                } catch (Exceptions.UIException e) {
+                    alerta.setText(e.getMessage());
+                    alerta.setListener(() -> baseFrame.setPanel1Up());
+                    alertaCardLayout.show(alertaPanel, "alerta");
+                    baseFrame.setPanel2Up();
+                    return;
+                }
             }
 
             @Override
@@ -940,9 +965,15 @@ public class Interfaz {
         cardLayout.show(mainPanel, "menuBedel");
     }
 
-    private void showRegistrarReserva() {
-
+    private void showRegistrarReserva() throws Exceptions.UIException {
+        try {
+            // obtiene la lista de años disponibles para los que se puede reservar.
+            regRsvaSeleccionTipoReserva.setListaAños(gestorReserva.recuperarAñosDisponibles());
+        } catch (DAOException ex) {
+            throw new Exceptions.UIException("Error al recuperar los años disponibles para reservar");
+        }
         cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
+        
     }
 
     private String[][] convertirFormatoAula(DisponibilidadDTO disp) {

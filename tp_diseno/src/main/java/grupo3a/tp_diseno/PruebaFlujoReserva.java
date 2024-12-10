@@ -72,11 +72,11 @@ public class PruebaFlujoReserva {
         GestorReserva gestorReserva = GestorReserva.getInstance();
         List<CuatrimestreDTO> cuatrimestresActuales = null;
         
-        try {
-            cuatrimestresActuales = gestorReserva.recuperarCuatrimestres();
+        /*try {
+            //cuatrimestresActuales = gestorReserva.recuperarCuatrimestresPor();
         } catch (Exceptions.DAOException ex) {
             Logger.getLogger(PruebaFlujoReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         List<DiaSemana> diasSemana = Arrays.asList(DiaSemana.LUNES, DiaSemana.MARTES);
         List<Time> horariosInicio = Arrays.asList(Time.valueOf("09:00:00"), Time.valueOf("09:00:00"));
