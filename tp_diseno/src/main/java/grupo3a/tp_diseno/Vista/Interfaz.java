@@ -177,8 +177,7 @@ public class Interfaz {
                     showMenuAdmin();
                 } else {
                     showMenuBedel();
-                    idBedel = 1;
-                    // TODO: idBedel = gestorLogin.getIdBedel(usuarioDTO);
+                    idBedel = gestorLogin.getIdUsuarioLogueado();
                 }
             } catch (DAOException e) {
                 System.out.println(e.getMessage());
