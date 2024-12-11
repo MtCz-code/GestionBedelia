@@ -33,7 +33,9 @@ public class AulaLaboratorioSqlDAO implements AulaLaboratorioDAO{
     public List<AulaLaboratorio> getByCapacidad(Integer capacidad) throws DAOException{
 
         String query = "SELECT g.id_aula, g.tipo, g.ubicacion, g.estado, g.capacidad, g.piso, g.tipo_pizarron, g.ventiladores, g.aire_acondicionado, g.habilitado, l.cantidad_pc"
-                + " FROM aula_general g LEFT JOIN aula_laboratorio l ON g.id_aula = l.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
+
+                + "FROM aula_general g RIGHT JOIN aula_laboratorio l ON g.id_aula = l.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
+
         List<AulaLaboratorio> aulas = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setInt(1,capacidad);
