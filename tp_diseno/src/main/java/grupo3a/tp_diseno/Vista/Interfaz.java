@@ -478,6 +478,9 @@ public class Interfaz {
                                 if (cuat1 == null || cuat2 == null) {
                                     throw new Exceptions.UIException("no se encontraron cuatrimestres asociados a este año");
                                 }
+                                if (cuat1.getFechaFin().isBefore(LocalDate.now())){
+                                    throw new Exceptions.UIException("no se pueden realizar reservas anuales si el primer cuatrimestre ya termino");
+                                }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 reserva.setIdCuatrimestre2(cuat2.getIdCuatrimestre());
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
