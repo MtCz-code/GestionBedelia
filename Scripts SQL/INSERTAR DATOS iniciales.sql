@@ -13,6 +13,12 @@ VALUES ('2024-02-01', '2024-06-30');
 INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
 VALUES ('2024-08-01', '2024-12-31');
 
+INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
+VALUES ('2025-03-01', '2025-06-30');
+
+INSERT INTO cuatrimestre (fecha_inicio_cuatrimestre, fecha_fin_cuatrimestre)
+VALUES ('2025-08-01', '2025-12-31');
+
 INSERT INTO aula_general (tipo, ubicacion, estado, capacidad, piso, tipo_pizarron, ventiladores, aire_acondicionado, habilitado)
 VALUES ('GENERAL', 'A1', TRUE, 30, 2, 'TIZA', TRUE, TRUE, TRUE);
 
