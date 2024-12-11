@@ -767,6 +767,24 @@ public class Interfaz {
                 if (reserva.isEsEsporadica()) {
                     cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                 } else {
+                    boolean d[] = new boolean[] {
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    };
+                    if (reserva.getDiasSemana().contains(DiaSemana.LUNES))
+                        d[0] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.MARTES))
+                        d[1] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.MIERCOLES))
+                        d[2] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.JUEVES))
+                        d[3] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.VIERNES))
+                        d[4] = true;
+                    regRsvaPeriodicaHorarios.setDiasHabilitados(d);
                     cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
                 }
             }
