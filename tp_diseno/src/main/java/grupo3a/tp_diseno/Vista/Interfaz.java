@@ -1065,13 +1065,13 @@ public class Interfaz {
         for (int i = 0; i < cuats.size(); i++) {
             CuatrimestreDTO cuat = cuats.get(i);
             // buscar en cuatrimestres de este año
-            if (cuat.getFechaInicio().getYear() == yearNow) {
+            
                 if (cuat.getFechaInicio().getMonthValue() < 6 && numofcuat == 1) {
                     return cuat;
                 } else if (cuat.getFechaInicio().getMonthValue() >= 6 && numofcuat == 2) {
                     return cuat;
                 }
-            }
+            
         }
         return null;
     }
