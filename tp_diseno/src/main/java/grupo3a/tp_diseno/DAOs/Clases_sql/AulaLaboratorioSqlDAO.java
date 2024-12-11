@@ -34,7 +34,7 @@ public class AulaLaboratorioSqlDAO implements AulaLaboratorioDAO{
 
         String query = "SELECT g.id_aula, g.tipo, g.ubicacion, g.estado, g.capacidad, g.piso, g.tipo_pizarron, g.ventiladores, g.aire_acondicionado, g.habilitado, l.cantidad_pc"
 
-                + "FROM aula_general g RIGHT JOIN aula_laboratorio l ON g.id_aula = l.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
+                + " FROM aula_general g RIGHT JOIN aula_laboratorio l ON g.id_aula = l.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
 
         List<AulaLaboratorio> aulas = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
@@ -60,6 +60,7 @@ public class AulaLaboratorioSqlDAO implements AulaLaboratorioDAO{
             
             
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new Exceptions.DAOException("Error al buscar aulas laboratorio: " + e.getMessage());
         }        
     }
