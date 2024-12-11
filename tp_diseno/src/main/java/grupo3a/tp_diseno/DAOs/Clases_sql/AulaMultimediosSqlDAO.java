@@ -32,7 +32,7 @@ public class AulaMultimediosSqlDAO implements AulaMultimediosDAO{
     public List<AulaMultimedios> getByCapacidad(Integer capacidad) throws DAOException{
             
         String query = "SELECT g.id_aula, g.tipo, g.ubicacion, g.estado, g.capacidad, g.piso, g.tipo_pizarron, g.ventiladores, g.aire_acondicionado, g.habilitado, m.televisor, m.canon, m.computadora"
-                + " FROM aula_general g LEFT JOIN aula_multimedio m ON g.id_aula = m.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
+                + " FROM aula_general g LEFT JOIN aula_multimedios m ON g.id_aula = m.id_aula WHERE g.capacidad >= ?  AND g.habilitado = true";
         List<AulaMultimedios> aulas = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection(); PreparedStatement stmtBed = conn.prepareStatement(query)){
             stmtBed.setInt(1,capacidad);
