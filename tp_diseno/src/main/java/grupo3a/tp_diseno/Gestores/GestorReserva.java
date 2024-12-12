@@ -205,7 +205,7 @@ public class GestorReserva {
         String nombreCatedra = r.getNombreCatedra();
         
         
-        if(r.getCantidadAlumnos() <= 0) throw new ValueException("La cantidad de alumnos debe ser mayor a 0");;
+        if(r.getCantidadAlumnos() <= 0) throw new ValueException("La cantidad de alumnos debe ser mayor a 0");
         
         int largoMaxNombre = 50;
         if (nombreDocente.length() >= largoMaxNombre
