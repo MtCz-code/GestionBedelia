@@ -47,14 +47,12 @@ public class BedelSqlDAO extends UsuarioSqlDAO implements BedelDAO {
                 stmtBed.setBoolean(3, bedel.isHabilitado());
                 stmtBed.executeUpdate();
 
-                System.out.println("Bedel ingresado con exito.");
                 conn.commit();
             }catch(DAOException e){
                 conn.rollback();
                 throw new DAOException("Error al crear el bedel"+e.getMessage());
             }
         } catch (SQLException e) {
-            System.out.println("Error al agregar el bedel: " + e.getMessage());
             throw new DAOException("Error al agregar el bedel: " + e.getMessage());
         }
 

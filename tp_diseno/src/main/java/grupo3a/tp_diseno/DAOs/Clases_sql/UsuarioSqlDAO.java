@@ -42,7 +42,6 @@ public class UsuarioSqlDAO implements UsuarioDAO{
             stmt.setString(4, usuario.getApellido());
         
             stmt.executeUpdate();
-            System.out.println("Usuario insertado exitosamente.");
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -50,12 +49,9 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                     
                    return idUsuario;
                     
-                } else {
-                    System.out.println("No se pudo obtener el ID del usuario.");
-                }
+                } 
             }
         } catch (SQLException e) {
-            System.out.println("Error al agregar usuario: " + e.getMessage());
             throw new DAOException("Error al agregar usuario: " + e.getMessage());
         }
         
@@ -80,7 +76,6 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                 
             }
         } catch (SQLException e) {
-            System.out.println("Error con la consulta." + e.getMessage());
             throw new DAOException("Error con la consulta." + e.getMessage());
         }
     }
@@ -106,7 +101,6 @@ public class UsuarioSqlDAO implements UsuarioDAO{
                 
             }
         } catch (SQLException e) {
-            System.out.println("Error con la consulta." + e.getMessage());
             throw new DAOException("Error con la consulta." + e.getMessage());
         }
     }
