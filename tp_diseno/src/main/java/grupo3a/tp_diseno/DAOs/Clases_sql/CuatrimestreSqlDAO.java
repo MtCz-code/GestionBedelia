@@ -62,9 +62,7 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             }            
             
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return cuatrimestres;
@@ -95,7 +93,6 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             
         } catch (SQLException ex) {
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return new ArrayList<>(anios);
@@ -134,7 +131,6 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             
         } catch (SQLException ex) {
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return cuatrimestres;

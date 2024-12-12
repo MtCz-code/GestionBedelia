@@ -60,7 +60,6 @@ public class AulaMultimediosSqlDAO implements AulaMultimediosDAO{
             
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new Exceptions.DAOException("Error al buscar aulas laboratorio: " + e.getMessage());
         }
         

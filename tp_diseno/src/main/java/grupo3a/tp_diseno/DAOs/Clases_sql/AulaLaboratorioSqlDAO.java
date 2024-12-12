@@ -60,7 +60,6 @@ public class AulaLaboratorioSqlDAO implements AulaLaboratorioDAO{
             
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             throw new Exceptions.DAOException("Error al buscar aulas laboratorio: " + e.getMessage());
         }        
     }
