@@ -474,10 +474,10 @@ public class Interfaz {
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat1 == null || cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados a este año");
+                                    throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados a este año");
                                 }
                                 if (cuat1.getFechaFin().isBefore(LocalDate.now())){
-                                    throw new Exceptions.UIException("no se pueden realizar reservas anuales si el primer cuatrimestre ya termino");
+                                    throw new Exceptions.UIException("<html>no se pueden realizar reservas anuales <br>si el primer cuatrimestre ya termino");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 reserva.setIdCuatrimestre2(cuat2.getIdCuatrimestre());
@@ -488,10 +488,10 @@ public class Interfaz {
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
                                 if(cuat1.getFechaFin().isBefore(LocalDate.now())) {
-                                    throw new Exceptions.UIException("No se puede reservar para un cuatrimestre pasado");
+                                    throw new Exceptions.UIException("<html>No se puede reservar para <br>un cuatrimestre pasado");
                                 }
                                 if (cuat1 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 1er cuatrimestre");
+                                    throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 1er cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
@@ -501,7 +501,7 @@ public class Interfaz {
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 2do cuatrimestre");
+                                    throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 2do cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat2.getIdCuatrimestre());    //TODO: check
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
