@@ -121,7 +121,8 @@ public class GestorBedel {
         }
 
         // id login
-        String patronIdLogin = "^[a-zA-Z0-9_]+$";
+//        String patronIdLogin = "^[a-zA-Z0-9_]+$";
+        String patronIdLogin = "^[a-zA-Z0-9_ñÑáéíóúÁÉÍÓÚ]+$";
         Pattern patternIdLogin = Pattern.compile(patronIdLogin);
         if (!patternIdLogin.matcher(idLogin).matches()) {
             throw new ValueException("<html>Introduzca un nombre de usuario válido. Se<br>permiten letras, números y _, sin espacios.</html>");
@@ -151,7 +152,8 @@ public class GestorBedel {
             throw new ValueException("<html>La contrasena debe contener menos de <br>" + largoMaxContrasena + " caracteres.</html>");
         }
 
-        String regex = "([a-zA-Z])+";
+//        String regex = "([a-zA-Z])+";
+        String regex = "([a-zA-ZñÑáéíóúÁÉÍÓÚ])+";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(nombre).matches()) {
             throw new ValueException("Introduzca un nombre válido.");
@@ -176,7 +178,7 @@ public class GestorBedel {
         }
 
         // si la contraseña debe contener al menos una letra mayúscula.
-        if (!contains(contraseña, 'A', 'Z')) {
+        if (!(contains(contraseña, 'A', 'Z') || contraseña.contains("Ñ"))) {
             throw new ValueException("<html>La contraseña debe contener <br> al menos una letra mayúscula</html>");
         }
 
@@ -223,7 +225,8 @@ public class GestorBedel {
         List<BedelDTO> bedeles = new ArrayList<>();
         List<Bedel> bedelesAux;
 
-        String regex = "([a-zA-Z])+";
+//        String regex = "([a-zA-Z])+";
+        String regex = "([a-zA-ZñÑáéíóúÁÉÍÓÚ])+";
         Pattern pattern = Pattern.compile(regex);
 
         apellido = apellido.trim();

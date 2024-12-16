@@ -215,7 +215,7 @@ public class GestorReserva {
             throw new ValueException("Nombre de cátedra inválido.");
         }
         
-       regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+       regex = "^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ._%+-]+@[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.-]+\\.[a-zA-Z]{2,}$";
        pattern = Pattern.compile(regex);
        if (!pattern.matcher(emailDocente).matches()) {
             throw new ValueException("Email del docente inválido.");
