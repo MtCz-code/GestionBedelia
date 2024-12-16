@@ -12,27 +12,33 @@ import java.util.List;
  * @author gabic
  */
 public class DisponibilidadDTO {
-    private HashMap<AulaDTO, Integer> aulasDisponibles; // el integer representa la cantidad de solapamiento en modulos. si nno tiene es 0 
+    private List<AulaDTO> aulasDisponibles; // el integer representa la cantidad de solapamiento en modulos. si nno tiene es 0 
     private Boolean solapamiento;
-    private Integer cantidadModulosTotales;
+    private List<ReservaDTO> reservasSolapadas;
+    
     //private List<Integer> modulosSolapamiento;
 
     public DisponibilidadDTO() {
     }
 
-    public DisponibilidadDTO(HashMap<AulaDTO, Integer> aulasDisponibles, Boolean solapamiento) {
+    public DisponibilidadDTO(List<AulaDTO> aulasDisponibles, Boolean solapamiento) {
         this.aulasDisponibles = aulasDisponibles;
         this.solapamiento = solapamiento;
     }
 
-    public Integer getCantidadModulosTotales() {
-        return cantidadModulosTotales;
+    public DisponibilidadDTO(Boolean solapamiento, List<ReservaDTO> reservasSolapadas) {
+        this.solapamiento = solapamiento;
+        this.reservasSolapadas = reservasSolapadas;
     }
 
-    public void setCantidadModulosTotales(Integer cantidadModulosTotales) {
-        this.cantidadModulosTotales = cantidadModulosTotales;
+    public List<AulaDTO> getAulasDisponibles() {
+        return aulasDisponibles;
     }
-    
+
+    public void setAulasDisponibles(List<AulaDTO> aulasDisponibles) {
+        this.aulasDisponibles = aulasDisponibles;
+    }
+
     public Boolean getSolapamiento() {
         return solapamiento;
     }
@@ -41,23 +47,15 @@ public class DisponibilidadDTO {
         this.solapamiento = solapamiento;
     }
 
+    public List<ReservaDTO> getReservasSolapadas() {
+        return reservasSolapadas;
+    }
+
+    public void setReservasSolapadas(List<ReservaDTO> reservasSolapadas) {
+        this.reservasSolapadas = reservasSolapadas;
+    }
     
     
-    public HashMap<AulaDTO, Integer> getAulasDisponibles() {
-        return aulasDisponibles;
-    }
-
-    public void setAulasDisponibles(HashMap<AulaDTO, Integer> aulasDisponibles) {
-        this.aulasDisponibles = aulasDisponibles;
-    }
-
-    public boolean isSolapamiento() {
-        return solapamiento;
-    }
-
-    public void setSolapamiento(boolean solapamiento) {
-        this.solapamiento = solapamiento;
-    }
     
     
 }
