@@ -203,6 +203,10 @@ public class Interfaz {
 
         // menuAdmin
         menuAdmin.setListener(new MenuAdmin.Listener() {
+            @Override 
+            public void back(){
+                showLogin();
+            }
             @Override
             public void registrarBedel() {
                 showRegistrarBedel();
@@ -950,6 +954,10 @@ public class Interfaz {
     // Reserva
     private void showMenuBedel() {
         menuBedel.setListener(new MenuBedel.Listener() {
+            @Override()
+            public void back() {
+                showLogin();
+            }
             @Override
             public void registrarReserva() {
                 try {

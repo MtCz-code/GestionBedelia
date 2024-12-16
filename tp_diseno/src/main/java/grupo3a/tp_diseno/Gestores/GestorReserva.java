@@ -196,7 +196,8 @@ public class GestorReserva {
             throw new ValueException("<html>Los nombres deben tener menos de <br>" + largoMaxNombre + " caracteres.</html>");
         }
 
-        String regex = "([a-zA-Z])+";
+//        String regex = "([a-zA-Z])+";
+        String regex = "([a-zA-ZñÑáéíóúÁÉÍÓÚ])+";
         Pattern pattern = Pattern.compile(regex);
         
         nombreDocente = nombreDocente.trim();
