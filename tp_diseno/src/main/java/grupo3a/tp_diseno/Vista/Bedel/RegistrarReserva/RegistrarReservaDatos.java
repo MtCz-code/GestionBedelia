@@ -513,26 +513,8 @@ public class RegistrarReservaDatos extends javax.swing.JPanel {
         apellidoDocente = tfApellidoDocente.getText();
         // TODO: verificar usando regex
 
-        boolean check = nombreDocente != null
-                && apellidoDocente != null
-                && nombreCatedra != null
-                && correo != null
-                && cantidadAlumnos != -1
-                && nombreDocente.length() > 1
-                && apellidoDocente.length() > 1
-                && nombreCatedra.length() > 1
-                && correo.length() > 1;
-
-        if (check && listener != null)
+        if (listener != null)
             listener.next();
-        else {
-            System.out.println("nombreDocente: " + nombreDocente);
-            System.out.println("apellidoDocente: " + apellidoDocente);
-            System.out.println("nombreCatedra: " + nombreCatedra);
-            System.out.println("correo: " + correo);
-            System.out.println("cantidadAlumnos: " + cantidadAlumnos);
-            System.out.println("tipoAula: " + tipoAula.toString());
-        }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void tfApellidoDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoDocenteActionPerformed

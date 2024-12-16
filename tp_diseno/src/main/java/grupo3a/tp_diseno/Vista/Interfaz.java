@@ -203,6 +203,10 @@ public class Interfaz {
 
         // menuAdmin
         menuAdmin.setListener(new MenuAdmin.Listener() {
+            @Override 
+            public void back(){
+                showLogin();
+            }
             @Override
             public void registrarBedel() {
                 showRegistrarBedel();
@@ -457,12 +461,10 @@ public class Interfaz {
             @Override
             public void next() {
                 try {
-                    System.out.println("HASTA ACA LLEGO");
                     Year año = regRsvaSeleccionTipoReserva.getSelectedAño();
                     cuatrimestres = gestorReserva.recuperarCuatrimestresPorAño(año);
                     reserva = new ReservaDTO(-1, null, -1, null, null, -1, null, null, -1, -1, null, false);
                     
-                     System.out.println("HASTA ACA LLEGO 2");
                     if (null == regRsvaSeleccionTipoReserva.getSelectedTipoReserva()) {  //esporadica
                         alerta.setText("Seleccione un tipo de reserva");
                         alerta.setListener(() -> baseFrame.setPanel1Up());
@@ -476,7 +478,10 @@ public class Interfaz {
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat1 == null || cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados a este año");
+                                    throw new Exceptions.UIException("<html>No se encontraron cuatrimestres <br>asociados a este año");
+                                }
+                                if (cuat1.getFechaFin().isBefore(LocalDate.now())){
+                                    throw new Exceptions.UIException("<html>No se pueden realizar reservas anuales <br>si el primer cuatrimestre ya termino");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 reserva.setIdCuatrimestre2(cuat2.getIdCuatrimestre());
@@ -487,10 +492,10 @@ public class Interfaz {
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat1 = obtenerCuatrimestreActual(cuatrimestres, 1);
                                 if(cuat1.getFechaFin().isBefore(LocalDate.now())) {
-                                    throw new Exceptions.UIException("No se puede reservar para un cuatrimestre pasado");
+                                    throw new Exceptions.UIException("<html>No se puede reservar para <br>un cuatrimestre pasado");
                                 }
                                 if (cuat1 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 1er cuatrimestre");
+                                    throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 1er cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
@@ -500,7 +505,7 @@ public class Interfaz {
                                 reserva.setTipo(TipoReservaPeriodica.CUATRIMESTRAL);
                                 cuat2 = obtenerCuatrimestreActual(cuatrimestres, 2);
                                 if (cuat2 == null) {
-                                    throw new Exceptions.UIException("no se encontraron cuatrimestres asociados al 2do cuatrimestre");
+                                    throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 2do cuatrimestre");
                                 }
                                 reserva.setIdCuatrimestre1(cuat2.getIdCuatrimestre());    //TODO: check
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
@@ -514,17 +519,17 @@ public class Interfaz {
                     }
                 } catch (DAOException e) {
                     System.out.println(e.getMessage());
-                    /*alerta.setText(e.getMessage());
+                    alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();*/
+                    baseFrame.setPanel2Up();
                     return;
                 } catch (Exceptions.UIException e) {
                     System.out.println(e.getMessage());
-                    /*alerta.setText(e.getMessage());
+                    alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
                     alertaCardLayout.show(alertaPanel, "alerta");
-                    baseFrame.setPanel2Up();*/
+                    baseFrame.setPanel2Up();
                     return;
                 }
 
@@ -767,6 +772,24 @@ public class Interfaz {
                 if (reserva.isEsEsporadica()) {
                     cardLayout.show(mainPanel, "regAulaEsporadicaDias");
                 } else {
+                    boolean d[] = new boolean[] {
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    };
+                    if (reserva.getDiasSemana().contains(DiaSemana.LUNES))
+                        d[0] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.MARTES))
+                        d[1] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.MIERCOLES))
+                        d[2] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.JUEVES))
+                        d[3] = true;
+                    if (reserva.getDiasSemana().contains(DiaSemana.VIERNES))
+                        d[4] = true;
+                    regRsvaPeriodicaHorarios.setDiasHabilitados(d);
                     cardLayout.show(mainPanel, "regRsvaPeriodicaHorarios");
                 }
             }
@@ -786,6 +809,7 @@ public class Interfaz {
                     reserva.setNombreCatedra(nombreCatedra);
                     reserva.setEmailDocente(correo);
                     reserva.setCantidadAlumnos(cantidadAlumnos);
+                    
 
                     disponibilidadDeAulas = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
                     regRsvaAula.setTable(convertirFormatoAula(disponibilidadDeAulas));
@@ -814,11 +838,6 @@ public class Interfaz {
                 
                 if(disponibilidadDeAulas.getSolapamiento()){
                     regRsvaAula.setTitle("<html>Seleccione su aula a reservar<br>no existen aulas sin solapamiento");
-//                    System.out.println("" + disponibilidadDeAulas.getSolapamiento());
-//                    alerta.setText("no existen aulas sin solapamiento");
-//                    alerta.setListener(() -> baseFrame.setPanel1Up());
-//                    alertaCardLayout.show(alertaPanel, "alerta");
-//                    baseFrame.setPanel2Up();
                 }
                 else 
                     regRsvaAula.setTitle("Seleccione su aula a reservar<");
@@ -935,6 +954,10 @@ public class Interfaz {
     // Reserva
     private void showMenuBedel() {
         menuBedel.setListener(new MenuBedel.Listener() {
+            @Override()
+            public void back() {
+                showLogin();
+            }
             @Override
             public void registrarReserva() {
                 try {
@@ -1021,17 +1044,6 @@ public class Interfaz {
                 }
             }
 
-//            String ubicacion = aulas[i].getTipo().toString() + " " + aulas[i].getUbicacion();
-//            String capacidad = aulas[i].getCapacidad() + "alumnos";
-//            String caracteristicas = "pizarron: " + aulas[i].getTipoDePizarron().toString();
-            // TODO: agregar ventiladores y eso
-//            if (aulas[i].getTipo() == TipoAula.GENERAL) {
-            // TODO
-//            } else if (aulas[i].getTipo() == TipoAula.LABORATORIO) {
-//                caracteristicas += " " + ((AulaLaboratorio) aulas[i]).getCantidadDePCs();
-//            } else if (aulas[i].getTipo() == TipoAula.MULTIMEDIOS) {
-            // TODO
-//            }
             str[i] = new String[]{ubicacion, capacidad, caracteristicas, solap};
             i++;
         }
@@ -1047,13 +1059,13 @@ public class Interfaz {
         for (int i = 0; i < cuats.size(); i++) {
             CuatrimestreDTO cuat = cuats.get(i);
             // buscar en cuatrimestres de este año
-            if (cuat.getFechaInicio().getYear() == yearNow) {
+            
                 if (cuat.getFechaInicio().getMonthValue() < 6 && numofcuat == 1) {
                     return cuat;
                 } else if (cuat.getFechaInicio().getMonthValue() >= 6 && numofcuat == 2) {
                     return cuat;
                 }
-            }
+            
         }
         return null;
     }

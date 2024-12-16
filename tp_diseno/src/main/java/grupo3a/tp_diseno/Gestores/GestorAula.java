@@ -55,35 +55,38 @@ public class GestorAula {
         int capacidad = reserva.getCantidadAlumnos();
         List<AulaDTO> listaAulas = new ArrayList<>();
 
-        // Obtener aulas elegibles según el tipo y capacidad
-        if (tipoAula == TipoAula.GENERAL) {
-            List<AulaGeneral> aulas = aulaGeneralDAO.getByCapacidad(capacidad);
-            
-            for (AulaGeneral a : aulas) {
-                listaAulas.add(convertirADTO(a));
-            }
-        } else if (tipoAula == TipoAula.LABORATORIO) {
-            List<AulaLaboratorio> aulas = aulaLaboratorioDAO.getByCapacidad(capacidad);
-            for (AulaLaboratorio a : aulas) {
-                listaAulas.add(convertirADTO(a));
-            }
-        } else if (tipoAula == TipoAula.MULTIMEDIOS) {
-            List<AulaMultimedios> aulas = aulaMultimediosDAO.getByCapacidad(capacidad);
-            for (AulaMultimedios a : aulas) {
-                listaAulas.add(convertirADTO(a));
-            }
-        } else {
+        if (null == tipoAula) {
             return null;
+        } else // Obtener aulas elegibles según el tipo y capacidad
+        switch (tipoAula) {
+            case GENERAL ->                 {
+                    List<AulaGeneral> aulas = aulaGeneralDAO.getByCapacidad(capacidad);
+                    for (AulaGeneral a : aulas) {
+                        listaAulas.add(convertirADTO(a));
+                    }                      
+            }
+            case LABORATORIO ->                 {
+                    List<AulaLaboratorio> aulas = aulaLaboratorioDAO.getByCapacidad(capacidad);
+                    for (AulaLaboratorio a : aulas) {
+                        listaAulas.add(convertirADTO(a));
+                    }                      
+            }
+            case MULTIMEDIOS ->                 {
+                    List<AulaMultimedios> aulas = aulaMultimediosDAO.getByCapacidad(capacidad);
+                    for (AulaMultimedios a : aulas) {
+                        listaAulas.add(convertirADTO(a));
+                    }                      
+            }
+            default -> {
+                return null;
+            }
         }
 
         if (listaAulas.isEmpty()) {
             throw new NoExisteAulaException("No existen aulas con la capacidad de alumnos requerida");
         }
         
-        /*System.out.println("Aulas disponibles:");
-            for(AulaDTO a : listaAulas){
-                System.out.println(a.getUbicacion());
-            }*/
+        
 
         // Obtener las reservas existentes que se solapan con los horarios y fechas de la nueva reserva
         List<List<DetalleReserva>> listaDRSolapados = new ArrayList<>();
@@ -91,11 +94,6 @@ public class GestorAula {
             listaDRSolapados.add(detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
         }
 
-        // rompe todo cuando no hay aulas
-//        for(DetalleReserva dr : listaDRSolapados.get(0)){
-//            System.out.println();
-//        };
-        
         
         // Filtrar por criterio (aulas sin solapamiento o con menor solapamiento)
         return filtrarPorCriterio(listaAulas, reserva.getDetallesReserva(), listaDRSolapados);
@@ -114,6 +112,9 @@ public class GestorAula {
         int totalModulosReserva = detallesReserva.stream()
                 .mapToInt(DetalleReservaDTO::getCantModulos)
                 .sum();
+        /*for(DetalleReservaDTO dr : detallesReserva){
+            totalModulosReserva += dr.getCantModulos();
+        }*/
 
         // Calcular solapamiento para cada aula
         for (int i = 0; i < detallesReserva.size(); i++) {
@@ -152,7 +153,7 @@ public class GestorAula {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         
         if (aulasFiltradas.isEmpty()) {
-            throw new NoExisteAulaException("No existen aulas del tipo requerido disponibles");
+            throw new NoExisteAulaException("<html>No existen aulas del tipo <br> requerido disponibles");
         }
 
         // Encontrar las 3 aulas con menor solapamiento

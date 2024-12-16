@@ -43,7 +43,6 @@ public class ReservaSqlDAO implements ReservaDAO{
 
  
         try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            //conn.setAutoCommit(false);
             
             
             stmt.setInt(1, reserva.getIdDocente());
@@ -52,8 +51,6 @@ public class ReservaSqlDAO implements ReservaDAO{
             stmt.setString(4, reserva.getEmailDocente());
             stmt.setInt(5, reserva.getIdCatedra());
             stmt.setString(6, reserva.getNombreCatedra());
-            //Timestamp timestamp = Timestamp.valueOf(reserva.getFechaRegistro());
-            //stmt.setTimestamp(7, timestamp);
             stmt.setInt(7, reserva.getBedel().getIdUsuario());
             
         
@@ -68,10 +65,8 @@ public class ReservaSqlDAO implements ReservaDAO{
                     DAO.crear(dr,conn);
                 }
             }
-            //conn.commit();
             return idReserva;
         } catch (SQLException e) {
-            System.out.println("Error al agregar la reserva: " + e.getMessage());
             throw new DAOException("Error al agregar la reserva: " + e.getMessage());
         }   
     }

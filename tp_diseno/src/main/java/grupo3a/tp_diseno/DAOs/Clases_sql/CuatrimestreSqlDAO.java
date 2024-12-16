@@ -63,7 +63,6 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             
         } catch (SQLException ex) {
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return cuatrimestres;
@@ -85,15 +84,15 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
                 
                 LocalDate fechaFin = fechaF.toLocalDate();
                 LocalDate anioActual = LocalDate.now();
-                
+                Year anio = Year.of(fechaFin.getYear()); 
                 if(fechaFin.getYear()>=anioActual.getYear()){
-                    anios.add(Year.now());
+                    
+                    anios.add(anio);
                 }
             }            
             
         } catch (SQLException ex) {
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return new ArrayList<>(anios);
@@ -132,7 +131,6 @@ public class CuatrimestreSqlDAO implements CuatrimestreDAO{
             
         } catch (SQLException ex) {
             throw new DAOException(ex.getMessage());
-            //System.out.println("Error al listar los cuatrimestres. Se devuelve lista vacia.");
         }
         
         return cuatrimestres;

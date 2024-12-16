@@ -28,23 +28,6 @@ import java.util.regex.Pattern;
 
 public class GestorReserva {
 
-    /*public static final int RESERVA_ANUAL = 0;
-    public final static int RESERVA_PRIMER_CUATRIMESTRE = 1;
-    public final static int RESERVA_SEGUNDO_CUATRIMESTRE = 2;
-    public final static int RESERVA_ESPORADICA = 3;*/
-
-   /* private int reservaTipoReserva = -1;
-    private List<DiaSemana> reservaDiasSeleccionadosSemana;
-    private List<DetalleReservaDTO> reservaDetalleReservas;
-    private String reservaNombreDocente;
-    private String reservaApellidoDocente;
-    private String reservaNombreCatedra;
-    private String reservaCorreo;
-    private int reservaCantidadAlumnos;
-    private TipoAula reservaTipoAula;
-    private AulaGeneral[] reservaAulasDisponibles; //
-    private AulaGeneral reservaAulaSeleccionada; // TODO: estas se pueden simplificar
-    private int reservaAulaSeleccionadaIdx; //*/
     
     
     private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
@@ -82,9 +65,7 @@ public class GestorReserva {
         for(Cuatrimestre c : cuatrimestres){
            cdto.add(convertirCuatrimestreADTO(c));
            
-            /*System.out.println("cuatrimestre:" + c.getIdCuatrimestre() 
-                    + "\ninicio: " + c.getFechaInicio().toString() 
-                    + "\nfin: " + c.getFechaFin());*/
+            
         }
         
         return cdto;
@@ -205,7 +186,7 @@ public class GestorReserva {
         String nombreCatedra = r.getNombreCatedra();
         
         
-        if(r.getCantidadAlumnos() <= 0) throw new ValueException("La cantidad de alumnos debe ser mayor a 0");;
+        if(r.getCantidadAlumnos() <= 0) throw new ValueException("La cantidad de alumnos debe ser mayor a 0");
         
         int largoMaxNombre = 50;
         if (nombreDocente.length() >= largoMaxNombre
@@ -215,7 +196,8 @@ public class GestorReserva {
             throw new ValueException("<html>Los nombres deben tener menos de <br>" + largoMaxNombre + " caracteres.</html>");
         }
 
-        String regex = "([a-zA-Z])+";
+//        String regex = "([a-zA-Z])+";
+        String regex = "([a-zA-ZñÑáéíóúÁÉÍÓÚ])+";
         Pattern pattern = Pattern.compile(regex);
         
         nombreDocente = nombreDocente.trim();
@@ -233,7 +215,7 @@ public class GestorReserva {
             throw new ValueException("Nombre de cátedra inválido.");
         }
         
-       regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+       regex = "^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ._%+-]+@[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.-]+\\.[a-zA-Z]{2,}$";
        pattern = Pattern.compile(regex);
        if (!pattern.matcher(emailDocente).matches()) {
             throw new ValueException("Email del docente inválido.");
@@ -378,8 +360,5 @@ public class GestorReserva {
         return new CuatrimestreDTO(id, fechaInicio, fechaFin);
     }
 
-    
-
-    
-
 }
+    

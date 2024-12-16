@@ -46,7 +46,6 @@ public class ReservaEsporadicaSqlDAO extends ReservaSqlDAO implements ReservaEsp
                 
                 stmt.setInt(1, reserva.getIdReserva());
                 stmt.executeUpdate();
-                System.out.println("Reserva insertada exitosamente.");
                 conn.commit();
                 return reserva.getIdReserva();
             } catch (Exception e){
@@ -54,7 +53,6 @@ public class ReservaEsporadicaSqlDAO extends ReservaSqlDAO implements ReservaEsp
                 throw new DAOException("Error al crear la reserva esporadica: "+ e.getMessage());
             }
         } catch (SQLException e) {
-            // System.out.println("Error al agregar la reserva esporadica");
             throw new DAOException("Error al agregar la reserva esporadica: " + e.getMessage());
         }
 
