@@ -39,10 +39,12 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor,
     public void actionPerformed(ActionEvent e) {
         if ("Editar".equals(label)) {
             // Lógica para editar el cliente
-            System.out.println("Editar cliente en fila " + row);
+            System.out.println("Editar en fila " + row);
         } else if ("Borrar".equals(label)) {
             // Lógica para borrar el cliente
-            System.out.println("Borrar cliente en fila " + row);
+            System.out.println("Borrar en fila " + row);
+        } else if("Ver detalle".equals(label)){
+            System.out.println("Ver detalle en fila" + row);
         }
         fireEditingStopped();
     }
