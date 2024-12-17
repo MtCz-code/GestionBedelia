@@ -157,7 +157,8 @@ public class MenuBedel extends javax.swing.JPanel {
 
         btnCancelar1.setBackground(new java.awt.Color(17, 17, 17));
         btnCancelar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar1.setText("Regresar");
+        btnCancelar1.setText("Cerrar sesion");
+        btnCancelar1.setName("Cerrar sesion"); // NOI18N
         btnCancelar1.setPreferredSize(new java.awt.Dimension(110, 40));
         btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
