@@ -351,6 +351,11 @@ public class GestorReserva {
         return listadr;
     }
     
+    public DetalleReservaDTO convertirDetalleReservaADTO(DetalleReserva dr){
+        return new DetalleReservaDTO(dr.getIdReserva(), dr.getHorarioInicio(), dr.getCantModulos(),
+                                                        dr.getFecha(), dr.getDiaReserva(), dr.getIdAula());
+    }
+    
     private CuatrimestreDTO convertirCuatrimestreADTO(Cuatrimestre c) {
         int id = c.getIdCuatrimestre();
         LocalDate fechaInicio = c.getFechaInicio();

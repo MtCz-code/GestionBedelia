@@ -70,5 +70,10 @@ public class ReservaSqlDAO implements ReservaDAO{
             throw new DAOException("Error al agregar la reserva: " + e.getMessage());
         }   
     }
+
+    @Override
+    public Reserva buscarPorId(Integer id) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

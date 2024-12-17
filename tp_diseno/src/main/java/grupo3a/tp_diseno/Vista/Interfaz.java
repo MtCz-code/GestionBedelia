@@ -1002,54 +1002,62 @@ public class Interfaz {
     }
 
     private String[][] convertirFormatoAula(DisponibilidadDTO disp) {
-        HashMap<AulaDTO, Integer> aulasDisponibles = disp.getAulasDisponibles();
-        
-        boolean solapamiento = disp.getSolapamiento();
+        // SI EXISTEN AULAS SIN SOLAPAMIENTO
+        if (!disp.getSolapamiento()) {
+            Set<AulaDTO> aulasDisponibles = (Set<AulaDTO>) disp.getAulasDisponibles().values();
 
-        String[][] str = new String[aulasDisponibles.size()][];
-
-        Set<AulaDTO> aulas = aulasDisponibles.keySet();
-
-        Iterator<AulaDTO> it = aulas.iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            // TODO: sacar tipo (solo se debe mostrar la ubicacion creo, verificar) 
-            AulaDTO auladto = it.next();
-            String ubicacion = auladto.getUbicacion();
-            String capacidad = auladto.getCapacidad() + " personas";
-            int modulosSolapados = aulasDisponibles.get(auladto);
+            String[][] str = new String[aulasDisponibles.size()][];
+            
+            Iterator<AulaDTO> it = aulasDisponibles.iterator();
+            int i = 0;
+            while (it.hasNext()) {
+                // TODO: sacar tipo (solo se debe mostrar la ubicacion creo, verificar) 
+                AulaDTO auladto = it.next();
+                String ubicacion = auladto.getUbicacion();
+                String capacidad = auladto.getCapacidad() + " personas";
+                /*int modulosSolapados = aulasDisponibles.get(auladto);
             int modulosTotales = disp.getCantidadModulosTotales();
             String solap = String.format("%.0f%%", ((float) modulosSolapados / modulosTotales) * 100);
-            //String solap = (((float) modulosSolapados / (float)modulosTotales) * 100) + "%";
+            //String solap = (((float) modulosSolapados / (float)modulosTotales) * 100) + "%";*/
 
-            List<String> caracteristics = new ArrayList<>();
-            if (auladto.isAireAcondicionado()) {
-                caracteristics.add("aire acondicionado");
-            }
-            if (auladto.isCanon()) {
-                caracteristics.add("cañon");
-            }
-            if (auladto.isComputadora()) {
-                caracteristics.add("computadoras");
-            }
-            if (auladto.isTelevisor()) {
-                caracteristics.add("televisor");
-            }
-            if (auladto.isVentiladores()) {
-                caracteristics.add("ventiladores");
-            }
-            String caracteristicas = "";
-            for (int j = 0; j < caracteristics.size(); j++) {
-                caracteristicas += caracteristics.get(j);
-                if (j != caracteristics.size() - 1) {
-                    caracteristicas += " / ";
+                List<String> caracteristics = new ArrayList<>();
+                if (auladto.isAireAcondicionado()) {
+                    caracteristics.add("aire acondicionado");
                 }
-            }
+                if (auladto.isCanon()) {
+                    caracteristics.add("cañon");
+                }
+                if (auladto.isComputadora()) {
+                    caracteristics.add("computadoras");
+                }
+                if (auladto.isTelevisor()) {
+                    caracteristics.add("televisor");
+                }
+                if (auladto.isVentiladores()) {
+                    caracteristics.add("ventiladores");
+                }
+                String caracteristicas = "";
+                for (int j = 0; j < caracteristics.size(); j++) {
+                    caracteristicas += caracteristics.get(j);
+                    if (j != caracteristics.size() - 1) {
+                        caracteristicas += " / ";
+                    }
+                }
 
-            str[i] = new String[]{ubicacion, capacidad, caracteristicas, solap};
-            i++;
+                str[i] = new String[]{ubicacion, capacidad, caracteristicas/*, solap*/};
+                i++;
+            }
+            return str;
         }
-        return str;
+        
+        // SI NO EXISTEN AULAS SIN SOLAPAMIENTO
+        // hay q manejar la lista de DR solapados, y el hashMap de aulas y Reservas (estos 2 hashmap son para obtener los datos necesarios de c/u)
+        // para cada DR de la lista, hay q mostrar: ubicación aula (atributo aula), fecha, horario inicio, horario fin, datos de contacto (atributos reserva)
+        else {
+            
+            
+            return ;
+        }
     }
 
     private CuatrimestreDTO obtenerCuatrimestreActual(List<CuatrimestreDTO> cuats, int numofcuat) {

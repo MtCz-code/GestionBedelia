@@ -18,5 +18,6 @@ import java.sql.Connection;
 public interface ReservaDAO {
     
     Integer crear(Reserva reserva, Connection conn) throws DAOException;
+    Reserva buscarPorId(Integer id) throws DAOException;
     //Integer crear(ReservaEsporadica reserva);
 }

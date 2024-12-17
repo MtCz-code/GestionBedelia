@@ -6,13 +6,14 @@ package grupo3a.tp_diseno.DTOs;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author gabic
  */
 public class DisponibilidadDTO {
-    private List<AulaDTO> aulasDisponibles;
+    private HashMap<Integer, AulaDTO> aulasDisponibles;
     private Boolean solapamiento;
     private List<DetalleReservaDTO> drSolapados;
     private HashMap<Integer, ReservaDTO> reservasSolapadas;
@@ -22,11 +23,11 @@ public class DisponibilidadDTO {
     public DisponibilidadDTO() {
     }
     
-    public List<AulaDTO> getAulasDisponibles() {
+    public HashMap<Integer, AulaDTO> getAulasDisponibles() {
         return aulasDisponibles;
     }
 
-    public void setAulasDisponibles(List<AulaDTO> aulasDisponibles) {
+    public void setAulasDisponibles(HashMap<Integer, AulaDTO> aulasDisponibles) {
         this.aulasDisponibles = aulasDisponibles;
     }
 

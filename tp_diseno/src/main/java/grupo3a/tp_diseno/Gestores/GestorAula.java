@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import grupo3a.tp_diseno.DAOs.AulaGeneralDAO;
 import grupo3a.tp_diseno.DAOs.Clases_sql.DetalleReservaSqlDAO;
+import grupo3a.tp_diseno.DAOs.Clases_sql.ReservaSqlDAO;
 import grupo3a.tp_diseno.DAOs.DetalleReservaDAO;
+import grupo3a.tp_diseno.DAOs.ReservaDAO;
 import grupo3a.tp_diseno.DTOs.AulaDTO;
 import grupo3a.tp_diseno.DTOs.DetalleReservaDTO;
 import grupo3a.tp_diseno.Enumerations.TipoAula;
@@ -23,8 +25,12 @@ import grupo3a.tp_diseno.Exceptions.Exceptions.NoExisteAulaException;
 import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Modelos.AulaMultimedios;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -49,6 +55,9 @@ public class GestorAula {
     private final AulaMultimediosDAO aulaMultimediosDAO = AulaMultimediosSqlDAO.getInstance();
     
     private final DetalleReservaDAO detalleReservaDAO = DetalleReservaSqlDAO.getInstance();
+    private final ReservaDAO reservaDAO = ReservaSqlDAO.getInstance();
+    private final GestorReserva gestorReserva = GestorReserva.getInstance();
+    
     
     
     public DisponibilidadDTO obtenerDisponibilidadAulas(ReservaDTO reserva, TipoAula tipoAula) throws DAOException, NoExisteAulaException {
@@ -87,89 +96,97 @@ public class GestorAula {
         }
         
         
-
-        // Obtener las reservas existentes que se solapan con los horarios y fechas de la nueva reserva
-        List<List<DetalleReserva>> listaDRSolapados = new ArrayList<>();
+        Map<LocalDate, List<DetalleReserva>> solapamientosPorDia = new HashMap<>();
         for (DetalleReservaDTO dr : reserva.getDetallesReserva()) {
-            listaDRSolapados.add(detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
+            solapamientosPorDia.put(dr.getFecha(),
+                    detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
         }
 
-        
         // Filtrar por criterio (aulas sin solapamiento o con menor solapamiento)
-        return filtrarPorCriterio(listaAulas, reserva.getDetallesReserva(), listaDRSolapados);
+        return filtrarPorCriterio(listaAulas, reserva.getDetallesReserva(), solapamientosPorDia); // devuelve DisponibilidadDTO
     }
     
-    public DisponibilidadDTO filtrarPorCriterio(List<AulaDTO> listaAulas, List<DetalleReservaDTO> detallesReserva, List<List<DetalleReserva>> reservasSolapadas) throws NoExisteAulaException {
+    private DisponibilidadDTO filtrarPorCriterio(List<AulaDTO> listaAulas, List<DetalleReservaDTO> detallesReserva, Map<LocalDate, List<DetalleReserva>> solapamientosPorDia) throws NoExisteAulaException, DAOException {
         DisponibilidadDTO disponibilidad = new DisponibilidadDTO();
+        HashMap<Integer, ReservaDTO> reservasMap = new HashMap<>();
+        HashMap<Integer, AulaDTO> aulasDisponibles = new HashMap<>();
+        List<DetalleReservaDTO> detallesSolapados = new ArrayList<>();
 
-        HashMap<AulaDTO, Integer> aulasConSolapamiento = inicializarHashMap(listaAulas);
+        // Inicializar las aulas sin solapamiento
+        Set<AulaDTO> aulasSinSolapamiento = new HashSet<>(listaAulas);
 
         // Crear un mapa para buscar aulas rápidamente por ID
-        Map<Integer, AulaDTO> mapAulas = listaAulas.stream()
-                .collect(Collectors.toMap(AulaDTO::getIdAula, Function.identity()));
+        Map<Integer, AulaDTO> mapAulas = new HashMap<>();
+        for (AulaDTO aula : listaAulas) {
+            mapAulas.put(aula.getIdAula(), aula);
+        }
 
-        // Calcular el total de módulos de la nueva reserva
-        int totalModulosReserva = detallesReserva.stream()
-                .mapToInt(DetalleReservaDTO::getCantModulos)
-                .sum();
-        /*for(DetalleReservaDTO dr : detallesReserva){
-            totalModulosReserva += dr.getCantModulos();
-        }*/
+        // Procesar cada día (representado por los detalles de la nueva reserva)
+        for (DetalleReservaDTO nuevoDR : detallesReserva) {
+            LocalDate fecha = nuevoDR.getFecha();
+            List<DetalleReserva> reservasExistentes = solapamientosPorDia.getOrDefault(fecha, Collections.emptyList());
 
-        // Calcular solapamiento para cada aula
-        for (int i = 0; i < detallesReserva.size(); i++) {
-            DetalleReservaDTO nuevaReserva = detallesReserva.get(i);
-            List<DetalleReserva> solapadas = reservasSolapadas.get(i);
+            // Mapa para acumular solapamientos por aula
+            Map<AulaDTO, Integer> solapamientoPorAula = new HashMap<>();
 
-            for (DetalleReserva reservaExistente : solapadas) {
-
+            for (DetalleReserva reservaExistente : reservasExistentes) {
                 AulaDTO aula = mapAulas.get(reservaExistente.getIdAula());
 
                 if (aula != null) {
-                    int solapamientoActual = aulasConSolapamiento.get(aula);
-                    aulasConSolapamiento.put(aula, solapamientoActual + calcularSolapamiento(nuevaReserva, reservaExistente));
+                    int solapamiento = calcularSolapamiento(nuevoDR, reservaExistente);
+                    if (solapamientoPorAula.containsKey(aula)) {
+                        solapamientoPorAula.put(aula, solapamientoPorAula.get(aula) + solapamiento);
+                    } else {
+                        solapamientoPorAula.put(aula, solapamiento);
+                    }
+                    aulasSinSolapamiento.remove(aula); // Eliminar aulas que tienen solapamiento
                 }
+            }
+
+            // Verificar si existen aulas sin solapamiento
+            if (!aulasSinSolapamiento.isEmpty()) {
+                for (AulaDTO aulaSinSolapamiento : aulasSinSolapamiento) {
+                    aulasDisponibles.put(aulaSinSolapamiento.getIdAula(), aulaSinSolapamiento);
+                }
+                disponibilidad.setAulasDisponibles(aulasDisponibles);
+                disponibilidad.setSolapamiento(false);
+                return disponibilidad;
+            }
+
+            // Encontrar el menor solapamiento y las aulas con ese solapamiento
+            int menorSolapamiento = Integer.MAX_VALUE;
+            for (Integer solapamiento : solapamientoPorAula.values()) {
+                if (solapamiento < menorSolapamiento) {
+                    menorSolapamiento = solapamiento;
+                }
+            }
+            for (Map.Entry<AulaDTO, Integer> entry : solapamientoPorAula.entrySet()) {
+                if (entry.getValue() == menorSolapamiento) {
+                    AulaDTO aulaSeleccionada = entry.getKey();
+                    aulasDisponibles.put(aulaSeleccionada.getIdAula(), aulaSeleccionada);
+               }
+            }
+
+            // Filtrar DetalleReserva correspondientes a las aulas seleccionadas
+            for (DetalleReserva dr : reservasExistentes) {
+                AulaDTO aula = mapAulas.get(dr.getIdAula());
+                if (aula != null && aulasDisponibles.containsKey(aula.getIdAula())) {
+                    detallesSolapados.add(gestorReserva.convertirDetalleReservaADTO(dr));
+
+                    // Asociar la reserva completa al HashMap si aún no existe
+                    if (!reservasMap.containsKey(dr.getIdReserva())) {
+                            ReservaDTO reservaDTO = gestorReserva.convertirADTO(reservaDAO.buscarPorId(dr.getIdReserva()));
+                            reservasMap.put(dr.getIdReserva(), reservaDTO);
+                      }
+                }
+                
             }
         }
 
-        // Filtrar aulas sin solapamiento
-        List<AulaDTO> aulasSinSolapamiento = aulasConSolapamiento.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() == 0)
-                .map(Map.Entry::getKey)
-                .toList();
-
-        if (!aulasSinSolapamiento.isEmpty()) {
-            disponibilidad.setAulasDisponibles(inicializarHashMap(aulasSinSolapamiento));
-            disponibilidad.setCantidadModulosTotales(totalModulosReserva);
-            disponibilidad.setSolapamiento(false);
-            return disponibilidad;
-        }
-
-        // Filtrar aulas cuyo solapamiento no exceda el 50% del total de módulos
-        Map<AulaDTO, Integer> aulasFiltradas = aulasConSolapamiento.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue() <= totalModulosReserva * 0.5)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        
-        if (aulasFiltradas.isEmpty()) {
-            throw new NoExisteAulaException("<html>No existen aulas del tipo <br> requerido disponibles");
-        }
-
-        // Encontrar las 3 aulas con menor solapamiento
-        List<AulaDTO> aulasMenorSolapamiento = aulasFiltradas.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .limit(3)
-                .map(Map.Entry::getKey)
-                .toList();
-
-        HashMap<AulaDTO, Integer> resultado = new HashMap<>();
-        for (AulaDTO aula : aulasMenorSolapamiento) {
-            resultado.put(aula, aulasConSolapamiento.get(aula));
-        }
-        disponibilidad.setAulasDisponibles(resultado);
-        disponibilidad.setCantidadModulosTotales(totalModulosReserva);
+        // Configurar el objeto DisponibilidadDTO
+        disponibilidad.setAulasDisponibles(aulasDisponibles);
+        disponibilidad.setDrSolapados(detallesSolapados);
+        disponibilidad.setReservasSolapadas(reservasMap);
         disponibilidad.setSolapamiento(true);
 
         return disponibilidad;
@@ -196,19 +213,6 @@ public class GestorAula {
         return (finSolapamiento - inicioSolapamiento) / 30; // Solapamiento en MODULOS
     }
 
-
-
-
-    
-    public static HashMap<AulaDTO, Integer> inicializarHashMap(List<AulaDTO> listaAulas) {
-        HashMap<AulaDTO, Integer> mapaAulas = new HashMap<>();
-        for (AulaDTO aula : listaAulas) {
-            mapaAulas.put(aula, 0); // Inicializar cada clave con valor 0
-        }
-        return mapaAulas;
-    }
-    
-    
     
     private AulaDTO convertirADTO(AulaGeneral a){
         int idAula = a.getIdAula();
