@@ -98,7 +98,7 @@ public class Interfaz {
     private List<CuatrimestreDTO> cuatrimestres;
     private CuatrimestreDTO cuat1, cuat2;
     private ArrayList<DiaSemana> dias;
-    private ArrayList<DetalleReservaDTO> detalleReservaDto;
+    private ArrayList<DetalleReservaDTO> listaDetalleReservaDTO;
     private DisponibilidadDTO disponibilidadDeAulas;
     private ReservaDTO reserva;
     private int idBedel;
@@ -493,6 +493,7 @@ public class Interfaz {
                                 if (cuat1 == null) {
                                     throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 1er cuatrimestre");
                                 }
+                                cuatrimestres.clear(); cuatrimestres.add(cuat1);
                                 reserva.setIdCuatrimestre1(cuat1.getIdCuatrimestre());
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
                             }
@@ -503,6 +504,7 @@ public class Interfaz {
                                 if (cuat2 == null) {
                                     throw new Exceptions.UIException("<html>no se encontraron cuatrimestres <br>asociados al 2do cuatrimestre");
                                 }
+                                cuatrimestres.clear(); cuatrimestres.add(cuat2);
                                 reserva.setIdCuatrimestre1(cuat2.getIdCuatrimestre());    //TODO: check
                                 cardLayout.show(mainPanel, "regRsvaTipoPeriodicaDias");
                             }
@@ -656,24 +658,30 @@ public class Interfaz {
                 }
 
                 /*CuatrimestreDTO cuat;
-                detalleReservaDto = new ArrayList<>();
+                listaDetalleReservaDTO = new ArrayList<>();
                 for (int i = 0; i < detallesDias.size(); i++) {
                     DetalleReservaDTO detalleDeDia = detallesDias.get(i);
 
                     if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.PRIMER_CUATRIMESTRE) {
-                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
+                        listaDetalleReservaDTO.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
                     } else if (regRsvaSeleccionTipoReserva.getSelected() == SeleccionTipoReserva.TIPO_RESERVA.SEGUNDO_CUATRIMESTRE) {
-                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
+                        listaDetalleReservaDTO.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
                     } else {
-                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
-                        detalleReservaDto.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
+                        listaDetalleReservaDTO.addAll(obtenerDiasCuatrimestre(cuat1, detalleDeDia));
+                        listaDetalleReservaDTO.addAll(obtenerDiasCuatrimestre(cuat2, detalleDeDia));
                     }
 
                 }*/
                 
                 
-                detalleReservaDto = (ArrayList) gestorReserva.generarDetallesReserva(cuatrimestres, reserva.getDiasSemana(), horariosInicio, modulos);
-                reserva.setDetallesReserva(detalleReservaDto);
+                listaDetalleReservaDTO = (ArrayList) gestorReserva.generarDetallesReserva(cuatrimestres, reserva.getDiasSemana(), horariosInicio, modulos);
+                
+                System.out.println("DetalleReserva generado para reserva periodica: ");
+                for(DetalleReservaDTO d : listaDetalleReservaDTO){
+                    System.out.println("Fecha: " + d.getFecha() + " - Horario Inicio: " + d.getHorarioInicio() + " - CANT MODULOS: " + d.getCantModulos() + " Dia Semana: " + d.getDiaReserva());
+                }
+                
+                reserva.setDetallesReserva(listaDetalleReservaDTO);
                 cardLayout.show(mainPanel, "regRsvaDatos");
 
             }
@@ -690,7 +698,7 @@ public class Interfaz {
             public void next() {
 
                 Object[][] datos = regAulaEsporadicaDias.getData();
-                detalleReservaDto = new ArrayList<>();
+                listaDetalleReservaDTO = new ArrayList<>();
 
                 try {
                     for (int i = 0; i < datos.length; i++) {
@@ -743,12 +751,12 @@ public class Interfaz {
                          */
                         LocalDate localDate = dia.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         DetalleReservaDTO tmp = new DetalleReservaDTO(-1, horarioInicio, cantModulos, localDate, ds, -1);
-                        detalleReservaDto.add(tmp);
+                        listaDetalleReservaDTO.add(tmp);
                     }
 
-                    reserva.setDetallesReserva(detalleReservaDto);
+                    reserva.setDetallesReserva(listaDetalleReservaDTO);
                     
-                    gestorReserva.validarDias(detalleReservaDto, cuatrimestres);
+                    gestorReserva.validarDias(listaDetalleReservaDTO, cuatrimestres);
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
                     alerta.setListener(() -> baseFrame.setPanel1Up());
@@ -833,10 +841,10 @@ public class Interfaz {
                 cardLayout.show(mainPanel, "regRsvaAula");
                 
                 if(disponibilidadDeAulas.getSolapamiento()){
-                    regRsvaAula.setTitle("<html>Seleccione su aula a reservar<br>no existen aulas sin solapamiento");
+                    regRsvaAula.setTitle("No existen aulas sin solapamiento para su reserva");
                 }
                 else 
-                    regRsvaAula.setTitle("Seleccione su aula a reservar<");
+                    regRsvaAula.setTitle("Seleccione su aula a reservar");
             }
         });
 
@@ -885,11 +893,11 @@ public class Interfaz {
                 diaReserva
                 idAula
                  */
-                for (int i = 0; i < detalleReservaDto.size(); i++) {
-                    detalleReservaDto.get(i).setIdAula(aula.getIdAula());
+                for (int i = 0; i < listaDetalleReservaDTO.size(); i++) {
+                    listaDetalleReservaDTO.get(i).setIdAula(aula.getIdAula());
                 }
                 
-                reserva.setDetallesReserva(detalleReservaDto);
+                reserva.setDetallesReserva(listaDetalleReservaDTO);
                 
                 try {
                     gestorReserva.crearReserva(reserva);
@@ -1050,7 +1058,12 @@ public class Interfaz {
         // hay q manejar la lista de DR solapados, y el hashMap de aulas y Reservas (estos 2 hashmap son para obtener los datos necesarios de c/u)
         // para cada DR de la lista, hay q mostrar: ubicación aula (atributo aula), fecha, horario inicio, horario fin, datos de contacto (atributos reserva)
         else {
-            
+            System.out.println("DETALLES RESERVA SOLAPADOS X DIA");
+            for(DetalleReservaDTO dr : disp.getDrSolapados()){
+                AulaDTO aula = disp.getAulasDisponibles().get(dr.getIdAula());
+                ReservaDTO reserva = disp.getReservasSolapadas().get(dr.getIdReserva());
+                System.out.println("fecha: " + dr.getFecha() + " - aula: "  + aula.getUbicacion()  + " - catedra: " + reserva.getNombreCatedra());
+            }
             
             return null;
         }

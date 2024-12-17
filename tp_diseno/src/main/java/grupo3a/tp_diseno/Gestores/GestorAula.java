@@ -94,12 +94,23 @@ public class GestorAula {
             throw new NoExisteAulaException("No existen aulas con la capacidad de alumnos requerida");
         }
         
-        
+        System.out.println("DETALLES RESERVA EN GESTOR AULA 1");
         Map<LocalDate, List<DetalleReserva>> solapamientosPorDia = new HashMap<>();
         for (DetalleReservaDTO dr : reserva.getDetallesReserva()) {
-            solapamientosPorDia.put(dr.getFecha(),
+            
+           System.out.println("Fecha: " + dr.getFecha() + " - Horario Inicio: " + dr.getHorarioInicio() + " - CANT MODULOS: " + dr.getCantModulos() + " Dia Semana: " + dr.getDiaReserva());
+            
+           solapamientosPorDia.put(dr.getFecha(),
                     detalleReservaDAO.getByDiaYHorario(dr.getFecha(), dr.getHorarioInicio(), dr.getCantModulos()));
+           
+            System.out.println("Solapamientos encontrados para ese DR:");
+            for(DetalleReserva d : solapamientosPorDia.get(dr.getFecha())){
+                System.out.println("Fecha: " + dr.getFecha() + " - ID Aula: " + d.getIdAula() + " - Horario Inicio: " + dr.getHorarioInicio() + " - CANT MODULOS: " + dr.getCantModulos() + " Dia Semana: " + dr.getDiaReserva());
+            }
+            System.out.println("FIN");
         }
+        
+        
 
         // Filtrar por criterio (aulas sin solapamiento o con menor solapamiento)
         return filtrarPorCriterio(listaAulas, reserva.getDetallesReserva(), solapamientosPorDia); // devuelve DisponibilidadDTO

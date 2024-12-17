@@ -138,9 +138,9 @@ public class GestorReserva {
             }
         }
         
-        for(DetalleReservaDTO d : detallesReserva){
+        /*for(DetalleReservaDTO d : detallesReserva){
             System.out.println("Fecha: " + d.getFecha() + " - Horario Inicio: " + d.getHorarioInicio() + " - CANT MODULOS: " + d.getCantModulos() + " Dia Semana: " + d.getDiaReserva());
-        }
+        }*/
 
         return detallesReserva;
     }
@@ -308,7 +308,7 @@ public class GestorReserva {
         if(r instanceof ReservaEsporadica){
             rdto.setEsEsporadica(true);
         }
-        else{
+        else if(r instanceof ReservaPeriodica){
             rdto.setEsEsporadica(false);
             
             ReservaPeriodica rp = (ReservaPeriodica) r;
@@ -326,6 +326,8 @@ public class GestorReserva {
     private List<DetalleReservaDTO> convertirListaDetallesADTO(List<DetalleReserva> detallesReserva) {
         List<DetalleReservaDTO> listadr = new ArrayList();
         
+        
+        if(detallesReserva == null) return null;
         for(DetalleReserva d : detallesReserva){
             DetalleReservaDTO dr = new DetalleReservaDTO(d.getIdReserva(), d.getHorarioInicio(), d.getCantModulos(),
                                                         d.getFecha(), d.getDiaReserva(), d.getIdAula());

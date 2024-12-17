@@ -96,15 +96,15 @@ public class ReservaSqlDAO implements ReservaDAO{
                 String email_docente = rs.getString("email_docente");
                 int id_catedra = rs.getInt("id_catedra");
                 String nombre_catedra = rs.getString("nombre_catedra");
-                Date fecha = rs.getDate("fecha_registro");
+                //Date fecha = rs.getDate("fecha_registro");
                 int id_bedel = rs.getInt("id_bedel");
                 
-                LocalDateTime fecha_registro = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                //LocalDateTime fecha_registro = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
                 
                 Bedel bedel = DAOBedel.buscarPorId(id_bedel);
                 
                 
-                Reserva reserva = new Reserva(id,nombre_docente,id_docente,apellido_docente,email_docente,id_catedra,nombre_catedra,fecha_registro,bedel);
+                Reserva reserva = new Reserva(id,nombre_docente,id_docente,apellido_docente,email_docente,id_catedra,nombre_catedra,null,bedel);
                 return reserva;
             }
             
