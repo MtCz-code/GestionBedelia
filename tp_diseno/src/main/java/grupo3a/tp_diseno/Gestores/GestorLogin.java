@@ -76,5 +76,9 @@ public class GestorLogin {
         return idUsuarioLogueado;
     }
     
+    public void cerrarSesion(){
+        idUsuarioLogueado = null;
+    }
+    
     
 }

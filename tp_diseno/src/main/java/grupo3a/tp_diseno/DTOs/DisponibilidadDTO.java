@@ -12,25 +12,16 @@ import java.util.List;
  * @author gabic
  */
 public class DisponibilidadDTO {
-    private List<AulaDTO> aulasDisponibles; // el integer representa la cantidad de solapamiento en modulos. si nno tiene es 0 
+    private List<AulaDTO> aulasDisponibles;
     private Boolean solapamiento;
-    private List<ReservaDTO> reservasSolapadas;
+    private List<DetalleReservaDTO> drSolapados;
+    private HashMap<Integer, ReservaDTO> reservasSolapadas;
     
     //private List<Integer> modulosSolapamiento;
 
     public DisponibilidadDTO() {
     }
-
-    public DisponibilidadDTO(List<AulaDTO> aulasDisponibles, Boolean solapamiento) {
-        this.aulasDisponibles = aulasDisponibles;
-        this.solapamiento = solapamiento;
-    }
-
-    public DisponibilidadDTO(Boolean solapamiento, List<ReservaDTO> reservasSolapadas) {
-        this.solapamiento = solapamiento;
-        this.reservasSolapadas = reservasSolapadas;
-    }
-
+    
     public List<AulaDTO> getAulasDisponibles() {
         return aulasDisponibles;
     }
@@ -47,14 +38,23 @@ public class DisponibilidadDTO {
         this.solapamiento = solapamiento;
     }
 
-    public List<ReservaDTO> getReservasSolapadas() {
+    public List<DetalleReservaDTO> getDrSolapados() {
+        return drSolapados;
+    }
+
+    public void setDrSolapados(List<DetalleReservaDTO> drSolapados) {
+        this.drSolapados = drSolapados;
+    }
+
+    public HashMap<Integer, ReservaDTO> getReservasSolapadas() {
         return reservasSolapadas;
     }
 
-    public void setReservasSolapadas(List<ReservaDTO> reservasSolapadas) {
+    public void setReservasSolapadas(HashMap<Integer, ReservaDTO> reservasSolapadas) {
         this.reservasSolapadas = reservasSolapadas;
     }
-    
+
+  
     
     
     

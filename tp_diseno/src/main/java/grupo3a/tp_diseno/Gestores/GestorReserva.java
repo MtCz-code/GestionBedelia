@@ -13,7 +13,6 @@ import grupo3a.tp_diseno.Exceptions.Exceptions.ValueException;
 import grupo3a.tp_diseno.Enumerations.TipoReservaPeriodica;
 import grupo3a.tp_diseno.Exceptions.Exceptions;
 import grupo3a.tp_diseno.Exceptions.Exceptions.NoExisteAulaException;
-import grupo3a.tp_diseno.Gestores.*;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva.TIPO_RESERVA;
 
 import java.sql.Time;
@@ -33,7 +32,7 @@ public class GestorReserva {
     private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
     private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
     
-    private final DetalleReservaDAO detalleReservaDAO = DetalleReservaSqlDAO.getInstance();
+    private final BedelDAO bedelDAO = BedelSqlDAO.getInstance();
     
     private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
     
@@ -169,11 +168,11 @@ public class GestorReserva {
         
         DisponibilidadDTO d = gestorAula.obtenerDisponibilidadAulas(reservaDTO, tipoAula);
         
-        System.out.println("Solapamiento: " + d.getSolapamiento());
+        /*System.out.println("Solapamiento: " + d.getSolapamiento());
         System.out.println("Aulas Disponibles:");
         for(AulaDTO a : d.getAulasDisponibles().keySet()){
             System.out.println("Aula: " + a.getUbicacion() + " - Solapamiento: " + d.getAulasDisponibles().get(a));
-        }
+        }*/
         
         return d;
     }
@@ -257,7 +256,7 @@ public class GestorReserva {
         String nombreCatedra = r.getNombreCatedra();
         LocalDateTime fechaRegistro = r.getFechaRegistro();
         
-        Bedel bedel = GestorBedel.getInstance().convertirAModelo( GestorBedel.getInstance().buscarPorID(r.getIdBedel() ));
+        Bedel bedel = bedelDAO.buscarPorId(r.getIdBedel());
         
         List<DetalleReserva> detallesReserva = convertirListaDetallesAModelo(r.getDetallesReserva());
         

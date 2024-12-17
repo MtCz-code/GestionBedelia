@@ -28,6 +28,7 @@ public class ReservaDTO {
     private List<DetalleReservaDTO> detallesReserva;
     private boolean esEsporadica; // FALSO = PERIODICA, VERDADERO = ESPORADICA
     
+    // atributos de periodica
     private TipoReservaPeriodica tipo; // Enum: CUATRIMESTRAL, ANUAL
     private List<DiaSemana> diasSemana; // Enum: LUNES, MARTES, etc.
     private int idCuatrimestre1; private int idCuatrimestre2;

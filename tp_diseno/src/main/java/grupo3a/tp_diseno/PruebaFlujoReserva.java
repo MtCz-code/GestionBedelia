@@ -139,7 +139,7 @@ public class PruebaFlujoReserva {
         
         System.out.println(disponibilidad.getAulasDisponibles().size());
         
-        if (!disponibilidad.getSolapamiento()) {
+        /*if (!disponibilidad.getSolapamiento()) {
             for (Map.Entry<AulaDTO, Integer> entry : disponibilidad.getAulasDisponibles().entrySet()) {
                 AulaDTO aulaDisponible = entry.getKey();
 
@@ -152,7 +152,7 @@ public class PruebaFlujoReserva {
                 Integer solapamiento = entry.getValue();
                 System.out.println("Aula disponible con solapamiento: " + aulaDisponible.getUbicacion() + ", Solapamiento: " + solapamiento);
             }
-        }
+        }*/
         
     }
     

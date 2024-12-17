@@ -1,6 +1,7 @@
 
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
+import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 import grupo3a.tp_diseno.Vista.Utilidades.ButtonEditor;
 import grupo3a.tp_diseno.Vista.Utilidades.ButtonRenderer;

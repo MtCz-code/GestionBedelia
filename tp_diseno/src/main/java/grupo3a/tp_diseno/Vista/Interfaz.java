@@ -205,6 +205,7 @@ public class Interfaz {
         menuAdmin.setListener(new MenuAdmin.Listener() {
             @Override 
             public void back(){
+                gestorLogin.cerrarSesion();
                 showLogin();
             }
             @Override
@@ -873,7 +874,7 @@ public class Interfaz {
                     detallesReserva     0
                  */
                 //nombreDocente, apellidoDocente, correo, nombreCatedra, cantidadAlumnos
-                AulaDTO aula = (AulaDTO) disponibilidadDeAulas.getAulasDisponibles().keySet().toArray()[idx];
+                AulaDTO aula = disponibilidadDeAulas.getAulasDisponibles().get(idx);
                 
                 /* estos 2 ya se hacen desde el gestor/dao
                     reserva.setFechaRegistro(LocalDateTime.now());
@@ -956,6 +957,7 @@ public class Interfaz {
         menuBedel.setListener(new MenuBedel.Listener() {
             @Override()
             public void back() {
+                gestorLogin.cerrarSesion();
                 showLogin();
             }
             @Override
