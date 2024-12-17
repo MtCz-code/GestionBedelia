@@ -32,27 +32,22 @@ import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaDias;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaHorarios;
 import grupo3a.tp_diseno.Vista.Login.InicioSesion;
-import grupo3a.tp_diseno.Modelos.AulaGeneral;
-import grupo3a.tp_diseno.Modelos.AulaLaboratorio;
 import grupo3a.tp_diseno.Vista.Utilidades.FuncionInterface.Fun;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.time.LocalTime;
 import java.time.Year;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import javax.swing.JPanel;
-import javax.swing.text.html.HTMLDocument;
 
 public class Interfaz {
 
@@ -874,8 +869,9 @@ public class Interfaz {
                     detallesReserva     0
                  */
                 //nombreDocente, apellidoDocente, correo, nombreCatedra, cantidadAlumnos
-                AulaDTO aula = disponibilidadDeAulas.getAulasDisponibles().get(idx);
-                
+                //AulaDTO aula = disponibilidadDeAulas.getAulasDisponibles().get(idx);
+                List<AulaDTO> aulasDisponibles = new ArrayList<>(disponibilidadDeAulas.getAulasDisponibles().values());
+                AulaDTO aula = aulasDisponibles.get(idx);
                 /* estos 2 ya se hacen desde el gestor/dao
                     reserva.setFechaRegistro(LocalDateTime.now());
                     reserva.setIdBedel(idBedel); 
@@ -1004,7 +1000,7 @@ public class Interfaz {
     private String[][] convertirFormatoAula(DisponibilidadDTO disp) {
         // SI EXISTEN AULAS SIN SOLAPAMIENTO
         if (!disp.getSolapamiento()) {
-            Set<AulaDTO> aulasDisponibles = (Set<AulaDTO>) disp.getAulasDisponibles().values();
+            List<AulaDTO> aulasDisponibles = new ArrayList<>(disp.getAulasDisponibles().values());
 
             String[][] str = new String[aulasDisponibles.size()][];
             
@@ -1056,7 +1052,7 @@ public class Interfaz {
         else {
             
             
-            return ;
+            return null;
         }
     }
 

@@ -26,19 +26,6 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.regex.Pattern;
 
 public class GestorReserva {
-
-    
-    
-    private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
-    private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
-    
-    private final BedelDAO bedelDAO = BedelSqlDAO.getInstance();
-    
-    private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
-    
-    private final GestorAula gestorAula = GestorAula.getInstance();
-    private final GestorLogin gestorLogin = GestorLogin.getInstance();
-    
     private static GestorReserva gestorReservaInstance;
     
     public static GestorReserva getInstance() {
@@ -51,6 +38,19 @@ public class GestorReserva {
     private GestorReserva() {
         
     }
+    
+    
+    private final ReservaPeriodicaDAO reservaPeriodicaDAO = ReservaPeriodicaSqlDAO.getInstance();
+    private final ReservaEsporadicaDAO reservaEsporadicaDAO = ReservaEsporadicaSqlDAO.getInstance();
+    
+    private final BedelDAO bedelDAO = BedelSqlDAO.getInstance();
+    
+    private final CuatrimestreDAO cuatrimestreDAO = CuatrimestreSqlDAO.getInstance();
+    
+    private final GestorAula gestorAula = GestorAula.getInstance();
+    private final GestorLogin gestorLogin = GestorLogin.getInstance();
+    
+    
     
     public List<Year> recuperarAñosDisponibles() throws DAOException{
         
@@ -351,10 +351,7 @@ public class GestorReserva {
         return listadr;
     }
     
-    public DetalleReservaDTO convertirDetalleReservaADTO(DetalleReserva dr){
-        return new DetalleReservaDTO(dr.getIdReserva(), dr.getHorarioInicio(), dr.getCantModulos(),
-                                                        dr.getFecha(), dr.getDiaReserva(), dr.getIdAula());
-    }
+    
     
     private CuatrimestreDTO convertirCuatrimestreADTO(Cuatrimestre c) {
         int id = c.getIdCuatrimestre();
