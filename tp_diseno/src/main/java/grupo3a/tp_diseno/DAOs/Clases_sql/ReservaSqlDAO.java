@@ -6,6 +6,7 @@ import grupo3a.tp_diseno.DAOs.ReservaDAO;
 import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Enumerations.DiaSemana;
 import grupo3a.tp_diseno.Exceptions.Exceptions.DAOException;
+import grupo3a.tp_diseno.Modelos.Bedel;
 import grupo3a.tp_diseno.Modelos.DetalleReserva;
 import grupo3a.tp_diseno.Modelos.Reserva;
 import grupo3a.tp_diseno.Modelos.ReservaEsporadica;
@@ -17,12 +18,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import org.json.JSONArray;
 
 public class ReservaSqlDAO implements ReservaDAO{
     
     DetalleReservaDAO DAO = DetalleReservaSqlDAO.getInstance();
-    
+    BedelSqlDAO DAOBedel = BedelSqlDAO.getInstance();
     
     public ReservaSqlDAO() {
     }
@@ -73,7 +78,41 @@ public class ReservaSqlDAO implements ReservaDAO{
 
     @Override
     public Reserva buscarPorId(Integer id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        String query = "SELECT id_docente,nombre_docente,apellido_docente, email_docente,id_catedra, nombre_catedra, fecha_registro, id_bedel FROM reserva WHERE id_reserva = ?";
+        
+        try (Connection conn = DataBaseConnection.getConnection(); 
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            
+            stmt.setInt(1, id);
+            
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                
+                int id_docente = rs.getInt("id_docente");
+                String nombre_docente = rs.getString("nombre_docente");
+                String apellido_docente = rs.getString("apellido_docente");
+                String email_docente = rs.getString("email_docente");
+                int id_catedra = rs.getInt("id_catedra");
+                String nombre_catedra = rs.getString("nombre_catedra");
+                Date fecha = rs.getDate("fecha_registro");
+                int id_bedel = rs.getInt("id_bedel");
+                
+                LocalDateTime fecha_registro = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                
+                Bedel bedel = DAOBedel.buscarPorId(id_bedel);
+                
+                
+                Reserva reserva = new Reserva(id,nombre_docente,id_docente,apellido_docente,email_docente,id_catedra,nombre_catedra,fecha_registro,bedel);
+                return reserva;
+            }
+            
+        } catch (SQLException e) {
+            throw new DAOException("Error al agregar la reserva: " + e.getMessage());
+        }   
+        
+        return null;
     }
     
 }
