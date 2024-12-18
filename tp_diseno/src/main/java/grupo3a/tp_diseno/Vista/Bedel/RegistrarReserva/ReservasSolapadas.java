@@ -1,4 +1,3 @@
-
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
 import grupo3a.tp_diseno.DTOs.AulaDTO;
@@ -13,39 +12,44 @@ import java.util.List;
 
 public class ReservasSolapadas extends javax.swing.JPanel {
 
-        public interface Listener {
+    public interface Listener {
 
         void back();
 
         void menu();
-        
+
         void next();
     }
-    
+
     private Listener listener;
     List<ReservaDTO> reservas;
-    HashMap<DetalleReservaDTO,AulaDTO> aulas;
-    
+    HashMap<DetalleReservaDTO, AulaDTO> aulas;
+
     public ReservasSolapadas() {
         initComponents();
         rootPanel.add(jPanel11, "showDetalles");
     }
 
-       public void showDetalles() {
+    public void showDetalles() {
         CardLayout cl = (CardLayout) rootPanel.getLayout();
         cl.show(rootPanel, "showDetalles");
     }
-    
-        public void updateAulas(HashMap<DetalleReservaDTO,AulaDTO> aulas) {
+
+    public void showSolapadas() {
+        CardLayout cl = (CardLayout) rootPanel.getLayout();
+        cl.show(rootPanel, "card2");
+    }
+
+    public void updateAulas(HashMap<DetalleReservaDTO, AulaDTO> aulas) {
         this.aulas = aulas;
         actualizarTabla();
     }
-    
+
     public void setReservas(List<ReservaDTO> reservas) {
         this.reservas = reservas;
-    }    
-        
-        public void setListener(Listener listener) {
+    }
+
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
@@ -101,7 +105,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel12.setLayout(new java.awt.GridLayout(0, 1, 0, 5));
 
         jPanel13.setBackground(new java.awt.Color(157, 154, 111));
-        jPanel13.setLayout(new java.awt.GridLayout());
+        jPanel13.setLayout(new java.awt.GridLayout(1, 0));
 
         lbNomDoc.setForeground(new java.awt.Color(255, 255, 255));
         lbNomDoc.setText("Nombre docente");
@@ -122,7 +126,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel12.add(jPanel13);
 
         jPanel19.setBackground(new java.awt.Color(157, 154, 111));
-        jPanel19.setLayout(new java.awt.GridLayout());
+        jPanel19.setLayout(new java.awt.GridLayout(1, 0));
 
         lbApellido.setBackground(new java.awt.Color(157, 154, 111));
         lbApellido.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +147,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel12.add(jPanel19);
 
         jPanel20.setBackground(new java.awt.Color(157, 154, 111));
-        jPanel20.setLayout(new java.awt.GridLayout());
+        jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
         lbEmail.setForeground(new java.awt.Color(255, 255, 255));
         lbEmail.setText("Email docente");
@@ -163,7 +167,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel12.add(jPanel20);
 
         jPanel21.setBackground(new java.awt.Color(157, 154, 111));
-        jPanel21.setLayout(new java.awt.GridLayout());
+        jPanel21.setLayout(new java.awt.GridLayout(1, 0));
 
         lbNomCat.setForeground(new java.awt.Color(255, 255, 255));
         lbNomCat.setText("Nombre cátedra");
@@ -255,9 +259,9 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 136, Short.MAX_VALUE)
+                .addGap(0, 52, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 136, Short.MAX_VALUE))
+                .addGap(0, 52, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +293,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,7 +309,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -330,12 +334,12 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addGap(0, 377, Short.MAX_VALUE)
             .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel9Layout.createSequentialGroup()
                     .addGap(130, 130, 130)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(221, Short.MAX_VALUE)))
+                    .addContainerGap(137, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,10 +372,10 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addGap(0, 377, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
-                    .addContainerGap(221, Short.MAX_VALUE)
+                    .addContainerGap(137, Short.MAX_VALUE)
                     .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(130, 130, 130)))
         );
@@ -398,7 +402,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         if (listener != null)
-        listener.back();
+            listener.back();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
@@ -412,19 +416,22 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         int fila = tableReservas.rowAtPoint(evt.getPoint());
         int columna = tableReservas.columnAtPoint(evt.getPoint());
         //asignar reserva para ver datos
-        if(!tableReservas.getValueAt(fila, 0).equals("") && !tableReservas.getValueAt(fila, 1).equals("")
-                 && !tableReservas.getValueAt(fila, 2).equals("") && !tableReservas.getValueAt(fila, 3).equals("")){
-            if(columna==4){
+        if (!tableReservas.getValueAt(fila, 0).equals("") && !tableReservas.getValueAt(fila, 1).equals("")
+                && !tableReservas.getValueAt(fila, 2).equals("") && !tableReservas.getValueAt(fila, 3).equals("")) {
+            if (columna == 4) {
                 tfNomDoc.setText(reservas.get(columna).getNombreDocente());
                 tfApellido.setText(reservas.get(columna).getApellidoDocente());
                 tfEmail.setText(reservas.get(columna).getEmailDocente());
                 tfNomCat.setText(reservas.get(columna).getNombreCatedra());
-                showDetalles();}}
+                showDetalles();
+            }
+        }
     }//GEN-LAST:event_tableReservasMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (listener != null)
-        listener.next();
+//        if (listener != null)
+//            listener.next();
+        showSolapadas();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tfNomDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomDocActionPerformed
@@ -443,30 +450,30 @@ public class ReservasSolapadas extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tfNomCatActionPerformed
 
-private void actualizarTabla() {
-    // Define los nombres de las columnas
-    String[] columnNames = {"Aula", "Día", "Horario", "Modulos", ""};
-    
-    // Crea los datos para la tabla a partir del HashMap
-    Object[][] data = new Object[aulas.size()][5];
-    int rowIndex = 0;
+    private void actualizarTabla() {
+        // Define los nombres de las columnas
+        String[] columnNames = {"Aula", "Día", "Horario", "Modulos", ""};
 
-    for (HashMap.Entry<DetalleReservaDTO, AulaDTO> entry : aulas.entrySet()) {
-        DetalleReservaDTO detalle = entry.getKey();
-        AulaDTO aula = entry.getValue();
-        
-        data[rowIndex][0] = aula.getUbicacion();
-        data[rowIndex][1] = detalle.getFecha(); 
-        data[rowIndex][2] = detalle.getHorarioInicio(); 
-        data[rowIndex][3] = detalle.getCantModulos();
-        data[rowIndex][4] = "Ver detalle";
-        rowIndex++;
-    }
+        // Crea los datos para la tabla a partir del HashMap
+        Object[][] data = new Object[aulas.size()][5];
+        int rowIndex = 0;
 
-    // Crea un modelo para la tabla
-    tableReservas.setModel(new javax.swing.table.DefaultTableModel(
-        data, columnNames
-    ));
+        for (HashMap.Entry<DetalleReservaDTO, AulaDTO> entry : aulas.entrySet()) {
+            DetalleReservaDTO detalle = entry.getKey();
+            AulaDTO aula = entry.getValue();
+
+            data[rowIndex][0] = aula.getUbicacion();
+            data[rowIndex][1] = detalle.getFecha();
+            data[rowIndex][2] = detalle.getHorarioInicio();
+            data[rowIndex][3] = detalle.getCantModulos();
+            data[rowIndex][4] = "Ver detalle";
+            rowIndex++;
+        }
+
+        // Crea un modelo para la tabla
+        tableReservas.setModel(new javax.swing.table.DefaultTableModel(
+                data, columnNames
+        ));
 
         tableReservas.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Ver detalle"));
 
