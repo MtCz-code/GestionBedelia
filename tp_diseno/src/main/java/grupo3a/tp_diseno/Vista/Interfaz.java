@@ -26,7 +26,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import grupo3a.tp_diseno.Vista.Bedel.MenuBedel;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.CartelDetalles;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.RegistrarReservaDatos;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.ReservasSolapadas;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.ResultadosAulas;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.SeleccionTipoReserva;
 import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.TipoPeriodicaDias;
@@ -44,6 +46,7 @@ import java.time.Year;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -88,6 +91,8 @@ public class Interfaz {
     private RegistrarReservaDatos regRsvaDatos = new RegistrarReservaDatos();
     private ResultadosAulas regRsvaAula = new ResultadosAulas();
     private EsporadicaDias regAulaEsporadicaDias = new EsporadicaDias();
+    private ReservasSolapadas reservasSolapadas= new ReservasSolapadas();
+    
 
     // gestores
     private GestorBedel gestorBedel = GestorBedel.getInstance();
@@ -123,6 +128,7 @@ public class Interfaz {
         alertaPanel.add(alerta, "alerta");
         alertaPanel.add(alertaConfirmacion, "alertaConfirmacion");
 
+
         baseFrame.setLocationRelativeTo(null);
         baseFrame.setVisible(true);
 
@@ -134,12 +140,13 @@ public class Interfaz {
         registrarBedel = new RegistrarBedel();
 
         // Reserva
-        regRsvaSeleccionTipoReserva = new SeleccionTipoReserva();
+       /* regRsvaSeleccionTipoReserva = new SeleccionTipoReserva();
         regRsvaTipoPeriodicaDias = new TipoPeriodicaDias();
         regRsvaPeriodicaHorarios = new TipoPeriodicaHorarios();
         regRsvaDatos = new RegistrarReservaDatos();
         regRsvaAula = new ResultadosAulas();
-        regAulaEsporadicaDias = new EsporadicaDias();
+        regAulaEsporadicaDias = new EsporadicaDias();*/
+
 
         mainPanel.add(login, "login");
         mainPanel.add(menuAdmin, "menuAdmin");
@@ -154,6 +161,7 @@ public class Interfaz {
         mainPanel.add(regRsvaDatos, "regRsvaDatos");
         mainPanel.add(regRsvaAula, "regRsvaAula");
         mainPanel.add(regAulaEsporadicaDias, "regAulaEsporadicaDias");
+        mainPanel.add(reservasSolapadas,"reservasSolapadas");
 
         configureListeners();
 
@@ -816,7 +824,8 @@ public class Interfaz {
                     
 
                     disponibilidadDeAulas = gestorReserva.validarDatosYObtenerAulas(reserva, tipoAula);
-                    regRsvaAula.setTable(convertirFormatoAula(disponibilidadDeAulas));
+                    String[][] datos=convertirFormatoAula(disponibilidadDeAulas);
+                    regRsvaAula.setTable(datos);
 
                 } catch (ValueException e) {
                     alerta.setText(e.getMessage());
@@ -838,13 +847,24 @@ public class Interfaz {
                     // deberia volver al menu?
                     return;
                 }
-                cardLayout.show(mainPanel, "regRsvaAula");
-                
                 if(disponibilidadDeAulas.getSolapamiento()){
-                    regRsvaAula.setTitle("No existen aulas sin solapamiento para su reserva");
+                HashMap<DetalleReservaDTO,AulaDTO> aulas= new HashMap();
+                List<ReservaDTO> reservas= new ArrayList();
+                System.out.println("DETALLES RESERVA SOLAPADOS X DIA");
+                for(DetalleReservaDTO dr : disponibilidadDeAulas.getDrSolapados()){
+                AulaDTO aula = disponibilidadDeAulas.getAulasDisponibles().get(dr.getIdAula());
+                aulas.put(dr, aula);
+                ReservaDTO reserva = disponibilidadDeAulas.getReservasSolapadas().get(dr.getIdReserva());
+                reservas.add(reserva);
+                System.out.println("fecha: " + dr.getFecha() + " - aula: "  + aula.getUbicacion()  + " - catedra: " + reserva.getNombreCatedra());
+            }
+            showReservasSolapadas(aulas,reservas);
                 }
-                else 
+                else{
+                    System.out.println(disponibilidadDeAulas.getSolapamiento());
                     regRsvaAula.setTitle("Seleccione su aula a reservar");
+                cardLayout.show(mainPanel, "regRsvaAula");
+                }
             }
         });
 
@@ -931,6 +951,37 @@ public class Interfaz {
                 }
             }
         });
+        
+        reservasSolapadas.setListener(new ReservasSolapadas.Listener() {
+            @Override
+            public void back() {
+                cardLayout.show(mainPanel, "regRsvaDatos");
+            }
+
+            @Override
+            public void next(){
+                baseFrame.setPanel1Up();
+            }
+            
+            @Override
+            public void menu() {
+                alertaConfirmacion.setText("¿Esta seguro que desea regresar al menu?");
+
+                alertaConfirmacion.setListener(new AlertaConfirmacion.Listener() {
+                    @Override
+                    public void back() {
+                        baseFrame.setPanel1Up();
+                    }
+
+                    @Override
+                    public void next() {
+                    showMenuBedel();
+                    }
+                });
+                baseFrame.setPanel2Up();
+                alertaCardLayout.show(alertaPanel, "alertaConfirmacion");
+            }
+        });
 
     }
 
@@ -1004,6 +1055,11 @@ public class Interfaz {
         cardLayout.show(mainPanel, "regRsvaSeleccionTipoReserva");
         
     }
+        public void showReservasSolapadas(HashMap<DetalleReservaDTO,AulaDTO> aulas,List<ReservaDTO> reservas) {
+        reservasSolapadas.setReservas(reservas);
+        reservasSolapadas.updateAulas(aulas);
+        cardLayout.show(mainPanel, "reservasSolapadas");
+    }
 
     private String[][] convertirFormatoAula(DisponibilidadDTO disp) {
         // SI EXISTEN AULAS SIN SOLAPAMIENTO
@@ -1057,16 +1113,7 @@ public class Interfaz {
         // SI NO EXISTEN AULAS SIN SOLAPAMIENTO
         // hay q manejar la lista de DR solapados, y el hashMap de aulas y Reservas (estos 2 hashmap son para obtener los datos necesarios de c/u)
         // para cada DR de la lista, hay q mostrar: ubicación aula (atributo aula), fecha, horario inicio, horario fin, datos de contacto (atributos reserva)
-        else {
-            System.out.println("DETALLES RESERVA SOLAPADOS X DIA");
-            for(DetalleReservaDTO dr : disp.getDrSolapados()){
-                AulaDTO aula = disp.getAulasDisponibles().get(dr.getIdAula());
-                ReservaDTO reserva = disp.getReservasSolapadas().get(dr.getIdReserva());
-                System.out.println("fecha: " + dr.getFecha() + " - aula: "  + aula.getUbicacion()  + " - catedra: " + reserva.getNombreCatedra());
-            }
-            
-            return null;
-        }
+        else return null;
     }
 
     private CuatrimestreDTO obtenerCuatrimestreActual(List<CuatrimestreDTO> cuats, int numofcuat) {

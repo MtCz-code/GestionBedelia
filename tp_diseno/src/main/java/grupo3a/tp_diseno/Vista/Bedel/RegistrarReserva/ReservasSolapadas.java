@@ -1,11 +1,14 @@
 
 package grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva;
 
+import grupo3a.tp_diseno.DTOs.AulaDTO;
+import grupo3a.tp_diseno.DTOs.DetalleReservaDTO;
 import grupo3a.tp_diseno.DTOs.ReservaDTO;
 import grupo3a.tp_diseno.Vista.Utilidades.BordesRedondeados;
 import grupo3a.tp_diseno.Vista.Utilidades.ButtonEditor;
 import grupo3a.tp_diseno.Vista.Utilidades.ButtonRenderer;
-import grupo3a.tp_diseno.Vista.Utilidades.UsuarioTableModel;
+import java.awt.CardLayout;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReservasSolapadas extends javax.swing.JPanel {
@@ -15,17 +18,33 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         void back();
 
         void menu();
+        
+        void next();
     }
     
     private Listener listener;
     List<ReservaDTO> reservas;
+    HashMap<DetalleReservaDTO,AulaDTO> aulas;
     
     public ReservasSolapadas() {
         initComponents();
-        actualizarTabla();
+        rootPanel.add(jPanel11, "showDetalles");
     }
 
+       public void showDetalles() {
+        CardLayout cl = (CardLayout) rootPanel.getLayout();
+        cl.show(rootPanel, "showDetalles");
+    }
     
+        public void updateAulas(HashMap<DetalleReservaDTO,AulaDTO> aulas) {
+        this.aulas = aulas;
+        actualizarTabla();
+    }
+    
+    public void setReservas(List<ReservaDTO> reservas) {
+        this.reservas = reservas;
+    }    
+        
         public void setListener(Listener listener) {
         this.listener = listener;
     }
@@ -34,6 +53,22 @@ public class ReservasSolapadas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel11 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        lbNomDoc = new javax.swing.JLabel();
+        tfNomDoc = new javax.swing.JTextField();
+        jPanel19 = new javax.swing.JPanel();
+        lbApellido = new javax.swing.JLabel();
+        tfApellido = new javax.swing.JTextField();
+        jPanel20 = new javax.swing.JPanel();
+        lbEmail = new javax.swing.JLabel();
+        tfEmail = new javax.swing.JTextField();
+        jPanel21 = new javax.swing.JPanel();
+        lbNomCat = new javax.swing.JLabel();
+        tfNomCat = new javax.swing.JTextField();
+        rootPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -49,6 +84,134 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         btnRegresar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         btnMenu = new javax.swing.JButton();
+
+        jPanel11.setBackground(new java.awt.Color(157, 154, 111));
+
+        jButton2.setBackground(new java.awt.Color(17, 17, 17));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("OK");
+        jButton2.setPreferredSize(new java.awt.Dimension(120, 30));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jPanel12.setBackground(new java.awt.Color(157, 154, 111));
+        jPanel12.setLayout(new java.awt.GridLayout(0, 1, 0, 5));
+
+        jPanel13.setBackground(new java.awt.Color(157, 154, 111));
+        jPanel13.setLayout(new java.awt.GridLayout());
+
+        lbNomDoc.setForeground(new java.awt.Color(255, 255, 255));
+        lbNomDoc.setText("Nombre docente");
+        lbNomDoc.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel13.add(lbNomDoc);
+
+        tfNomDoc.setBackground(new java.awt.Color(40, 40, 40));
+        tfNomDoc.setForeground(new java.awt.Color(255, 255, 255));
+        tfNomDoc.setEnabled(false);
+        tfNomDoc.setPreferredSize(new java.awt.Dimension(64, 20));
+        tfNomDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNomDocActionPerformed(evt);
+            }
+        });
+        jPanel13.add(tfNomDoc);
+
+        jPanel12.add(jPanel13);
+
+        jPanel19.setBackground(new java.awt.Color(157, 154, 111));
+        jPanel19.setLayout(new java.awt.GridLayout());
+
+        lbApellido.setBackground(new java.awt.Color(157, 154, 111));
+        lbApellido.setForeground(new java.awt.Color(255, 255, 255));
+        lbApellido.setText("Apellido docente");
+        lbApellido.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel19.add(lbApellido);
+
+        tfApellido.setBackground(new java.awt.Color(40, 40, 40));
+        tfApellido.setForeground(new java.awt.Color(255, 255, 255));
+        tfApellido.setEnabled(false);
+        tfApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfApellidoActionPerformed(evt);
+            }
+        });
+        jPanel19.add(tfApellido);
+
+        jPanel12.add(jPanel19);
+
+        jPanel20.setBackground(new java.awt.Color(157, 154, 111));
+        jPanel20.setLayout(new java.awt.GridLayout());
+
+        lbEmail.setForeground(new java.awt.Color(255, 255, 255));
+        lbEmail.setText("Email docente");
+        lbEmail.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel20.add(lbEmail);
+
+        tfEmail.setBackground(new java.awt.Color(40, 40, 40));
+        tfEmail.setForeground(new java.awt.Color(255, 255, 255));
+        tfEmail.setEnabled(false);
+        tfEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfEmailActionPerformed(evt);
+            }
+        });
+        jPanel20.add(tfEmail);
+
+        jPanel12.add(jPanel20);
+
+        jPanel21.setBackground(new java.awt.Color(157, 154, 111));
+        jPanel21.setLayout(new java.awt.GridLayout());
+
+        lbNomCat.setForeground(new java.awt.Color(255, 255, 255));
+        lbNomCat.setText("Nombre cátedra");
+        lbNomCat.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel21.add(lbNomCat);
+
+        tfNomCat.setBackground(new java.awt.Color(40, 40, 40));
+        tfNomCat.setForeground(new java.awt.Color(255, 255, 255));
+        tfNomCat.setEnabled(false);
+        tfNomCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNomCatActionPerformed(evt);
+            }
+        });
+        jPanel21.add(tfNomCat);
+
+        jPanel12.add(jPanel21);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(145, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(141, 141, 141))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(13, Short.MAX_VALUE)))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(217, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                    .addContainerGap(9, Short.MAX_VALUE)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(47, Short.MAX_VALUE)))
+        );
+
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
+        rootPanel.setLayout(new java.awt.CardLayout());
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -115,6 +278,11 @@ public class ReservasSolapadas extends javax.swing.JPanel {
         tableReservas.setMinimumSize(new java.awt.Dimension(100, 50));
         tableReservas.setPreferredSize(new java.awt.Dimension(650, 95));
         tableReservas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableReservasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableReservas);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -137,7 +305,7 @@ public class ReservasSolapadas extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -223,25 +391,9 @@ public class ReservasSolapadas extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 922, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 612, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+        rootPanel.add(jPanel1, "card2");
+
+        add(rootPanel);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -255,10 +407,66 @@ public class ReservasSolapadas extends javax.swing.JPanel {
             listener.menu();
         }
     }//GEN-LAST:event_btnMenuActionPerformed
-    private void actualizarTabla() {
-        String[] columnNames = {"Aula", "Día", "Horario", "Duracion", ""};
 
-        tableReservas.setModel(new UsuarioTableModel(reservas, columnNames));
+    private void tableReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableReservasMouseClicked
+        int fila = tableReservas.rowAtPoint(evt.getPoint());
+        int columna = tableReservas.columnAtPoint(evt.getPoint());
+        //asignar reserva para ver datos
+        if(!tableReservas.getValueAt(fila, 0).equals("") && !tableReservas.getValueAt(fila, 1).equals("")
+                 && !tableReservas.getValueAt(fila, 2).equals("") && !tableReservas.getValueAt(fila, 3).equals("")){
+            if(columna==4){
+                tfNomDoc.setText(reservas.get(columna).getNombreDocente());
+                tfApellido.setText(reservas.get(columna).getApellidoDocente());
+                tfEmail.setText(reservas.get(columna).getEmailDocente());
+                tfNomCat.setText(reservas.get(columna).getNombreCatedra());
+                showDetalles();}}
+    }//GEN-LAST:event_tableReservasMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (listener != null)
+        listener.next();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tfNomDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomDocActionPerformed
+
+    }//GEN-LAST:event_tfNomDocActionPerformed
+
+    private void tfApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfApellidoActionPerformed
+
+    }//GEN-LAST:event_tfApellidoActionPerformed
+
+    private void tfEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEmailActionPerformed
+
+    private void tfNomCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomCatActionPerformed
+
+    }//GEN-LAST:event_tfNomCatActionPerformed
+
+private void actualizarTabla() {
+    // Define los nombres de las columnas
+    String[] columnNames = {"Aula", "Día", "Horario", "Modulos", ""};
+    
+    // Crea los datos para la tabla a partir del HashMap
+    Object[][] data = new Object[aulas.size()][5];
+    int rowIndex = 0;
+
+    for (HashMap.Entry<DetalleReservaDTO, AulaDTO> entry : aulas.entrySet()) {
+        DetalleReservaDTO detalle = entry.getKey();
+        AulaDTO aula = entry.getValue();
+        
+        data[rowIndex][0] = aula.getUbicacion();
+        data[rowIndex][1] = detalle.getFecha(); 
+        data[rowIndex][2] = detalle.getHorarioInicio(); 
+        data[rowIndex][3] = detalle.getCantModulos();
+        data[rowIndex][4] = "Ver detalle";
+        rowIndex++;
+    }
+
+    // Crea un modelo para la tabla
+    tableReservas.setModel(new javax.swing.table.DefaultTableModel(
+        data, columnNames
+    ));
 
         tableReservas.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Ver detalle"));
 
@@ -270,10 +478,17 @@ public class ReservasSolapadas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -282,6 +497,15 @@ public class ReservasSolapadas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbApellido;
+    private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbNomCat;
+    private javax.swing.JLabel lbNomDoc;
+    private javax.swing.JPanel rootPanel;
     private javax.swing.JTable tableReservas;
+    private javax.swing.JTextField tfApellido;
+    private javax.swing.JTextField tfEmail;
+    private javax.swing.JTextField tfNomCat;
+    private javax.swing.JTextField tfNomDoc;
     // End of variables declaration//GEN-END:variables
 }

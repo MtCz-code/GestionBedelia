@@ -1,9 +1,12 @@
 
 package grupo3a.tp_diseno.Vista.Utilidades;
 
+import grupo3a.tp_diseno.DTOs.ReservaDTO;
+import grupo3a.tp_diseno.Vista.Bedel.RegistrarReserva.ReservasSolapadas.Listener;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -16,10 +19,12 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor,
     private JTable table;
     private int row;
 
-    public ButtonEditor(String text) {
+        public ButtonEditor(String text) {
         button = new JButton(text);
         button.addActionListener(this);
-    }
+        }
+        
+
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -44,8 +49,7 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor,
             // Lógica para borrar el cliente
             System.out.println("Borrar en fila " + row);
         } else if("Ver detalle".equals(label)){
-            System.out.println("Ver detalle en fila" + row);
-        }
+            }
         fireEditingStopped();
     }
 }
